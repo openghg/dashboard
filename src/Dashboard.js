@@ -14,73 +14,99 @@ function getID() {
   return "vis-id-" + uuidv4();
 }
 
-const apiAddress = "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random"
+const apiAddress =
+  "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random";
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { something: "useful" };
-  }
-
-  retrieveAPIData() {
-    return fetch(apiAddress)
-      .then((response) => response.json())
-      .then((json) => {
-        return json;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.state = { error: null, isLoaded: false, apiData: [] };
   }
 
   componentDidMount() {
-    this.retrieveAPIData().then((result) => this.setState({ apiData: result }));
+    fetch(apiAddress)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            apiData: result,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
   }
 
+  //   renderLayout() {
+  //     const gas_data_a = this.state.apiData["gas_a"];
+  //     const gas_data_b = this.state.apiData["gas_b"];
+  //     const gas_data_c = this.state.apiData["gas_c"];
+
+  //     return (
+
+  //     );
+  //   }
+
   render() {
-    console.log(this.state.apiData);
-    return (
-      <div>
-        <Layout>
-          <Content style={{ height: 300 }}>
-            <LineChart
-              data={data[0]}
-              width="1100"
-              height="250"
-              divID={getID()}
-            />
-          </Content>
-          <Content style={{ height: 300 }}>
-            <LineChart
-              data={data[1]}
-              width="1100"
-              height="250"
-              divID={getID()}
-            />
-          </Content>
-          <Content style={{ height: 300 }}>
-            <LineChart
-              data={data[2]}
-              width="1100"
-              height="250"
-              divID={getID()}
-            />
-          </Content>
-        </Layout>
-        <Layout>
-          <Footer style={{ height: 20 }}>
-            <div style={{ marginTop: -10 }}>
-              Source Code{" "}
-              <a href="https://github.com/openghg/dashboard">
-                https://github.com/openghg/dashboard
-              </a>
-              Author <a href="OpenGHG">OpenGHG</a>;
-            </div>
-          </Footer>
-        </Layout>
-      </div>
-    );
+    const { error, isLoaded, apiData } = this.state;
+
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+      const gas_data_a = apiData["gas_a"];
+      const gas_data_b = apiData["gas_b"];
+      const gas_data_c = apiData["gas_c"];
+
+      return (
+        <div>
+          <Layout>
+            <Content style={{ height: 300 }}>
+              <LineChart
+                data={gas_data_a}
+                width="1100"
+                height="250"
+                divID={getID()}
+              />
+            </Content>
+            <Content style={{ height: 300 }}>
+              <LineChart
+                data={gas_data_b}
+                width="1100"
+                height="250"
+                divID={getID()}
+              />
+            </Content>
+            <Content style={{ height: 300 }}>
+              <LineChart
+                data={gas_data_c}
+                width="1100"
+                height="250"
+                divID={getID()}
+              />
+            </Content>
+          </Layout>
+          {/* <Layout>
+                <Footer style={{ height: 20 }}>
+                  <div style={{ marginTop: -10 }}>
+                    Source Code{" "}
+                    <a href="https://github.com/openghg/dashboard">
+                      https://github.com/openghg/dashboard
+                    </a>
+                    Author <a href="OpenGHG">OpenGHG</a>;
+                  </div>
+                </Footer>
+              </Layout> */}
+        </div>
+      );
+    }
   }
 }
 

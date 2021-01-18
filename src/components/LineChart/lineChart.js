@@ -12,7 +12,6 @@ class LineChart extends React.Component {
   }
 
   render() {
-
     return (
       <div className="pane">
         <div className="header">Time series plot</div>
