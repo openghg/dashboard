@@ -1,7 +1,7 @@
 import "./Dashboard.css";
 import React from "react";
 import { Layout } from "antd";
-import data from "./data";
+import random_data from "./random.json"
 import { v4 as uuidv4 } from "uuid";
 import "antd/dist/antd.css";
 
@@ -17,6 +17,7 @@ function getID() {
 const apiAddress =
   "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random";
 
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -25,45 +26,38 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    fetch(apiAddress)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            apiData: result,
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        }
-      );
+    // fetch(apiAddress)
+    //   .then((res) => res.json())
+    //   .then(
+    //     (result) => {
+    //       this.setState({
+    //         isLoaded: true,
+    //         apiData: result,
+    //       });
+    //     },
+    //     (error) => {
+    //       this.setState({
+    //         isLoaded: true,
+    //         error,
+    //       });
+    //     }
+    //   );
   }
 
-  //   renderLayout() {
-  //     const gas_data_a = this.state.apiData["gas_a"];
-  //     const gas_data_b = this.state.apiData["gas_b"];
-  //     const gas_data_c = this.state.apiData["gas_c"];
-
-  //     return (
-
-  //     );
-  //   }
-
   render() {
-    const { error, isLoaded, apiData } = this.state;
+    let { error, isLoaded, apiData } = this.state;
+
+    isLoaded = true;
 
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      const gas_data_a = apiData["gas_a"];
-      const gas_data_b = apiData["gas_b"];
-      const gas_data_c = apiData["gas_c"];
+
+      const gas_data_a = random_data["gas_a"];
+      const gas_data_b = random_data["gas_b"];
+      const gas_data_c = random_data["gas_c"];
 
       return (
         <div>

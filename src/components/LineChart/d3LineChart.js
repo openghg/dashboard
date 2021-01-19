@@ -1,24 +1,30 @@
 import * as d3 from "d3";
 import { cloneDeep } from "lodash";
 
-function convertDates(data) {
-  // Converts UNIX ms timestamps to dates
-  let dated_data = {};
+function convertData(data) {
+  // Takes the pandas exported JSON data and converts timestamps
+  //
+  // Args:
+  //    data (object): JSON output from pandas
+  // Returns:
+  //    Array: array of Objects with date and value keys
+  let dated_data = [];
 
   for (const [key, value] of Object.entries(data)) {
-    const converted_key = new Date(parseInt(key)).toISOString();
-    dated_data[converted_key] = value;
+    const date = new Date(parseInt(key));
+    let date_obj = { date: date, count: value };
+
+    dated_data.push(date_obj);
   }
 
   return dated_data;
 }
 
-function draw(props) {
+const draw = (props) => {
   const selectID = "." + props.divID;
 
   let data = [];
 
-  // Here we clone the data to ensure there's no
   if (props.data !== null) {
     data = cloneDeep(props.data);
   }
@@ -35,43 +41,54 @@ function draw(props) {
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  // Now we want to convert all the timestamps into actual dates
-  // Here we need to parse the timestamp data to a date
-  //   data.forEach(function (d) {
-  //     d.date = d3.timeParse("%Y-%m-%d")(d.date);
-  //     // %Q - milliseconds since UNIX epoch
-  //     // d.date = d3.timeParse("%Q")(d.date);
-  //     console.log(d.date);
-  //     d.count = +d.count;
-  //   });
+  // Here we convert pandas JSON output data to
+  // an array of objects with date, count keys
+  data = convertData(data);
 
-  // Convert the UNIX ms timestamps to dates
-  data = convertDates(data);
-
-  console.log(data);
-
+  // Setup the x-axis and set its limits
   let x = d3
     .scaleTime()
-    .domain(d3.extent(Object.keys(data)))
+    .domain(
+      d3.extent(data, function (d) {
+        return d.date;
+      })
+    )
     .range([0, width]);
   svg
     .append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
 
+  // Setup the y-axis and set its limits
   let y = d3
     .scaleLinear()
-    .domain([0, d3.max(Object.values(data))])
+    .domain([
+      0,
+      d3.max(data, function (d) {
+        return d.count;
+      }),
+    ])
     .range([height, 0]);
   svg.append("g").call(d3.axisLeft(y));
 
+  // Draw the line
   svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
     .attr("stroke", "steelblue")
     .attr("stroke-width", 1.5)
-    .attr("d", d3.line().x(Object.keys(data)).y(Object.values(data)));
-}
+    .attr(
+      "d",
+      d3
+        .line()
+        .x(function (d) {
+          return x(d.date);
+        })
+        .y(function (d) {
+          return y(d.count);
+        })
+    );
+};
 
 export default draw;
