@@ -3,9 +3,12 @@ import React from "react";
 import { Layout } from "antd";
 import random_data from "./random.json"
 import { v4 as uuidv4 } from "uuid";
+import {createSites} from "./mock/randomSites.js"
+
 import "antd/dist/antd.css";
 
 import LineChart from "./components/LineChart/lineChart";
+import LeafletMap from "./components/LeafletMap/map"
 
 const { Sider, Content, Footer } = Layout;
 
@@ -47,6 +50,8 @@ class Dashboard extends React.Component {
   render() {
     let { error, isLoaded, apiData } = this.state;
 
+    console.log(createSites())
+
     isLoaded = true;
 
     if (error) {
@@ -86,7 +91,11 @@ class Dashboard extends React.Component {
                 divID={getID()}
               />
             </Content>
+            <Content style={{ height: 300 }}>
+              <LeafletMap sites={createSites()} divID={getID()} centre={[51.458377, -2.603017]} zoom={3}/>
+            </Content>
           </Layout>
+          
           {/* <Layout>
                 <Footer style={{ height: 20 }}>
                   <div style={{ marginTop: -10 }}>
