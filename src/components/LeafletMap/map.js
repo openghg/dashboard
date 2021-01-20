@@ -4,25 +4,25 @@ import "./map.css";
 
 class LeafletMap extends React.Component {
   processSites() {
-      const sites = this.props.sites;
+    const sites = this.props.sites;
 
-      let markers = []
-      for (const [key, value] of Object.entries(sites)) {
-          const latitude = value["latitude"]
-          const longitude = value["longitude"]
+    let markers = [];
+    for (const [key, value] of Object.entries(sites)) {
+      const latitude = value["latitude"];
+      const longitude = value["longitude"];
 
-          const location = [latitude, longitude];
+      const location = [latitude, longitude];
 
-          const marker = (
-            <Marker position={location}>
-            <Popup>{key.toUpperCase()}</Popup>
-          </Marker>
-          )
+      const marker = (
+        <Marker position={location}>
+          <Popup>{key.toUpperCase()}</Popup>
+        </Marker>
+      );
 
-          markers.push(marker)
-      }
+      markers.push(marker);
+    }
 
-      return markers
+    return markers;
   }
 
   render() {
