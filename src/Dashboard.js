@@ -86,9 +86,24 @@ class Dashboard extends React.Component {
             <Overview />
 
             <VisLayout>
-              <LineChart divID={this.getID()} data={gas_data_a} />
-              <div>Sweet vis 2</div>
-              <div>Sweet vis 3</div>
+              <LineChart
+                divID={this.getID()}
+                data={gas_data_a}
+                width="1100"
+                height="250"
+              />
+               <LineChart
+                divID={this.getID()}
+                data={gas_data_b}
+                width="1100"
+                height="250"
+              />
+               <LineChart
+                divID={this.getID()}
+                data={gas_data_c}
+                width="1100"
+                height="250"
+              />
             </VisLayout>
           </div>
         </div>
