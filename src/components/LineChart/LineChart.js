@@ -1,5 +1,5 @@
 import React from "react";
-import "./lineChart.css";
+import "./LineChart.css";
 import draw from "./d3LineChart.js";
 
 class LineChart extends React.Component {

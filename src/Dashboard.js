@@ -1,21 +1,16 @@
 import "./Dashboard.css";
 import React from "react";
-import { Layout } from "antd";
 import random_data from "./random.json";
 import { v4 as uuidv4 } from "uuid";
 import { createSites } from "./mock/randomSites.js";
 
-import "antd/dist/antd.css";
+import LineChart from "./components/LineChart/LineChart";
+import LeafletMap from "./components/LeafletMap/Map";
 
-import LineChart from "./components/LineChart/lineChart";
-import LeafletMap from "./components/LeafletMap/map";
-
-const { Header, Footer, Sider, Content } = Layout;
-
-function getID() {
-  // Create a unique ID for each visualisation
-  return "vis-id-" + uuidv4();
-}
+import Header from "./components/Header/Header";
+import Summary from "./components/Summary/Summary";
+import Overview from "./components/Overview/Overview";
+import VisLayout from "./components/VisLayout/VisLayout";
 
 const apiAddress =
   "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random";
@@ -46,6 +41,11 @@ class Dashboard extends React.Component {
     //   );
   }
 
+  getID() {
+    // Create a unique ID for each visualisation
+    return "vis-id-" + uuidv4();
+  }
+
   render() {
     let { error, isLoaded, apiData } = this.state;
 
@@ -62,52 +62,35 @@ class Dashboard extends React.Component {
       const gas_data_b = random_data["gas_b"];
       const gas_data_c = random_data["gas_c"];
 
+      // Break the header into a component?
+      // Break the cards into components?
+      // How will visualisations scale?
+      // Have a VisLayout component that takes
+
       return (
         <div>
-          <Layout style={{ height: "100vh" }}>
-            <Sider style={{ background: "#eee" }}>
-              <Content style={{ height: 200 }}>Some sweet text</Content>
-              <Content style={{ height: 300 }}>Menu 1</Content>
-            </Sider>
-            <Layout>
-              <Header style={{ background: "#fa8fab" }}>Header</Header>
-              <Layout style={{overflowY: "scroll"}}>
-              <Content style={{ height: "20vh" }}>
-                <LineChart
-                  data={gas_data_a}
-                  width="1100"
-                  height="250"
-                  divID={getID()}
-                />
-              </Content>
-              <Content style={{ height: "20vh" }}>
-                <LineChart
-                  data={gas_data_a}
-                  width="1100"
-                  height="250"
-                  divID={getID()}
-                />
-              </Content>
-              <Content style={{ height: "20vh" }}>
-                <LineChart
-                  data={gas_data_a}
-                  width="1100"
-                  height="250"
-                  divID={getID()}
-                />
-              </Content>
-              <Content style={{ height: "20vh" }}>
-                <LineChart
-                  data={gas_data_a}
-                  width="1100"
-                  height="250"
-                  divID={getID()}
-                />
-              </Content>
-              </Layout>
-              <Footer>Footer</Footer>
-            </Layout>
-          </Layout>
+          <div className="main">
+            <Header text={"OpenGHG Dashboard"} />
+            <Summary>
+              <div>
+                Glasgow is the third most populous city in the United Kingdom,
+                with an estimated city population of 612,040 in 2016.
+                Historically, but now no longer, part of Lanarkshire, the city
+                now forms the Glasgow City council area, one of the 32 council
+                areas of Scotland; the local authority is Glasgow City Council.
+                Glasgow is situated on the River Clyde in the country's West
+                Central Lowlands.
+              </div>
+            </Summary>
+
+            <Overview />
+
+            <VisLayout>
+              <LineChart divID={this.getID()} data={gas_data_a} />
+              <div>Sweet vis 2</div>
+              <div>Sweet vis 3</div>
+            </VisLayout>
+          </div>
         </div>
       );
     }
