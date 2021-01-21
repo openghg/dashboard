@@ -15,7 +15,7 @@ class LineChart extends React.Component {
     return (
       <div>
         <div style={{ overflowX: "scroll", overflowY: "hidden" }}>
-          <div className={this.props.divID} />
+          <div className={this.props.divID} style={{height: 300, width: 1200}}/>
         </div>
       </div>
     );
