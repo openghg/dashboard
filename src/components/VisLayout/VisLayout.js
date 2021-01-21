@@ -5,9 +5,14 @@ import "./VisLayout.css";
 
 class VisLayout extends React.Component {
   render() {
-    const visualisations = this.props.children.map((child) => {
-      return <VisUnit vis={child} />;
-    });
+    let visualisations;
+    if (Array.isArray(this.props.children)) {
+      visualisations = this.props.children.map((child) => {
+        return <VisUnit vis={child} />;
+      });
+    } else {
+      visualisations = <VisUnit vis={this.props.children} />;
+    }
 
     return <div className="vis-main">{visualisations}</div>;
   }

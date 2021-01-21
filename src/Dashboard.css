@@ -58,7 +58,14 @@ body {
   height: 100vh;
 }
 
-
+.header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: #648ca6;
+}
 
 /* Make room for the menu icon on mobile */
 /* .header-search {

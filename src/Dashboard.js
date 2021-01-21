@@ -68,9 +68,9 @@ class Dashboard extends React.Component {
       // Have a VisLayout component that takes
 
       return (
-        <div>
+        <div className="grid-container">
+          <div className="header">OpenGHG Dashboard</div>
           <div className="main">
-            <Header text={"OpenGHG Dashboard"} />
             <Summary>
               <div>
                 Glasgow is the third most populous city in the United Kingdom,
@@ -89,20 +89,6 @@ class Dashboard extends React.Component {
               <LineChart
                 divID={this.getID()}
                 data={gas_data_a}
-                width="1100"
-                height="250"
-              />
-               <LineChart
-                divID={this.getID()}
-                data={gas_data_b}
-                width="1100"
-                height="250"
-              />
-               <LineChart
-                divID={this.getID()}
-                data={gas_data_c}
-                width="1100"
-                height="250"
               />
             </VisLayout>
           </div>
