@@ -3,29 +3,29 @@ import "./LineChart.css";
 import draw from "./d3LineChart.js";
 import * as d3 from "d3";
 
-function getDivWidth(divName) {
-  const width = window.innerWidth; // d3.select(divName).node().getBoundingClientRect().width;
-  const height = window.innerHeight; //d3.select(divName).node().getBoundingClientRect().height;
-
-  return [width, height];
-}
-
 class LineChart extends React.Component {
   constructor(props) {
     super(props);
-    // Find the initial width and height of the div we're going to
-    // create the SVG inside and set those to state
-    const [width, height] = getDivWidth(this.props.divID);
-    this.state = { width: width, height: height };
+    // Set the initial size of the plot
+    this.state = { width: 1000, height: 250 };
+    this.lineRef = React.createRef();
+  }
+
+  updateDimensions() {
+    const node = this.lineRef.current;
+    const height = node.parentNode.clientHeight;
+    const width = node.parentNode.clientWidth;
+
+    this.setState({ height: height, width: width });
   }
 
   componentDidMount() {
-    draw(this.props, this.state.width, this.state.height);
+    this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
+    draw(this.props, this.state.width, this.state.height);
   }
 
   componentDidUpdate() {
-    console.log("Update wooo");
     draw(this.props, this.state.width, this.state.height);
   }
 
@@ -33,15 +33,9 @@ class LineChart extends React.Component {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
   }
 
-  updateDimensions() {
-    const [width, height] = getDivWidth(this.props.divID);
-
-    this.setState({ width: width, height: height });
-  }
-
   render() {
     return (
-      <div>
+      <div ref={this.lineRef}>
         <div className={this.props.divID} />
       </div>
     );

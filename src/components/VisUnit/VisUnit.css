@@ -9,18 +9,20 @@
   page-break-inside: avoid;
   padding: 2vh 2vw;
   box-sizing: border-box;
+  height: calc(30vh - 50px);
+  width: calc(90vw - 50px);
 }
 
 /* Force varying heights to simulate dynamic content */
-.vis-unit:first-child {
+/* .vis-unit:first-child {
     height: 320px;
   }
   
-  .card:nth-child(2) {
+  .vis-unit:nth-child(2) {
     height: 200px;
   }
   
-  .card:nth-child(3) {
+  .vis-unit:nth-child(3) {
     height: 265px;
   }
-  
+   */
