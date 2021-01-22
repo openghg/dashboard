@@ -1,6 +1,13 @@
 .vis-main {
+  display: grid;
+  grid-auto-rows: 30vh;
+  height: 100vh;
   column-count: 1;
   column-gap: 5vh;
   margin: 1vw;
-  height: 300px;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
+
+

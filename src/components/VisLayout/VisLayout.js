@@ -14,7 +14,9 @@ class VisLayout extends React.Component {
       visualisations = <VisUnit vis={this.props.children} />;
     }
 
-    return <div className="vis-main">{visualisations}</div>;
+    return (
+      <div className="vis-main">{visualisations}</div>
+    );
   }
 }
 

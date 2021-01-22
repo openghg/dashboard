@@ -1,7 +1,6 @@
 import React from "react";
 import "./LineChart.css";
 import draw from "./d3LineChart.js";
-import * as d3 from "d3";
 
 class LineChart extends React.Component {
   constructor(props) {

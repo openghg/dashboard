@@ -1,4 +1,7 @@
-.lineBox {
-    height: 300px;
-    /* background-color: green; */
+.x-axis {
+  font-size: 1.5vh;
+}
+
+.y-axis {
+  font-size: 1.5vh;
 }

@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import { cloneDeep } from "lodash";
+import "./LineChart.css";
 
 function convertData(data) {
   // Takes the pandas exported JSON data and converts timestamps
@@ -34,11 +35,9 @@ const draw = (props, divWidth, divHeight) => {
 
   d3.select(selectID + " > *").remove();
 
-  const margin = { top: 10, right: 20, bottom: 30, left: 30 };
+  const margin = { top: 0, right: 30, bottom: 50, left: 40 };
   const width = divWidth - margin.left - margin.right;
   const height = divHeight - margin.top - margin.bottom;
-
-  console.log("Inside: " , width, height)
 
   // Setup the x-axis and set its limits
   let x = d3
@@ -69,16 +68,7 @@ const draw = (props, divWidth, divHeight) => {
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  // Add the x-axis to the svg
-  svg
-    .append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .call(d3.axisBottom(x));
-
-  // Add the y-axis
-  svg.append("g").call(d3.axisLeft(y));
-
-  // Draw the line itself
+  // Draw the line first so it doesn't overlay the axes
   svg
     .append("path")
     .datum(data)
@@ -96,6 +86,16 @@ const draw = (props, divWidth, divHeight) => {
           return y(d.count);
         })
     );
+
+  // Add the x-axis to the svg
+  svg
+    .append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(x));
+
+  // Add the y-axis
+  svg.append("g").attr("class", "y-axis").call(d3.axisLeft(y).ticks(4));
 };
 
 export default draw;

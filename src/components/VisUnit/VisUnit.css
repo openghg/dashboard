@@ -9,8 +9,6 @@
   page-break-inside: avoid;
   padding: 2vh 2vw;
   box-sizing: border-box;
-  height: calc(30vh - 50px);
-  width: calc(90vw - 50px);
 }
 
 /* Force varying heights to simulate dynamic content */
@@ -26,3 +24,4 @@
     height: 265px;
   }
    */
+
