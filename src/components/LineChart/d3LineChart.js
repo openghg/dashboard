@@ -53,7 +53,6 @@ const draw = (props, divWidth, divHeight) => {
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .call(responsivefy) // this is all it takes to make the chart responsive
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
@@ -76,38 +75,6 @@ const draw = (props, divWidth, divHeight) => {
 
   console.log(divWidth, divHeight);
 
-  function responsivefy(svg) {
-    // container will be the DOM element the svg is appended to
-    // we then measure the container and find its aspect ratio
-    const container = d3.select(svg.node().parentNode),
-      width = parseInt(svg.style("width"), 10),
-      height = parseInt(svg.style("height"), 10),
-      aspect = width / height;
-
-    // add viewBox attribute and set its value to the initial size
-    // add preserveAspectRatio attribute to specify how to scale
-    // and call resize so that svg resizes on inital page load
-    svg
-      .attr("viewBox", `0 0 ${width} ${height}`)
-      .attr("preserveAspectRatio", "xMinYMid")
-      .call(resize);
-
-    // add a listener so the chart will be resized when the window resizes
-    // to register multiple listeners for same event type,
-    // you need to add namespace, i.e., 'click.foo'
-    // necessary if you invoke this function for multiple svgs
-    // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-    d3.select(window).on("resize." + container.attr("id"), resize);
-
-    // this is the code that actually resizes the chart
-    // and will be called on load and in response to window resize
-    // gets the width of the container and proportionally resizes the svg to fit
-    function resize() {
-      const targetWidth = parseInt(container.style("width"));
-      svg.attr("width", targetWidth);
-      svg.attr("height", Math.round(targetWidth / aspect));
-    }
-  }
   // Here we convert pandas JSON output data to
   // an array of objects with date, count keys
   //   data = convertData(data);
