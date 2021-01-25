@@ -46,7 +46,6 @@ body {
   background-color: #8fd4d9;
 }
 
-/* Assign grid instructions to our parent grid container, mobile-first (hide the sidenav) */
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;

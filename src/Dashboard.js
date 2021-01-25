@@ -11,6 +11,7 @@ import Header from "./components/Header/Header";
 import Summary from "./components/Summary/Summary";
 import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
+import SidePanel from "./components/Sidepanel/SidePanel";
 
 const apiAddress =
   "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random";
@@ -19,7 +20,14 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { error: null, isLoaded: false, apiData: [] };
+    this.state = {
+      error: null,
+      isLoaded: false,
+      sidePanel: false,
+      apiData: [],
+    };
+
+    this.toggleSidePanel = this.toggleSidePanel.bind(this);
   }
 
   componentDidMount() {
@@ -46,10 +54,13 @@ class Dashboard extends React.Component {
     return "vis-id-" + uuidv4();
   }
 
+  toggleSidePanel() {
+    this.setState({ sidePanel: !this.state.sidePanel });
+    console.log("Toggling to ", this.state.sidePanel);
+  }
+
   render() {
     let { error, isLoaded, apiData } = this.state;
-
-    console.log(createSites());
 
     isLoaded = true;
 
@@ -69,8 +80,12 @@ class Dashboard extends React.Component {
 
       return (
         <div className="grid-container">
-          <div className="header">OpenGHG Dashboard</div>
+          <div className="header">
+            OpenGHG Dashboard{" "}
+            <button onClick={this.toggleSidePanel}>Click me</button>
+          </div>
           <div className="main">
+            <SidePanel isOpen={this.state.sidePanel} />
             <Summary>
               <div>
                 Glasgow is the third most populous city in the United Kingdom,
