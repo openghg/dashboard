@@ -1,6 +1,7 @@
 import React from "react";
 import "./LineChart.css";
 import draw from "./d3LineChart.js";
+import { contourDensity } from "d3";
 
 class LineChart extends React.Component {
   constructor(props) {
@@ -12,10 +13,11 @@ class LineChart extends React.Component {
 
   updateDimensions() {
     const node = this.lineRef.current;
-    const height = node.parentNode.clientHeight;
-    const width = node.parentNode.clientWidth;
-
-    this.setState({ height: height, width: width });
+    if (node) {
+      const height = node.parentNode.clientHeight;
+      const width = node.parentNode.clientWidth;
+      this.setState({ height: height, width: width });
+    }
   }
 
   componentDidMount() {
