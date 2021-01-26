@@ -13,6 +13,8 @@ import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
 import SidePanel from "./components/Sidepanel/SidePanel";
 
+import GraphContainer from "./components/GraphContainer/GraphContainer";
+
 const apiAddress =
   "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random";
 
@@ -106,9 +108,15 @@ class Dashboard extends React.Component {
             <Overview />
 
             <VisLayout>
-              <LineChart divID={this.getID()} data={gas_data_a} />
-              <LineChart divID={this.getID()} data={gas_data_b} />
-              <LineChart divID={this.getID()} data={gas_data_c} />
+              <GraphContainer>
+                <LineChart divID={this.getID()} data={gas_data_a} />
+              </GraphContainer>
+              <GraphContainer>
+                <LineChart divID={this.getID()} data={gas_data_b} />
+              </GraphContainer>
+              <GraphContainer>
+                <LineChart divID={this.getID()} data={gas_data_c} />
+              </GraphContainer>
             </VisLayout>
           </div>
         </div>

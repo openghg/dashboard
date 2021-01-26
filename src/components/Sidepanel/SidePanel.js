@@ -33,8 +33,13 @@ class SidePanel extends React.Component {
                   Source
                 </button>
               </li>
-              <li onClick={this.props.togglePanel} className="panel-list-item">
-                Close
+              <li className="panel-list-item">
+                <button
+                  onClick={this.props.togglePanel}
+                  className="panel-button"
+                >
+                  Close
+                </button>
               </li>
             </div>
           </div>

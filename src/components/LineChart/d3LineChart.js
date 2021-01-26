@@ -21,7 +21,7 @@ function convertData(data) {
   return dated_data;
 }
 
-const draw = (props, divWidth, divHeight) => {
+const draw = (props) => {
   const selectID = "." + props.divID;
 
   let data = [];
@@ -34,6 +34,9 @@ const draw = (props, divWidth, divHeight) => {
   data = convertData(data);
 
   d3.select(selectID + " > *").remove();
+
+  const divWidth = props.width;
+  const divHeight = props.height;
 
   const margin = { top: 0, right: 30, bottom: 50, left: 40 };
   const width = divWidth - margin.left - margin.right;
