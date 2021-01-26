@@ -1,19 +1,137 @@
-.container {
-  background-color: #808080;
+.panel-container {
+  background-color: #9cb6a4;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 3;
   height: 100vh;
   width: 15vw;
 }
 
-.leftContainer {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
-  }
+.panel-header {
+  height: 20%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.panel-links {
+  height: 70%;
+}
+
+.panel-footer {
+  height: 70%;
+}
+
+.panel-transition-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.panel-transition-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  transform: translateX(0);
+}
+
+.panel-transition-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.panel-transition-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+.panel-list {
+  padding: 0;
+  margin-top: 85px;
+  list-style-type: none;
+}
+
+.panel-list-item {
+  font-size: 2vh;
+  padding: 20px 20px 20px 40px;
+  color: #fff;
+}
+
+.panel-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+/* .panel-exit-button {
+  position: absolute;
+  right: 1vw;
+  padding: 0px;
+  top: 1vh;
+  font-size: 4vh;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+}
+
+.panel-exit-button:hover {
+  color: #ff9900;
+} */
+
+.panel-nav-icon {
+  margin: 1em;
+  width: 40px;
+}
+
+.panel-nav-icon:after,
+.panel-nav-icon:before,
+.panel-nav-icon div {
+  background-color: #fff;
+  border-radius: 3px;
+  content: "";
+  display: block;
+  height: 5px;
+  margin: 7px 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.panel-nav-icon:before {
+  transform: translateY(12px) rotate(135deg);
+}
+
+.panel-nav-icon:after {
+  transform: translateY(-12px) rotate(-135deg);
+}
+
+.panel-nav-icon div {
+  transform: scale(0);
+}
+
+.panel-nav-icon:hover:before {
+  transform: translateY(12px) rotate(135deg);
+  background-color: #222;
+}
+
+.panel-nav-icon:hover:after {
+  transform: translateY(-12px) rotate(-135deg);
+  background-color: #222;
+}
+
+/* This makes the buttons look like text */
+/* Based on https://stackoverflow.com/a/1368286 */
+.panel-button {
+  background: none;
+  border: none;
+  color: #f1f1f1;
+  cursor: pointer;
+  /* Responsive text size */
+  font-size: 2vh;
+  padding: 0px 0px 0px 0px;
+  text-align: left;
+}

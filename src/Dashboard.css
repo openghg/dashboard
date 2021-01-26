@@ -55,7 +55,7 @@ body {
     "main"
     "footer";
   height: 100vh;
-  width: 100%;;
+  width: 100%;
 }
 
 .header {
@@ -85,4 +85,33 @@ body {
   height: 30vh;
   background-color: #e3e4e6;
   color: slategray;
+}
+
+.nav-icon {
+  margin: 1em;
+  width: 40px;
+}
+
+.nav-icon:after,
+.nav-icon:before,
+.nav-icon div {
+  background-color: #fff;
+  border-radius: 3px;
+  content: "";
+  display: block;
+  height: 5px;
+  margin: 7px 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-icon:hover:before {
+  background-color: #222;
+}
+
+.nav-icon:hover:after {
+  background-color: #222;
+}
+
+.nav-icon:hover div {
+  background-color: #222;
 }

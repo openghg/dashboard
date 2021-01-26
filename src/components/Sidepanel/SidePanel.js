@@ -1,45 +1,45 @@
 import React from "react";
 import { CSSTransition } from "react-transition-group";
-
-import styles from "./SidePanel.css";
-
-import SlideFromLeft from "./transitions/SlideFromLeft.css";
+import "./SidePanel.css";
 
 class SidePanel extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isOpen: false,
-      position: "right",
-      defaultSize: "40%",
-      minSize: "300px",
-      maxSize: null,
-    };
-  }
-
   render() {
-    console.log(SlideFromLeft);
-
-    let container = styles.leftContainer;
-    let transition = SlideFromLeft;
-
-    let style = { width: "15vw", height: "100vh", minSize: this.state.minSize };
-    console.log(container, transition);
-
     return (
-      <CSSTransition
-        in={this.props.isOpen}
-        timeout={200}
-        classNames={transition}
-        unmountOnExit
-      >
-        <div className={styles.container} style={style}>
-          <li>This</li>
-          <li>That</li>
-          <li>Other</li>
-        </div>
-      </CSSTransition>
+      <div>
+        <CSSTransition
+          in={this.props.isOpen}
+          timeout={300}
+          classNames={"panel-transition"}
+          unmountOnExit
+        >
+          <div className="panel-container">
+            <div className="panel-header">
+              <div onClick={this.props.togglePanel} class="panel-nav-icon">
+                <div></div>
+              </div>
+            </div>
+            <div className="panel-links">
+              <li className="panel-list-item">
+                <button className="panel-button">About</button>
+              </li>
+              <li className="panel-list-item">
+                <button className="panel-button">Data</button>
+              </li>
+              <li className="panel-list-item">
+                <button
+                  onClick={() => {window.open('https://github.com/openghg/dashboard', "_blank")}}
+                  className="panel-button"
+                >
+                  Source
+                </button>
+              </li>
+              <li onClick={this.props.togglePanel} className="panel-list-item">
+                Close
+              </li>
+            </div>
+          </div>
+        </CSSTransition>
+      </div>
     );
   }
 }

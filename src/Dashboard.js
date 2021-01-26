@@ -81,11 +81,16 @@ class Dashboard extends React.Component {
       return (
         <div className="grid-container">
           <div className="header">
-            OpenGHG Dashboard{" "}
-            <button onClick={this.toggleSidePanel}>Click me</button>
+            <div onClick={this.toggleSidePanel} class="nav-icon">
+              <div></div>
+            </div>
+            OpenGHG Dashboard
           </div>
           <div className="main">
-            <SidePanel isOpen={this.state.sidePanel} />
+            <SidePanel
+              isOpen={this.state.sidePanel}
+              togglePanel={this.toggleSidePanel}
+            />
             <Summary>
               <div>
                 Glasgow is the third most populous city in the United Kingdom,
