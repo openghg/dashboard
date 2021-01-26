@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { createSites } from "./mock/randomSites.js";
 
 import LineChart from "./components/LineChart/LineChart";
-import LeafletMap from "./components/LeafletMap/Map";
+import LeafletMap from "./components/LeafletMap/LeafletMap";
 
 import Header from "./components/Header/Header";
 import Summary from "./components/Summary/Summary";
@@ -93,15 +93,18 @@ class Dashboard extends React.Component {
               isOpen={this.state.sidePanel}
               togglePanel={this.toggleSidePanel}
             />
+            <LeafletMap
+              divID={this.getID()}
+              sites={createSites()}
+              centre={[51.458377, -2.603017]}
+              zoom={5}
+              width={"75vw"}
+              height={"40vh"}
+            />
             <Summary>
               <div>
                 Glasgow is the third most populous city in the United Kingdom,
                 with an estimated city population of 612,040 in 2016.
-                Historically, but now no longer, part of Lanarkshire, the city
-                now forms the Glasgow City council area, one of the 32 council
-                areas of Scotland; the local authority is Glasgow City Council.
-                Glasgow is situated on the River Clyde in the country's West
-                Central Lowlands.
               </div>
             </Summary>
 

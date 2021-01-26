@@ -1,6 +1,6 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "./Map.css";
+import "./LeafletMap.css";
 
 class LeafletMap extends React.Component {
   processSites() {
@@ -32,21 +32,28 @@ class LeafletMap extends React.Component {
     const markers = this.processSites();
     const zoom = this.props.zoom ? this.props.zoom : 5;
 
+    const width = this.props.width ? this.props.width : "60vw";
+    const height = this.props.height ? this.props.height : "40vh";
+
+    const style = { width: width, height: height };
+
     return (
-      <div className="pane">
+      <div className="map-container">
         <div id={this.props.divID} className="mapid">
-          <div className="header">A map</div>
-          <MapContainer
-            center={this.props.centre}
-            zoom={zoom}
-            scrollWheelZoom={true}
-          >
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {markers}
-          </MapContainer>
+          <div>
+            <MapContainer
+              center={this.props.centre}
+              zoom={zoom}
+              scrollWheelZoom={true}
+              style={style}
+            >
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              {markers}
+            </MapContainer>
+          </div>
         </div>
       </div>
     );

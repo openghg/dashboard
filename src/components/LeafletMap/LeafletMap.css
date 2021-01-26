@@ -1,0 +1,24 @@
+.mapid {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+.map-header {
+  background-color: lightblue;
+  font-size: 2vh;
+}
+
+.map-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #e3e4e6;
+    color: slategray;
+  }
+  
