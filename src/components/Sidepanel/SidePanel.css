@@ -9,7 +9,8 @@
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 3;
+  /* This is crazy high to ensure it's drawn over the leaflet map */
+  z-index: 5001;
   height: 100vh;
   width: 15vw;
 }

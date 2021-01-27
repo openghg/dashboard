@@ -18,24 +18,6 @@ import GraphContainer from "./components/GraphContainer/GraphContainer";
 const apiAddress =
   "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random";
 
-function apiFetch(apiURL) {
-  fetch(apiURL)
-    .then((res) => res.json())
-    .then(
-      (result) => {
-        this.setState({
-          isLoaded: true,
-          apiData: result,
-        });
-      },
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error,
-        });
-      }
-    );
-}
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -51,34 +33,27 @@ class Dashboard extends React.Component {
     this.toggleSidePanel = this.toggleSidePanel.bind(this);
   }
 
-  apiFetch(apiURL) {
-    fetch(apiURL)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            weatherData: result,
-            // or apiData
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        }
-      );
-  }
+  apiFetch(apiURL) {}
 
   componentDidMount() {
-    const weatherAPIURL =
-      "http://api.openweathermap.org/data/2.5/weather?q=Glasgow,uk&APPID=e871a23f71fa0764cda7446f7888b2f7";
-    const weatherData = apiFetch(weatherAPIURL);
-
-    this.setState({ weatherData: weatherData });
-
-    console.log(this.state.weatherData);
+    // const apiURL = "";
+    // fetch(apiURL)
+    //   .then((res) => res.json())
+    //   .then(
+    //     (result) => {
+    //       this.setState({
+    //         isLoaded: true,
+    //         weatherData: result,
+    //         // or apiData
+    //       });
+    //     },
+    //     (error) => {
+    //       this.setState({
+    //         isLoaded: true,
+    //         error,
+    //       });
+    //     }
+    //   );
   }
 
   getID() {
