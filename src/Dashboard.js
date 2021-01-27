@@ -18,6 +18,25 @@ import GraphContainer from "./components/GraphContainer/GraphContainer";
 const apiAddress =
   "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random";
 
+function apiFetch(apiURL) {
+  fetch(apiURL)
+    .then((res) => res.json())
+    .then(
+      (result) => {
+        this.setState({
+          isLoaded: true,
+          apiData: result,
+        });
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error,
+        });
+      }
+    );
+}
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -32,23 +51,34 @@ class Dashboard extends React.Component {
     this.toggleSidePanel = this.toggleSidePanel.bind(this);
   }
 
+  apiFetch(apiURL) {
+    fetch(apiURL)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            weatherData: result,
+            // or apiData
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }
+
   componentDidMount() {
-    // fetch(apiAddress)
-    //   .then((res) => res.json())
-    //   .then(
-    //     (result) => {
-    //       this.setState({
-    //         isLoaded: true,
-    //         apiData: result,
-    //       });
-    //     },
-    //     (error) => {
-    //       this.setState({
-    //         isLoaded: true,
-    //         error,
-    //       });
-    //     }
-    //   );
+    const weatherAPIURL =
+      "http://api.openweathermap.org/data/2.5/weather?q=Glasgow,uk&APPID=e871a23f71fa0764cda7446f7888b2f7";
+    const weatherData = apiFetch(weatherAPIURL);
+
+    this.setState({ weatherData: weatherData });
+
+    console.log(this.state.weatherData);
   }
 
   getID() {
@@ -58,7 +88,6 @@ class Dashboard extends React.Component {
 
   toggleSidePanel() {
     this.setState({ sidePanel: !this.state.sidePanel });
-    console.log("Toggling to ", this.state.sidePanel);
   }
 
   render() {
@@ -99,7 +128,7 @@ class Dashboard extends React.Component {
               centre={[51.458377, -2.603017]}
               zoom={5}
               width={"75vw"}
-              height={"40vh"}
+              height={"65vh"}
             />
             <Summary>
               <div>

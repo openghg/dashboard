@@ -39,22 +39,18 @@ class LeafletMap extends React.Component {
 
     return (
       <div className="map-container">
-        <div id={this.props.divID} className="mapid">
-          <div>
-            <MapContainer
-              center={this.props.centre}
-              zoom={zoom}
-              scrollWheelZoom={true}
-              style={style}
-            >
-              <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              {markers}
-            </MapContainer>
-          </div>
-        </div>
+        <MapContainer
+          center={this.props.centre}
+          zoom={zoom}
+          scrollWheelZoom={true}
+          style={style}
+        >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {markers}
+        </MapContainer>
       </div>
     );
   }
