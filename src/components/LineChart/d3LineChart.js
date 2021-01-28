@@ -71,12 +71,13 @@ const draw = (props) => {
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+  const lineColour = props.colour;
   // Draw the line first so it doesn't overlay the axes
   svg
     .append("path")
     .datum(data)
     .attr("fill", "none")
-    .attr("stroke", "steelblue")
+    .attr("stroke", lineColour)
     .attr("stroke-width", 1.5)
     .attr(
       "d",

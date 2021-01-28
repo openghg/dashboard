@@ -43,7 +43,7 @@ body {
   color: #fff;
   font-family: "Open Sans", Helvetica, sans-serif;
   box-sizing: border-box;
-  background-color: #8fd4d9;
+  background-color: #fff;
 }
 
 .grid-container {
@@ -74,7 +74,7 @@ body {
 
 .main {
   grid-area: main;
-  background-color: #8fd4d9;
+  background-color: #f4f3ee;
 }
 
 .main-header {
@@ -83,7 +83,7 @@ body {
   margin: 20px;
   padding: 20px;
   height: 30vh;
-  background-color: #e3e4e6;
+  background-color: #f4f3ee;
   color: slategray;
 }
 

@@ -30,6 +30,8 @@ class Dashboard extends React.Component {
       apiData: [],
     };
 
+    this.state.sites = createSites();
+
     this.toggleSidePanel = this.toggleSidePanel.bind(this);
   }
 
@@ -68,6 +70,8 @@ class Dashboard extends React.Component {
   render() {
     let { error, isLoaded, apiData } = this.state;
 
+    const colours = ["#013a63", "#2a6f97", "#014f86"]
+
     isLoaded = true;
 
     if (error) {
@@ -99,7 +103,7 @@ class Dashboard extends React.Component {
             />
             <LeafletMap
               divID={this.getID()}
-              sites={createSites()}
+              sites={this.state.sites}
               centre={[51.458377, -2.603017]}
               zoom={5}
               width={"75vw"}
@@ -116,13 +120,13 @@ class Dashboard extends React.Component {
 
             <VisLayout>
               <GraphContainer>
-                <LineChart divID={this.getID()} data={gas_data_a} />
+                <LineChart divID={this.getID()} data={gas_data_a} colour={colours[2]} />
               </GraphContainer>
               <GraphContainer>
-                <LineChart divID={this.getID()} data={gas_data_b} />
+                <LineChart divID={this.getID()} data={gas_data_b} colour={colours[1]}/>
               </GraphContainer>
               <GraphContainer>
-                <LineChart divID={this.getID()} data={gas_data_c} />
+                <LineChart divID={this.getID()} data={gas_data_c} colour={colours[0]}/>
               </GraphContainer>
             </VisLayout>
           </div>
