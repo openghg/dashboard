@@ -14,12 +14,12 @@ class SidePanel extends React.Component {
         >
           <div className="panel-container">
             <div className="panel-header">
-              <div onClick={this.props.togglePanel} class="panel-nav-icon">
+              <div onClick={this.props.togglePanel} className="panel-nav-icon">
                 <div></div>
               </div>
             </div>
   
-            <div  className="panel-links">
+            <div className="panel-links">
               <li className="panel-list-item">
                 <button className="panel-button">About</button>
               </li>

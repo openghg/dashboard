@@ -11,7 +11,7 @@ class VisLayout extends React.Component {
         return <VisUnit key={child.id} vis={child} />;
       });
     } else {
-      visualisations = <VisUnit vis={this.props.children} />;
+      visualisations = <VisUnit key={this.props.children.id} vis={this.props.children} />;
     }
 
     return (
