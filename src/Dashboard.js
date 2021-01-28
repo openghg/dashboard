@@ -7,7 +7,7 @@ import { createSites } from "./mock/randomSites.js";
 import LineChart from "./components/LineChart/LineChart";
 import LeafletMap from "./components/LeafletMap/LeafletMap";
 
-import Header from "./components/Header/Header";
+// import Header from "./components/Header/Header";
 import Summary from "./components/Summary/Summary";
 import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
@@ -65,10 +65,12 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    let { error, isLoaded, apiData } = this.state;
+    let { error, isLoaded } = this.state;
 
     const colours = ["#013a63", "#2a6f97", "#014f86"]
 
+    // Just set this as true for now as we're not pulling anything
+    // from an API
     isLoaded = true;
 
     if (error) {
