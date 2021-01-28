@@ -18,7 +18,8 @@ class SidePanel extends React.Component {
                 <div></div>
               </div>
             </div>
-            <div className="panel-links">
+  
+            <div  className="panel-links">
               <li className="panel-list-item">
                 <button className="panel-button">About</button>
               </li>

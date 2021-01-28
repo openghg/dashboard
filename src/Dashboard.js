@@ -15,9 +15,6 @@ import SidePanel from "./components/Sidepanel/SidePanel";
 
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 
-const apiAddress =
-  "https://hcn2wtdvd6.execute-api.us-east-2.amazonaws.com/default/random";
-
 
 class Dashboard extends React.Component {
   constructor(props) {
