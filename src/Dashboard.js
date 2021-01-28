@@ -15,7 +15,6 @@ import SidePanel from "./components/Sidepanel/SidePanel";
 
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 
-
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +66,7 @@ class Dashboard extends React.Component {
   render() {
     let { error, isLoaded } = this.state;
 
-    const colours = ["#013a63", "#2a6f97", "#014f86"]
+    const colours = ["#013a63", "#2a6f97", "#014f86"];
 
     // Just set this as true for now as we're not pulling anything
     // from an API
@@ -90,7 +89,7 @@ class Dashboard extends React.Component {
       return (
         <div className="grid-container">
           <div className="header">
-            <div onClick={this.toggleSidePanel} class="nav-icon">
+            <div onClick={this.toggleSidePanel} className="nav-icon">
               <div></div>
             </div>
             OpenGHG Dashboard
@@ -119,13 +118,37 @@ class Dashboard extends React.Component {
 
             <VisLayout>
               <GraphContainer>
-                <LineChart divID={this.getID()} data={gas_data_a} colour={colours[2]} />
+                <LineChart
+                  divID={this.getID()}
+                  data={gas_data_a}
+                  colour={colours[2]}
+                  title="gas_a"
+                  xLabel="Date"
+                  yLabel="Concentration"
+                  yRange={[0.15,0.55]}
+                />
               </GraphContainer>
               <GraphContainer>
-                <LineChart divID={this.getID()} data={gas_data_b} colour={colours[1]}/>
+                <LineChart
+                  divID={this.getID()}
+                  data={gas_data_b}
+                  colour={colours[1]}
+                  title="gas_b"
+                  xLabel="Date"
+                  yLabel="Concentration"
+                  yRange={[0.5, 0.95]}
+                />
               </GraphContainer>
               <GraphContainer>
-                <LineChart divID={this.getID()} data={gas_data_c} colour={colours[0]}/>
+                <LineChart
+                  divID={this.getID()}
+                  data={gas_data_c}
+                  colour={colours[0]}
+                  title="gas_c"
+                  xLabel="Date"
+                  yLabel="Concentration"
+                  yRange={[0,0.35]}
+                />
               </GraphContainer>
             </VisLayout>
           </div>

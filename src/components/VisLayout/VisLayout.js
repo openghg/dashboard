@@ -7,7 +7,7 @@ class VisLayout extends React.Component {
   render() {
     let visualisations;
     if (Array.isArray(this.props.children)) {
-      visualisations = this.props.children.map((child, index) => {
+      visualisations = this.props.children.map((child) => {
         return <VisUnit key={child.id} vis={child} />;
       });
     } else {
