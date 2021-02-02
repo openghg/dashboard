@@ -46,6 +46,7 @@ class DataSelector extends React.Component {
           dataKeys={siteData}
           siteName={siteName}
           onChange={this.handleInputChange}
+          key={siteName}
         ></SelectionBlock>
       );
 

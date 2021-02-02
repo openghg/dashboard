@@ -11,10 +11,12 @@ class LeafletMap extends React.Component {
       const latitude = value["latitude"];
       const longitude = value["longitude"];
 
+      const componentKey = `${latitude}_${longitude}`;
+
       const location = [latitude, longitude];
 
       const marker = (
-        <Marker position={location}>
+        <Marker key={componentKey} position={location}>
           <Popup>{key.toUpperCase()}</Popup>
         </Marker>
       );

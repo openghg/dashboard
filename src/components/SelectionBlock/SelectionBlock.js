@@ -21,6 +21,7 @@ class SelectionBlock extends React.Component {
           site={siteName}
           species={species}
           onChange={this.props.onChange}
+          key={label}
         />
       );
 
