@@ -1,0 +1,45 @@
+.container {
+  background-color: #e9ecef;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.2fr 0.65fr 0.15fr;
+  grid-template-areas:
+    "panelHeader"
+    "panelMain"
+    "panelFooter";
+  overflow-x: hidden;
+  overflow-y: hidden;
+  left: 0;
+  top: 0;
+  /* This is crazy high to ensure it's drawn over the leaflet map */
+  height: 100vh;
+  width: 15vw;
+  
+  color: black;
+}
+
+.header {
+  grid-area: panelHeader;
+  padding: 2vh 0vh 0vh 2vh;
+  font-size: 3vh;
+}
+
+.headerText {
+  font-weight: 700;
+}
+
+.headerTag {
+  font-size: 2vh;
+  width: 70%;
+}
+
+.main {
+  grid-area: panelMain;
+  padding: 2vh 0vh 0vh 2vh;
+}
+
+
+.footer {
+  grid-area: panelFooter;
+  padding: 2vh 0vh 0vh 2vh;
+}

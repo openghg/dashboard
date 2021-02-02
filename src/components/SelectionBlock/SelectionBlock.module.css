@@ -1,0 +1,14 @@
+.container {
+  padding: 2vh 1vh 1vh 2vh;
+}
+.header {
+  font-size: 2vh;
+  font-weight: 600;
+}
+
+.checkboxes {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5vh;
+  font-weight: 300;
+}

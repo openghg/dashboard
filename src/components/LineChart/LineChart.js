@@ -35,8 +35,6 @@ class LineChart extends React.Component {
     // Extract the count values
     const y_values = Object.values(data);
 
-    console.log(this.props.xRange)
-
     const layout = {
       xaxis: {
         title: this.props.xLabel,
@@ -70,8 +68,6 @@ class LineChart extends React.Component {
         },
       },
     ];
-
-    console.log(this.props.colour);
 
     return <Plot data={plot_data} layout={layout} />;
   }

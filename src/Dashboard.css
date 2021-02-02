@@ -41,7 +41,8 @@ body {
   margin: 0;
   padding: 0;
   color: #fff;
-  font-family: "Open Sans", Helvetica, sans-serif;
+  font-family: "Open Sans", Roboto, Noto Sans, Ubuntu, Droid Sans, "Helvetica Neue", sans-serif;
+  font-weight: 300;
   box-sizing: border-box;
   background-color: #fff;
 }
@@ -75,6 +76,22 @@ body {
 .main {
   grid-area: main;
   background-color: #f4f3ee;
+  display: grid;
+  grid-template-columns: 0.2fr 0.8fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    "mainSide mainPanel"
+}
+
+.main-side {
+    grid-area: mainSide;
+    
+    width: 15vw;
+}
+
+.main-panel {
+    grid-area: mainPanel;
+    width: 80vw;
 }
 
 .main-header {

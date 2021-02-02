@@ -9,7 +9,7 @@
   page-break-inside: avoid;
   padding: 2vh 2vw;
   box-sizing: border-box;
-  width: 97vw;
+  width: 80vw;
 }
 
 /* Force varying heights to simulate dynamic content */

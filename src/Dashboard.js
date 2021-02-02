@@ -1,8 +1,11 @@
+
 import "./Dashboard.css";
 import React from "react";
-import random_data from "./random.json";
+// import randomData from "./random.json";
 import { v4 as uuidv4 } from "uuid";
 import { createSites } from "./mock/randomSites.js";
+
+import randomData from "./mock/randomSiteData.json";
 
 import LineChart from "./components/LineChart/LineChart";
 import LeafletMap from "./components/LeafletMap/LeafletMap";
@@ -11,7 +14,7 @@ import LeafletMap from "./components/LeafletMap/LeafletMap";
 import Summary from "./components/Summary/Summary";
 import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
-import SidePanel from "./components/Sidepanel/SidePanel";
+import ControlPanel from "./components/ControlPanel/ControlPanel";
 
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 
@@ -26,12 +29,60 @@ class Dashboard extends React.Component {
       apiData: [],
     };
 
+    // For the moment create some fake sites
     this.state.sites = createSites();
+    // This data will come from a function but for now just read it in
+    this.state.apiData = this.processData();
 
     this.toggleSidePanel = this.toggleSidePanel.bind(this);
+    this.dataSelector = this.dataSelector.bind(this);
+    this.processData = this.processData.bind(this);
   }
 
-  apiFetch(apiURL) {}
+  // Need a function to process the data that's keyed
+  processData() {
+    // const data = this.state.apiData;
+    const data = randomData;
+
+    // Process the data and create the correct Javascript time objects
+    let dataKeys = {};
+    let processedData = {};
+
+    for (const site of Object.keys(data)) {
+      dataKeys[site] = {};
+      processedData[site] = {};
+
+      for (const species of Object.keys(data[site])) {
+        dataKeys[site][species] = false;
+
+        const gas_data = data[site][species];
+
+        const x_timestamps = Object.keys(gas_data);
+        const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+        // Extract the count values
+        const y_values = Object.values(gas_data);
+
+        // Create a structure that plotly expects
+        processedData[site][species] = {
+          x_values: x_values,
+          y_values: y_values,
+        };
+      }
+    }
+
+    // Disabled the no direct mutation rule here as this only gets called from the ctor
+    /* eslint-disable react/no-direct-mutation-state */
+    this.state.processedData = processedData;
+    this.state.dataKeys = dataKeys;
+    /* eslint-enable react/no-direct-mutation-state */
+  }
+
+  dataSelector(dataKeys) {
+      // Use the data keys to create the plots here
+    //   console.log(dataKeys);
+    // The keys we want to plot
+    // Selec the
+  }
 
   componentDidMount() {
     // const apiURL = "";
@@ -68,6 +119,8 @@ class Dashboard extends React.Component {
 
     const colours = ["#013a63", "#2a6f97", "#014f86"];
 
+    // console.log(this.state.dataKeys);
+
     // Just set this as true for now as we're not pulling anything
     // from an API
     isLoaded = true;
@@ -77,9 +130,9 @@ class Dashboard extends React.Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      const gas_data_a = random_data["gas_a"];
-      const gas_data_b = random_data["gas_b"];
-      const gas_data_c = random_data["gas_c"];
+      const gas_data_a = randomData["gas_a"];
+      const gas_data_b = randomData["gas_b"];
+      const gas_data_c = randomData["gas_c"];
 
       // Break the header into a component?
       // Break the cards into components?
@@ -92,65 +145,66 @@ class Dashboard extends React.Component {
             <div onClick={this.toggleSidePanel} className="nav-icon">
               <div></div>
             </div>
-            OpenGHG Dashboard
+            LondonGHG Dashboard
           </div>
           <div className="main">
-            <SidePanel
-              isOpen={this.state.sidePanel}
-              togglePanel={this.toggleSidePanel}
-            />
-            <LeafletMap
-              divID={this.getID()}
-              sites={this.state.sites}
-              centre={[51.458377, -2.603017]}
-              zoom={5}
-              width={"75vw"}
-              height={"65vh"}
-            />
-            <Summary>
-              <div>
-                Glasgow is the third most populous city in the United Kingdom,
-                with an estimated city population of 612,040 in 2016.
-              </div>
-            </Summary>
+            <div className="main-side">
+              <ControlPanel dataKeys={this.state.dataKeys} dataSelector={this.dataSelector}/>
+            </div>
+            <div className="main-panel">
+              <LeafletMap
+                divID={this.getID()}
+                sites={this.state.sites}
+                centre={[51.458377, -2.603017]}
+                zoom={5}
+                width={"75vw"}
+                height={"65vh"}
+              />
+              <Summary>
+                <div>
+                  Glasgow is the third most populous city in the United Kingdom,
+                  with an estimated city population of 612,040 in 2016.
+                </div>
+              </Summary>
 
-            <Overview />
+              <Overview />
 
-            <VisLayout>
-              <GraphContainer>
-                <LineChart
-                  divID={this.getID()}
-                  data={gas_data_a}
-                  colour={colours[2]}
-                  title="gas_a"
-                  xLabel="Date"
-                  yLabel="Concentration"
-                  yRange={[0.15,0.55]}
-                />
-              </GraphContainer>
-              <GraphContainer>
-                <LineChart
-                  divID={this.getID()}
-                  data={gas_data_b}
-                  colour={colours[1]}
-                  title="gas_b"
-                  xLabel="Date"
-                  yLabel="Concentration"
-                  yRange={[0.5, 0.95]}
-                />
-              </GraphContainer>
-              <GraphContainer>
-                <LineChart
-                  divID={this.getID()}
-                  data={gas_data_c}
-                  colour={colours[0]}
-                  title="gas_c"
-                  xLabel="Date"
-                  yLabel="Concentration"
-                  yRange={[0,0.35]}
-                />
-              </GraphContainer>
-            </VisLayout>
+              {/* <VisLayout>
+                <GraphContainer>
+                  <LineChart
+                    divID={this.getID()}
+                    data={gas_data_a}
+                    colour={colours[2]}
+                    title="gas_a"
+                    xLabel="Date"
+                    yLabel="Concentration"
+                    yRange={[0.15, 0.55]}
+                  />
+                </GraphContainer>
+                <GraphContainer>
+                  <LineChart
+                    divID={this.getID()}
+                    data={gas_data_b}
+                    colour={colours[1]}
+                    title="gas_b"
+                    xLabel="Date"
+                    yLabel="Concentration"
+                    yRange={[0.5, 0.95]}
+                  />
+                </GraphContainer>
+                <GraphContainer>
+                  <LineChart
+                    divID={this.getID()}
+                    data={gas_data_c}
+                    colour={colours[0]}
+                    title="gas_c"
+                    xLabel="Date"
+                    yLabel="Concentration"
+                    yRange={[0, 0.35]}
+                  />
+                </GraphContainer>
+              </VisLayout> */}
+            </div>
           </div>
         </div>
       );
