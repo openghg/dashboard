@@ -1,4 +1,3 @@
-
 import "./Dashboard.css";
 import React from "react";
 // import randomData from "./random.json";
@@ -78,10 +77,50 @@ class Dashboard extends React.Component {
   }
 
   dataSelector(dataKeys) {
-      // Use the data keys to create the plots here
-    //   console.log(dataKeys);
+    this.setState({ selectedKeys: dataKeys });
+  }
+
+  createVisLayout() {
+    // Use the data keys to create the plots here
+    const colours = ["#013a63", "#2a6f97", "#014f86"];
+
     // The keys we want to plot
-    // Selec the
+    let visualisations = [];
+
+    const selectedKeys = this.state.selectedKeys;
+
+    if (selectedKeys) {
+      // Loop through the selected data keys and if true create a plot
+      for (const [site, subObj] of Object.entries(selectedKeys)) {
+        for (const [species, value] of Object.entries(subObj)) {
+          if (value) {
+            // Create a visualisation and add it to the list
+            const data = randomData[site][species];
+            const title = `${String(site).toUpperCase()} - ${String(
+              site
+            ).toUpperCase()}`;
+
+            const vis = (
+              <GraphContainer>
+                <LineChart
+                  divID={this.getID()}
+                  data={data}
+                  colour={colours[1]}
+                  title={title}
+                  xLabel="Date"
+                  yLabel="Concentration"
+                  key={title}
+                />
+              </GraphContainer>
+            );
+
+            visualisations.push(vis);
+          }
+        }
+      }
+    }
+
+    return visualisations;
   }
 
   componentDidMount() {
@@ -117,8 +156,6 @@ class Dashboard extends React.Component {
   render() {
     let { error, isLoaded } = this.state;
 
-    const colours = ["#013a63", "#2a6f97", "#014f86"];
-
     // console.log(this.state.dataKeys);
 
     // Just set this as true for now as we're not pulling anything
@@ -149,7 +186,10 @@ class Dashboard extends React.Component {
           </div>
           <div className="main">
             <div className="main-side">
-              <ControlPanel dataKeys={this.state.dataKeys} dataSelector={this.dataSelector}/>
+              <ControlPanel
+                dataKeys={this.state.dataKeys}
+                dataSelector={this.dataSelector}
+              />
             </div>
             <div className="main-panel">
               <LeafletMap
@@ -169,41 +209,7 @@ class Dashboard extends React.Component {
 
               <Overview />
 
-              {/* <VisLayout>
-                <GraphContainer>
-                  <LineChart
-                    divID={this.getID()}
-                    data={gas_data_a}
-                    colour={colours[2]}
-                    title="gas_a"
-                    xLabel="Date"
-                    yLabel="Concentration"
-                    yRange={[0.15, 0.55]}
-                  />
-                </GraphContainer>
-                <GraphContainer>
-                  <LineChart
-                    divID={this.getID()}
-                    data={gas_data_b}
-                    colour={colours[1]}
-                    title="gas_b"
-                    xLabel="Date"
-                    yLabel="Concentration"
-                    yRange={[0.5, 0.95]}
-                  />
-                </GraphContainer>
-                <GraphContainer>
-                  <LineChart
-                    divID={this.getID()}
-                    data={gas_data_c}
-                    colour={colours[0]}
-                    title="gas_c"
-                    xLabel="Date"
-                    yLabel="Concentration"
-                    yRange={[0, 0.35]}
-                  />
-                </GraphContainer>
-              </VisLayout> */}
+              <VisLayout>{this.createVisLayout()}</VisLayout>
             </div>
           </div>
         </div>
