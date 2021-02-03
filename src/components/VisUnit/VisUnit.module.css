@@ -1,0 +1,19 @@
+.unit {
+  box-sizing: border-box;
+  /* width: 78vw; */
+  width: 100%;
+}
+
+/* Force varying heights to simulate dynamic content */
+/* .vis-unit:first-child {
+    height: 320px;
+  }
+  
+  .vis-unit:nth-child(2) {
+    height: 200px;
+  }
+  
+  .vis-unit:nth-child(3) {
+    height: 265px;
+  }
+   */

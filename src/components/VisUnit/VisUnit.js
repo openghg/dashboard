@@ -1,9 +1,9 @@
 import React from "react";
-import "./VisUnit.css";
+import styles from "./VisUnit.module.css";
 
 class VisUnit extends React.Component {
   render() {
-    return <div className="vis-unit">{this.props.vis}</div>;
+    return <div className={styles.unit}>{this.props.vis}</div>;
   }
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import VisUnit from "../VisUnit/VisUnit";
 
-import "./VisLayout.css";
+import styles from "./VisLayout.module.css";
 
 class VisLayout extends React.Component {
   render() {
@@ -15,7 +15,7 @@ class VisLayout extends React.Component {
     }
 
     return (
-      <div className="vis-main">{visualisations}</div>
+      <div className={styles.main}>{visualisations}</div>
     );
   }
 }

@@ -1,8 +1,7 @@
 import React from "react";
-import "./LineChart.css";
-// import draw from "./d3LineChart.js";
-
 import Plot from "react-plotly.js";
+
+import styles from "./LineChart.module.css";
 
 class LineChart extends React.Component {
   render() {
@@ -57,7 +56,11 @@ class LineChart extends React.Component {
       },
     ];
 
-    return <Plot data={plot_data} layout={layout} />;
+    return (
+      <div className={styles.container}>
+        <Plot data={plot_data} layout={layout} />
+      </div>
+    );
   }
 }
 
