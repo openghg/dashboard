@@ -5,27 +5,6 @@ import "./LineChart.css";
 import Plot from "react-plotly.js";
 
 class LineChart extends React.Component {
-  //   componentDidMount() {
-  //     draw(this.props);
-  //   }
-
-  //   componentDidUpdate() {
-  //     draw(this.props);
-  //   }
-  //   convertData() {
-  // Takes the pandas exported JSON data and converts timestamps
-  //
-  // Args:
-  //    data (object): JSON output from pandas
-  // Returns:
-  //    Array: array of Objects with date and value keys
-  //     const data = this.props.data;
-  //     const x_values = Object.keys(data).forEach((d) => new Date(parseInt(d)));
-  //     const y_values = Object.values(data);
-
-  //     return [x_values, y_values];
-  //   }
-
   render() {
     const data = this.props.data;
 
@@ -36,15 +15,24 @@ class LineChart extends React.Component {
     const y_values = Object.values(data);
 
     const layout = {
+      title: {
+        text: this.props.title ? this.props.title : null,
+        font: {
+          size: 16,
+        },
+        xanchor: "center",
+        y: 0.97,
+        yanchor: "top",
+      },
       xaxis: {
         title: this.props.xLabel,
-        range: this.props.xRange ? this.props.xRange: null,
-        showgrid: false
+        range: this.props.xRange ? this.props.xRange : null,
+        showgrid: false,
       },
       yaxis: {
         title: this.props.yLabel,
-        range: this.props.yRange ? this.props.yRange: null,
-        showgrid: false
+        range: this.props.yRange ? this.props.yRange : null,
+        showgrid: false,
       },
       width: this.props.width,
       height: this.props.height,

@@ -80,7 +80,7 @@ class Dashboard extends React.Component {
     this.setState({ selectedKeys: dataKeys });
   }
 
-  createVisLayout() {
+  createGraphs() {
     // Use the data keys to create the plots here
     const colours = ["#013a63", "#2a6f97", "#014f86"];
 
@@ -209,7 +209,7 @@ class Dashboard extends React.Component {
 
               <Overview />
 
-              <VisLayout>{this.createVisLayout()}</VisLayout>
+              <VisLayout>{this.createGraphs()}</VisLayout>
             </div>
           </div>
         </div>
