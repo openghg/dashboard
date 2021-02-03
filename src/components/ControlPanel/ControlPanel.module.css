@@ -1,8 +1,9 @@
 .container {
   background-color: #e9ecef;
+  position: fixed;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.2fr 0.65fr 0.15fr;
+  grid-template-rows: 0.2fr 0.7fr 0.1fr;
   grid-template-areas:
     "panelHeader"
     "panelMain"

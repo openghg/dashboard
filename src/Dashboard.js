@@ -191,8 +191,11 @@ class Dashboard extends React.Component {
               />
               <Summary>
                 <div>
-                  Glasgow is the third most populous city in the United Kingdom,
-                  with an estimated city population of 612,040 in 2016.
+                  To tackle climate change, we need to measure and reduce carbon
+                  emissions. London GHG is installing a new network of
+                  atmospheric measurements across the capital, and developing a
+                  new modelling framework to provide emission estimates of
+                  carbon dioxide and methane.
                 </div>
               </Summary>
 

@@ -6,7 +6,7 @@ class Overview extends React.Component {
     return (
       <div className="overview">
         <div className="overview-card">
-          <b>Glasgow</b>
+          <b>London</b>
           <br />
           Temperature: 13°C
         </div>
