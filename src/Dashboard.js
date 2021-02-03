@@ -156,8 +156,6 @@ class Dashboard extends React.Component {
   render() {
     let { error, isLoaded } = this.state;
 
-    // console.log(this.state.dataKeys);
-
     // Just set this as true for now as we're not pulling anything
     // from an API
     isLoaded = true;
@@ -167,15 +165,6 @@ class Dashboard extends React.Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      const gas_data_a = randomData["gas_a"];
-      const gas_data_b = randomData["gas_b"];
-      const gas_data_c = randomData["gas_c"];
-
-      // Break the header into a component?
-      // Break the cards into components?
-      // How will visualisations scale?
-      // Have a VisLayout component that takes
-
       return (
         <div className="grid-container">
           <div className="header">
