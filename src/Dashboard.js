@@ -97,7 +97,7 @@ class Dashboard extends React.Component {
             // Create a visualisation and add it to the list
             const data = randomData[site][species];
             const title = `${String(site).toUpperCase()} - ${String(
-              site
+              species
             ).toUpperCase()}`;
 
             const vis = (
