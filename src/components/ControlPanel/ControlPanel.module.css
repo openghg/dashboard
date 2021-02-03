@@ -38,6 +38,11 @@
   padding: 2vh 0vh 0vh 2vh;
 }
 
+.mainHeader {
+    font-size: 2vh;
+    font-weight: 500;
+}
+
 
 .footer {
   grid-area: panelFooter;

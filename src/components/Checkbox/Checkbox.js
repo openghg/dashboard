@@ -11,6 +11,7 @@ class Checkbox extends React.Component {
           site={this.props.site}
           species={this.props.species}
           type="checkbox"
+          checked={this.props.checked}
           onChange={this.props.onChange}
           style={{ marginLeft: "0.5vw" }}
         />

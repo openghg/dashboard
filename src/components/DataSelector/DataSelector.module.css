@@ -6,6 +6,29 @@
   font-size: 1.5vh;
 }
 
-.plotButton {
-    padding-top: 1vh;
+.buttons {
+  display: flex;
+  column-gap: 1vh;
+  padding-top: 1vh;
+}
+
+.betterButton {
+  font-family: inherit;
+  font-weight: 350;
+  width: 3.5vw;
+  font-size: 2vh;
+  cursor: pointer;
+  box-shadow: rgba(255, 255, 255, 0.05) 0px 3px 20px;
+  border-width: initial;
+  background-color: #01497c;
+  color: white;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  outline: none;
+}
+
+.betterButton:hover {
+  background-color: #61a5c2;
+  color: white;
 }

@@ -12,6 +12,7 @@ class DataSelector extends React.Component {
     this.state = { selected: cloneDeep(this.props.dataKeys) };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.callSelector = this.callSelector.bind(this);
+    this.clearSelection = this.clearSelection.bind(this);
   }
 
   callSelector() {
@@ -33,17 +34,32 @@ class DataSelector extends React.Component {
     this.setState({ selected: oldSelected });
   }
 
+  clearSelection() {
+    // Clear all
+    const selected = this.state.selected;
+
+    for (let [key, subdict] of Object.entries(selected)) {
+      for (const subkey of Object.keys(subdict)) {
+        selected[key][subkey] = false;
+      }
+    }
+
+    this.props.dataSelector(selected);
+
+    // Also need to clear all checkboxes
+  }
+
   render() {
     let blocks = [];
-    const dataKeys = this.props.dataKeys;
+    const dataKeys = this.state.selected;
 
     for (const site of Object.keys(dataKeys)) {
       const siteName = String(site).toUpperCase();
-      const siteData = dataKeys[site];
+      const siteDataKeys = dataKeys[site];
 
       const block = (
         <SelectionBlock
-          dataKeys={siteData}
+          siteDataKeys={siteDataKeys}
           siteName={siteName}
           onChange={this.handleInputChange}
           key={siteName}
@@ -56,8 +72,9 @@ class DataSelector extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.blocks}>{blocks}</div>
-        <div className={styles.plotButton}>
-          <button onClick={this.callSelector}>Plot</button>
+        <div className={styles.buttons}>
+          <button className={styles.betterButton} onClick={this.callSelector}>Plot</button>
+          <button className={styles.betterButton} onClick={this.clearSelection}>Clear</button>
         </div>
       </div>
     );

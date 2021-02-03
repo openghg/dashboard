@@ -14,7 +14,7 @@ class ControlPanel extends React.Component {
           </div>
         </div>
         <div className={styles.main}>
-          <div className={styles.mainHeader}>Plotting</div>
+          <div className={styles.mainHeader}>Sites</div>
           <div>
             <DataSelector
               dataKeys={this.props.dataKeys}

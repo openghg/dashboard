@@ -5,14 +5,16 @@ import Checkbox from "../Checkbox/Checkbox";
 
 class SelectionBlock extends React.Component {
   render() {
-    const dataKeys = this.props.dataKeys;
+      // This just has the data for this specific site
+    const siteDataKeys = this.props.siteDataKeys;
     const siteName = this.props.siteName;
 
 
     let checkboxes = [];
-    for (const species of Object.keys(dataKeys)) {
+    for (const species of Object.keys(siteDataKeys)) {
       const label = `${siteName}_${species}`;
       const speciesName = String(species).toUpperCase();
+      const checkedStatus = siteDataKeys[species];
 
       const checkbox = (
         <Checkbox
@@ -20,6 +22,7 @@ class SelectionBlock extends React.Component {
           name={label}
           site={siteName}
           species={species}
+          checked={checkedStatus}
           onChange={this.props.onChange}
           key={label}
         />
