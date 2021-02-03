@@ -14,7 +14,7 @@
   /* This is crazy high to ensure it's drawn over the leaflet map */
   height: 100vh;
   width: 15vw;
-  
+
   color: black;
 }
 
@@ -39,10 +39,9 @@
 }
 
 .mainHeader {
-    font-size: 2vh;
-    font-weight: 500;
+  font-size: 2vh;
+  font-weight: 500;
 }
-
 
 .footer {
   grid-area: panelFooter;

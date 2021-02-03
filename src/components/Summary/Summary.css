@@ -1,9 +1,9 @@
 .summary {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px;
-    padding: 20px;
-    height: 150px;
-    background-color: #e3e4e6;
-    color: slategray;
-  }
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  padding: 20px;
+  height: 150px;
+  background-color: #e3e4e6;
+  color: slategray;
+}

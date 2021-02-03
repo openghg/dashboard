@@ -15,12 +15,10 @@ class ControlPanel extends React.Component {
         </div>
         <div className={styles.main}>
           <div className={styles.mainHeader}>Sites</div>
-          <div>
             <DataSelector
               dataKeys={this.props.dataKeys}
               dataSelector={this.props.dataSelector}
             />
-          </div>
         </div>
         <div className={styles.footer}>Source</div>
       </div>
