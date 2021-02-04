@@ -33,35 +33,42 @@ class LineChart extends React.Component {
     }
 
     const layout = {
-      title: {
-        text: this.props.title ? this.props.title : null,
-        font: {
-          size: 16,
+        title: {
+          text: this.props.title ? this.props.title : null,
+          font: {
+            size: 16,
+          },
+          xanchor: "center",
+          y: 0.97,
+          yanchor: "top",
         },
-        xanchor: "center",
-        y: 0.97,
-        yanchor: "top",
-      },
-      xaxis: {
-        title: this.props.xLabel,
-        range: this.props.xRange ? this.props.xRange : null,
-        showgrid: false,
-      },
-      yaxis: {
-        title: this.props.yLabel,
-        range: this.props.yRange ? this.props.yRange : null,
-        showgrid: false,
-      },
-      width: this.props.width,
-      height: this.props.height,
-      margin: {
-        l: 60,
-        r: 40,
-        b: 30,
-        t: 20,
-        pad: 5,
-      },
-    };
+        xaxis: {
+          title: this.props.xLabel,
+          range: this.props.xRange ? this.props.xRange : null,
+          showgrid: false,
+          linecolor: "black",
+          autotick: true,
+          ticks: "outside",
+        },
+        yaxis: {
+          title: this.props.yLabel,
+          range: this.props.yRange ? this.props.yRange : null,
+          showgrid: false,
+          linecolor: "black",
+          autotick: true,
+          ticks: "outside",
+          zeroline: false,
+        },
+        width: this.props.width,
+        height: this.props.height,
+        margin: {
+          l: 60,
+          r: 40,
+          b: 30,
+          t: 20,
+          pad: 5,
+        },
+      };
 
     return (
       <div className={styles.container}>
