@@ -18,7 +18,7 @@ import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 
 function isEmpty(obj) {
-  return Object.keys(siteData).length === 0;
+  return Object.keys(obj).length === 0;
 }
 
 class Dashboard extends React.Component {
@@ -88,64 +88,51 @@ class Dashboard extends React.Component {
     // Use the data keys to create the plots here
     const colours = ["#013a63", "#2a6f97", "#014f86"];
 
-    // The keys we want to plot
     let visualisations = [];
-
-    // So we want to get a list of all the species we need to plot, then loop over each of them
-    // And check if
-    // Loop through the plots, add the data to a list of data for that species
-    // obj = {site: {species: [data1, data2]}}
-    // Then when we
 
     const selectedKeys = this.state.selectedKeys;
 
-    if (selectedKeys) {
-      // Loop through the selected data keys and if true create a plot
-      let siteData = {};
+    let speciesData = {};
 
+    if (selectedKeys) {
       for (const [site, subObj] of Object.entries(selectedKeys)) {
         for (const [species, value] of Object.entries(subObj)) {
           if (value) {
             // Create a visualisation and add it to the list
             const data = randomData[site][species];
 
-            if (!siteData.hasOwnProperty(site)) {
-              siteData[site] = {};
-              siteData[site][species] = [];
+            if (!speciesData.hasOwnProperty(species)) {
+              speciesData[species] = {};
             }
-
-            siteData[site][species].push(data);
+            
+            speciesData[species][site] = data;
           }
         }
       }
 
-    //   for 
+      if (!isEmpty(speciesData)) {
+        for (const [species, siteData] of Object.entries(speciesData)) {
+          // Create a graph for each species
+          const title = String(species).toUpperCase();
+          const key = title.concat("-", Object.keys(siteData).join("-"));
 
-    //   if (isEmpty(siteData)) {
-    //     break;
-    //   }
+          const vis = (
+            <GraphContainer>
+              <LineChart
+                divID={this.getID()}
+                data={siteData}
+                colour={colours[1]}
+                title={title}
+                xLabel="Date"
+                yLabel="Concentration"
+                key={key}
+              />
+            </GraphContainer>
+          );
 
-    //   const lineData = siteData[site];
-
-    //   const title = `${String(site).toUpperCase()} - ${String(
-    //     species
-    //   ).toUpperCase()}`;
-
-    //   const vis = (
-    //     <GraphContainer>
-    //       <LineChart
-    //         divID={this.getID()}
-    //         data={lineData}
-    //         colour={colours[1]}
-    //         title={title}
-    //         xLabel="Date"
-    //         yLabel="Concentration"
-    //         key={title}
-    //       />
-    //     </GraphContainer>
-    //   );
-
-    //   visualisations.push(vis);
+          visualisations.push(vis);
+        }
+      }
     }
 
     return visualisations;

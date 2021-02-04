@@ -7,11 +7,30 @@ class LineChart extends React.Component {
   render() {
     const data = this.props.data;
 
-    // We want to conver UNIX ms timestamps to Dates
-    const x_timestamps = Object.keys(data);
-    const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
-    // Extract the count values
-    const y_values = Object.values(data);
+    // Data keyed by site
+    let plotData = [];
+
+    for (const [site, siteData] of Object.entries(data)) {
+      // We want to conver UNIX ms timestamps to Dates
+      const x_timestamps = Object.keys(siteData);
+      const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+      // Extract the count values
+      const y_values = Object.values(siteData);
+
+      const name = String(site).toUpperCase();
+
+      const trace = {
+        x: x_values,
+        y: y_values,
+        mode: "lines",
+        line: {
+          width: 1,
+        },
+        name: name,
+      };
+
+      plotData.push(trace);
+    }
 
     const layout = {
       title: {
@@ -44,21 +63,9 @@ class LineChart extends React.Component {
       },
     };
 
-    const plot_data = [
-      {
-        x: x_values,
-        y: y_values,
-        mode: "lines",
-        line: {
-          color: this.props.colour,
-          width: 1,
-        },
-      },
-    ];
-
     return (
       <div className={styles.container}>
-        <Plot data={plot_data} layout={layout} />
+        <Plot data={plotData} layout={layout} />
       </div>
     );
   }
