@@ -1,11 +1,9 @@
 import "./Dashboard.css";
 import React from "react";
-// import randomData from "./random.json";
 import { v4 as uuidv4 } from "uuid";
-import { createSites } from "./mock/randomSites.js";
 
 import randomData from "./mock/randomSiteData.json";
-import londonGHGSites from "./data/site_data.json";
+import londonGHGSites from "./data/siteData.json";
 
 import LineChart from "./components/LineChart/LineChart";
 import LeafletMap from "./components/LeafletMap/LeafletMap";
@@ -15,6 +13,7 @@ import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 
+import colours from "./data/colours.json"
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
@@ -84,9 +83,6 @@ class Dashboard extends React.Component {
   }
 
   createGraphs() {
-    // Use the data keys to create the plots here
-    const colours = ["#013a63", "#2a6f97", "#014f86"];
-
     let visualisations = [];
 
     const selectedKeys = this.state.selectedKeys;
@@ -109,18 +105,30 @@ class Dashboard extends React.Component {
         }
       }
 
+      let totalSites = 0;
+
+      const tableau10 = colours["tableau10"];
+
       if (!isEmpty(speciesData)) {
         for (const [species, siteData] of Object.entries(speciesData)) {
           // Create a graph for each species
           const title = String(species).toUpperCase();
           const key = title.concat("-", Object.keys(siteData).join("-"));
 
+          const nSites = Object.keys(siteData).length;
+          const selectedColours = tableau10.slice(
+            totalSites,
+            totalSites + nSites
+          );
+
+          console.log(selectedColours);
+
           const vis = (
             <GraphContainer>
               <LineChart
                 divID={this.getID()}
                 data={siteData}
-                colour={colours[1]}
+                colours={selectedColours}
                 title={title}
                 xLabel="Date"
                 yLabel="Concentration"
@@ -130,6 +138,8 @@ class Dashboard extends React.Component {
           );
 
           visualisations.push(vis);
+
+          totalSites += nSites;
         }
       }
     }
