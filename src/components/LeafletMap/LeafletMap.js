@@ -1,6 +1,6 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "./LeafletMap.css";
+import styles from "./LeafletMap.module.css";
 
 class LeafletMap extends React.Component {
   processSites() {
@@ -11,13 +11,21 @@ class LeafletMap extends React.Component {
       const latitude = value["latitude"];
       const longitude = value["longitude"];
 
-      const componentKey = `${latitude}_${longitude}`;
+      const locationStr = `${latitude}, ${longitude}`;
 
       const location = [latitude, longitude];
 
       const marker = (
-        <Marker key={componentKey} position={location}>
-          <Popup>{key.toUpperCase()}</Popup>
+        <Marker key={locationStr} position={location}>
+          <Popup>
+            <div className={styles.marker}>
+              <div className={styles.markerHeader}>
+                {String(key).toUpperCase()}
+              </div>
+              <div className={styles.markerBody}>{value["long_name"]}</div>
+              <div className={styles.markerLocation}>Location: {locationStr}</div>
+            </div>
+          </Popup>
         </Marker>
       );
 
@@ -28,9 +36,6 @@ class LeafletMap extends React.Component {
   }
 
   render() {
-    // Here we can pass an array of tuples (x, y, title) for position markers?
-    // const position = [51.458377, -2.603017];
-
     const markers = this.processSites();
     const zoom = this.props.zoom ? this.props.zoom : 5;
 
@@ -40,7 +45,7 @@ class LeafletMap extends React.Component {
     const style = { width: width, height: height };
 
     return (
-      <div className="map-container">
+      <div className={styles.container}>
         <MapContainer
           center={this.props.centre}
           zoom={zoom}

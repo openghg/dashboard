@@ -5,17 +5,16 @@ import { v4 as uuidv4 } from "uuid";
 import { createSites } from "./mock/randomSites.js";
 
 import randomData from "./mock/randomSiteData.json";
+import londonGHGSites from "./data/site_data.json";
 
 import LineChart from "./components/LineChart/LineChart";
 import LeafletMap from "./components/LeafletMap/LeafletMap";
-
-// import Header from "./components/Header/Header";
 import Summary from "./components/Summary/Summary";
 import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
-
 import GraphContainer from "./components/GraphContainer/GraphContainer";
+
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
@@ -33,7 +32,7 @@ class Dashboard extends React.Component {
     };
 
     // For the moment create some fake sites
-    this.state.sites = createSites();
+    this.state.sites = londonGHGSites;
     // This data will come from a function but for now just read it in
     this.state.apiData = this.processData();
 
@@ -104,7 +103,7 @@ class Dashboard extends React.Component {
             if (!speciesData.hasOwnProperty(species)) {
               speciesData[species] = {};
             }
-            
+
             speciesData[species][site] = data;
           }
         }
@@ -199,8 +198,8 @@ class Dashboard extends React.Component {
               <LeafletMap
                 divID={this.getID()}
                 sites={this.state.sites}
-                centre={[51.458377, -2.603017]}
-                zoom={5}
+                centre={[51.5, -0.0482]}
+                zoom={11}
                 width={"75vw"}
                 height={"65vh"}
               />
