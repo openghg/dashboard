@@ -13,7 +13,7 @@ import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 
-import colours from "./data/colours.json"
+import colours from "./data/colours.json";
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
@@ -114,17 +114,21 @@ class Dashboard extends React.Component {
           // Create a graph for each species
           const title = String(species).toUpperCase();
           const key = title.concat("-", Object.keys(siteData).join("-"));
+          const containerKey = `container-${key}`;
 
           const nSites = Object.keys(siteData).length;
+
           const selectedColours = tableau10.slice(
             totalSites,
             totalSites + nSites
           );
 
-          console.log(selectedColours);
+        //   for (let i = 0; i < nSites; i++) {
+        //     tableau10.push(tableau10.shift());
+        //   }
 
           const vis = (
-            <GraphContainer>
+            <GraphContainer key={containerKey}>
               <LineChart
                 divID={this.getID()}
                 data={siteData}

@@ -3,6 +3,8 @@ import React from "react";
 import DataSelector from "../DataSelector/DataSelector";
 import styles from "./ControlPanel.module.css";
 
+import GitHubLogo from "../../images/github.svg";
+
 class ControlPanel extends React.Component {
   render() {
     return (
@@ -20,7 +22,15 @@ class ControlPanel extends React.Component {
             dataSelector={this.props.dataSelector}
           />
         </div>
-        <div className={styles.footer}>LondonGHG</div>
+        <div className={styles.footer}>
+          <a
+            href="https://github.com/openghg/dashboard"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <img src={GitHubLogo} alt="GitHub logo" />
+          </a>
+        </div>
       </div>
     );
   }

@@ -11,7 +11,7 @@ class LeafletMap extends React.Component {
       const latitude = value["latitude"];
       const longitude = value["longitude"];
 
-      const locationStr = `${latitude}, ${longitude}`;
+      const locationStr = `${key}, ${latitude}, ${longitude}`;
 
       const location = [latitude, longitude];
 
