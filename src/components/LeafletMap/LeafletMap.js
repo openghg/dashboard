@@ -12,7 +12,6 @@ class LeafletMap extends React.Component {
       const longitude = value["longitude"];
 
       const locationStr = `${key}, ${latitude}, ${longitude}`;
-
       const location = [latitude, longitude];
 
       const marker = (
@@ -37,6 +36,7 @@ class LeafletMap extends React.Component {
 
   render() {
     const markers = this.processSites();
+    
     const zoom = this.props.zoom ? this.props.zoom : 5;
 
     const width = this.props.width ? this.props.width : "60vw";
