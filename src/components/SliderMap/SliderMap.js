@@ -1,6 +1,6 @@
 import React from "react";
 import { MapContainer, Circle, TileLayer, Popup } from "react-leaflet";
-import DateSlider from "../DateSlider/DateSlider";
+import { Slider } from "@material-ui/core";
 
 import styles from "./SliderMap.module.css";
 
@@ -31,7 +31,7 @@ class SliderMap extends React.Component {
       const longName = siteData["long_name"];
       const locationStr = `${siteName}, ${lat}, ${long}`;
 
-      const measurement = siteData[this.state.currentDate];
+      const measurement = siteData["measurements"][this.state.currentDate];
 
       let colour = "green";
       if (measurement > 50) {
@@ -65,6 +65,57 @@ class SliderMap extends React.Component {
     return markers;
   }
 
+  createSlider() {
+    const siteData = this.props.sites;
+
+    const firstSite = Object.keys(siteData)[0];
+
+    const firstSiteData = siteData[firstSite]["measurements"];
+    const dates = Object.keys(firstSiteData).sort();
+
+    const startDate = new Date(dates[0]);
+    const endDate = new Date(dates[dates.length - 1]);
+
+    let marks = [];
+
+    console.log(firstSiteData)
+
+    for (const [key, value] in Object.entries(firstSiteData)) {
+        
+    //     console.log(key)
+    //   const date = new Date(key);
+    //   console.log(date)
+    //   const m = { value: date.getTime(), label: date.toLocaleDateString() };
+    //   marks.push(m);
+    }
+
+    // const marks = [
+    //   {
+    //     value: startDate.getTime(),
+    //     label: startDate.toLocaleDateString(),
+    //   },
+    //   {
+    //     value: endDate.getTime(),
+    //     label: endDate.toLocaleDateString(),
+    //   },
+    // ];
+
+    const slider = (
+      <Slider
+        defaultValue={0}
+        onChange={this.handleDateChange}
+        getAriaValueText={""}
+        aria-labelledby="continuous-slider"
+        marks={marks}
+        step={null}
+        max={endDate.getTime()}
+        min={startDate.getTime()}
+      />
+    );
+
+    return slider;
+  }
+
   render() {
     const zoom = this.props.zoom ? this.props.zoom : 5;
     const width = this.props.width ? this.props.width : "60vw";
@@ -88,9 +139,7 @@ class SliderMap extends React.Component {
             {this.createMarkers()}
           </MapContainer>
         </div>
-        <div className={styles.sliderBox}>
-          <DateSlider handleDateChange={this.handleDateChange} />
-        </div>
+        <div className={styles.sliderBox}>{this.createSlider()}</div>
       </div>
     );
   }

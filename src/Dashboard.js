@@ -15,7 +15,7 @@ import GraphContainer from "./components/GraphContainer/GraphContainer";
 import SliderMap from "./components/SliderMap/SliderMap";
 import DateSlider from "./components/DateSlider/DateSlider";
 
-import siteData from "./data/siteData.json";
+import siteData from "./mock/randomLGHG.json"
 
 import colours from "./data/colours.json";
 
@@ -213,17 +213,7 @@ class Dashboard extends React.Component {
               />
             </div>
             <div className="main-panel">
-              {/* <LeafletMap
-                divID={this.getID()}
-                sites={this.state.sites}
-                centre={[51.5, -0.0482]}
-                zoom={11}
-                width={"75vw"}
-                height={"65vh"}
-              /> */}
               <SliderMap
-                divID={this.getID()}
-                radius={5}
                 sites={siteData}
                 centre={[51.5, -0.0482]}
                 zoom={11}
