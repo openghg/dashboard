@@ -8,20 +8,22 @@ class SliderMap extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { currentDate: "2021-01-01" };
+    const siteData = this.props.sites;
+    const firstSite = Object.keys(siteData)[0];
+    const firstSiteData = siteData[firstSite]["measurements"];
+    const dates = Object.keys(firstSiteData).sort();
 
+    this.state = { currentDate: parseInt(dates[0]) };
     this.handleDateChange = this.handleDateChange.bind(this);
   }
 
-  handleDateChange() {
-    console.log("Date date date");
+  handleDateChange(event, timestamp) {
+    this.setState({ currentTime: parseInt(timestamp) });
   }
 
   createMarkers() {
     // Dictionary of sites
     const sites = this.props.sites;
-
-    // Could bin the data? Check d3.bin
 
     let markers = [];
     for (const [site, siteData] of Object.entries(sites)) {
@@ -33,8 +35,13 @@ class SliderMap extends React.Component {
 
       const measurement = siteData["measurements"][this.state.currentDate];
 
-      let colour = "green";
-      if (measurement > 50) {
+      // Should use some correct binning here
+      let colour = "black";
+      if (measurement > 0 && measurement < 30) {
+        colour = "green";
+      } else if (measurement < 60) {
+        colour = "orange";
+      } else if (measurement < 150) {
         colour = "red";
       }
 
@@ -76,29 +83,16 @@ class SliderMap extends React.Component {
     const startDate = new Date(dates[0]);
     const endDate = new Date(dates[dates.length - 1]);
 
+    // We'll have to ensure that each of the sites has data for every date
+    // just add in NaNs for missing data - this can be done by the serverless fn
     let marks = [];
+    // eslint-disable-next-line no-unused-vars
+    for (const [key, value] of Object.entries(firstSiteData)) {
+      const UNIXDate = parseInt(key);
+      const date = new Date(UNIXDate);
 
-    console.log(firstSiteData)
-
-    for (const [key, value] in Object.entries(firstSiteData)) {
-        
-    //     console.log(key)
-    //   const date = new Date(key);
-    //   console.log(date)
-    //   const m = { value: date.getTime(), label: date.toLocaleDateString() };
-    //   marks.push(m);
+      marks.push({ value: date.getTime(), label: date.toLocaleDateString() });
     }
-
-    // const marks = [
-    //   {
-    //     value: startDate.getTime(),
-    //     label: startDate.toLocaleDateString(),
-    //   },
-    //   {
-    //     value: endDate.getTime(),
-    //     label: endDate.toLocaleDateString(),
-    //   },
-    // ];
 
     const slider = (
       <Slider
