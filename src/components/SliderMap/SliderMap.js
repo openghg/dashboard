@@ -26,18 +26,11 @@ class SliderMap extends React.Component {
   }
 
   handleDateChange(event, timestamp) {
-    this.setState({ currentTime: parseInt(timestamp) });
+    this.setState({ currentDate: parseInt(timestamp) });
   }
 
   createMarkerLayer() {
     const sites = this.props.sites;
-
-    // First clear the layers and then add the markers below in as a layer
-    if (this.layerRef.current) {
-      this.layerRef.current.clearLayers();
-    }
-
-    // this.setState({markerLayers: []})
 
     let markers = [];
     for (const [site, siteData] of Object.entries(sites)) {
@@ -47,17 +40,15 @@ class SliderMap extends React.Component {
       const longName = siteData["long_name"];
       const locationStr = `${siteName}, ${lat}, ${long}`;
 
-      //   const measurement = siteData["measurements"][this.state.currentDate];
-
-      const measurement = this.state.measurementValue;
+      const measurement = siteData["measurements"][this.state.currentDate];
 
       // Should use some correct binning here
       let colour = "black";
-      if (measurement > 0 && measurement < 20) {
+      if (measurement > 0 && measurement < 30) {
         colour = "green";
-      } else if (measurement < 30) {
+      } else if (measurement < 60) {
         colour = "orange";
-      } else if (measurement < 40) {
+      } else if (measurement < 150) {
         colour = "red";
       }
 
@@ -69,11 +60,22 @@ class SliderMap extends React.Component {
         <CircleMarker
           key={circleKey}
           center={[lat, long]}
-          radius={600}
-          fillOpacity={1}
+          radius={15}
+          fillOpacity={0.9}
           fillColor={colour}
           stroke={false}
-        />
+        >
+          <Popup>
+            <div className={styles.marker}>
+              <div className={styles.markerHeader}>{siteName}</div>
+              <div className={styles.markerBody}>{longName}</div>
+              <div className={styles.markerLocation}>
+                Location: {locationStr}
+              </div>
+            </div>
+          </Popup>
+          ;
+        </CircleMarker>
       );
 
       markers.push(circle);
