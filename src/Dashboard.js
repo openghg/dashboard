@@ -1,22 +1,19 @@
 import "./Dashboard.css";
 import React from "react";
-import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "nanoid";
 
 import randomData from "./mock/randomSiteData.json";
 import londonGHGSites from "./data/siteData.json";
 
 import LineChart from "./components/LineChart/LineChart";
-import LeafletMap from "./components/LeafletMap/LeafletMap";
 import Summary from "./components/Summary/Summary";
 import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 import SliderMap from "./components/SliderMap/SliderMap";
-import DateSlider from "./components/DateSlider/DateSlider";
 
-import siteData from "./mock/randomLGHG.json"
-
+import siteData from "./mock/randomLGHG.json";
 import colours from "./data/colours.json";
 
 function isEmpty(obj) {
@@ -178,7 +175,7 @@ class Dashboard extends React.Component {
 
   getID() {
     // Create a unique ID for each visualisation
-    return "vis-id-" + uuidv4();
+    return "vis-id-" + nanoid();
   }
 
   toggleSidePanel() {

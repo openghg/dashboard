@@ -3,14 +3,13 @@ import {
   LayerGroup,
   MapContainer,
   CircleMarker,
-  Circle,
   TileLayer,
   Popup,
 } from "react-leaflet";
 import { Slider } from "@material-ui/core";
+import { nanoid } from "nanoid";
 
 import styles from "./SliderMap.module.css";
-import { Layer } from "leaflet";
 
 class SliderMap extends React.Component {
   constructor(props) {
@@ -23,7 +22,6 @@ class SliderMap extends React.Component {
 
     this.state = { currentDate: parseInt(dates[0]), measurementValue: 5 };
     this.handleDateChange = this.handleDateChange.bind(this);
-    this.randomValue = this.randomValue.bind(this);
     this.layerRef = React.createRef();
   }
 
@@ -31,17 +29,12 @@ class SliderMap extends React.Component {
     this.setState({ currentTime: parseInt(timestamp) });
   }
 
-  getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
   createMarkerLayer() {
     const sites = this.props.sites;
 
     // First clear the layers and then add the markers below in as a layer
     if (this.layerRef.current) {
-      //   this.layerRef.current.clearLayers();
-      console.log(this.layerRef.current);
+      this.layerRef.current.clearLayers();
     }
 
     // this.setState({markerLayers: []})
@@ -68,15 +61,19 @@ class SliderMap extends React.Component {
         colour = "red";
       }
 
+      // This is usually bad practice but here we want to force new CircleMarkers
+      // to be created on the map
+      const circleKey = nanoid();
+
       const circle = (
-        <Circle
-          key={locationStr}
+        <CircleMarker
+          key={circleKey}
           center={[lat, long]}
           radius={600}
           fillOpacity={1}
           fillColor={colour}
           stroke={false}
-        ></Circle>
+        />
       );
 
       markers.push(circle);
@@ -89,7 +86,6 @@ class SliderMap extends React.Component {
     const siteData = this.props.sites;
 
     const firstSite = Object.keys(siteData)[0];
-
     const firstSiteData = siteData[firstSite]["measurements"];
     const dates = Object.keys(firstSiteData).sort();
 
@@ -123,13 +119,6 @@ class SliderMap extends React.Component {
     return slider;
   }
 
-  randomValue() {
-      const v = Math.random() * (50 - 5) + 5;
-    this.setState({ measurementValue:  v});
-
-    console.log(v);
-  }
-
   render() {
     const zoom = this.props.zoom ? this.props.zoom : 5;
     const width = this.props.width ? this.props.width : "60vw";
@@ -150,14 +139,12 @@ class SliderMap extends React.Component {
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {this.createMarkerLayer()}
+            <LayerGroup ref={this.layerRef}>
+              {this.createMarkerLayer()}
+            </LayerGroup>
           </MapContainer>
         </div>
-        <div className={styles.sliderBox}>
-          <button onClick={this.randomValue}>Click me</button>
-        </div>
-
-        {/* <div className={styles.sliderBox}>{this.createSlider()}</div> */}
+        <div className={styles.sliderBox}>{this.createSlider()}</div>
       </div>
     );
   }
