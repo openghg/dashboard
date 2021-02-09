@@ -1,8 +1,16 @@
 import React from "react";
-import { MapContainer, Circle, TileLayer, Popup } from "react-leaflet";
+import {
+  LayerGroup,
+  MapContainer,
+  CircleMarker,
+  Circle,
+  TileLayer,
+  Popup,
+} from "react-leaflet";
 import { Slider } from "@material-ui/core";
 
 import styles from "./SliderMap.module.css";
+import { Layer } from "leaflet";
 
 class SliderMap extends React.Component {
   constructor(props) {
@@ -13,17 +21,30 @@ class SliderMap extends React.Component {
     const firstSiteData = siteData[firstSite]["measurements"];
     const dates = Object.keys(firstSiteData).sort();
 
-    this.state = { currentDate: parseInt(dates[0]) };
+    this.state = { currentDate: parseInt(dates[0]), measurementValue: 5 };
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.randomValue = this.randomValue.bind(this);
+    this.layerRef = React.createRef();
   }
 
   handleDateChange(event, timestamp) {
     this.setState({ currentTime: parseInt(timestamp) });
   }
 
-  createMarkers() {
-    // Dictionary of sites
+  getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  createMarkerLayer() {
     const sites = this.props.sites;
+
+    // First clear the layers and then add the markers below in as a layer
+    if (this.layerRef.current) {
+      //   this.layerRef.current.clearLayers();
+      console.log(this.layerRef.current);
+    }
+
+    // this.setState({markerLayers: []})
 
     let markers = [];
     for (const [site, siteData] of Object.entries(sites)) {
@@ -33,15 +54,17 @@ class SliderMap extends React.Component {
       const longName = siteData["long_name"];
       const locationStr = `${siteName}, ${lat}, ${long}`;
 
-      const measurement = siteData["measurements"][this.state.currentDate];
+      //   const measurement = siteData["measurements"][this.state.currentDate];
+
+      const measurement = this.state.measurementValue;
 
       // Should use some correct binning here
       let colour = "black";
-      if (measurement > 0 && measurement < 30) {
+      if (measurement > 0 && measurement < 20) {
         colour = "green";
-      } else if (measurement < 60) {
+      } else if (measurement < 30) {
         colour = "orange";
-      } else if (measurement < 150) {
+      } else if (measurement < 40) {
         colour = "red";
       }
 
@@ -49,21 +72,11 @@ class SliderMap extends React.Component {
         <Circle
           key={locationStr}
           center={[lat, long]}
-          radius={750}
-          fillOpacity={0.5}
+          radius={600}
+          fillOpacity={1}
           fillColor={colour}
           stroke={false}
-        >
-          <Popup>
-            <div className={styles.marker}>
-              <div className={styles.markerHeader}>{siteName}</div>
-              <div className={styles.markerBody}>{longName}</div>
-              <div className={styles.markerLocation}>
-                Location: {locationStr}
-              </div>
-            </div>
-          </Popup>
-        </Circle>
+        ></Circle>
       );
 
       markers.push(circle);
@@ -80,8 +93,8 @@ class SliderMap extends React.Component {
     const firstSiteData = siteData[firstSite]["measurements"];
     const dates = Object.keys(firstSiteData).sort();
 
-    const startDate = new Date(dates[0]);
-    const endDate = new Date(dates[dates.length - 1]);
+    const startDate = parseInt(dates[0]);
+    const endDate = parseInt(dates[dates.length - 1]);
 
     // We'll have to ensure that each of the sites has data for every date
     // just add in NaNs for missing data - this can be done by the serverless fn
@@ -91,7 +104,7 @@ class SliderMap extends React.Component {
       const UNIXDate = parseInt(key);
       const date = new Date(UNIXDate);
 
-      marks.push({ value: date.getTime(), label: date.toLocaleDateString() });
+      marks.push({ value: UNIXDate, label: date.toLocaleDateString() });
     }
 
     const slider = (
@@ -102,12 +115,19 @@ class SliderMap extends React.Component {
         aria-labelledby="continuous-slider"
         marks={marks}
         step={null}
-        max={endDate.getTime()}
-        min={startDate.getTime()}
+        max={endDate}
+        min={startDate}
       />
     );
 
     return slider;
+  }
+
+  randomValue() {
+      const v = Math.random() * (50 - 5) + 5;
+    this.setState({ measurementValue:  v});
+
+    console.log(v);
   }
 
   render() {
@@ -130,10 +150,14 @@ class SliderMap extends React.Component {
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {this.createMarkers()}
+            {this.createMarkerLayer()}
           </MapContainer>
         </div>
-        <div className={styles.sliderBox}>{this.createSlider()}</div>
+        <div className={styles.sliderBox}>
+          <button onClick={this.randomValue}>Click me</button>
+        </div>
+
+        {/* <div className={styles.sliderBox}>{this.createSlider()}</div> */}
       </div>
     );
   }
