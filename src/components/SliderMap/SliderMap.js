@@ -10,6 +10,7 @@ import { Slider } from "@material-ui/core";
 import { nanoid } from "nanoid";
 
 import styles from "./SliderMap.module.css";
+import "./SliderLabel.css" 
 
 class SliderMap extends React.Component {
   constructor(props) {
@@ -68,7 +69,9 @@ class SliderMap extends React.Component {
           <Popup>
             <div className={styles.marker}>
               <div className={styles.markerHeader}>{siteName}</div>
-              <div className={styles.markerBody}>{longName}</div>
+              <div className={styles.markerBody}>
+                {new Date(this.state.currentDate).toLocaleDateString()}: {measurement}
+              </div>
               <div className={styles.markerLocation}>
                 Location: {locationStr}
               </div>

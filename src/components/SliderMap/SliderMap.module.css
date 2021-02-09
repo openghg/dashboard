@@ -1,15 +1,16 @@
 .container {
   margin: 20px;
   padding: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
   background-color: #f4f3ee;
   color: slategray;
   display: grid;
   grid-template-rows: 0.9fr 0.1fr;
-  row-gap: 5vh;
   justify-content: center;
+  grid-gap: 3vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center; /* adjusted */
 }
 
 .mapBox {
@@ -17,7 +18,7 @@
 }
 
 .sliderBox {
-  width: 100%;
+  width: 90%;
 }
 
 .marker {
