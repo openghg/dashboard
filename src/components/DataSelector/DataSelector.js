@@ -15,10 +15,6 @@ class DataSelector extends React.Component {
     this.clearSelection = this.clearSelection.bind(this);
   }
 
-  callSelector() {
-    this.props.dataSelector(this.state.selected);
-  }
-
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -27,11 +23,15 @@ class DataSelector extends React.Component {
     const species = target.attributes["species"].value;
 
     // Update the state to have the new
-    let oldSelected = cloneDeep(this.state.selected);
+    const oldSelected = cloneDeep(this.state.selected);
 
     oldSelected[site][species] = value;
 
     this.setState({ selected: oldSelected });
+  }
+
+  callSelector() {
+    this.props.dataSelector(this.state.selected);
   }
 
   clearSelection() {
@@ -73,8 +73,12 @@ class DataSelector extends React.Component {
       <div className={styles.container}>
         <div className={styles.blocks}>{blocks}</div>
         <div className={styles.buttons}>
-          <button className={styles.betterButton} onClick={this.callSelector}>Plot</button>
-          <button className={styles.betterButton} onClick={this.clearSelection}>Clear</button>
+          <button className={styles.betterButton} onClick={this.callSelector}>
+            Plot
+          </button>
+          <button className={styles.betterButton} onClick={this.clearSelection}>
+            Clear
+          </button>
         </div>
       </div>
     );

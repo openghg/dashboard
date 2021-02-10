@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, findByText, findByTestId } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
@@ -25,6 +25,26 @@ describe("Test Dashboard", () => {
     expect(screen.getByTestId("CCC_gas_c")).toBeInTheDocument();
   });
 
+  test("Check select and plot click draws new plot", async () => {
+    render(<Dashboard />);
+
+    expect(screen.getByTestId("AAA_gas_a")).toBeInTheDocument();
+
+    expect(screen.queryByTestId("vis-unit-container-GAS_A-AAA")).toBeFalsy();
+
+    const checkbox = screen.getByTestId("AAA_gas_a");
+
+    expect(checkbox).not.toBeChecked();
+    userEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
+
+    const plotButton = screen.getByRole("button", { name: /plot/i });
+
+    userEvent.click(plotButton);
+
+    expect(screen.getByTestId(/vis-unit-container-GAS_A-AAA/)).toBeTruthy();
+  });
+
   test("Check select and plot click draws new plot", () => {
     render(<Dashboard />);
 
@@ -32,28 +52,32 @@ describe("Test Dashboard", () => {
 
     expect(screen.queryByTestId("vis-unit-container-GAS_A-AAA")).toBeFalsy();
 
-    userEvent.click(screen.getByRole("checkbox", { name: /i accept the terms and conditions/i }));
+    expect(screen.getByRole("button", { name: /clear/i })).toBeTruthy();
 
-    // userEvent.click(
-    //   screen.getByRole("button", {
-    //     name: /plot/i,
-    //   })
-    // );
+    const checkbox = screen.getByTestId("AAA_gas_a");
 
-    const plotButton = screen.getByRole("button", { name: /plot/i });
+    expect(checkbox).not.toBeChecked();
+    userEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
 
-    fireEvent.click(plotButton);
+    userEvent.click(screen.getByRole("button", { name: /plot/i }));
 
-    // expect(screen.queryByTestId("vis-unit-container-GAS_A-AAA")).toBeTruthy();
+    expect(screen.getByTestId(/vis-unit-container-GAS_A-AAA/)).toBeTruthy();
+  });
 
-    // expect(screen.getByTestId(/vis-unit-container-GAS_A-AAA/)).toBeTruthy();
-    // Check the expected isn't there
-    // vis-unit-container-GAS_A-AAA
-    // Click the plot button
-    // userEvent.click(screen.getByText("Plot"));
+  test("Check overview cards rendered", () => {
+    render(<Dashboard />);
 
-    screen.debug(null, 20000);
+    expect(screen.getByText(/temperature/i)).toBeInTheDocument();
+    expect(screen.getByText(/aqi/i)).toBeInTheDocument();
+    expect(screen.getByText(/ppm/i)).toBeInTheDocument();
+  });
 
-    // Click
+  test("Check summary rendered", () => {
+    render(<Dashboard />);
+
+    expect(
+      screen.getByText(/To tackle climate change, we need to measure and reduce carbon emissions/i)
+    ).toBeInTheDocument();
   });
 });
