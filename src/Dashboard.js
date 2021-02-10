@@ -119,10 +119,7 @@ class Dashboard extends React.Component {
 
           const nSites = Object.keys(siteData).length;
 
-          const selectedColours = tableau10.slice(
-            totalSites,
-            totalSites + nSites
-          );
+          const selectedColours = tableau10.slice(totalSites, totalSites + nSites);
 
           //   for (let i = 0; i < nSites; i++) {
           //     tableau10.push(tableau10.shift());
@@ -204,26 +201,15 @@ class Dashboard extends React.Component {
           </div>
           <div className="main">
             <div className="main-side">
-              <ControlPanel
-                dataKeys={this.state.dataKeys}
-                dataSelector={this.dataSelector}
-              />
+              <ControlPanel dataKeys={this.state.dataKeys} dataSelector={this.dataSelector} />
             </div>
             <div className="main-panel">
-              <SliderMap
-                sites={siteData}
-                centre={[51.5, -0.0482]}
-                zoom={11}
-                width={"75vw"}
-                height={"65vh"}
-              />
+              <SliderMap sites={siteData} centre={[51.5, -0.0482]} zoom={11} width={"75vw"} height={"65vh"} />
               <Summary>
                 <div>
-                  To tackle climate change, we need to measure and reduce carbon
-                  emissions. London GHG is installing a new network of
-                  atmospheric measurements across the capital, and developing a
-                  new modelling framework to provide emission estimates of
-                  carbon dioxide and methane.
+                  To tackle climate change, we need to measure and reduce carbon emissions. London GHG is installing a
+                  new network of atmospheric measurements across the capital, and developing a new modelling framework
+                  to provide emission estimates of carbon dioxide and methane.
                 </div>
               </Summary>
 

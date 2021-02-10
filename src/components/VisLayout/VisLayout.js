@@ -5,18 +5,23 @@ import styles from "./VisLayout.module.css";
 
 class VisLayout extends React.Component {
   render() {
+      console.log("\n\nCreating VisLayout\n\n")
     let visualisations;
     if (Array.isArray(this.props.children)) {
       visualisations = this.props.children.map((child) => {
-        return <VisUnit key={child.id} vis={child} />;
+        const key = "vis-unit-".concat(child.key);
+        console.log(key);
+        return <VisUnit data-testid={key} key={key} vis={child} />;
       });
     } else {
-      visualisations = <VisUnit key={this.props.children.id} vis={this.props.children} />;
+      const key = "vis-unit-".concat(this.props.children.key);
+      console.log(key);
+      visualisations = (
+        <VisUnit data-testid={key} key={key} vis={this.props.children} />
+      );
     }
 
-    return (
-      <div className={styles.main}>{visualisations}</div>
-    );
+    return <div className={styles.main}>{visualisations}</div>;
   }
 }
 

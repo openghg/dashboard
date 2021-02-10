@@ -8,6 +8,7 @@ class Checkbox extends React.Component {
         <span>{this.props.label}</span>
         <input
           name={this.props.name}
+          data-testid={this.props.name}
           site={this.props.site}
           species={this.props.species}
           type="checkbox"

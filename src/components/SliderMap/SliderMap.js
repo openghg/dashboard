@@ -115,7 +115,6 @@ class SliderMap extends React.Component {
       <Slider
         defaultValue={0}
         onChange={this.handleDateChange}
-        getAriaValueText={""}
         aria-labelledby="continuous-slider"
         marks={marks}
         step={null}
