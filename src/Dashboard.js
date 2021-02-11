@@ -124,6 +124,8 @@ class Dashboard extends React.Component {
           //   for (let i = 0; i < nSites; i++) {
           //     tableau10.push(tableau10.shift());
           //   }
+                
+          console.log(siteData);
 
           const vis = (
             <GraphContainer key={containerKey}>

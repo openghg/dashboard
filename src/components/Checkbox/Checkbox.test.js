@@ -4,7 +4,7 @@ import React from "react";
 
 import Checkbox from "./Checkbox";
 
-describe("Test Dashboard", () => {
+describe("Test Checkbox", () => {
   test("Check ticking calls function", () => {
     const fn = jest.fn();
 

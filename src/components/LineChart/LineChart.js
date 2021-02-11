@@ -77,7 +77,7 @@ class LineChart extends React.Component {
     };
 
     return (
-      <div className={styles.container}>
+      <div data-testid={"linePlot"} className={styles.container}>
         <Plot data={plotData} layout={layout} />
       </div>
     );
