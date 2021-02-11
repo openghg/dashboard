@@ -7,7 +7,7 @@ import DataSelector from "./DataSelector";
 const testKeys = { AAA: { test_a: false, test_b: false, test_c: false } };
 
 describe("Test DataSelector", () => {
-  test("Test correct boxes rendered", () => {
+  test("Check correct boxes rendered", () => {
     const fn = jest.fn();
 
     render(<DataSelector dataKeys={testKeys} dataSelector={fn} />);

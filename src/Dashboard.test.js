@@ -25,26 +25,6 @@ describe("Test Dashboard", () => {
     expect(screen.getByTestId("CCC_gas_c")).toBeInTheDocument();
   });
 
-  test("Check select and plot click draws new plot", async () => {
-    render(<Dashboard />);
-
-    expect(screen.getByTestId("AAA_gas_a")).toBeInTheDocument();
-
-    expect(screen.queryByTestId("vis-unit-container-GAS_A-AAA")).toBeFalsy();
-
-    const checkbox = screen.getByTestId("AAA_gas_a");
-
-    expect(checkbox).not.toBeChecked();
-    userEvent.click(checkbox);
-    expect(checkbox).toBeChecked();
-
-    const plotButton = screen.getByRole("button", { name: /plot/i });
-
-    userEvent.click(plotButton);
-
-    expect(screen.getByTestId(/vis-unit-container-GAS_A-AAA/)).toBeTruthy();
-  });
-
   test("Check select and plot click draws new plot", () => {
     render(<Dashboard />);
 
