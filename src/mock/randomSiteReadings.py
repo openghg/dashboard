@@ -2,6 +2,10 @@ import json
 import pandas as pd
 import random
 
+"""
+This writes dated random measurement data to JSON for each of the sites in siteData
+"""
+
 with open("../data/siteData.json", "r") as f:
     data = json.load(f)
 
@@ -15,5 +19,5 @@ for site, values in data.items():
     values["measurements"] = {to_UNIX_ms(d): random.randint(20,90) for d in date_range}
 
 
-with open("randomLGHG.json", "w") as f:
+with open("LGHGSitesRandomData.json", "w") as f:
     json.dump(data, f, indent=4)

@@ -5,10 +5,9 @@ import Checkbox from "../Checkbox/Checkbox";
 
 class SelectionBlock extends React.Component {
   render() {
-      // This just has the data for this specific site
+    // This just has the data for this specific site
     const siteDataKeys = this.props.siteDataKeys;
     const siteName = this.props.siteName;
-
 
     let checkboxes = [];
     for (const species of Object.keys(siteDataKeys)) {

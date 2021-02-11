@@ -13,7 +13,7 @@ import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 import SliderMap from "./components/SliderMap/SliderMap";
 
-import siteData from "./mock/randomLGHG.json";
+import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
 
 function isEmpty(obj) {
@@ -124,8 +124,6 @@ class Dashboard extends React.Component {
           //   for (let i = 0; i < nSites; i++) {
           //     tableau10.push(tableau10.shift());
           //   }
-                
-          console.log(siteData);
 
           const vis = (
             <GraphContainer key={containerKey}>
