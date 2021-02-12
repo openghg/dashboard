@@ -2,7 +2,7 @@ import "./Dashboard.css";
 import React from "react";
 import { nanoid } from "nanoid";
 
-import randomData from "./mock/randomSiteData.json";
+// import randomData from "./mock/randomSiteData.json";
 import londonGHGSites from "./data/siteData.json";
 
 import LineChart from "./components/LineChart/LineChart";
@@ -15,6 +15,16 @@ import SliderMap from "./components/SliderMap/SliderMap";
 
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
+
+import TMBData from "./data/TMB_data_LGHG.json"
+import NPLData from "./data/NPL_data_LGHG.json"
+import BTTData from "./data/BTT_data_LGHG.json"
+
+const randomData = {
+    ...TMBData, 
+    ...NPLData, 
+    ...BTTData
+};
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
