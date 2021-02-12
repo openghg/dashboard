@@ -37,7 +37,7 @@ npm test
 
 ### Code Quality
 
-Code is passed through ESLint to find problems in the code. After writing your code please run the linter using
+Code quality is checked using ESLint, this can be run using
 
 ```bash
 npm run lint
