@@ -12,29 +12,26 @@ describe("Test Dashboard", () => {
 
     expect(screen.getByText("Sites")).toBeInTheDocument();
 
-    expect(screen.getByTestId("AAA_gas_a")).toBeInTheDocument();
-    expect(screen.getByTestId("AAA_gas_b")).toBeInTheDocument();
-    expect(screen.getByTestId("AAA_gas_c")).toBeInTheDocument();
+    expect(screen.getByTestId("TMB_CH4")).toBeInTheDocument();
+    expect(screen.getByTestId("TMB_CO2")).toBeInTheDocument();
 
-    expect(screen.getByTestId("BBB_gas_a")).toBeInTheDocument();
-    expect(screen.getByTestId("BBB_gas_b")).toBeInTheDocument();
-    expect(screen.getByTestId("BBB_gas_c")).toBeInTheDocument();
+    expect(screen.getByTestId("NPL_CH4")).toBeInTheDocument();
+    expect(screen.getByTestId("NPL_CO2")).toBeInTheDocument();
 
-    expect(screen.getByTestId("CCC_gas_a")).toBeInTheDocument();
-    expect(screen.getByTestId("CCC_gas_b")).toBeInTheDocument();
-    expect(screen.getByTestId("CCC_gas_c")).toBeInTheDocument();
+    expect(screen.getByTestId("BTT_CO2")).toBeInTheDocument();
+    expect(screen.getByTestId("BTT_CH4")).toBeInTheDocument();
   });
 
   test("Check select and plot click draws new plot", () => {
     render(<Dashboard />);
 
-    expect(screen.getByTestId("AAA_gas_a")).toBeInTheDocument();
+    expect(screen.getByTestId("TMB_CH4")).toBeInTheDocument();
 
-    expect(screen.queryByTestId("vis-unit-container-GAS_A-AAA")).toBeFalsy();
+    expect(screen.queryByTestId("vis-unit-container-CH4-TMB")).toBeFalsy();
 
     expect(screen.getByRole("button", { name: /clear/i })).toBeTruthy();
 
-    const checkbox = screen.getByTestId("AAA_gas_a");
+    const checkbox = screen.getByTestId("TMB_CH4");
 
     expect(checkbox).not.toBeChecked();
     userEvent.click(checkbox);
@@ -42,7 +39,7 @@ describe("Test Dashboard", () => {
 
     userEvent.click(screen.getByRole("button", { name: /plot/i }));
 
-    expect(screen.getByTestId(/vis-unit-container-GAS_A-AAA/)).toBeTruthy();
+    expect(screen.getByTestId(/vis-unit-container-CH4-TMB/)).toBeTruthy();
   });
 
   test("Check overview cards rendered", () => {
