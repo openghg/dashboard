@@ -4,7 +4,7 @@
 
 A simple React and Plotly.js based visualisation dashboard for the [LondonGHG project](https://openghg.org/londonGHG/).
 
-![Screenshot of app](./img/screenshot.png?raw=true)
+![Screenshot of app](./img/screenshot.jpg?raw=true)
 
 ## Run locally
 
