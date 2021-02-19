@@ -25,7 +25,7 @@ class LeafletMap extends React.Component {
           <Popup>
             <div data-testid={locationStr} className={styles.marker}>
               <div className={styles.markerHeader}>{String(key).toUpperCase()}</div>
-              <div className={styles.markerBody}>{value["long_name"]}</div>
+              <div className={styles.markerBody}>{value["long_name"]}<br/><br/>Height: {value["height"]}</div>
               <div className={styles.markerLocation}>Location: {locationStr}</div>
             </div>
           </Popup>
