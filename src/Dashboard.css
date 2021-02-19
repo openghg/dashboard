@@ -67,6 +67,7 @@ body {
   justify-content: space-between;
   padding: 0 16px;
   background-color: #648ca6;
+  z-index: 5
 }
 
 /* Make room for the menu icon on mobile */

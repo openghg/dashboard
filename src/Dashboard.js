@@ -206,7 +206,7 @@ class Dashboard extends React.Component {
       return (
         <div className="grid-container">
           <div className="header">
-            <div onClick={this.toggleSidePanel} className="nav-icon">
+            <div>
               <div></div>
             </div>
             LondonGHG Dashboard
