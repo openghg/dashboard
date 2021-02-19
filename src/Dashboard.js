@@ -2,8 +2,7 @@ import "./Dashboard.css";
 import React from "react";
 import { nanoid } from "nanoid";
 
-// import randomData from "./mock/randomSiteData.json";
-import londonGHGSites from "./data/siteData.json";
+import londonGHGSites from "./data/siteMetadata.json";
 
 import LineChart from "./components/LineChart/LineChart";
 import Summary from "./components/Summary/Summary";
@@ -16,14 +15,17 @@ import SliderMap from "./components/SliderMap/SliderMap";
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
 
-import TMBData from "./data/TMB_data_LGHG.json"
-import NPLData from "./data/NPL_data_LGHG.json"
-import BTTData from "./data/BTT_data_LGHG.json"
+import TMBData from "./data/TMB_data_LGHG.json";
+import NPLData from "./data/NPL_data_LGHG.json";
+import BTTData from "./data/BTT_data_LGHG.json";
+import LeafletMap from "./components/LeafletMap/LeafletMap";
+
+import londonFootprint from "./images/londonHighResFootprint.svg";
 
 const randomData = {
-    ...TMBData, 
-    ...NPLData, 
-    ...BTTData
+  ...TMBData,
+  ...NPLData,
+  ...BTTData,
 };
 
 function isEmpty(obj) {
@@ -215,6 +217,18 @@ class Dashboard extends React.Component {
             </div>
             <div className="main-panel">
               <SliderMap sites={siteData} centre={[51.5, -0.0482]} zoom={11} width={"75vw"} height={"65vh"} />
+              <LeafletMap
+                sites={{"TMB": londonGHGSites["TMB"]}}
+                overlayImg={londonFootprint}
+                overlayBounds={[
+                  [50.87063, -1.26],
+                  [52.0193672, 0.46799811],
+                ]}
+                centre={[51.5, -0.0482]}
+                zoom={10}
+                width={"75vw"}
+                height={"65vh"}
+              />
               <Summary>
                 <div>
                   To tackle climate change, we need to measure and reduce carbon emissions. London GHG is installing a
