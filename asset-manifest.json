@@ -1,23 +1,24 @@
 {
   "files": {
-    "main.css": "/dashboard/static/css/main.df7b725e.chunk.css",
-    "main.js": "/dashboard/static/js/main.362a17dd.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.362a17dd.chunk.js.map",
-    "runtime-main.js": "/dashboard/static/js/runtime-main.0e4dec86.js",
-    "runtime-main.js.map": "/dashboard/static/js/runtime-main.0e4dec86.js.map",
-    "static/js/2.b6d0bc38.chunk.js": "/dashboard/static/js/2.b6d0bc38.chunk.js",
-    "static/js/2.b6d0bc38.chunk.js.map": "/dashboard/static/js/2.b6d0bc38.chunk.js.map",
-    "static/js/3.5b719e1c.chunk.js": "/dashboard/static/js/3.5b719e1c.chunk.js",
-    "static/js/3.5b719e1c.chunk.js.map": "/dashboard/static/js/3.5b719e1c.chunk.js.map",
+    "main.css": "/dashboard/static/css/main.284d7a3a.chunk.css",
+    "main.js": "/dashboard/static/js/main.0e75a0e6.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.0e75a0e6.chunk.js.map",
+    "runtime-main.js": "/dashboard/static/js/runtime-main.40d9dad9.js",
+    "runtime-main.js.map": "/dashboard/static/js/runtime-main.40d9dad9.js.map",
+    "static/js/2.2520f161.chunk.js": "/dashboard/static/js/2.2520f161.chunk.js",
+    "static/js/2.2520f161.chunk.js.map": "/dashboard/static/js/2.2520f161.chunk.js.map",
+    "static/js/3.2d1b6f98.chunk.js": "/dashboard/static/js/3.2d1b6f98.chunk.js",
+    "static/js/3.2d1b6f98.chunk.js.map": "/dashboard/static/js/3.2d1b6f98.chunk.js.map",
     "index.html": "/dashboard/index.html",
-    "static/css/main.df7b725e.chunk.css.map": "/dashboard/static/css/main.df7b725e.chunk.css.map",
-    "static/js/2.b6d0bc38.chunk.js.LICENSE.txt": "/dashboard/static/js/2.b6d0bc38.chunk.js.LICENSE.txt",
-    "static/media/github.16a9304e.svg": "/dashboard/static/media/github.16a9304e.svg"
+    "static/css/main.284d7a3a.chunk.css.map": "/dashboard/static/css/main.284d7a3a.chunk.css.map",
+    "static/js/2.2520f161.chunk.js.LICENSE.txt": "/dashboard/static/js/2.2520f161.chunk.js.LICENSE.txt",
+    "static/media/github.16a9304e.svg": "/dashboard/static/media/github.16a9304e.svg",
+    "static/media/londonHighResFootprint.f33fc7dc.svg": "/dashboard/static/media/londonHighResFootprint.f33fc7dc.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.0e4dec86.js",
-    "static/js/2.b6d0bc38.chunk.js",
-    "static/css/main.df7b725e.chunk.css",
-    "static/js/main.362a17dd.chunk.js"
+    "static/js/runtime-main.40d9dad9.js",
+    "static/js/2.2520f161.chunk.js",
+    "static/css/main.284d7a3a.chunk.css",
+    "static/js/main.0e75a0e6.chunk.js"
   ]
 }
