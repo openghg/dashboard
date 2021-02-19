@@ -2,14 +2,12 @@ import React from "react";
 import { MapContainer, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import styles from "./LeafletMap.module.css";
 
-
-
 class LeafletMap extends React.Component {
   processSites() {
     const sites = this.props.sites;
-    
-    if(!sites) {
-        return null;
+
+    if (!sites) {
+      return null;
     }
 
     let markers = [];
@@ -17,15 +15,20 @@ class LeafletMap extends React.Component {
       const latitude = value["latitude"];
       const longitude = value["longitude"];
 
-      const locationStr = `${key}, ${latitude}, ${longitude}`;
+      const locationStr = `${key}-${latitude}-${longitude}`;
       const location = [latitude, longitude];
 
       const marker = (
         <Marker key={locationStr} position={location}>
           <Popup>
-            <div data-testid={locationStr} className={styles.marker}>
+            <div className={styles.marker}>
               <div className={styles.markerHeader}>{String(key).toUpperCase()}</div>
-              <div className={styles.markerBody}>{value["long_name"]}<br/><br/>Height: {value["height"]}</div>
+              <div className={styles.markerBody}>
+                {value["long_name"]}
+                <br />
+                <br />
+                Height: {value["height"]}
+              </div>
               <div className={styles.markerLocation}>Location: {locationStr}</div>
             </div>
           </Popup>
