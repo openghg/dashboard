@@ -42,7 +42,7 @@ class Dashboard extends React.Component {
       error: null,
       isLoaded: false,
       sidePanel: false,
-      apiData: [],
+    //   apiData: [],
       selectedDate: 0,
     };
 
@@ -231,7 +231,7 @@ class Dashboard extends React.Component {
                 zoom={11}
                 width={"75vw"}
                 height={"65vh"}
-                measurementData={measurementData}
+                measurementData={this.state.apiData}
                 siteData={siteData}
               />
 
@@ -256,7 +256,7 @@ class Dashboard extends React.Component {
                 width={"75vw"}
                 height={"65vh"}
               /> */}
-              <LeafletMap
+              {/* <LeafletMap
                 sites={{ TMB: londonGHGSites["TMB"] }}
                 overlayImg={londonFootprint}
                 overlayBounds={[
@@ -267,7 +267,7 @@ class Dashboard extends React.Component {
                 zoom={10}
                 width={"75vw"}
                 height={"65vh"}
-              />
+              /> */}
               <Summary>
                 <div>
                   To tackle climate change, we need to measure and reduce carbon emissions. London GHG is installing a

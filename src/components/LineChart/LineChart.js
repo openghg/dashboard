@@ -10,13 +10,26 @@ class LineChart extends React.Component {
     // Data keyed by site
     let plotData = [];
     let siteNumber = 0;
+    let maxY = 0;
+    let minY = Infinity;
 
     for (const [site, siteData] of Object.entries(data)) {
       // We want to conver UNIX ms timestamps to Dates
-      const x_timestamps = Object.keys(siteData);
-      const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+      const xTimestamps = Object.keys(siteData);
+      const xValues = xTimestamps.map((d) => new Date(parseInt(d)));
       // Extract the count values
-      const y_values = Object.values(siteData);
+      const yValues = Object.values(siteData);
+
+      const max = Math.max(yValues);
+      const min = Math.min(yValues);
+
+      if (max > maxY) {
+        maxY = max;
+      }
+
+      if (min < minY) {
+        minY = min;
+      }
 
       const name = String(site).toUpperCase();
 
@@ -24,8 +37,8 @@ class LineChart extends React.Component {
       const colour = selectedColour ? selectedColour : "black";
 
       const trace = {
-        x: x_values,
-        y: y_values,
+        x: xValues,
+        y: yValues,
         mode: "lines",
         line: {
           width: 1,
@@ -36,6 +49,22 @@ class LineChart extends React.Component {
 
       plotData.push(trace);
       siteNumber++;
+    }
+
+    let dateMarkObject = null;
+    if (this.props.dateMarker) {
+      const date = new Date(this.props.dateMarker);
+      dateMarkObject = {
+        type: "line",
+        x0: date,
+        y0: minY,
+        x1: date,
+        y1: maxY,
+        line: {
+          color: "rgb(55, 128, 191)",
+          width: 3,
+        },
+      };
     }
 
     const layout = {
@@ -74,19 +103,7 @@ class LineChart extends React.Component {
         t: 20,
         pad: 5,
       },
-      shapes: [
-        {
-          type: "line",
-          x0: this.props.dateMarker,
-          y0: 0,
-          x1: this.props.dateMarker,
-          y1: 1,
-          line: {
-            color: "rgb(55, 128, 191)",
-            width: 3,
-          },
-        },
-      ],
+      shapes: [dateMarkObject],
     };
 
     return (
