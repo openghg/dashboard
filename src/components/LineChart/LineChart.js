@@ -74,6 +74,19 @@ class LineChart extends React.Component {
         t: 20,
         pad: 5,
       },
+      shapes: [
+        {
+          type: "line",
+          x0: this.props.dateMarker,
+          y0: 0,
+          x1: this.props.dateMarker,
+          y1: 1,
+          line: {
+            color: "rgb(55, 128, 191)",
+            width: 3,
+          },
+        },
+      ],
     };
 
     return (

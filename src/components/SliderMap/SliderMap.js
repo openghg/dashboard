@@ -1,11 +1,6 @@
+import PropTypes from "prop-types";
 import React from "react";
-import {
-  LayerGroup,
-  MapContainer,
-  CircleMarker,
-  TileLayer,
-  Popup,
-} from "react-leaflet";
+import { LayerGroup, MapContainer, CircleMarker, TileLayer, Popup } from "react-leaflet";
 import { Slider } from "@material-ui/core";
 import { nanoid } from "nanoid";
 
@@ -28,6 +23,7 @@ class SliderMap extends React.Component {
 
   handleDateChange(event, timestamp) {
     this.setState({ currentDate: parseInt(timestamp) });
+    this.props.dateSelector(timestamp);
   }
 
   createMarkerLayer() {
@@ -71,16 +67,13 @@ class SliderMap extends React.Component {
               <div className={styles.markerHeader}>{siteName}</div>
               <div className={styles.markerBody}>
                 Name: {longName}
-                <br /><br />
-                {new Date(this.state.currentDate).toLocaleDateString()}:{" "}
-                {measurement}
+                <br />
+                <br />
+                {new Date(this.state.currentDate).toLocaleDateString()}: {measurement}
               </div>
-              <div className={styles.markerLocation}>
-                Location: {locationStr}
-              </div>
+              <div className={styles.markerLocation}>Location: {locationStr}</div>
             </div>
           </Popup>
-          ;
         </CircleMarker>
       );
 
@@ -136,19 +129,12 @@ class SliderMap extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.mapBox}>
-          <MapContainer
-            center={this.props.centre}
-            zoom={zoom}
-            scrollWheelZoom={true}
-            style={style}
-          >
+          <MapContainer center={this.props.centre} zoom={zoom} scrollWheelZoom={true} style={style}>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <LayerGroup ref={this.layerRef}>
-              {this.createMarkerLayer()}
-            </LayerGroup>
+            <LayerGroup ref={this.layerRef}>{this.createMarkerLayer()}</LayerGroup>
           </MapContainer>
         </div>
         <div className={styles.sliderBox}>{this.createSlider()}</div>
@@ -156,5 +142,14 @@ class SliderMap extends React.Component {
     );
   }
 }
+
+SliderMap.propTypes = {
+  centre: PropTypes.array,
+  dateSelector: PropTypes.func,
+  height: PropTypes.string,
+  sites: PropTypes.object,
+  width: PropTypes.string,
+  zoom: PropTypes.string,
+};
 
 export default SliderMap;

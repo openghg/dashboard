@@ -10,19 +10,21 @@ import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
-import SliderMap from "./components/SliderMap/SliderMap";
+// import SliderMap from "./components/SliderMap/SliderMap";
+import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
 
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
 
-import TMBData from "./data/TMB_data_LGHG.json";
-import NPLData from "./data/NPL_data_LGHG.json";
-import BTTData from "./data/BTT_data_LGHG.json";
 import LeafletMap from "./components/LeafletMap/LeafletMap";
 
 import londonFootprint from "./images/londonHighResFootprint.svg";
 
-const randomData = {
+import TMBData from "./data/TMB_data_LGHG.json";
+import NPLData from "./data/NPL_data_LGHG.json";
+import BTTData from "./data/BTT_data_LGHG.json";
+
+const measurementData = {
   ...TMBData,
   ...NPLData,
   ...BTTData,
@@ -41,6 +43,7 @@ class Dashboard extends React.Component {
       isLoaded: false,
       sidePanel: false,
       apiData: [],
+      selectedDate: 0,
     };
 
     // For the moment create some fake sites
@@ -51,12 +54,18 @@ class Dashboard extends React.Component {
     this.toggleSidePanel = this.toggleSidePanel.bind(this);
     this.dataSelector = this.dataSelector.bind(this);
     this.processData = this.processData.bind(this);
+    this.dateSelector = this.dateSelector.bind(this);
+  }
+
+  dateSelector(date) {
+    // Here date is a ms-based UNIX timestamp
+    this.setState({ selectedDate: parseInt(date) });
   }
 
   // Need a function to process the data that's keyed
   processData() {
     // const data = this.state.apiData;
-    const data = randomData;
+    const data = measurementData;
 
     // Process the data and create the correct Javascript time objects
     let dataKeys = {};
@@ -107,7 +116,7 @@ class Dashboard extends React.Component {
         for (const [species, value] of Object.entries(subObj)) {
           if (value) {
             // Create a visualisation and add it to the list
-            const data = randomData[site][species];
+            const data = measurementData[site][species];
 
             if (!speciesData.hasOwnProperty(species)) {
               speciesData[species] = {};
@@ -216,9 +225,39 @@ class Dashboard extends React.Component {
               <ControlPanel dataKeys={this.state.dataKeys} dataSelector={this.dataSelector} />
             </div>
             <div className="main-panel">
-              <SliderMap sites={siteData} centre={[51.5, -0.0482]} zoom={11} width={"75vw"} height={"65vh"} />
+              <FootprintAnalysis
+                sites={siteData}
+                centre={[51.5, -0.0482]}
+                zoom={11}
+                width={"75vw"}
+                height={"65vh"}
+                measurementData={measurementData}
+                siteData={siteData}
+              />
+
+              {/* <SliderMap
+                dateSelector={this.dateSelector}
+                sites={siteData}
+                centre={[51.5, -0.0482]}
+                zoom={11}
+                width={"75vw"}
+                height={"65vh"}
+              />
+              <SliderMap
+                dateSelector={this.dateSelector}
+                sites={siteData}
+                overlayImg={londonFootprint}
+                overlayBounds={[
+                  [50.87063, -1.26],
+                  [52.0193672, 0.46799811],
+                ]}
+                centre={[51.5, -0.0482]}
+                zoom={11}
+                width={"75vw"}
+                height={"65vh"}
+              /> */}
               <LeafletMap
-                sites={{"TMB": londonGHGSites["TMB"]}}
+                sites={{ TMB: londonGHGSites["TMB"] }}
                 overlayImg={londonFootprint}
                 overlayBounds={[
                   [50.87063, -1.26],
