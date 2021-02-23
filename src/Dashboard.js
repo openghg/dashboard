@@ -113,6 +113,7 @@ class Dashboard extends React.Component {
     let visualisations = [];
 
     const selectedKeys = this.state.selectedKeys;
+    const processedData = this.state.processedData;
 
     let speciesData = {};
 
@@ -121,7 +122,7 @@ class Dashboard extends React.Component {
         for (const [species, value] of Object.entries(subObj)) {
           if (value) {
             // Create a visualisation and add it to the list
-            const data = measurementData[site][species];
+            const data = processedData[site][species];
 
             if (!speciesData.hasOwnProperty(species)) {
               speciesData[species] = {};

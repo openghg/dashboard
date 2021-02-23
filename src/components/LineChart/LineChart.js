@@ -10,26 +10,23 @@ class LineChart extends React.Component {
     // Data keyed by site
     let plotData = [];
     let siteNumber = 0;
-    let maxY = 0;
-    let minY = Infinity;
+    let maxY = -1;
+    let minY = 999999;
 
     for (const [site, siteData] of Object.entries(data)) {
-      // We want to conver UNIX ms timestamps to Dates
-      const xTimestamps = Object.keys(siteData);
-      const xValues = xTimestamps.map((d) => new Date(parseInt(d)));
-      // Extract the count values
-      const yValues = Object.values(siteData);
+      const xValues = siteData["x_values"];
+      const yValues = siteData["y_values"];
 
-    //   const max = Math.max(yValues);
-    //   const min = Math.min(yValues);
+      const max = Math.max(...yValues);
+      const min = Math.min(...yValues);
 
-    //   if (max > maxY) {
-    //     maxY = max;
-    //   }
+      if (max > maxY) {
+        maxY = max;
+      }
 
-    //   if (min < minY) {
-    //     minY = min;
-    //   }
+      if (min < minY) {
+        minY = min;
+      }
 
       const name = String(site).toUpperCase();
 
@@ -55,7 +52,9 @@ class LineChart extends React.Component {
     const selectedDate = this.props.selectedDate;
 
     if (selectedDate) {
-      const date = new Date(selectedDate);
+      const date = new Date(parseInt(selectedDate));
+
+      console.log(minY, maxY);
 
       dateMarkObject = {
         type: "line",
@@ -64,7 +63,7 @@ class LineChart extends React.Component {
         x1: date,
         y1: maxY,
         line: {
-          color: "rgb(55, 128, 191)",
+          color: "black",
           width: 3,
         },
       };
@@ -106,6 +105,7 @@ class LineChart extends React.Component {
         t: 20,
         pad: 5,
       },
+      shapes: [dateMarkObject],
     };
 
     return (

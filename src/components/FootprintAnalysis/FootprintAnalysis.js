@@ -103,7 +103,7 @@ class FootprintAnalysis extends React.Component {
                 xLabel="Date"
                 yLabel="Concentration"
                 key={key}
-                // selectedDate={this.state.selectedDate}
+                selectedDate={this.state.selectedDate}
               />
             </GraphContainer>
           );
