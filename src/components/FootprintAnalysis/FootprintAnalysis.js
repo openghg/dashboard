@@ -6,7 +6,7 @@ import GraphContainer from "../GraphContainer/GraphContainer";
 import LineChart from "./../LineChart/LineChart";
 import colours from "../../data/colours.json";
 
-import { isEmpty, getVisID } from "../../util/helpers";
+import { isEmpty, getVisID, importSVGs } from "../../util/helpers";
 
 import styles from "./FootprintAnalysis.module.css";
 
@@ -20,30 +20,10 @@ class FootprintAnalysis extends React.Component {
   constructor(props) {
     super(props);
 
-    let dates = [];
+    const footprints = importSVGs("../../images/londonFootprints/TMB");
 
-    const footprints = {};
-    try {
-      const requiredSVGs = require.context("../../images/londonFootprints/TMB", false, /\.svg$/);
-      const paths = requiredSVGs.keys();
-
-      // This is quite a bit of work but it means we can have human-readable filenames
-      // and pass a list of UNIX timestamps to the SliderMap component
-      for (const path of paths) {
-        // Here we need to read the filename and convert it to a UNIX timestamp
-        const filename = String(path).split("_")[1];
-        const timestampStr = String(filename).split(".")[0];
-
-        const timestamp = new Date(timestampStr).getTime();
-
-        footprints[timestamp] = requiredSVGs(path)["default"];
-
-        dates = Object.keys(footprints);
-        dates.sort();
-      }
-    } catch (e) {
-      console.error("Could not import images. We expect image filenames of the form siteName-2021-01-01T00:00:00.svg");
-    }
+    let dates = Object.keys(footprints);
+    dates.sort();
 
     this.state = { selectedDate: dates[0], footprints: footprints, dates: dates };
     this.dateSelector = this.dateSelector.bind(this);

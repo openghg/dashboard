@@ -4,10 +4,7 @@ import React from "react";
 import LineChart from "./LineChart";
 
 const mockData = {
-  TEST_SITE: {
-    1590969600000: 0.2759910252,
-    1591056000000: 0.4787901427,
-  },
+  TEST_SITE: { x_values: [1590969600000, 1591056000000], y_values: [0.2759910252, 0.4787901427] },
 };
 
 describe("Test LineChart", () => {

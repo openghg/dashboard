@@ -54,8 +54,6 @@ class LineChart extends React.Component {
     if (selectedDate) {
       const date = new Date(parseInt(selectedDate));
 
-      console.log(minY, maxY);
-
       dateMarkObject = {
         type: "line",
         x0: date,

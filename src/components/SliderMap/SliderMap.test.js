@@ -6,7 +6,7 @@ import siteData from "../../mock/LGHGSitesRandomData.json";
 
 describe("Test SliderMap", () => {
   test("Check map and slider renders correctly", () => {
-    render(<SliderMap sites={siteData} centre={[51.5, -0.0482]} zoom={11} width={"75vw"} height={"65vh"} />);
+    render(<SliderMap sites={siteData} centre={[51.5, -0.0482]} zoom={11} width={"75vw"} height={"65vh"} dates={[1614094251343, 1614094251346]} />);
 
     expect(screen.getByRole("link", { name: /openstreetmap/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /a js library for interactive maps/i })).toBeInTheDocument();

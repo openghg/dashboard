@@ -4,6 +4,14 @@ import React from "react";
 
 import Dashboard from "./Dashboard";
 
+jest.mock("./util/helpers", () => ({
+  importSVGs: () => {
+    return { "1609459200000": "siteName-2021-01-01T00:00:00.svg" };
+  },
+  isEmpty: () => false,
+  getVisID: () => "123",
+}));
+
 describe("Test Dashboard", () => {
   test("Ensure sidebar rendered correctly", () => {
     render(<Dashboard />);
