@@ -6,6 +6,8 @@ import GraphContainer from "../GraphContainer/GraphContainer";
 import LineChart from "./../LineChart/LineChart";
 import colours from "../../data/colours.json";
 
+import { isEmpty, getVisID } from "../../util/helpers";
+
 import styles from "./FootprintAnalysis.module.css";
 
 // Import all the data we need - so all the SVGs
@@ -26,7 +28,7 @@ class FootprintAnalysis extends React.Component {
       const paths = requiredSVGs.keys();
 
       // This is quite a bit of work but it means we can have human-readable filenames
-      // and pass a list of dates to the SliderMap component
+      // and pass a list of UNIX timestamps to the SliderMap component
       for (const path of paths) {
         // Here we need to read the filename and convert it to a UNIX timestamp
         const filename = String(path).split("_")[1];
@@ -40,9 +42,7 @@ class FootprintAnalysis extends React.Component {
         dates.sort();
       }
     } catch (e) {
-      console.error(
-        "Could not import images. We expect image filenames of the form londonHighResFootprint-2020-08-01T11:00:00.svg"
-      );
+      console.error("Could not import images. We expect image filenames of the form siteName-2021-01-01T00:00:00.svg");
     }
 
     this.state = { selectedDate: dates[0], footprints: footprints, dates: dates };
@@ -50,7 +50,6 @@ class FootprintAnalysis extends React.Component {
   }
 
   createGraphs() {
-    return null;
     const measurementData = this.props.measurementData;
 
     let visualisations = [];
@@ -81,15 +80,13 @@ class FootprintAnalysis extends React.Component {
 
       const tableau10 = colours["tableau10"];
 
-      if (!Object.keys(speciesData).length === 0) {
+      if (!isEmpty(speciesData)) {
         for (const [species, siteData] of Object.entries(speciesData)) {
           // Create a graph for each species
           const title = String(species).toUpperCase();
-          const key = title.concat("-", Object.keys(siteData).join("-"));
-          const containerKey = `container-${key}`;
-
+          const key = title.concat("-fp-", Object.keys(siteData).join("-"));
+          const containerKey = `footprint-plot-${key}`;
           const nSites = Object.keys(siteData).length;
-
           const selectedColours = tableau10.slice(totalSites, totalSites + nSites);
 
           //   for (let i = 0; i < nSites; i++) {
@@ -99,14 +96,14 @@ class FootprintAnalysis extends React.Component {
           const vis = (
             <GraphContainer key={containerKey}>
               <LineChart
-                divID={this.getID()}
+                divID={getVisID()}
                 data={siteData}
                 colours={selectedColours}
                 title={title}
                 xLabel="Date"
                 yLabel="Concentration"
                 key={key}
-                dateMarker={this.state.dateSelected}
+                // selectedDate={this.state.selectedDate}
               />
             </GraphContainer>
           );
@@ -124,7 +121,6 @@ class FootprintAnalysis extends React.Component {
   dateSelector(date) {
     // Here date is a ms-based UNIX timestamp
     this.setState({ selectedDate: parseInt(date) });
-    console.log(date);
   }
 
   dataSelector() {

@@ -20,16 +20,16 @@ class LineChart extends React.Component {
       // Extract the count values
       const yValues = Object.values(siteData);
 
-      const max = Math.max(yValues);
-      const min = Math.min(yValues);
+    //   const max = Math.max(yValues);
+    //   const min = Math.min(yValues);
 
-      if (max > maxY) {
-        maxY = max;
-      }
+    //   if (max > maxY) {
+    //     maxY = max;
+    //   }
 
-      if (min < minY) {
-        minY = min;
-      }
+    //   if (min < minY) {
+    //     minY = min;
+    //   }
 
       const name = String(site).toUpperCase();
 
@@ -52,8 +52,11 @@ class LineChart extends React.Component {
     }
 
     let dateMarkObject = null;
-    if (this.props.dateMarker) {
-      const date = new Date(this.props.dateMarker);
+    const selectedDate = this.props.selectedDate;
+
+    if (selectedDate) {
+      const date = new Date(selectedDate);
+
       dateMarkObject = {
         type: "line",
         x0: date,
@@ -103,7 +106,6 @@ class LineChart extends React.Component {
         t: 20,
         pad: 5,
       },
-      shapes: [dateMarkObject],
     };
 
     return (

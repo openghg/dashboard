@@ -20,6 +20,8 @@ import LeafletMap from "./components/LeafletMap/LeafletMap";
 
 import londonFootprint from "./images/londonHighResFootprint.svg";
 
+import {isEmpty, getVisID} from "./util/helpers"
+
 import TMBData from "./data/TMB_data_LGHG.json";
 import NPLData from "./data/NPL_data_LGHG.json";
 import BTTData from "./data/BTT_data_LGHG.json";
@@ -30,10 +32,6 @@ const measurementData = {
   ...BTTData,
 };
 
-function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
-
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -42,8 +40,10 @@ class Dashboard extends React.Component {
       error: null,
       isLoaded: false,
       sidePanel: false,
-    //   apiData: [],
+      //   apiData: [],
       selectedDate: 0,
+      processedData: {},
+      dataKeys: {},
     };
 
     // For the moment create some fake sites
@@ -71,32 +71,37 @@ class Dashboard extends React.Component {
     let dataKeys = {};
     let processedData = {};
 
-    for (const site of Object.keys(data)) {
-      dataKeys[site] = {};
-      processedData[site] = {};
+    try {
+      for (const site of Object.keys(data)) {
+        dataKeys[site] = {};
+        processedData[site] = {};
 
-      for (const species of Object.keys(data[site])) {
-        dataKeys[site][species] = false;
+        for (const species of Object.keys(data[site])) {
+          dataKeys[site][species] = false;
 
-        const gas_data = data[site][species];
+          const gas_data = data[site][species];
 
-        const x_timestamps = Object.keys(gas_data);
-        const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
-        // Extract the count values
-        const y_values = Object.values(gas_data);
+          const x_timestamps = Object.keys(gas_data);
+          const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+          // Extract the count values
+          const y_values = Object.values(gas_data);
 
-        // Create a structure that plotly expects
-        processedData[site][species] = {
-          x_values: x_values,
-          y_values: y_values,
-        };
+          // Create a structure that plotly expects
+          processedData[site][species] = {
+            x_values: x_values,
+            y_values: y_values,
+          };
+        }
       }
+    } catch (error) {
+      console.error("Error reading data: ", error);
     }
 
     // Disabled the no direct mutation rule here as this only gets called from the ctor
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
+    this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
   }
 
@@ -149,7 +154,7 @@ class Dashboard extends React.Component {
           const vis = (
             <GraphContainer key={containerKey}>
               <LineChart
-                divID={this.getID()}
+                divID={getVisID()}
                 data={siteData}
                 colours={selectedColours}
                 title={title}
@@ -205,7 +210,7 @@ class Dashboard extends React.Component {
 
     // Just set this as true for now as we're not pulling anything
     // from an API
-    isLoaded = true;
+    // isLoaded = true;
 
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -231,7 +236,7 @@ class Dashboard extends React.Component {
                 zoom={11}
                 width={"75vw"}
                 height={"65vh"}
-                measurementData={this.state.apiData}
+                measurementData={this.state.processedData}
                 siteData={siteData}
               />
 
