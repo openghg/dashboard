@@ -114,8 +114,7 @@ class FootprintAnalysis extends React.Component {
         }
       }
     }
-
-    return <VisLayout>{visualisations}</VisLayout>;
+    return <VisLayout slimPlot={true}>{visualisations}</VisLayout>;
   }
 
   dateSelector(date) {
@@ -144,12 +143,13 @@ class FootprintAnalysis extends React.Component {
             selectedDate={this.state.selectedDate}
             dates={this.state.dates}
             sites={this.props.siteData}
-            centre={[51.5, -0.0482]}
-            zoom={10}
-            width={"75vw"}
-            height={"65vh"}
+            centre={this.props.centre}
+            zoom={this.props.zoom}
+            width={this.props.width}
+            height={this.props.height}
             overlayImg={footprintImg}
             overlayBounds={overlayBounds}
+            showSites={false}
           />
         </div>
         <div className={styles.plots}>{this.createGraphs()}</div>

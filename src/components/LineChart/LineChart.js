@@ -10,8 +10,8 @@ class LineChart extends React.Component {
     // Data keyed by site
     let plotData = [];
     let siteNumber = 0;
-    let maxY = -1;
-    let minY = 999999;
+    let maxY = 0;
+    let minY = Infinity;
 
     for (const [site, siteData] of Object.entries(data)) {
       const xValues = siteData["x_values"];
@@ -64,7 +64,7 @@ class LineChart extends React.Component {
         y1: maxY,
         line: {
           color: "black",
-          width: 3,
+          width: 1,
         },
       };
     }
@@ -80,7 +80,6 @@ class LineChart extends React.Component {
         yanchor: "top",
       },
       xaxis: {
-        title: this.props.xLabel,
         range: this.props.xRange ? this.props.xRange : null,
         showgrid: false,
         linecolor: "black",
@@ -88,7 +87,11 @@ class LineChart extends React.Component {
         ticks: "outside",
       },
       yaxis: {
-        title: this.props.yLabel,
+        automargin: true,
+        title: {
+          text: this.props.yLabel,
+          standoff: 1,
+        },
         range: this.props.yRange ? this.props.yRange : null,
         showgrid: false,
         linecolor: "black",

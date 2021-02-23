@@ -1,12 +1,12 @@
 .container {
-  margin: 20px;
-  padding: 20px;
+  padding: 2vw;
+  padding-bottom: 2vh;
   background-color: #f4f3ee;
   color: slategray;
   display: grid;
   grid-template-rows: 0.9fr 0.1fr;
   justify-content: center;
-  grid-gap: 3vh;
+  grid-gap: 2vh;
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
@@ -17,7 +17,10 @@
   width: 100%;
 }
 
-.sliderBox {
+.sliderSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
   width: 90%;
 }
 
@@ -39,4 +42,12 @@
 
 .markerLocation {
   font-style: italic;
+}
+
+.sliderContainer {
+  font-size: 2vh;
+}
+
+.dateContainer {
+  font-size: 2vh;
 }

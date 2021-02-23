@@ -93,6 +93,9 @@ body {
 .main-panel {
   grid-area: mainPanel;
   width: 80vw;
+  /* display: flex;
+  flex-direction: column;
+  gap: 5vh; */
 }
 
 .main-header {

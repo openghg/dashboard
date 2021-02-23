@@ -16,10 +16,6 @@ import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis"
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
 
-import LeafletMap from "./components/LeafletMap/LeafletMap";
-
-import londonFootprint from "./images/londonHighResFootprint.svg";
-
 import {isEmpty, getVisID} from "./util/helpers"
 
 import TMBData from "./data/TMB_data_LGHG.json";
@@ -234,9 +230,9 @@ class Dashboard extends React.Component {
               <FootprintAnalysis
                 sites={siteData}
                 centre={[51.5, -0.0482]}
-                zoom={11}
+                zoom={9}
                 width={"75vw"}
-                height={"65vh"}
+                height={"40vh"}
                 measurementData={this.state.processedData}
                 siteData={siteData}
               />

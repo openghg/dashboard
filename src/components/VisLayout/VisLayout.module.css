@@ -3,8 +3,23 @@
   grid-auto-rows: 30vh;
   grid-auto-columns: 100%;
   column-count: 1;
-  margin: 20px;
-  row-gap: 3vh;
+  margin: 1vw;
+  margin-top: 0px;
+  row-gap: 2vh;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  justify-items: left;
+}
+
+.mainSlim {
+  display: grid;
+  grid-auto-rows: 18vh;
+  grid-auto-columns: 100%;
+  column-count: 1;
+  margin: 1vw;
+  margin-top: 0px;
+  row-gap: 2vh;
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;
