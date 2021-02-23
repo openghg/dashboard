@@ -9,11 +9,11 @@ export function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
-export function importSVGs(folderPath) {
+export function importSVGs() {
   let footprints = {};
-  
+  // TODO - fix having this folderpath hardcoded
   try {
-    const requiredSVGs = require.context(folderPath, false, /\.svg$/);
+    const requiredSVGs = require.context("../images/londonFootprints/TMB", false, /\.svg$/);
     const paths = requiredSVGs.keys();
 
     // This is quite a bit of work but it means we can have human-readable filenames

@@ -20,7 +20,7 @@ class FootprintAnalysis extends React.Component {
   constructor(props) {
     super(props);
 
-    const footprints = importSVGs("../../images/londonFootprints/TMB");
+    const footprints = importSVGs();
 
     let dates = Object.keys(footprints);
     dates.sort();
