@@ -16,7 +16,7 @@ import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis"
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
 
-import {isEmpty, getVisID} from "./util/helpers"
+import { isEmpty, getVisID } from "./util/helpers";
 
 import TMBData from "./data/TMB_data_LGHG.json";
 import NPLData from "./data/NPL_data_LGHG.json";
@@ -193,21 +193,12 @@ class Dashboard extends React.Component {
     //   );
   }
 
-  getID() {
-    // Create a unique ID for each visualisation
-    return "vis-id-" + nanoid();
-  }
-
   toggleSidePanel() {
     this.setState({ sidePanel: !this.state.sidePanel });
   }
 
   render() {
     let { error, isLoaded } = this.state;
-
-    // Just set this as true for now as we're not pulling anything
-    // from an API
-    // isLoaded = true;
 
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -236,40 +227,6 @@ class Dashboard extends React.Component {
                 measurementData={this.state.processedData}
                 siteData={siteData}
               />
-
-              {/* <SliderMap
-                dateSelector={this.dateSelector}
-                sites={siteData}
-                centre={[51.5, -0.0482]}
-                zoom={11}
-                width={"75vw"}
-                height={"65vh"}
-              />
-              <SliderMap
-                dateSelector={this.dateSelector}
-                sites={siteData}
-                overlayImg={londonFootprint}
-                overlayBounds={[
-                  [50.87063, -1.26],
-                  [52.0193672, 0.46799811],
-                ]}
-                centre={[51.5, -0.0482]}
-                zoom={11}
-                width={"75vw"}
-                height={"65vh"}
-              /> */}
-              {/* <LeafletMap
-                sites={{ TMB: londonGHGSites["TMB"] }}
-                overlayImg={londonFootprint}
-                overlayBounds={[
-                  [50.87063, -1.26],
-                  [52.0193672, 0.46799811],
-                ]}
-                centre={[51.5, -0.0482]}
-                zoom={10}
-                width={"75vw"}
-                height={"65vh"}
-              /> */}
               <Summary>
                 <div>
                   To tackle climate change, we need to measure and reduce carbon emissions. London GHG is installing a
