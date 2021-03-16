@@ -79,10 +79,15 @@ body {
   grid-area: main;
   background-color: #f4f3ee;
   display: grid;
-  grid-template-columns: 0.2fr 0.8fr;
-  grid-template-rows: 1fr;
+  /* grid-template-columns: 0.2fr 0.8fr; */
+  /* grid-template-rows: 1fr; */
   grid-template-areas: "mainSide mainPanel";
 }
+
+.main-plots {
+    left: 0;
+    top: 0;
+  }
 
 .main-side {
   grid-area: mainSide;

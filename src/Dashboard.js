@@ -9,7 +9,6 @@ import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
-// import SliderMap from "./components/SliderMap/SliderMap";
 import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
 
 import siteData from "./mock/LGHGSitesRandomData.json";
@@ -39,6 +38,7 @@ class Dashboard extends React.Component {
       selectedDate: 0,
       processedData: {},
       dataKeys: {},
+      footprintView: true,
     };
 
     // For the moment create some fake sites
@@ -50,6 +50,7 @@ class Dashboard extends React.Component {
     this.dataSelector = this.dataSelector.bind(this);
     this.processData = this.processData.bind(this);
     this.dateSelector = this.dateSelector.bind(this);
+    this.togglePlots = this.togglePlots.bind(this);
   }
 
   dateSelector(date) {
@@ -196,6 +197,29 @@ class Dashboard extends React.Component {
     this.setState({ sidePanel: !this.state.sidePanel });
   }
 
+  togglePlots() {
+    console.log("togglings plots");
+    this.setState({ footprintView: !this.state.footprintView });
+  }
+
+  createPlots() {
+    if (this.state.footprintView) {
+      return (
+        <FootprintAnalysis
+          sites={siteData}
+          centre={[51.5, -0.0482]}
+          zoom={9}
+          width={"75vw"}
+          height={"40vh"}
+          measurementData={this.state.processedData}
+          siteData={siteData}
+        />
+      );
+    } else {
+      return <VisLayout>{this.createGraphs()}</VisLayout>;
+    }
+  }
+
   render() {
     let { error, isLoaded } = this.state;
 
@@ -214,18 +238,15 @@ class Dashboard extends React.Component {
           </div>
           <div className="main">
             <div className="main-side">
-              <ControlPanel dataKeys={this.state.dataKeys} dataSelector={this.dataSelector} />
+              <ControlPanel
+                togglePlots={this.togglePlots}
+                footprintView={this.state.footprintView}
+                dataKeys={this.state.dataKeys}
+                dataSelector={this.dataSelector}
+              />
             </div>
             <div className="main-panel">
-              <FootprintAnalysis
-                sites={siteData}
-                centre={[51.5, -0.0482]}
-                zoom={9}
-                width={"75vw"}
-                height={"40vh"}
-                measurementData={this.state.processedData}
-                siteData={siteData}
-              />
+              <div className="main-plots">{this.createPlots()}</div>
               <Summary>
                 <div>
                   To tackle climate change, we need to measure and reduce carbon emissions. London GHG is installing a
@@ -235,8 +256,6 @@ class Dashboard extends React.Component {
               </Summary>
 
               <Overview />
-
-              <VisLayout>{this.createGraphs()}</VisLayout>
             </div>
           </div>
         </div>

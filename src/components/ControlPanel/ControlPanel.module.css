@@ -36,7 +36,23 @@
 .main {
   grid-area: panelMain;
   padding: 2vh 0vh 0vh 2vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
 }
+
+.plotSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  justify-content: center;
+}
+
+.plotselector input {
+    vertical-align: middle;
+    position: relative;
+    bottom: 0.08em; /* this is a better value for different fonts! */
+  }
 
 .mainHeader {
   font-size: 2vh;
@@ -51,3 +67,5 @@
 .footer img {
   width: 1.5vw;
 }
+
+
