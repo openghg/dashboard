@@ -1,0 +1,13 @@
+.main {
+  display: grid;
+  grid-template-columns: 0.45fr 0.3fr;
+  gap: 0vw
+}
+
+.label {
+  font-size: 1.6vh;
+}
+
+.box {
+    color: black;
+}
