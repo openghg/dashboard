@@ -1,6 +1,5 @@
 import "./Dashboard.css";
 import React from "react";
-import { nanoid } from "nanoid";
 
 import londonGHGSites from "./data/siteMetadata.json";
 
