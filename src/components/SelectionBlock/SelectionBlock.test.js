@@ -16,8 +16,8 @@ describe("Test SelectionBlock", () => {
 
     expect(screen.getByText("test site name")).toBeInTheDocument();
 
-    const checkboxA = screen.getByRole("checkbox", { name: /GAS_A/i });
-    const checkboxB = screen.getByRole("checkbox", { name: /GAS_B/i });
+    const checkboxA = screen.getByTestId("test site name_gas_a");
+    const checkboxB = screen.getByTestId("test site name_gas_b");
 
     expect(checkboxA).not.toBeChecked();
     expect(checkboxB).not.toBeChecked();
@@ -28,7 +28,7 @@ describe("Test SelectionBlock", () => {
 
     render(<SelectionBlock siteDataKeys={mockData} siteName={"test site name"} onChange={fn} />);
 
-    const checkboxA = screen.getByRole("checkbox", { name: /GAS_A/i });
+    const checkboxA = screen.getByTestId("test site name_gas_a");
 
     userEvent.click(checkboxA);
 

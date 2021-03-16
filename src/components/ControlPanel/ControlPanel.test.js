@@ -21,9 +21,9 @@ describe("Test ControlPanel", () => {
 
     render(<ControlPanel dataKeys={testKeys} dataSelector={fn} />);
 
-    const checkboxA = screen.getByRole("checkbox", { name: /test_a/i });
-    const checkboxB = screen.getByRole("checkbox", { name: /test_b/i });
-    const checkboxC = screen.getByRole("checkbox", { name: /test_c/i });
+    const checkboxA = screen.getByTestId("AAA_test_a");
+    const checkboxB = screen.getByTestId("AAA_test_b");
+    const checkboxC = screen.getByTestId("AAA_test_c");
 
     expect(checkboxA).not.toBeChecked();
     expect(checkboxB).not.toBeChecked();

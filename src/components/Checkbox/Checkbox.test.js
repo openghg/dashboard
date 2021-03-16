@@ -10,7 +10,7 @@ describe("Test Checkbox", () => {
 
     render(<Checkbox name="testbox" label="testbox" onChange={fn} />);
 
-    const checkbox = screen.getByRole("checkbox", { name: /testbox/i });
+    const checkbox = screen.getByTestId("testbox")
 
     expect(checkbox).toBeInTheDocument();
     expect(checkbox).not.toBeChecked();
