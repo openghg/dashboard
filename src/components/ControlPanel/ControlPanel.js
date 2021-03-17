@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import DataSelector from "../DataSelector/DataSelector";
 import styles from "./ControlPanel.module.css";
@@ -7,7 +6,6 @@ import GitHubLogo from "../../images/github.svg";
 
 class ControlPanel extends React.Component {
   plottingInterface() {
-    console.log(this.props.dataKeys);
     if (this.props.plotType === "timeseries") {
       return (
         <div>
