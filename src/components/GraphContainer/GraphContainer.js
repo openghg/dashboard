@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 
 class GraphContainer extends React.Component {
@@ -36,6 +37,10 @@ class GraphContainer extends React.Component {
       </div>
     );
   }
+}
+
+GraphContainer.propTypes = {
+  children: PropTypes.node.isRequired
 }
 
 export default GraphContainer;

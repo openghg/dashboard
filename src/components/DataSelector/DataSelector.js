@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 // import styles from "./ControlPanel.module.css";
 import { cloneDeep } from "lodash";
@@ -80,6 +81,11 @@ class DataSelector extends React.Component {
       </div>
     );
   }
+}
+
+DataSelector.propTypes = {
+  dataKeys: PropTypes.object,
+  dataSelector: PropTypes.func
 }
 
 export default DataSelector;

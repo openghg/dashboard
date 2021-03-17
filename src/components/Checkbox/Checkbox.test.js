@@ -8,9 +8,11 @@ describe("Test Checkbox", () => {
   test("Check ticking calls function", () => {
     const fn = jest.fn();
 
-    render(<Checkbox name="testbox" label="testbox" onChange={fn} />);
+    render(
+      <Checkbox species="test_species" site="test_site" name="testbox" label="testbox" onChange={fn} />
+    );
 
-    const checkbox = screen.getByTestId("testbox")
+    const checkbox = screen.getByTestId("testbox");
 
     expect(checkbox).toBeInTheDocument();
     expect(checkbox).not.toBeChecked();

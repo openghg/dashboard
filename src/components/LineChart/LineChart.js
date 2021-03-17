@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import Plot from "react-plotly.js";
 
@@ -116,5 +117,17 @@ class LineChart extends React.Component {
     );
   }
 }
+
+LineChart.propTypes = {
+  colours: PropTypes.arrayOf(PropTypes.string).isRequired,
+  data: PropTypes.object.isRequired,
+  selectedDate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  title: PropTypes.string,
+  height: PropTypes.number,
+  width: PropTypes.number,
+  xRange: PropTypes.string,
+  yLabel: PropTypes.string,
+  yRange: PropTypes.string,
+};
 
 export default LineChart;

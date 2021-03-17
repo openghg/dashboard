@@ -159,11 +159,16 @@ class SliderMap extends React.Component {
 
 SliderMap.propTypes = {
   centre: PropTypes.array,
-  dateSelector: PropTypes.func,
+  dateSelector: PropTypes.func.isRequired,
+  dates: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
   height: PropTypes.string,
+  overlayBounds: PropTypes.array,
+  overlayImg: PropTypes.string,
+  selectedDate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  showSites: PropTypes.bool,
   sites: PropTypes.object,
-  width: PropTypes.string,
-  zoom: PropTypes.number,
+  width: PropTypes.string.isRequired,
+  zoom: PropTypes.number.isRequired
 };
 
 export default SliderMap;

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import VisUnit from "../VisUnit/VisUnit";
 
@@ -27,6 +28,11 @@ class VisLayout extends React.Component {
       </div>
     );
   }
+}
+
+VisLayout.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  slimPlot: PropTypes.bool
 }
 
 export default VisLayout;

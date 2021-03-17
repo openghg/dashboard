@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import DataSelector from "../DataSelector/DataSelector";
 import styles from "./ControlPanel.module.css";
@@ -49,6 +50,13 @@ class ControlPanel extends React.Component {
       </div>
     );
   }
+}
+
+ControlPanel.propTypes = {
+  dataKeys: PropTypes.object.isRequired,
+  dataSelector: PropTypes.func.isRequired,
+  plotType: PropTypes.string.isRequired,
+  selectPlotType: PropTypes.func.isRequired
 }
 
 export default ControlPanel;

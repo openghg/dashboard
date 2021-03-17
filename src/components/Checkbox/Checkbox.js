@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import styles from "./Checkbox.module.css";
 
@@ -23,6 +24,15 @@ class Checkbox extends React.Component {
       </div>
     );
   }
+}
+
+Checkbox.propTypes = {
+  checked: PropTypes.bool,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  site: PropTypes.string.isRequired,
+  species: PropTypes.string.isRequired
 }
 
 export default Checkbox;

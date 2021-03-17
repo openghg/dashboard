@@ -10,7 +10,7 @@ describe("Test ControlPanel", () => {
   test("Check correct text rendered", () => {
     const fn = jest.fn();
 
-    render(<ControlPanel dataKeys={testKeys} dataSelector={fn} />);
+    render(<ControlPanel selectPlotType={fn} plotType="timeseries" dataKeys={testKeys} dataSelector={fn} />);
 
     expect(screen.getByText("LondonGHG")).toBeInTheDocument();
     expect(screen.getByText("A new system for estimating London's emissions")).toBeInTheDocument();
