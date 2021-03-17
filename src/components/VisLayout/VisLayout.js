@@ -16,12 +16,16 @@ class VisLayout extends React.Component {
       visualisations = <VisUnit testid={key} key={key} vis={this.props.children} />;
     }
 
-    let style = styles.main;
+    let plotStyle = styles.main;
     if (this.props.slimPlot) {
-      style = styles.mainSlim;
+      plotStyle = styles.mainSlim;
     }
 
-    return <div className={style}>{visualisations}</div>;
+    return (
+      <div className={styles.content}>
+        <div className={plotStyle}>{visualisations}</div>;
+      </div>
+    );
   }
 }
 
