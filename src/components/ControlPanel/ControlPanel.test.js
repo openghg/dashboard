@@ -14,12 +14,21 @@ describe("Test ControlPanel", () => {
 
     expect(screen.getByText("LondonGHG")).toBeInTheDocument();
     expect(screen.getByText("A new system for estimating London's emissions")).toBeInTheDocument();
+    expect(screen.getByText("Select visualisation type:")).toBeInTheDocument();
   });
-  
+
   test("Check ticking and clicking plot", () => {
     const fn = jest.fn();
+    const sel_fn = jest.fn();
 
-    render(<ControlPanel dataKeys={testKeys} dataSelector={fn} />);
+    render(<ControlPanel selectPlotType={sel_fn} plotType="timeseries" dataKeys={testKeys} dataSelector={fn} />);
+
+    userEvent.selectOptions(screen.getByTestId("select-form"), ["timeseries"]);
+    expect(screen.getByTestId("sel-footprint").selected).toBe(false);
+    expect(screen.getByTestId("sel-timeseries").selected).toBe(true);
+
+    expect(screen.getByText("Plot")).toBeInTheDocument()
+    expect(screen.getByText("Clear")).toBeInTheDocument()
 
     const checkboxA = screen.getByTestId("AAA_test_a");
     const checkboxB = screen.getByTestId("AAA_test_b");
@@ -40,5 +49,23 @@ describe("Test ControlPanel", () => {
     userEvent.click(screen.getByRole("button", { name: /plot/i }));
 
     expect(fn).toHaveBeenCalledTimes(1);
+    expect(sel_fn).toHaveBeenCalledTimes(1);
   });
+
+  test("Check footprint panel renders", () => {
+    const fn = jest.fn();
+    const sel_fn = jest.fn();
+
+    render(<ControlPanel selectPlotType={sel_fn} plotType="footprint" dataKeys={testKeys} dataSelector={fn} />);
+
+    expect(screen.getByText("Footprint")).toBeInTheDocument()
+
+    userEvent.selectOptions(screen.getByTestId("select-form"), ["footprint"]);
+    expect(screen.getByTestId("sel-footprint").selected).toBe(true);
+    expect(screen.getByTestId("sel-timeseries").selected).toBe(false);
+    
+    expect(sel_fn).toHaveBeenCalledTimes(1);
+  });
+
+
 });

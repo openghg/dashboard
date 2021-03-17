@@ -35,7 +35,6 @@ class DataSelector extends React.Component {
   }
 
   clearSelection() {
-    // Clear all
     const selected = this.state.selected;
 
     for (let [key, subdict] of Object.entries(selected)) {
@@ -45,8 +44,6 @@ class DataSelector extends React.Component {
     }
 
     this.props.dataSelector(selected);
-
-    // Also need to clear all checkboxes
   }
 
   render() {

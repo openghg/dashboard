@@ -1,14 +1,22 @@
 import React from "react";
-import Switch from "react-switch";
 import DataSelector from "../DataSelector/DataSelector";
 import styles from "./ControlPanel.module.css";
 
 import GitHubLogo from "../../images/github.svg";
 
 class ControlPanel extends React.Component {
-  render() {
-    let plotText = this.props.footprintView ? "Footprint Analysis" : "Plotting";
+  plottingInterface() {
+    if (this.props.plotType === "timeseries") {
+      return (
+        <div>
+          <div className={styles.mainHeader}>Sites</div>
+          <DataSelector dataKeys={this.props.dataKeys} dataSelector={this.props.dataSelector} />
+        </div>
+      );
+    }
+  }
 
+  render() {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
@@ -17,11 +25,21 @@ class ControlPanel extends React.Component {
         </div>
         <div className={styles.main}>
           <div className={styles.plotSelector}>
-            {plotText}
-            <Switch onChange={this.props.togglePlots} checked={this.props.footprintView} />
+            Select visualisation type:
+            <div>
+              <form>
+                <select data-testid="select-form" value={this.props.plotType} onChange={this.props.selectPlotType}>
+                  <option data-testid="sel-footprint" value="footprint">
+                    Footprint
+                  </option>
+                  <option data-testid="sel-timeseries" value="timeseries">
+                    Timeseries
+                  </option>
+                </select>
+              </form>
+            </div>
           </div>
-          <div className={styles.mainHeader}>Sites</div>
-          <DataSelector dataKeys={this.props.dataKeys} dataSelector={this.props.dataSelector} />
+          {this.plottingInterface()}
         </div>
         <div className={styles.footer}>
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">

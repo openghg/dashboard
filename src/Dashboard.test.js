@@ -17,6 +17,34 @@ describe("Test Dashboard", () => {
     render(<Dashboard />);
 
     expect(screen.getByText("A new system for estimating London's emissions")).toBeInTheDocument();
+    expect(screen.getByText("Select visualisation type:")).toBeInTheDocument();
+    expect(screen.getByText("Footprint Analysis")).toBeInTheDocument();
+    expect(screen.getByTestId("select-form")).toBeInTheDocument()
+    
+  });
+
+  test("Ensure select button selects", () => {
+    render(<Dashboard />);
+
+    expect(screen.getByText("Select visualisation type:")).toBeInTheDocument();
+    expect(screen.getByTestId("select-form")).toBeInTheDocument()
+    
+    userEvent.selectOptions(screen.getByTestId("select-form"), ["footprint"]);
+    expect(screen.getByTestId("sel-footprint").selected).toBe(true);
+    expect(screen.getByTestId("sel-timeseries").selected).toBe(false);
+    expect(screen.getByText("Footprint Analysis")).toBeInTheDocument();
+
+    userEvent.selectOptions(screen.getByTestId("select-form"), ["timeseries"]);
+    expect(screen.getByTestId("sel-footprint").selected).toBe(false);
+    expect(screen.getByTestId("sel-timeseries").selected).toBe(true);
+    
+  });
+
+  test("Ensure timeseries plotting panel rendered", () => {
+
+    render(<Dashboard />);
+
+    userEvent.selectOptions(screen.getByTestId("select-form"), ["timeseries"]);
 
     expect(screen.getByText("Sites")).toBeInTheDocument();
 
@@ -32,6 +60,8 @@ describe("Test Dashboard", () => {
 
   test("Check select and plot click draws new plot", () => {
     render(<Dashboard />);
+
+    userEvent.selectOptions(screen.getByTestId("select-form"), ["timeseries"]);
 
     expect(screen.getByTestId("TMB_CH4")).toBeInTheDocument();
 
@@ -58,11 +88,19 @@ describe("Test Dashboard", () => {
     expect(screen.getByText(/ppm/i)).toBeInTheDocument();
   });
 
-  test("Check summary rendered", () => {
+  test("Ensure footprint analysis rendered", () => {
+
     render(<Dashboard />);
 
-    expect(
-      screen.getByText(/To tackle climate change, we need to measure and reduce carbon emissions/i)
-    ).toBeInTheDocument();
+    userEvent.selectOptions(screen.getByTestId("select-form"), ["footprint"]);
+
+    expect(screen.queryByText("Sites")).not.toBeInTheDocument();
+
+    expect(screen.getByTestId("vis-unit-footprint-plot-CO2-fp-TMB")).toBeInTheDocument();
+    expect(screen.getByTestId("vis-unit-footprint-plot-CH4-fp-TMB")).toBeInTheDocument();
+
+    expect(screen.getByText("Footprint Analysis")).toBeInTheDocument()
+
   });
+
 });

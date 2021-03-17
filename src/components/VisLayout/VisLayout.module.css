@@ -1,3 +1,9 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
 .main {
   display: grid;
   grid-auto-rows: 30vh;
@@ -11,6 +17,14 @@
   break-inside: avoid;
   justify-items: left;
 }
+
+.header {
+    font-size: 2vh;
+    font-weight: 500;
+    color: #808080;
+}
+
+
 
 .mainSlim {
   display: grid;

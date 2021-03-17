@@ -119,6 +119,7 @@ class FootprintAnalysis extends React.Component {
       <div className={styles.container}>
         <div className={styles.map}>
           <SliderMap
+            data-testid="slider-map"
             dateSelector={this.dateSelector}
             selectedDate={this.state.selectedDate}
             dates={this.state.dates}

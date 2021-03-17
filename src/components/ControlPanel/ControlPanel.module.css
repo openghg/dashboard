@@ -48,12 +48,6 @@
   justify-content: center;
 }
 
-.plotselector input {
-    vertical-align: middle;
-    position: relative;
-    bottom: 0.08em; /* this is a better value for different fonts! */
-  }
-
 .mainHeader {
   font-size: 2vh;
   font-weight: 500;
