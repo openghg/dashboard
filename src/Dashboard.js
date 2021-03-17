@@ -38,6 +38,7 @@ class Dashboard extends React.Component {
       selectedDate: 0,
       processedData: {},
       dataKeys: {},
+      selectedKeys: {},
       footprintView: true,
       emptySelection: true,
       plotType: "footprint",
@@ -99,6 +100,7 @@ class Dashboard extends React.Component {
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
+    this.state.selectedKeys = dataKeys;
     this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
   }
@@ -275,13 +277,12 @@ class Dashboard extends React.Component {
               <ControlPanel
                 selectPlotType={this.selectPlotType}
                 plotType={this.state.plotType}
-                dataKeys={this.state.dataKeys}
+                dataKeys={this.state.selectedKeys}
                 dataSelector={this.dataSelector}
               />
             </div>
             <div className="main-panel">
               <Overview />
-
               <div className="main-plots">
                 {this.plotHeader()}
                 {this.createPlots()}
