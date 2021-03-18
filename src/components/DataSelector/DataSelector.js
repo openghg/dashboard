@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 // import styles from "./ControlPanel.module.css";
 import { cloneDeep } from "lodash";
@@ -35,7 +36,6 @@ class DataSelector extends React.Component {
   }
 
   clearSelection() {
-    // Clear all
     const selected = this.state.selected;
 
     for (let [key, subdict] of Object.entries(selected)) {
@@ -45,8 +45,6 @@ class DataSelector extends React.Component {
     }
 
     this.props.dataSelector(selected);
-
-    // Also need to clear all checkboxes
   }
 
   render() {
@@ -83,6 +81,11 @@ class DataSelector extends React.Component {
       </div>
     );
   }
+}
+
+DataSelector.propTypes = {
+  dataKeys: PropTypes.object,
+  dataSelector: PropTypes.func
 }
 
 export default DataSelector;

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 
 import SliderMap from "../SliderMap/SliderMap";
@@ -6,15 +7,9 @@ import GraphContainer from "../GraphContainer/GraphContainer";
 import LineChart from "./../LineChart/LineChart";
 import colours from "../../data/colours.json";
 
-import { isEmpty, getVisID, importSVGs } from "../../util/helpers";
+import { isEmpty, importSVGs } from "../../util/helpers";
 
 import styles from "./FootprintAnalysis.module.css";
-
-// Import all the data we need - so all the SVGs
-// Have all the site data available
-// Have a list of the sites available
-// Then we can select the plots we want to create
-// Maybe instead of Linechart directly we could use VisLayout
 
 class FootprintAnalysis extends React.Component {
   constructor(props) {
@@ -76,7 +71,6 @@ class FootprintAnalysis extends React.Component {
           const vis = (
             <GraphContainer key={containerKey}>
               <LineChart
-                divID={getVisID()}
                 data={siteData}
                 colours={selectedColours}
                 title={title}
@@ -119,6 +113,7 @@ class FootprintAnalysis extends React.Component {
       <div className={styles.container}>
         <div className={styles.map}>
           <SliderMap
+            data-testid="slider-map"
             dateSelector={this.dateSelector}
             selectedDate={this.state.selectedDate}
             dates={this.state.dates}
@@ -136,6 +131,15 @@ class FootprintAnalysis extends React.Component {
       </div>
     );
   }
+}
+
+FootprintAnalysis.propTypes = {
+  centre: PropTypes.arrayOf(PropTypes.number).isRequired,
+  height: PropTypes.string,
+  measurementData: PropTypes.object,
+  siteData: PropTypes.object,
+  width: PropTypes.string,
+  zoom: PropTypes.number.isRequired
 }
 
 export default FootprintAnalysis;

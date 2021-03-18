@@ -1,3 +1,4 @@
+import PropTypes, { object } from "prop-types";
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import styles from "./LeafletMap.module.css";
@@ -71,6 +72,16 @@ class LeafletMap extends React.Component {
       </div>
     );
   }
+}
+
+LeafletMap.propTypes = {
+  centre: PropTypes.arrayOf(PropTypes.number).isRequired,
+  height: PropTypes.string.isRequired,
+  overlayBounds: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.array)),
+  overlayImg: PropTypes.string,
+  sites: PropTypes.objectOf(object),
+  width: PropTypes.string.isRequired,
+  zoom: PropTypes.number.isRequired
 }
 
 export default LeafletMap;

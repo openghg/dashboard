@@ -1,16 +1,14 @@
 import "./Dashboard.css";
 import React from "react";
-import { nanoid } from "nanoid";
 
 import londonGHGSites from "./data/siteMetadata.json";
 
 import LineChart from "./components/LineChart/LineChart";
-import Summary from "./components/Summary/Summary";
+// import Summary from "./components/Summary/Summary";
 import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
-// import SliderMap from "./components/SliderMap/SliderMap";
 import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
 
 import siteData from "./mock/LGHGSitesRandomData.json";
@@ -40,6 +38,10 @@ class Dashboard extends React.Component {
       selectedDate: 0,
       processedData: {},
       dataKeys: {},
+      selectedKeys: {},
+      footprintView: true,
+      emptySelection: true,
+      plotType: "footprint",
     };
 
     // For the moment create some fake sites
@@ -51,6 +53,7 @@ class Dashboard extends React.Component {
     this.dataSelector = this.dataSelector.bind(this);
     this.processData = this.processData.bind(this);
     this.dateSelector = this.dateSelector.bind(this);
+    this.selectPlotType = this.selectPlotType.bind(this);
   }
 
   dateSelector(date) {
@@ -97,6 +100,7 @@ class Dashboard extends React.Component {
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
+    this.state.selectedKeys = dataKeys;
     this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
   }
@@ -197,6 +201,61 @@ class Dashboard extends React.Component {
     this.setState({ sidePanel: !this.state.sidePanel });
   }
 
+  //   togglePlots() {
+  //     this.setState({ footprintView: !this.state.footprintView });
+  //   }
+
+  selectPlotType(event) {
+    const value = event.target.value;
+    this.setState({ plotType: value });
+  }
+
+  createPlots() {
+    if (this.state.plotType === "footprint") {
+      return (
+        <FootprintAnalysis
+          sites={siteData}
+          centre={[51.5, -0.0482]}
+          zoom={9}
+          width={"75vw"}
+          height={"40vh"}
+          measurementData={this.state.processedData}
+          siteData={siteData}
+        />
+      );
+    } else {
+      return <VisLayout>{this.createGraphs()}</VisLayout>;
+    }
+  }
+
+  anySelected() {
+    for (const subdict of Object.values(this.state.selectedKeys)) {
+      for (const value of Object.values(subdict)) {
+        if (value === true) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  plotHeader() {
+    if (this.state.plotType === "footprint") {
+      return <div className={"plot-header"}>Footprint Analysis</div>;
+    } else {
+      return <div className={"plot-header"}>Timeseries Comparison</div>;
+    }
+  }
+
+  plotAdvice() {
+    if (this.state.plotType === "timeseries") {
+      if (!this.state.selectedKeys || !this.anySelected()) {
+        return <div className="plot-advice">Please select species to plot.</div>;
+      }
+    }
+  }
+
   render() {
     let { error, isLoaded } = this.state;
 
@@ -215,29 +274,27 @@ class Dashboard extends React.Component {
           </div>
           <div className="main">
             <div className="main-side">
-              <ControlPanel dataKeys={this.state.dataKeys} dataSelector={this.dataSelector} />
+              <ControlPanel
+                selectPlotType={this.selectPlotType}
+                plotType={this.state.plotType}
+                dataKeys={this.state.selectedKeys}
+                dataSelector={this.dataSelector}
+              />
             </div>
             <div className="main-panel">
-              <FootprintAnalysis
-                sites={siteData}
-                centre={[51.5, -0.0482]}
-                zoom={9}
-                width={"75vw"}
-                height={"40vh"}
-                measurementData={this.state.processedData}
-                siteData={siteData}
-              />
-              <Summary>
+              <Overview />
+              <div className="main-plots">
+                {this.plotHeader()}
+                {this.createPlots()}
+                {this.plotAdvice()}
+              </div>
+              {/* <Summary>
                 <div>
                   To tackle climate change, we need to measure and reduce carbon emissions. London GHG is installing a
                   new network of atmospheric measurements across the capital, and developing a new modelling framework
                   to provide emission estimates of carbon dioxide and methane.
                 </div>
-              </Summary>
-
-              <Overview />
-
-              <VisLayout>{this.createGraphs()}</VisLayout>
+              </Summary> */}
             </div>
           </div>
         </div>

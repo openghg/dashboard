@@ -1,16 +1,30 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
 .main {
   display: grid;
   grid-auto-rows: 30vh;
   grid-auto-columns: 100%;
   column-count: 1;
   margin: 1vw;
-  margin-top: 0px;
+  margin-top: 3vh;
   row-gap: 2vh;
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;
   justify-items: left;
 }
+
+.header {
+    font-size: 2vh;
+    font-weight: 500;
+    color: #808080;
+}
+
+
 
 .mainSlim {
   display: grid;

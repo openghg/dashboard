@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import styles from "./SelectionBlock.module.css";
 
@@ -38,5 +39,11 @@ class SelectionBlock extends React.Component {
     );
   }
 }
+
+SelectionBlock.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  siteDataKeys: PropTypes.object.isRequired,
+  siteName: PropTypes.string.isRequired,
+};
 
 export default SelectionBlock;
