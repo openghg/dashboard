@@ -76,21 +76,26 @@ body {
 
 .content {
   background-color: #f4f3ee;
+  display: grid;
+  grid-template:
+    "plotHeader" 1fr
+    "plotContent" 8fr;
 }
 
-.main-plots {
-  padding-top: 1vh;
-  left: 0;
-  top: 0;
-}
-
-.plot-header {
+.plotHeader {
+  grid-area: plotHeader;
+  /* top | horizontal | bottom */
+  padding: 1vh 2vw 0vh;
   font-size: 2.5vh;
   color: #808080;
   font-weight: 300;
 }
 
-.plot-advice {
+.plotContent {
+  grid-area: plotContent;
+}
+
+.plotAdvice {
   color: #222222;
   font-size: 2vh;
   font-weight: 300;

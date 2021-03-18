@@ -252,7 +252,7 @@ class Dashboard extends React.Component {
   plotAdvice() {
     if (this.state.plotType === "timeseries") {
       if (!this.state.selectedKeys || !this.anySelected()) {
-        return <div className="plot-advice">Please select species to plot.</div>;
+        return <div className={styles.plotAdvice}>Please select species to plot.</div>;
       }
     }
   }
@@ -279,15 +279,13 @@ class Dashboard extends React.Component {
             />
           </div>
           <div className={styles.content}>
-            {/* <div className={styles.plotHeader}> */}
-              {/* <Overview />
-            </div>
-            <div className={styles.plots}>
+            <div className={styles.plotHeader}>
               {this.plotHeader()}
+            </div>
+            <div className={styles.plotContent}>
               {this.createPlots()}
               {this.plotAdvice()}
-            </div> */}
-            Woooo
+            </div>
           </div>
         </div>
       );
