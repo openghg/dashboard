@@ -24,7 +24,7 @@ class VisLayout extends React.Component {
 
     return (
       <div className={styles.content}>
-        <div className={plotStyle}>{visualisations}</div>;
+        <div className={plotStyle}>{visualisations}</div>
       </div>
     );
   }
@@ -32,7 +32,7 @@ class VisLayout extends React.Component {
 
 VisLayout.propTypes = {
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
-  slimPlot: PropTypes.bool
-}
+  slimPlot: PropTypes.bool,
+};
 
 export default VisLayout;

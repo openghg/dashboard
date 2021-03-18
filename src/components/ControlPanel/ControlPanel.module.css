@@ -1,8 +1,7 @@
 .container {
   background-color: #e9ecef;
   position: fixed;
-  display: grid;
-  grid-template-columns: 1fr;
+  /* display: grid;
   grid-template-rows: 0.2fr 0.7fr 0.1fr;
   grid-template-areas:
     "panelHeader"
@@ -12,9 +11,7 @@
   overflow-y: hidden;
   left: 0;
   top: 0;
-  height: 100vh;
-  width: 15vw;
-  padding-top: 4vh;
+  padding-top: 4vh; */
   color: black;
 }
 
@@ -30,7 +27,6 @@
 
 .headerTag {
   font-size: 2vh;
-  width: 70%;
 }
 
 .main {

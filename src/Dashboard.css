@@ -78,8 +78,7 @@ body {
   grid-area: main;
   background-color: #f4f3ee;
   display: grid;
-  /* grid-template-columns: 0.2fr 0.8fr; */
-  /* grid-template-rows: 1fr; */
+  grid-template-columns: minmax(170px, 14vw) 86vw;
   grid-template-areas: "mainSide mainPanel";
 }
 
@@ -92,12 +91,12 @@ body {
 .main-side {
   grid-area: mainSide;
   position: relative;
-  width: 15vw;
+  background: tomato;
 }
 
 .main-panel {
   grid-area: mainPanel;
-  width: 80vw;
+  /* width: 80vw; */
   /* display: flex;
   flex-direction: column;
   gap: 5vh; */
