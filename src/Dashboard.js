@@ -1,4 +1,3 @@
-import "./Dashboard.css";
 import React from "react";
 
 import londonGHGSites from "./data/siteMetadata.json";
@@ -15,6 +14,8 @@ import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
 
 import { isEmpty, getVisID } from "./util/helpers";
+
+import styles from "./Dashboard.module.css";
 
 import TMBData from "./data/TMB_data_LGHG.json";
 import NPLData from "./data/NPL_data_LGHG.json";
@@ -265,37 +266,28 @@ class Dashboard extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <div className="grid-container">
-          <div className="header">
-            <div>
-              <div></div>
-            </div>
+        <div className={styles.gridContainer}>
+          <div className={styles.header}>
             LondonGHG Dashboard
           </div>
-          <div className="main">
-            <div className="main-side">
-              <ControlPanel
-                selectPlotType={this.selectPlotType}
-                plotType={this.state.plotType}
-                dataKeys={this.state.selectedKeys}
-                dataSelector={this.dataSelector}
-              />
+          <div className={styles.sidebar}>
+            <ControlPanel
+              selectPlotType={this.selectPlotType}
+              plotType={this.state.plotType}
+              dataKeys={this.state.selectedKeys}
+              dataSelector={this.dataSelector}
+            />
+          </div>
+          <div className={styles.content}>
+            {/* <div className={styles.plotHeader}> */}
+              {/* <Overview />
             </div>
-            <div className="main-panel">
-              <Overview />
-              <div className="main-plots">
-                {this.plotHeader()}
-                {this.createPlots()}
-                {this.plotAdvice()}
-              </div>
-              {/* <Summary>
-                <div>
-                  To tackle climate change, we need to measure and reduce carbon emissions. London GHG is installing a
-                  new network of atmospheric measurements across the capital, and developing a new modelling framework
-                  to provide emission estimates of carbon dioxide and methane.
-                </div>
-              </Summary> */}
-            </div>
+            <div className={styles.plots}>
+              {this.plotHeader()}
+              {this.createPlots()}
+              {this.plotAdvice()}
+            </div> */}
+            Woooo
           </div>
         </div>
       );

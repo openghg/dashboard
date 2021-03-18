@@ -1,24 +1,23 @@
 .container {
   background-color: #e9ecef;
-  position: fixed;
-  /* display: grid;
-  grid-template-rows: 0.2fr 0.7fr 0.1fr;
-  grid-template-areas:
-    "panelHeader"
-    "panelMain"
-    "panelFooter";
-  overflow-x: hidden;
-  overflow-y: hidden;
-  left: 0;
-  top: 0;
-  padding-top: 4vh; */
+  /* display: flex; */
+  /* flex-direction: column; */
+
+  display: grid;
+  grid-template:
+    "sideHeader" 1fr
+    "sideContent" 5fr
+    "sideFooter" 1fr;
+
+  padding-right: 1vw;
   color: black;
 }
 
 .header {
-  grid-area: panelHeader;
+  grid-area: sideHeader;
   padding: 2vh 0vh 0vh 2vh;
   font-size: 3vh;
+ 
 }
 
 .headerText {
@@ -29,8 +28,8 @@
   font-size: 2vh;
 }
 
-.main {
-  grid-area: panelMain;
+.content {
+  grid-area: sideContent;
   padding: 2vh 0vh 0vh 2vh;
   display: flex;
   flex-direction: column;
@@ -50,12 +49,10 @@
 }
 
 .footer {
-  grid-area: panelFooter;
+  grid-area: "sideFooter";
   padding: 2vh 0vh 0vh 2vh;
 }
 
 .footer img {
   width: 1.5vw;
 }
-
-

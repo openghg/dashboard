@@ -24,7 +24,7 @@ class ControlPanel extends React.Component {
           <div className={styles.headerText}>LondonGHG</div>
           <div className={styles.headerTag}>A new system for estimating London's emissions</div>
         </div>
-        <div className={styles.main}>
+        <div className={styles.content}>
           <div className={styles.plotSelector}>
             Select visualisation type:
             <div>
@@ -56,7 +56,7 @@ ControlPanel.propTypes = {
   dataKeys: PropTypes.object.isRequired,
   dataSelector: PropTypes.func.isRequired,
   plotType: PropTypes.string.isRequired,
-  selectPlotType: PropTypes.func.isRequired
-}
+  selectPlotType: PropTypes.func.isRequired,
+};
 
 export default ControlPanel;
