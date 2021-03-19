@@ -68,6 +68,8 @@ class LineChart extends React.Component {
       };
     }
 
+    const widthScaleFactor = 0.925;
+
     const layout = {
       title: {
         text: this.props.title ? this.props.title : null,
@@ -98,7 +100,7 @@ class LineChart extends React.Component {
         ticks: "outside",
         zeroline: false,
       },
-      width: this.props.width,
+      width: widthScaleFactor * this.props.width,
       height: this.props.height,
       margin: {
         l: 60,

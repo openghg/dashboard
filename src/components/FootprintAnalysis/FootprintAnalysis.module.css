@@ -6,6 +6,7 @@
     "map"
     "linechart";
   color: black;
+  justify-content: center;
 }
 
 .map {

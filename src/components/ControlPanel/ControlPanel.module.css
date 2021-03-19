@@ -2,7 +2,6 @@
   background-color: #e9ecef;
   /* display: flex; */
   /* flex-direction: column; */
-
   display: grid;
   grid-template:
     "sideHeader" 1fr

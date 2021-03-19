@@ -50,11 +50,9 @@ class Dashboard extends React.Component {
     // This data will come from a function but for now just read it in
     this.state.apiData = this.processData();
 
-    this.toggleSidePanel = this.toggleSidePanel.bind(this);
     this.dataSelector = this.dataSelector.bind(this);
-    this.processData = this.processData.bind(this);
     this.dateSelector = this.dateSelector.bind(this);
-    this.selectPlotType = this.selectPlotType.bind(this);
+    this.selectPlotType = this.selectPlotType.bind(this); 
   }
 
   dateSelector(date) {
@@ -198,13 +196,6 @@ class Dashboard extends React.Component {
     //   );
   }
 
-  toggleSidePanel() {
-    this.setState({ sidePanel: !this.state.sidePanel });
-  }
-
-  //   togglePlots() {
-  //     this.setState({ footprintView: !this.state.footprintView });
-  //   }
 
   selectPlotType(event) {
     const value = event.target.value;
@@ -278,7 +269,7 @@ class Dashboard extends React.Component {
               dataSelector={this.dataSelector}
             />
           </div>
-          <div className={styles.content}>
+          <div className={styles.content} id="dbContent">
             <div className={styles.plotHeader}>
               {this.plotHeader()}
             </div>

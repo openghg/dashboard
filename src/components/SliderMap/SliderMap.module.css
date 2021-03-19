@@ -5,12 +5,9 @@
   color: slategray;
   display: grid;
   grid-template-rows: 0.9fr 0.1fr;
-  justify-content: center;
   grid-gap: 2vh;
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  justify-items: center; /* adjusted */
+  justify-content: center;
+  justify-items: center;
 }
 
 .mapBox {
