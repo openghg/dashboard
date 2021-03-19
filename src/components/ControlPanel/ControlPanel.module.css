@@ -1,13 +1,11 @@
 .container {
-  background-color: #e9ecef;
-  /* display: flex; */
-  /* flex-direction: column; */
+  position: fixed;
   display: grid;
   grid-template:
     "sideHeader" 1fr
     "sideContent" 5fr
     "sideFooter" 1fr;
-
+  grid-template-columns: minmax(180px, 15vw);
   padding-right: 1vw;
   color: black;
 }
@@ -16,7 +14,6 @@
   grid-area: sideHeader;
   padding: 2vh 0vh 0vh 2vh;
   font-size: 3vh;
- 
 }
 
 .headerText {

@@ -49,12 +49,13 @@ body {
 
 .gridContainer {
   display: grid;
-  /* grid-template-columns: minmax(180px, 14vw) 86vw; */
-  grid-template-columns: 14vw 86vw;
-  grid-template-rows: 5vh 95vh;
+  grid-template-columns: minmax(180px, 15vw) 85vw;
+  /* grid-template-columns: 14vw 86vw; */
+  grid-template-rows: auto 1fr;
   grid-template-areas:
     "header  header"
     "sidebar content";
+  height: 100vh;
 }
 
 .header {
@@ -73,7 +74,8 @@ body {
   /* position: relative; */
   background: #e9ecef;
   overflow: hidden;
-  height: 100vh;
+  height: 1fr;
+
 }
 
 .content {
