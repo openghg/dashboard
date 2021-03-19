@@ -50,12 +50,10 @@ body {
 .gridContainer {
   display: grid;
   grid-template-columns: minmax(180px, 15vw) 85vw;
-  /* grid-template-columns: 14vw 86vw; */
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 4fr 96fr;
   grid-template-areas:
     "header  header"
     "sidebar content";
-  height: 100vh;
 }
 
 .header {
@@ -82,8 +80,8 @@ body {
   background-color: #f4f3ee;
   display: grid;
   grid-template:
-    "plotHeader" 7.5%
-    "plotContent" 92.5%;
+    "plotHeader" 7.5fr
+    "plotContent" 92.5fr;
   height: 100vh;
 }
 
