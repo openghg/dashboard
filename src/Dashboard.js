@@ -269,11 +269,9 @@ class Dashboard extends React.Component {
             />
           </div>
           <div className={styles.content} id="dbContent">
-            <div className={styles.plotHeader}>{this.plotHeader()}</div>
-            <div className={styles.plotContent}>
-              {this.createPlots()}
-              {this.plotAdvice()}
-            </div>
+            <div className={styles.emissions}></div>
+            <div className={styles.model}></div>
+            <div className={styles.observations}></div>
           </div>
         </div>
       );

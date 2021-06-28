@@ -56,6 +56,15 @@ body {
     "sidebar content";
 }
 
+/* .gridContainer {
+    display: grid;
+    grid-template-columns: minmax(180px, 15vw) 85vw;
+    grid-template-rows: 4fr 96fr;
+    grid-template-areas:
+      "header  header"
+      "sidebar content";
+  } */
+
 .header {
   grid-area: header;
   display: flex;
@@ -73,32 +82,37 @@ body {
   background: #e9ecef;
   overflow: hidden;
   height: 1fr;
-
 }
 
 .content {
   background-color: #f4f3ee;
-  display: grid;
+  /* display: grid;
   grid-template:
     "plotHeader" 7.5fr
     "plotContent" 92.5fr;
-  height: 100vh;
+  height: 100vh; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1.3fr 0.7fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "emissions model"
+    "observations observations";
 }
 
-.plotHeader {
-  grid-area: plotHeader;
-  /* top | horizontal | bottom */
-  padding: 1vh 2vw 0vh;
-  font-size: 2.5vh;
-  color: #808080;
-  font-weight: 300;
+.emissions {
+  grid-area: emissions;
 }
 
-.plotContent {
-  grid-area: plotContent;
-  display: flex;
-  flex-direction: column;
+.model {
+  grid-area: model;
 }
+
+.observations {
+  grid-area: observations;
+}
+
 
 .plotAdvice {
   color: #222222;
