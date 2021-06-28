@@ -11,18 +11,11 @@ class PlotBox extends React.Component {
   }
 
   render() {
-    let containerStyle = styles.containerLeft;
-    let plotStyle = styles.plotLeft;
-    if (this.props.rhs) {
-      containerStyle = styles.containerRight;
-      plotStyle = styles.plotRight;
-    }
-
     return (
-      <div className={containerStyle}>
+      <div className={styles.container}>
         <div className={styles.header}>{this.props.headerText}</div>
         <div className={styles.body}>{this.props.bodyText}</div>
-        <div className={plotStyle}>
+        <div className={styles.plot}>
           <img src={this.props.imagePath} alt={this.props.altText} />
         </div>
       </div>

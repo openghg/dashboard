@@ -178,6 +178,75 @@ class Dashboard extends React.Component {
     return visualisations;
   }
 
+  // Lets use the selections from the panel as different emissions values
+  createEmissionsGraphs() {
+    let visualisations = [];
+
+    const selectedKeys = this.state.selectedKeys;
+    const processedData = this.state.processedData;
+
+    let siteEmissions = {};
+
+    if (selectedKeys) {
+        for (const [site, subObj] of Object.entries(selectedKeys)) {
+          for (const [species, value] of Object.entries(subObj)) {
+            if (value) {
+              // Create a visualisation and add it to the list
+              const data = processedData[site][species];
+
+              if (!siteEmissions.hasOwnProperty(site)) {
+                siteEmissions[site] = {};
+              }
+
+              siteEmissions[site][species] = data;
+            }
+          }
+        }
+
+      let totalSites = 0;
+
+      const tableau10 = colours["tableau10"];
+
+      if (!isEmpty(siteEmissions)) {
+        for (const [site, emissionsData] of Object.entries(siteEmissions)) {
+        //   console.log(site, emissionsData);
+          // Create a graph for each site
+          const title = String(site).toUpperCase();
+          const key = title.concat("-", Object.keys(emissionsData).join("-"));
+          const containerKey = `container-${key}`;
+
+          const nTypes = Object.keys(emissionsData).length;
+
+          const selectedColours = tableau10.slice(totalSites, totalSites + nTypes);
+
+          //   for (let i = 0; i < nTypes; i++) {
+          //     tableau10.push(tableau10.shift());
+          //   }
+
+          const vis = (
+            <GraphContainer key={containerKey}>
+              <LineChart
+                divID={getVisID()}
+                data={emissionsData}
+                colours={selectedColours}
+                title={title}
+                xLabel="Date"
+                yLabel="Concentration"
+                key={key}
+              />
+            </GraphContainer>
+          );
+
+          visualisations.push(vis);
+
+          totalSites += nTypes;
+        }
+      }
+    }
+
+    return visualisations;
+  }
+
   componentDidMount() {
     // const apiURL = "";
     // fetch(apiURL)
@@ -294,7 +363,7 @@ class Dashboard extends React.Component {
     } else {
       return (
         <div className={styles.gridContainer}>
-          <div className={styles.header}>LondonGHG Dashboard</div>
+          <div className={styles.header}>OpenGHG Dashboard</div>
           <div className={styles.sidebar}>
             <ControlPanel
               selectPlotType={this.selectPlotType}
@@ -306,7 +375,9 @@ class Dashboard extends React.Component {
           <div className={styles.content} id="dbContent">
             {this.createEmissionsBox()}
             {this.createModelBox()}
-            <div className={styles.observations}>Some text</div>
+            <div className={styles.observations}>
+              <VisLayout>{this.createEmissionsGraphs()}</VisLayout>
+            </div>
           </div>
         </div>
       );

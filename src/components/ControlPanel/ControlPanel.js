@@ -21,8 +21,8 @@ class ControlPanel extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <div className={styles.headerText}>LondonGHG</div>
-          <div className={styles.headerTag}>A new system for estimating London's emissions</div>
+          <div className={styles.headerText}>OpenGHG</div>
+          <div className={styles.headerTag}>A COP26 dashboard</div>
         </div>
         <div className={styles.content}>
           <div className={styles.plotSelector}>

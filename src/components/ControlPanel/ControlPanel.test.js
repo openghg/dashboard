@@ -12,7 +12,7 @@ describe("Test ControlPanel", () => {
 
     render(<ControlPanel selectPlotType={fn} plotType="timeseries" dataKeys={testKeys} dataSelector={fn} />);
 
-    expect(screen.getByText("LondonGHG")).toBeInTheDocument();
+    expect(screen.getByText("OpenGHG")).toBeInTheDocument();
     expect(screen.getByText("A new system for estimating London's emissions")).toBeInTheDocument();
     expect(screen.getByText("Select visualisation type:")).toBeInTheDocument();
   });
