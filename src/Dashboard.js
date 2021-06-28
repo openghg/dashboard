@@ -4,12 +4,13 @@ import londonGHGSites from "./data/siteMetadata.json";
 
 import LineChart from "./components/LineChart/LineChart";
 // import Summary from "./components/Summary/Summary";
-import Overview from "./components/Overview/Overview";
+// import Overview from "./components/Overview/Overview";
 import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
 import PlotBox from "./components/PlotBox/PlotBox";
+import ObsBox from "./components/ObsBox/ObsBox";
 
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
@@ -188,20 +189,20 @@ class Dashboard extends React.Component {
     let siteEmissions = {};
 
     if (selectedKeys) {
-        for (const [site, subObj] of Object.entries(selectedKeys)) {
-          for (const [species, value] of Object.entries(subObj)) {
-            if (value) {
-              // Create a visualisation and add it to the list
-              const data = processedData[site][species];
+      for (const [site, subObj] of Object.entries(selectedKeys)) {
+        for (const [species, value] of Object.entries(subObj)) {
+          if (value) {
+            // Create a visualisation and add it to the list
+            const data = processedData[site][species];
 
-              if (!siteEmissions.hasOwnProperty(site)) {
-                siteEmissions[site] = {};
-              }
-
-              siteEmissions[site][species] = data;
+            if (!siteEmissions.hasOwnProperty(site)) {
+              siteEmissions[site] = {};
             }
+
+            siteEmissions[site][species] = data;
           }
         }
+      }
 
       let totalSites = 0;
 
@@ -209,7 +210,7 @@ class Dashboard extends React.Component {
 
       if (!isEmpty(siteEmissions)) {
         for (const [site, emissionsData] of Object.entries(siteEmissions)) {
-        //   console.log(site, emissionsData);
+          //   console.log(site, emissionsData);
           // Create a graph for each site
           const title = String(site).toUpperCase();
           const key = title.concat("-", Object.keys(emissionsData).join("-"));
@@ -323,8 +324,9 @@ class Dashboard extends React.Component {
 
   createEmissionsBox() {
     const emissionsHeader = "Emissions";
-    const emissionsText =
-      "This is an example of some emissions data, this emissions data was created from measurements of...";
+    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (LINK: NAEI). Learn more about how
+       countries estimate and report there emissions here (LINK: PAGE EXPLAINING INVENTORY)`;
+
     return (
       <div className={styles.emissions}>
         <PlotBox
@@ -339,7 +341,8 @@ class Dashboard extends React.Component {
 
   createModelBox() {
     const modelHeader = "Model";
-    const modelText = "This is an example of some model output, this output was created using model X for data....";
+    const modelText = `Atmospheric models use meteorological data to simulate the dispersion of 
+    greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here (LINK: PAGE ON MODELS)​`;
     return (
       <div className={styles.model}>
         <PlotBox
@@ -349,6 +352,20 @@ class Dashboard extends React.Component {
           bodyText={modelText}
           rhs={true}
         />
+      </div>
+    );
+  }
+
+  createObsBox() {
+    const obsHeader = "Observations";
+    const obsText = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
+      Learn more about evaluating GHG emissions inventories using atmospheric data (LINK: PAGE ON INVERSIONS)​`;
+
+    return (
+      <div className={styles.observations}>
+        <ObsBox headerText={obsHeader} bodyText={obsText}>
+          <VisLayout>{this.createEmissionsGraphs()}</VisLayout>
+        </ObsBox>
       </div>
     );
   }
@@ -375,9 +392,7 @@ class Dashboard extends React.Component {
           <div className={styles.content} id="dbContent">
             {this.createEmissionsBox()}
             {this.createModelBox()}
-            <div className={styles.observations}>
-              <VisLayout>{this.createEmissionsGraphs()}</VisLayout>
-            </div>
+            {this.createObsBox()}
           </div>
         </div>
       );

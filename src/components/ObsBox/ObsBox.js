@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import styles from "./PlotBox.module.css";
+import styles from "./ObsBox.module.css";
 
-class PlotBox extends React.Component {
+class ObsBox extends React.Component {
   constructor(props) {
     super(props);
 
@@ -11,24 +11,17 @@ class PlotBox extends React.Component {
   }
 
   render() {
-    // This needs a better name, normal layout is
-    // header, plot, body
-    // Layout two is header, body, plot
-    const containerStyle = this.props.layoutTwo ? styles.containerTwo : styles.container
-
     return (
       <div className={styles.container}>
         <div className={styles.header}>{this.props.headerText}</div>
         <div className={styles.body}>{this.props.bodyText}</div>
-        <div className={styles.plot}>
-          <img src={this.props.imagePath} alt={this.props.altText} />
-        </div>
+        <div className={styles.plot}>{this.props.children}</div>
       </div>
     );
   }
 }
 
-PlotBox.propTypes = {
+ObsBox.propTypes = {
   altText: PropTypes.string,
   bodyText: PropTypes.string,
   headerText: PropTypes.string,
@@ -36,4 +29,4 @@ PlotBox.propTypes = {
   layoutTwo: PropTypes.bool,
 };
 
-export default PlotBox;
+export default ObsBox;
