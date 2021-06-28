@@ -99,6 +99,7 @@ body {
   grid-template-areas:
     "emissions model"
     "observations observations";
+  height: 100vh;
 }
 
 .emissions {
@@ -112,7 +113,6 @@ body {
 .observations {
   grid-area: observations;
 }
-
 
 .plotAdvice {
   color: #222222;

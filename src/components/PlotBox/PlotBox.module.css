@@ -1,0 +1,62 @@
+.containerLeft {
+  background: white;
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr;
+  grid-template-rows: 0.2fr 1.1fr;
+  /* top | right | bottom | left */
+  padding: 0px 5px 0 10px;
+  gap: 0px 0px;
+  grid-template-areas:
+    "header header"
+    "body plot";
+  height: 100%;
+}
+
+.containerRight {
+  background: white;
+  display: grid;
+  grid-template-columns: 1.5fr 0.5fr;
+  grid-template-rows: 0.2fr 1.1fr;
+  gap: 0px 0px;
+  /* top | right | bottom | left */
+  padding: 0px 10px 0 5px;
+  grid-template-areas:
+    "header header"
+    "plot body";
+  height: 100%;
+}
+
+.header {
+  padding-top: 5px;
+  grid-area: header;
+  font-size: 2.5vh;
+  font-weight: 300;
+}
+
+.body {
+  grid-area: body;
+}
+
+.plotLeft {
+  grid-area: plot;
+  display: flex;
+  align-items: right;
+}
+
+.plotRight {
+  display: flex;
+  align-items: left;
+  grid-area: plot;
+}
+
+.plotLeft > img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.plotRight > img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}

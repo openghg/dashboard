@@ -9,9 +9,12 @@ import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
+import PlotBox from "./components/PlotBox/PlotBox";
 
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
+
+import EmissionExample from "./images/exampleEmissions.png";
 
 import { isEmpty, getVisID } from "./util/helpers";
 
@@ -249,6 +252,38 @@ class Dashboard extends React.Component {
     }
   }
 
+  createEmissionsBox() {
+    const emissionsHeader = "Emissions";
+    const emissionsText =
+      "This is an example of some emissions data, this emissions data was created from measurements of...";
+    return (
+      <div className={styles.emissions}>
+        <PlotBox
+          imagePath={EmissionExample}
+          altText={"Example emissions"}
+          headerText={emissionsHeader}
+          bodyText={emissionsText}
+        />
+      </div>
+    );
+  }
+
+  createModelBox() {
+    const modelHeader = "Model";
+    const modelText = "This is an example of some model output, this output was created using model X for data....";
+    return (
+      <div className={styles.model}>
+        <PlotBox
+          imagePath={EmissionExample}
+          altText={"Example model"}
+          headerText={modelHeader}
+          bodyText={modelText}
+          rhs={true}
+        />
+      </div>
+    );
+  }
+
   render() {
     let { error, isLoaded } = this.state;
 
@@ -269,9 +304,9 @@ class Dashboard extends React.Component {
             />
           </div>
           <div className={styles.content} id="dbContent">
-            <div className={styles.emissions}></div>
-            <div className={styles.model}></div>
-            <div className={styles.observations}></div>
+            {this.createEmissionsBox()}
+            {this.createModelBox()}
+            <div className={styles.observations}>Some text</div>
           </div>
         </div>
       );
