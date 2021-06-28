@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
 
     this.dataSelector = this.dataSelector.bind(this);
     this.dateSelector = this.dateSelector.bind(this);
-    this.selectPlotType = this.selectPlotType.bind(this); 
+    this.selectPlotType = this.selectPlotType.bind(this);
   }
 
   dateSelector(date) {
@@ -196,7 +196,6 @@ class Dashboard extends React.Component {
     //   );
   }
 
-
   selectPlotType(event) {
     const value = event.target.value;
     this.setState({ plotType: value });
@@ -204,9 +203,11 @@ class Dashboard extends React.Component {
 
   createPlots() {
     if (this.state.plotType === "footprint") {
+      // TODO - Find a better way of doing this
+      const siteMarkers = { TMB: { long_name: "Thames Barrier", latitude: 51.497, longitude: 0.037 } };
       return (
         <FootprintAnalysis
-          sites={siteData}
+          sites={siteMarkers}
           centre={[51.5, -0.0482]}
           zoom={9}
           width={"75vw"}
@@ -258,9 +259,7 @@ class Dashboard extends React.Component {
     } else {
       return (
         <div className={styles.gridContainer}>
-          <div className={styles.header}>
-            LondonGHG Dashboard
-          </div>
+          <div className={styles.header}>LondonGHG Dashboard</div>
           <div className={styles.sidebar}>
             <ControlPanel
               selectPlotType={this.selectPlotType}
@@ -270,9 +269,7 @@ class Dashboard extends React.Component {
             />
           </div>
           <div className={styles.content} id="dbContent">
-            <div className={styles.plotHeader}>
-              {this.plotHeader()}
-            </div>
+            <div className={styles.plotHeader}>{this.plotHeader()}</div>
             <div className={styles.plotContent}>
               {this.createPlots()}
               {this.plotAdvice()}
