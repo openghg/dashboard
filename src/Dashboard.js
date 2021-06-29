@@ -8,7 +8,7 @@ import LineChart from "./components/LineChart/LineChart";
 import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
-import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
+// import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
 import PlotBox from "./components/PlotBox/PlotBox";
 import ObsBox from "./components/ObsBox/ObsBox";
 import DateSlider from "./components/DateSlider/DateSlider";
@@ -36,12 +36,14 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
+    const dates = Object.keys(siteData["TMB"]["measurements"]);
+
     this.state = {
       error: null,
       isLoaded: false,
       sidePanel: false,
-      //   apiData: [],
       selectedDate: 0,
+      availableDates: dates,
       processedData: {},
       dataKeys: {},
       selectedKeys: {},
@@ -55,7 +57,9 @@ class Dashboard extends React.Component {
     // This data will come from a function but for now just read it in
     this.state.apiData = this.processData();
 
+    // Select the data
     this.dataSelector = this.dataSelector.bind(this);
+    // Selects the dates
     this.dateSelector = this.dateSelector.bind(this);
     this.selectPlotType = this.selectPlotType.bind(this);
   }
@@ -275,25 +279,25 @@ class Dashboard extends React.Component {
     this.setState({ plotType: value });
   }
 
-  createPlots() {
-    if (this.state.plotType === "footprint") {
-      // TODO - Find a better way of doing this
-      const siteMarkers = { TMB: { long_name: "Thames Barrier", latitude: 51.497, longitude: 0.037 } };
-      return (
-        <FootprintAnalysis
-          sites={siteMarkers}
-          centre={[51.5, -0.0482]}
-          zoom={9}
-          width={"75vw"}
-          height={"40vh"}
-          measurementData={this.state.processedData}
-          siteData={siteData}
-        />
-      );
-    } else {
-      return <VisLayout>{this.createGraphs()}</VisLayout>;
-    }
-  }
+//   createPlots() {
+//     if (this.state.plotType === "footprint") {
+//       // TODO - Find a better way of doing this
+//       const siteMarkers = { TMB: { long_name: "Thames Barrier", latitude: 51.497, longitude: 0.037 } };
+//       return (
+//         <FootprintAnalysis
+//           sites={siteMarkers}
+//           centre={[51.5, -0.0482]}
+//           zoom={9}
+//           width={"75vw"}
+//           height={"40vh"}
+//           measurementData={this.state.processedData}
+//           siteData={siteData}
+//         />
+//       );
+//     } else {
+//       return <VisLayout>{this.createGraphs()}</VisLayout>;
+//     }
+//   }
 
   anySelected() {
     for (const subdict of Object.values(this.state.selectedKeys)) {
@@ -372,10 +376,13 @@ class Dashboard extends React.Component {
   }
 
   createDateSlider() {
-      const dates = this.state.dataDates;
     return (
       <div className={styles.dateSlider}>
-        <DateSlider dates= />
+        <DateSlider
+          dates={this.state.availableDates}
+          selectedDate={this.state.selectedDate}
+          dateSelector={this.dateSelector}
+        />
       </div>
     );
   }
@@ -402,6 +409,7 @@ class Dashboard extends React.Component {
           <div className={styles.content} id="dbContent">
             {this.createEmissionsBox()}
             {this.createModelBox()}
+            {this.createDateSlider()}
             {this.createObsBox()}
           </div>
         </div>

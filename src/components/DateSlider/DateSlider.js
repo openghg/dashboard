@@ -3,22 +3,17 @@ import React from "react";
 import { Slider } from "@material-ui/core";
 
 import styles from "./DateSlider.module.css";
-import "./SliderLabel.css";
+// import "./SliderLabel.css";
 
 class DateSlider extends React.Component {
   constructor(props) {
     super(props);
-
-    const startDate = parseInt(this.props.dates[0]);
-
-    this.state = { selectedDate: startDate };
 
     this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   handleDateChange(event, timestamp) {
     this.props.dateSelector(timestamp);
-    this.setState({ selectedDate: timestamp });
   }
 
   render() {
@@ -27,19 +22,9 @@ class DateSlider extends React.Component {
     const startDate = parseInt(dates[0]);
     const endDate = parseInt(dates[dates.length - 1]);
 
-    // We'll have to ensure that each of the sites has data for every date
-    // just add in NaNs for missing data - this can be done by the serverless fn
-    const nDates = dates.length;
-
     let marks = [];
     for (const date of dates) {
-      const dateInt = parseInt(date);
-      let dateString = null;
-      if (nDates < 36) {
-        dateString = new Date(dateInt).toISOString();
-      }
-
-      marks.push({ value: dateInt, label: dateString });
+      marks.push({ value: parseInt(date)});
     }
 
     return (
@@ -55,7 +40,7 @@ class DateSlider extends React.Component {
             min={startDate}
           />
         </div>
-        <div className={styles.dateContainer}>Date: {new Date(this.state.selectedDate).toLocaleString()}</div>
+        <div className={styles.dateContainer}>Date: {new Date(this.props.selectedDate).toLocaleString()}</div>
       </div>
     );
   }
