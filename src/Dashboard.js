@@ -10,13 +10,13 @@ import PlotBox from "./components/PlotBox/PlotBox";
 import ObsBox from "./components/ObsBox/ObsBox";
 import DateSlider from "./components/DateSlider/DateSlider";
 
-import siteData from "./mock/LGHGSitesRandomData.json";
+// import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
-import mockData from "./mock/randomSiteData.json"
+import mockData from "./mock/randomSiteData.json";
 
 import EmissionExample from "./images/exampleEmissions.png";
 
-import { isEmpty, getVisID } from "./util/helpers";
+import { isEmpty, getVisID, importEmissions } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
 
@@ -54,6 +54,11 @@ class Dashboard extends React.Component {
 
     // For the moment create some fake sites
     this.state.sites = londonGHGSites;
+    // Import the emissions PNG paths so we can select the image we want using
+    //  the slider
+    this.state.emissionsPNGs = importEmissions();
+
+    console.log(this.state.emissionsPNGs);
     // This data will come from a function but for now just read it in
 
     // Process data we have from JSON
@@ -266,11 +271,11 @@ class Dashboard extends React.Component {
     const emissionsHeader = "Emissions";
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (LINK: NAEI). Learn more about how
        countries estimate and report there emissions here (LINK: PAGE EXPLAINING INVENTORY)`;
-
+    const imagePath = this.state.emissionsPNGs[this.state.selectedDate];
     return (
       <div className={styles.emissions}>
         <PlotBox
-          imagePath={EmissionExample}
+          imagePath={imagePath}
           altText={"Example emissions"}
           headerText={emissionsHeader}
           bodyText={emissionsText}
@@ -284,10 +289,14 @@ class Dashboard extends React.Component {
     const modelHeader = "Model";
     const modelText = `Atmospheric models use meteorological data to simulate the dispersion of 
     greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here (LINK: PAGE ON MODELS)​`;
+    const imagePath = this.state.emissionsPNGs[this.state.selectedDate];
+
+    console.log(imagePath);
+
     return (
       <div className={styles.model}>
         <PlotBox
-          imagePath={EmissionExample}
+          imagePath={imagePath}
           altText={"Example model"}
           headerText={modelHeader}
           bodyText={modelText}
@@ -311,8 +320,7 @@ class Dashboard extends React.Component {
           processedData={this.state.processedData}
           dataSelector={this.dataSelector}
           selectedDate={this.state.selectedDate}
-        >
-        </ObsBox>
+        ></ObsBox>
       </div>
     );
   }
