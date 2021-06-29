@@ -4,12 +4,6 @@ import React from "react";
 import styles from "./ObsBox.module.css";
 
 class ObsBox extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.something = 2;
-  }
-
   render() {
     return (
       <div className={styles.container}>
@@ -26,7 +20,6 @@ ObsBox.propTypes = {
   bodyText: PropTypes.string,
   headerText: PropTypes.string,
   imagePath: PropTypes.string,
-  layoutTwo: PropTypes.bool,
 };
 
 export default ObsBox;

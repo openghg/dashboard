@@ -1,0 +1,35 @@
+.container {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  width: 90%;
+}
+
+.marker {
+  background-color: white;
+}
+
+.markerHeader {
+  font-size: 2vh;
+  font-weight: 500;
+  padding-bottom: 1vh;
+}
+
+.markerBody {
+  font-size: 1.5vh;
+  font-weight: 300;
+  padding-bottom: 1vh;
+}
+
+.markerLocation {
+  font-style: italic;
+}
+
+.sliderContainer {
+  font-size: 2vh;
+}
+
+.dateContainer {
+  font-size: 2vh;
+}

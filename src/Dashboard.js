@@ -11,6 +11,7 @@ import GraphContainer from "./components/GraphContainer/GraphContainer";
 import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
 import PlotBox from "./components/PlotBox/PlotBox";
 import ObsBox from "./components/ObsBox/ObsBox";
+import DateSlider from "./components/DateSlider/DateSlider";
 
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
@@ -366,6 +367,15 @@ class Dashboard extends React.Component {
         <ObsBox headerText={obsHeader} bodyText={obsText}>
           <VisLayout>{this.createEmissionsGraphs()}</VisLayout>
         </ObsBox>
+      </div>
+    );
+  }
+
+  createDateSlider() {
+      const dates = this.state.dataDates;
+    return (
+      <div className={styles.dateSlider}>
+        <DateSlider dates= />
       </div>
     );
   }

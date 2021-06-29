@@ -2,7 +2,7 @@
   background: white;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.3fr 0.8fr 1.9fr;
+  grid-template-rows: 0.3fr auto 1.9fr;
   gap: 5px 0px;
   grid-template-areas:
     "header"
@@ -25,4 +25,5 @@
 
 .plot {
   grid-area: plot;
+  height: 100%;
 }
