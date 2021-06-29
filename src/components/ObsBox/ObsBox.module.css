@@ -1,13 +1,13 @@
 .container {
   background: white;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 0.3fr auto 1.9fr;
-  gap: 5px 0px;
+  grid-template-columns: 0.4fr 1.6fr;
+  grid-template-rows: 0.2fr auto 2.1fr;
+  gap: 0px 0px;
   grid-template-areas:
-    "header"
-    "body"
-    "plot";
+    "header header"
+    "body body"
+    "select plot";
   height: 100%;
 }
 
@@ -22,8 +22,16 @@
   grid-area: body;
   padding-left: 10px;
 }
-
+.select {
+  grid-area: select;
+}
 .plot {
   grid-area: plot;
-  height: 100%;
+}
+
+.plotSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  justify-content: center;
 }

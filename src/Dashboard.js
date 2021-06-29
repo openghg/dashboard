@@ -55,7 +55,9 @@ class Dashboard extends React.Component {
     // For the moment create some fake sites
     this.state.sites = londonGHGSites;
     // This data will come from a function but for now just read it in
-    this.state.apiData = this.processData();
+
+    // Process data we have from JSON
+    this.processData();
 
     // Select the data
     this.dataSelector = this.dataSelector.bind(this);
@@ -185,73 +187,6 @@ class Dashboard extends React.Component {
   }
 
   // Lets use the selections from the panel as different emissions values
-  createEmissionsGraphs() {
-    let visualisations = [];
-
-    const selectedKeys = this.state.selectedKeys;
-    const processedData = this.state.processedData;
-
-    let siteEmissions = {};
-
-    if (selectedKeys) {
-      for (const [site, subObj] of Object.entries(selectedKeys)) {
-        for (const [species, value] of Object.entries(subObj)) {
-          if (value) {
-            // Create a visualisation and add it to the list
-            const data = processedData[site][species];
-
-            if (!siteEmissions.hasOwnProperty(site)) {
-              siteEmissions[site] = {};
-            }
-
-            siteEmissions[site][species] = data;
-          }
-        }
-      }
-
-      let totalSites = 0;
-
-      const tableau10 = colours["tableau10"];
-
-      if (!isEmpty(siteEmissions)) {
-        for (const [site, emissionsData] of Object.entries(siteEmissions)) {
-          //   console.log(site, emissionsData);
-          // Create a graph for each site
-          const title = String(site).toUpperCase();
-          const key = title.concat("-", Object.keys(emissionsData).join("-"));
-          const containerKey = `container-${key}`;
-
-          const nTypes = Object.keys(emissionsData).length;
-
-          const selectedColours = tableau10.slice(totalSites, totalSites + nTypes);
-
-          //   for (let i = 0; i < nTypes; i++) {
-          //     tableau10.push(tableau10.shift());
-          //   }
-
-          const vis = (
-            <GraphContainer key={containerKey}>
-              <LineChart
-                divID={getVisID()}
-                data={emissionsData}
-                colours={selectedColours}
-                title={title}
-                xLabel="Date"
-                yLabel="Concentration"
-                key={key}
-              />
-            </GraphContainer>
-          );
-
-          visualisations.push(vis);
-
-          totalSites += nTypes;
-        }
-      }
-    }
-
-    return visualisations;
-  }
 
   componentDidMount() {
     // const apiURL = "";
@@ -279,25 +214,25 @@ class Dashboard extends React.Component {
     this.setState({ plotType: value });
   }
 
-//   createPlots() {
-//     if (this.state.plotType === "footprint") {
-//       // TODO - Find a better way of doing this
-//       const siteMarkers = { TMB: { long_name: "Thames Barrier", latitude: 51.497, longitude: 0.037 } };
-//       return (
-//         <FootprintAnalysis
-//           sites={siteMarkers}
-//           centre={[51.5, -0.0482]}
-//           zoom={9}
-//           width={"75vw"}
-//           height={"40vh"}
-//           measurementData={this.state.processedData}
-//           siteData={siteData}
-//         />
-//       );
-//     } else {
-//       return <VisLayout>{this.createGraphs()}</VisLayout>;
-//     }
-//   }
+  //   createPlots() {
+  //     if (this.state.plotType === "footprint") {
+  //       // TODO - Find a better way of doing this
+  //       const siteMarkers = { TMB: { long_name: "Thames Barrier", latitude: 51.497, longitude: 0.037 } };
+  //       return (
+  //         <FootprintAnalysis
+  //           sites={siteMarkers}
+  //           centre={[51.5, -0.0482]}
+  //           zoom={9}
+  //           width={"75vw"}
+  //           height={"40vh"}
+  //           measurementData={this.state.processedData}
+  //           siteData={siteData}
+  //         />
+  //       );
+  //     } else {
+  //       return <VisLayout>{this.createGraphs()}</VisLayout>;
+  //     }
+  //   }
 
   anySelected() {
     for (const subdict of Object.values(this.state.selectedKeys)) {
@@ -339,6 +274,7 @@ class Dashboard extends React.Component {
           altText={"Example emissions"}
           headerText={emissionsHeader}
           bodyText={emissionsText}
+          selectedDate={this.state.selectedDate}
         />
       </div>
     );
@@ -355,7 +291,7 @@ class Dashboard extends React.Component {
           altText={"Example model"}
           headerText={modelHeader}
           bodyText={modelText}
-          rhs={true}
+          selectedDate={this.state.selectedDate}
         />
       </div>
     );
@@ -368,8 +304,12 @@ class Dashboard extends React.Component {
 
     return (
       <div className={styles.observations}>
-        <ObsBox headerText={obsHeader} bodyText={obsText}>
-          <VisLayout>{this.createEmissionsGraphs()}</VisLayout>
+        <ObsBox
+          headerText={obsHeader}
+          bodyText={obsText}
+          dataKeys={this.state.selectedKeys}
+          dataSelector={this.dataSelector}
+        >
         </ObsBox>
       </div>
     );

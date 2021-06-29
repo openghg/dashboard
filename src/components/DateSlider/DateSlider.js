@@ -1,24 +1,21 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Slider } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
 
 import styles from "./DateSlider.module.css";
-// import "./SliderLabel.css";
 
 class DateSlider extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = { selectedDate: parseInt(this.props.dates[0]) };
     this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   handleDateChange(event, timestamp) {
+    this.setState({ selectedDate: timestamp });
     this.props.dateSelector(timestamp);
   }
-
-  
-
 
   render() {
     const dates = this.props.dates;
@@ -28,7 +25,7 @@ class DateSlider extends React.Component {
 
     let marks = [];
     for (const date of dates) {
-      marks.push({ value: parseInt(date)});
+      marks.push({ value: parseInt(date) });
     }
 
     return (
@@ -44,7 +41,7 @@ class DateSlider extends React.Component {
             min={startDate}
           />
         </div>
-        <div className={styles.dateContainer}>Date: {new Date(this.props.selectedDate).toLocaleString()}</div>
+        <div className={styles.dateContainer}>Date: {new Date(this.state.selectedDate).toLocaleString()}</div>
       </div>
     );
   }
@@ -55,6 +52,7 @@ DateSlider.propTypes = {
   dates: PropTypes.shape({
     length: PropTypes.number,
   }),
+  selectedDate: PropTypes.number,
 };
 
 export default DateSlider;
