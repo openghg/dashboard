@@ -3,9 +3,6 @@ import React from "react";
 import londonGHGSites from "./data/siteMetadata.json";
 
 import LineChart from "./components/LineChart/LineChart";
-// import Summary from "./components/Summary/Summary";
-// import Overview from "./components/Overview/Overview";
-import VisLayout from "./components/VisLayout/VisLayout";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 // import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
@@ -15,6 +12,7 @@ import DateSlider from "./components/DateSlider/DateSlider";
 
 import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
+import mockData from "./mock/randomSiteData.json"
 
 import EmissionExample from "./images/exampleEmissions.png";
 
@@ -22,21 +20,23 @@ import { isEmpty, getVisID } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
 
-import TMBData from "./data/TMB_data_LGHG.json";
-import NPLData from "./data/NPL_data_LGHG.json";
-import BTTData from "./data/BTT_data_LGHG.json";
+// import TMBData from "./data/TMB_data_LGHG.json";
+// import NPLData from "./data/NPL_data_LGHG.json";
+// import BTTData from "./data/BTT_data_LGHG.json";
 
-const measurementData = {
-  ...TMBData,
-  ...NPLData,
-  ...BTTData,
-};
+// const measurementData = {
+//   ...TMBData,
+//   ...NPLData,
+//   ...BTTData,
+// };
+
+const measurementData = mockData;
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    const dates = Object.keys(siteData["TMB"]["measurements"]);
+    const dates = Object.keys(measurementData["AAA"]["gas_a"]);
 
     this.state = {
       error: null,
@@ -308,7 +308,9 @@ class Dashboard extends React.Component {
           headerText={obsHeader}
           bodyText={obsText}
           selectedKeys={this.state.selectedKeys}
+          processedData={this.state.processedData}
           dataSelector={this.dataSelector}
+          selectedDate={this.state.selectedDate}
         >
         </ObsBox>
       </div>

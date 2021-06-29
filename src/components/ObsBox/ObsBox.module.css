@@ -29,9 +29,4 @@
   grid-area: plot;
 }
 
-.plotSelector {
-  display: flex;
-  flex-direction: column;
-  gap: 2vh;
-  justify-content: center;
-}
+

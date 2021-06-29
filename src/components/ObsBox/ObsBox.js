@@ -4,6 +4,7 @@ import React from "react";
 import GraphContainer from "../GraphContainer/GraphContainer";
 import LineChart from "../LineChart/LineChart";
 import VisLayout from "../VisLayout/VisLayout";
+import Dropdown from "../Dropdown/Dropdown";
 
 import colours from "../../data/colours.json";
 import { isEmpty, getVisID } from "../../util/helpers";
@@ -11,6 +12,36 @@ import { isEmpty, getVisID } from "../../util/helpers";
 import styles from "./ObsBox.module.css";
 
 class ObsBox extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleDropdownChange = this.handleDropdownChange.bind(this);
+    // Select the first site
+    const selectedKeys = this.props.selectedKeys;
+
+    const firstSite = Object.keys(selectedKeys).sort()[0];
+    this.state = { defaultSite: firstSite };
+    this.handleDropdownChange({ target: { value: firstSite } });
+  }
+
+  handleDropdownChange(event) {
+    const site = event.target.value;
+
+    const selected = this.props.selectedKeys;
+
+    for (let [key, subdict] of Object.entries(selected)) {
+      for (const subkey of Object.keys(subdict)) {
+        if (key === site) {
+          selected[key][subkey] = true;
+        } else {
+          selected[key][subkey] = false;
+        }
+      }
+    }
+
+    this.props.dataSelector(selected);
+  }
+
   createEmissionsGraphs() {
     let visualisations = [];
 
@@ -65,6 +96,7 @@ class ObsBox extends React.Component {
                 xLabel="Date"
                 yLabel="Concentration"
                 key={key}
+                selectedDate={this.props.selectedDate}
               />
             </GraphContainer>
           );
@@ -78,52 +110,19 @@ class ObsBox extends React.Component {
     return <VisLayout>{visualisations}</VisLayout>;
   }
 
-  selectSite(event) {
-    const value = event.target.value;
-    this.setState({ plotType: value });
-  }
-
-  createDropDown() {
-    //   Iterate over the sites so we can select the data we want to plot, only select by site for now
-    const data = this.props.processedData;
-    let choices = [];
-
-    for (const site of Object.keys(data)) {
-      const label = String(site).toUpperCase();
-      const testID = "test-id-" + label;
-
-      const choice = (
-        <option data-testid={testID} value={label}>
-          {label}
-        </option>
-      );
-
-      choices.push(choice);
-    }
-
-    return (
-      <div className={styles.plotSelector}>
-        Select site:
-        <div>
-          <form>
-            <select data-testid="select-form" value={this.props.plotType} onChange={this.props.dataSelector}>
-              {choices}
-            </select>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
       <div className={styles.container}>
         <div className={styles.header}>{this.props.headerText}</div>
         <div className={styles.body}>{this.props.bodyText}</div>
-        <div className={styles.select}>{this.createDropDown()}</div>
-        <div className={styles.plot}>Plots yah</div>
-        {/* <div className={styles.plot}>{this.createEmissionsGraphs()}</div> */}
-        
+        <div className={styles.select}>
+          <Dropdown
+            selectedKeys={this.props.selectedKeys}
+            defaultSite={this.state.defaultSite}
+            onChange={this.handleDropdownChange}
+          />
+        </div>
+        <div className={styles.plot}>{this.createEmissionsGraphs()}</div>
       </div>
     );
   }
