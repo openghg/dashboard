@@ -307,7 +307,7 @@ class Dashboard extends React.Component {
         <ObsBox
           headerText={obsHeader}
           bodyText={obsText}
-          dataKeys={this.state.selectedKeys}
+          selectedKeys={this.state.selectedKeys}
           dataSelector={this.dataSelector}
         >
         </ObsBox>

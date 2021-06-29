@@ -78,6 +78,11 @@ class ObsBox extends React.Component {
     return <VisLayout>{visualisations}</VisLayout>;
   }
 
+  selectSite(event) {
+    const value = event.target.value;
+    this.setState({ plotType: value });
+  }
+
   createDropDown() {
     //   Iterate over the sites so we can select the data we want to plot, only select by site for now
     const data = this.props.processedData;
@@ -101,7 +106,7 @@ class ObsBox extends React.Component {
         Select site:
         <div>
           <form>
-            <select data-testid="select-form" value={this.props.plotType} onChange={this.props.selectPlotType}>
+            <select data-testid="select-form" value={this.props.plotType} onChange={this.props.dataSelector}>
               {choices}
             </select>
           </form>
@@ -115,9 +120,10 @@ class ObsBox extends React.Component {
       <div className={styles.container}>
         <div className={styles.header}>{this.props.headerText}</div>
         <div className={styles.body}>{this.props.bodyText}</div>
-        <div className={styles.select}></div>
-
-        <div className={styles.plot}>{this.createEmissionsGraphs()}</div>
+        <div className={styles.select}>{this.createDropDown()}</div>
+        <div className={styles.plot}>Plots yah</div>
+        {/* <div className={styles.plot}>{this.createEmissionsGraphs()}</div> */}
+        
       </div>
     );
   }
@@ -128,6 +134,7 @@ ObsBox.propTypes = {
   headerText: PropTypes.any,
   processedData: PropTypes.object,
   selectedKeys: PropTypes.object,
+  dataSelector: PropTypes.func,
 };
 
 export default ObsBox;
