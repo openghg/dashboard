@@ -21,27 +21,10 @@ class ControlPanel extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <div className={styles.headerText}>LondonGHG</div>
-          <div className={styles.headerTag}>A new system for estimating London's emissions</div>
+          <div className={styles.headerText}>OpenGHG</div>
+          <div className={styles.headerTag}>A COP26 dashboard</div>
         </div>
-        <div className={styles.content}>
-          <div className={styles.plotSelector}>
-            Select visualisation type:
-            <div>
-              <form>
-                <select data-testid="select-form" value={this.props.plotType} onChange={this.props.selectPlotType}>
-                  <option data-testid="sel-footprint" value="footprint">
-                    Footprint
-                  </option>
-                  <option data-testid="sel-timeseries" value="timeseries">
-                    Timeseries
-                  </option>
-                </select>
-              </form>
-            </div>
-          </div>
-          {this.plottingInterface()}
-        </div>
+        <div className={styles.content}></div>
         <div className={styles.footer}>
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
             <img src={GitHubLogo} alt="GitHub logo" />

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-// import styles from "./ControlPanel.module.css";
 import { cloneDeep } from "lodash";
 import SelectionBlock from "../SelectionBlock/SelectionBlock";
 

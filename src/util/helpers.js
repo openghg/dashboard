@@ -11,7 +11,6 @@ export function isEmpty(obj) {
 
 export function importSVGs() {
   let footprints = {};
-  // TODO - fix having this folderpath hardcoded
   try {
     const requiredSVGs = require.context("../images/londonFootprints/TMB", false, /\.svg$/);
     const paths = requiredSVGs.keys();
@@ -33,3 +32,26 @@ export function importSVGs() {
 
   return footprints;
 }
+
+export function importEmissions() {
+    let emissions = {};
+    try {
+      const requiredPNGs = require.context("../images/mockEmissions", false, /\.png$/);
+      const paths = requiredPNGs.keys();
+  
+      // This is quite a bit of work but it means we can have human-readable filenames
+      // and pass a list of UNIX timestamps to the SliderMap component
+      for (const path of paths) {
+        // Here we need to read the filename and convert it to a UNIX timestamp
+        const filename = String(path).split("./")[1];
+        const timestampStr = String(filename).split(".")[0];
+        const timestamp = parseInt(timestampStr);
+  
+        emissions[timestamp] = requiredPNGs(path)["default"];
+      }
+    } catch (error) {
+      console.error("Could not import images. We expect image filenames of the form 1610323200000.png");
+    }
+  
+    return emissions;
+  }

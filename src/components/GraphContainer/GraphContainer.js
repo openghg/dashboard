@@ -29,8 +29,6 @@ class GraphContainer extends React.Component {
   }
 
   render() {
-    console.log(this.state.height, this.state.width);
-
     return (
       <div ref={this.contRef}>
         {React.cloneElement(this.props.children, {
