@@ -17,6 +17,7 @@ import mockData from "./mock/randomSiteData.json";
 import { isEmpty, getVisID, importEmissions } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
+import { defaults } from "lodash";
 
 // import TMBData from "./data/TMB_data_LGHG.json";
 // import NPLData from "./data/NPL_data_LGHG.json";
@@ -89,13 +90,19 @@ class Dashboard extends React.Component {
     let dataKeys = {};
     let processedData = {};
 
+    const defaultSite = Object.keys(data).sort()[0];
+
     try {
       for (const site of Object.keys(data)) {
         dataKeys[site] = {};
         processedData[site] = {};
 
         for (const species of Object.keys(data[site])) {
-          dataKeys[site][species] = false;
+          if (site === defaultSite) {
+            dataKeys[site][species] = true;
+          } else {
+            dataKeys[site][species] = false;
+          }
 
           const gas_data = data[site][species];
 
@@ -119,8 +126,8 @@ class Dashboard extends React.Component {
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
+    this.state.selectedSite = defaultSite;
     this.state.selectedKeys = dataKeys;
-    this.state.selectedSite = Object.keys(dataKeys).sort()[0];
     this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
   }

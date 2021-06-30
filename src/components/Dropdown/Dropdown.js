@@ -42,8 +42,11 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = {
-  handleDropdownChange: PropTypes.func,
-  selectedKeys: PropTypes.object,
-};
+  defaultSite: PropTypes.string,
+  onChange: PropTypes.func,
+  selectedKeys: PropTypes.object
+}
+
+
 
 export default Dropdown;

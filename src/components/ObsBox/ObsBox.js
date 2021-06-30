@@ -16,17 +16,11 @@ class ObsBox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { oldSite: null };
-
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
   }
 
   handleDropdownChange(event) {
     const site = event.target.value;
-
-    if(site === this.state.oldSite) {
-        return
-    }
 
     const selected = this.props.selectedKeys;
 
@@ -137,14 +131,14 @@ class ObsBox extends React.Component {
             defaultSite={this.props.selectedSite}
             onChange={this.handleDropdownChange}
           />
+          <DataSelector
+            dataKeys={this.props.selectedKeys}
+            dataSelector={this.props.dataSelector}
+            selectedSite={this.props.selectedSite}
+            autoUpdate={true}
+            singleSite={true}
+          />
         </div>
-        <DataSelector
-          dataKeys={this.props.selectedKeys}
-          dataSelector={this.props.dataSelector}
-          selectedSite={this.props.selectedSite}
-          autoUpdate={true}
-          singleSite={true}
-        />
         <div className={styles.plot}>{this.createEmissionsGraphs()}</div>
       </div>
     );
