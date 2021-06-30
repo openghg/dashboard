@@ -14,8 +14,6 @@ import DateSlider from "./components/DateSlider/DateSlider";
 import colours from "./data/colours.json";
 import mockData from "./mock/randomSiteData.json";
 
-import EmissionExample from "./images/exampleEmissions.png";
-
 import { isEmpty, getVisID, importEmissions } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
