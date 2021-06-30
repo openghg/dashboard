@@ -1,0 +1,36 @@
+.container {
+  background: white;
+  display: grid;
+  grid-template-columns: 0.4fr 1.6fr;
+  grid-template-rows: 0.2fr auto 2.1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "header header"
+    "body body"
+    "select plot";
+  height: 100%;
+}
+
+.header {
+  grid-area: header;
+  font-size: 2.5vh;
+  font-weight: 300;
+  padding-left: 10px;
+}
+
+.body {
+  grid-area: body;
+  padding-left: 0.5vw;
+  padding-bottom: 1vh;
+  padding-top: 1vh;
+
+}
+.select {
+  grid-area: select;
+  padding-left: 0.5vw;
+}
+.plot {
+  grid-area: plot;
+}
+
+

@@ -1,12 +1,13 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    gap: 1vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  align-items: center;
 }
 
 .main {
   display: grid;
-  grid-auto-rows: 30vh;
+  grid-auto-rows: 20vh;
   grid-auto-columns: 100%;
   column-count: 1;
   margin: 1vw;
@@ -15,16 +16,14 @@
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;
-  justify-items: left;
+  justify-content: center;
 }
 
 .header {
-    font-size: 2vh;
-    font-weight: 500;
-    color: #808080;
+  font-size: 2vh;
+  font-weight: 500;
+  color: #808080;
 }
-
-
 
 .mainSlim {
   display: grid;
@@ -37,5 +36,4 @@
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;
-  justify-items: left;
 }

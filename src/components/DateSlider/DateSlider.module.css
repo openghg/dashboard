@@ -1,24 +1,12 @@
 .container {
-  padding: 2vw;
-  padding-bottom: 2vh;
-  background-color: #f4f3ee;
-  color: slategray;
-  display: grid;
-  grid-template-rows: 0.9fr 0.1fr;
-  grid-gap: 2vh;
-  justify-content: center;
-  justify-items: center;
-}
-
-.mapBox {
+  background: white;
+  gap: 1vh;
   width: 100%;
-}
-
-.sliderSection {
   display: flex;
   flex-direction: column;
-  gap: 1vh;
-  width: 90%;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.5vh;
 }
 
 .marker {
@@ -43,8 +31,10 @@
 
 .sliderContainer {
   font-size: 2vh;
+  width: 80%;
 }
 
 .dateContainer {
-  font-size: 2vh;
+  font-size: 1.8vh;
+  width: 80%;
 }

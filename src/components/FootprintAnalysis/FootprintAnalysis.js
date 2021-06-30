@@ -104,6 +104,7 @@ class FootprintAnalysis extends React.Component {
     const footprints = this.state.footprints;
     const footprintImg = footprints[this.state.selectedDate];
 
+    // TODO - change this to be read in instead of hard-coding the bounding box
     const overlayBounds = [
       [50.87063, -1.26],
       [52.0193672, 0.46799811],
@@ -117,14 +118,15 @@ class FootprintAnalysis extends React.Component {
             dateSelector={this.dateSelector}
             selectedDate={this.state.selectedDate}
             dates={this.state.dates}
-            sites={this.props.siteData}
+            sites={this.props.sites}
             centre={this.props.centre}
             zoom={this.props.zoom}
             width={this.props.width}
             height={this.props.height}
             overlayImg={footprintImg}
             overlayBounds={overlayBounds}
-            showSites={false}
+            showSites={true}
+            measMarkers={false}
           />
         </div>
         <div className={styles.plots}>{this.createGraphs()}</div>

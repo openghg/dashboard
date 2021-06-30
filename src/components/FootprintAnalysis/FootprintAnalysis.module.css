@@ -1,14 +1,12 @@
 .container {
   font-size: 2vh;
   display: grid;
-  grid-template-columns: 1fr;
   grid-template-rows: 0.6fr 0.4fr;
   grid-template-areas:
     "map"
     "linechart";
-  left: 0;
-  top: 0;
   color: black;
+  justify-content: center;
 }
 
 .map {

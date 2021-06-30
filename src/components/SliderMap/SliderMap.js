@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { LayerGroup, MapContainer, ImageOverlay, CircleMarker, TileLayer, Popup } from "react-leaflet";
+import { LayerGroup, MapContainer, ImageOverlay, Marker, CircleMarker, TileLayer, Popup } from "react-leaflet";
 import { Slider } from "@material-ui/core";
 import { nanoid } from "nanoid";
 
@@ -32,6 +32,7 @@ class SliderMap extends React.Component {
     }
 
     let markers = [];
+
     for (const [site, siteData] of Object.entries(sites)) {
       const siteName = String(site).toUpperCase();
       const lat = siteData["latitude"];
@@ -39,47 +40,68 @@ class SliderMap extends React.Component {
       const longName = siteData["long_name"];
       const locationStr = `${siteName}, ${lat}, ${long}`;
 
-      const measurement = siteData["measurements"][this.props.selectedDate];
+      let marker;
+      if (this.props.measMarkers) {
+        let measurement;
+        try {
+          measurement = siteData["measurements"][this.props.selectedDate];
+        } catch (error) {
+          console.error("Unable to read measurement data for this site.");
+          break;
+        }
 
-      // Should use some correct binning here
-      let colour = "black";
-      if (measurement > 0 && measurement < 30) {
-        colour = "green";
-      } else if (measurement < 60) {
-        colour = "orange";
-      } else if (measurement < 150) {
-        colour = "red";
+        // Should use some correct binning here
+        let colour = "black";
+        if (measurement > 0 && measurement < 30) {
+          colour = "green";
+        } else if (measurement < 60) {
+          colour = "orange";
+        } else if (measurement < 150) {
+          colour = "red";
+        }
+
+        // This is usually bad practice but here we want to force new CircleMarkers
+        // to be created on the map
+        const circleKey = nanoid();
+
+        marker = (
+          <CircleMarker
+            key={circleKey}
+            center={[lat, long]}
+            radius={15}
+            fillOpacity={0.9}
+            fillColor={colour}
+            stroke={false}
+          >
+            <Popup>
+              <div className={styles.marker}>
+                <div className={styles.markerHeader}>{siteName}</div>
+                <div className={styles.markerBody}>
+                  Name: {longName}
+                  <br />
+                  <br />
+                  {new Date(this.state.currentDate).toLocaleDateString()}: {measurement}
+                </div>
+                <div className={styles.markerLocation}>Location: {locationStr}</div>
+              </div>
+            </Popup>
+          </CircleMarker>
+        );
+      } else {
+        marker = (
+          <Marker position={[lat, long]}>
+            <Popup>
+              <div className={styles.marker}>
+                <div className={styles.markerHeader}>{siteName}</div>
+                <div className={styles.markerBody}>Name: {longName}</div>
+                <div className={styles.markerLocation}>Location: {locationStr}</div>
+              </div>
+            </Popup>
+          </Marker>
+        );
       }
 
-      // This is usually bad practice but here we want to force new CircleMarkers
-      // to be created on the map
-      const circleKey = nanoid();
-
-      const circle = (
-        <CircleMarker
-          key={circleKey}
-          center={[lat, long]}
-          radius={15}
-          fillOpacity={0.9}
-          fillColor={colour}
-          stroke={false}
-        >
-          <Popup>
-            <div className={styles.marker}>
-              <div className={styles.markerHeader}>{siteName}</div>
-              <div className={styles.markerBody}>
-                Name: {longName}
-                <br />
-                <br />
-                {new Date(this.state.currentDate).toLocaleDateString()}: {measurement}
-              </div>
-              <div className={styles.markerLocation}>Location: {locationStr}</div>
-            </div>
-          </Popup>
-        </CircleMarker>
-      );
-
-      markers.push(circle);
+      markers.push(marker);
     }
 
     return markers;
@@ -168,7 +190,8 @@ SliderMap.propTypes = {
   showSites: PropTypes.bool,
   sites: PropTypes.object,
   width: PropTypes.string.isRequired,
-  zoom: PropTypes.number.isRequired
+  zoom: PropTypes.number.isRequired,
+  measMarkers: PropTypes.bool.isRequired,
 };
 
 export default SliderMap;
