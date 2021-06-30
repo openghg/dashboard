@@ -12,14 +12,8 @@ class Dropdown extends React.Component {
       const label = String(site).toUpperCase();
       const testID = "test-id-" + label;
 
-      let selected = false;
-
-      if (site === this.props.defaultSite) {
-        selected = true;
-      }
-
       const choice = (
-        <option key={label} selected={selected} data-testid={testID} value={label}>
+        <option key={label} data-testid={testID} value={label}>
           {label}
         </option>
       );
@@ -32,7 +26,12 @@ class Dropdown extends React.Component {
         Select site:
         <div>
           <form>
-            <select data-testid="select-form" name="obs-select" onChange={this.props.onChange}>
+            <select
+              data-testid="select-form"
+              defaultValue={this.props.defaultSite}
+              name="obs-select"
+              onChange={this.props.onChange}
+            >
               {choices}
             </select>
           </form>

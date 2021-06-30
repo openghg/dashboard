@@ -49,9 +49,7 @@ class DateSlider extends React.Component {
 
 DateSlider.propTypes = {
   dateSelector: PropTypes.func,
-  dates: PropTypes.shape({
-    length: PropTypes.number,
-  }),
+  dates: PropTypes.array,
   selectedDate: PropTypes.number,
 };
 
