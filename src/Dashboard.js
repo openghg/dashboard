@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
     // TOOD - update this
     // This only works on the assumption that all data has the same dates
     // which the current mocked data does.
-    const dates = Object.keys(measurementData["AAA"]["sector_a"]);
+    const dates = Object.keys(measurementData["AAA"]["waste"]);
 
     this.state = {
       error: null,
@@ -51,6 +51,7 @@ class Dashboard extends React.Component {
       footprintView: true,
       emptySelection: true,
       plotType: "footprint",
+      selectedSite: null,
     };
 
     // For the moment create some fake sites
@@ -67,11 +68,16 @@ class Dashboard extends React.Component {
     // Selects the dates
     this.dateSelector = this.dateSelector.bind(this);
     this.selectPlotType = this.selectPlotType.bind(this);
+    this.siteSelector = this.siteSelector.bind(this);
   }
 
   dateSelector(date) {
     // Here date is a ms-based UNIX timestamp
     this.setState({ selectedDate: parseInt(date) });
+  }
+
+  siteSelector(site) {
+    this.setState({ selectedSite: site });
   }
 
   // Need a function to process the data that's keyed
@@ -114,6 +120,7 @@ class Dashboard extends React.Component {
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
     this.state.selectedKeys = dataKeys;
+    this.state.selectedSite = Object.keys(dataKeys).sort()[0];
     this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
   }
@@ -316,6 +323,8 @@ class Dashboard extends React.Component {
           processedData={this.state.processedData}
           dataSelector={this.dataSelector}
           selectedDate={this.state.selectedDate}
+          selectedSite={this.state.selectedSite}
+          setSelectedSite={this.siteSelector}
         ></ObsBox>
       </div>
     );

@@ -17,6 +17,10 @@ class ControlPanel extends React.Component {
     }
   }
 
+  logMe() {
+    console.log("Clicked yah");
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -24,7 +28,20 @@ class ControlPanel extends React.Component {
           <div className={styles.headerText}>OpenGHG</div>
           <div className={styles.headerTag}>A COP26 dashboard</div>
         </div>
-        <div className={styles.content}></div>
+        <div className={styles.content}>
+          <button type="button" className={styles.linkButton} onClick={this.logMe}>
+            Emissions
+          </button>
+          <button type="button" className={styles.linkButton} onClick={this.logMe}>
+            Model
+          </button>
+          <button type="button" className={styles.linkButton} onClick={this.logMe}>
+            Obervations
+          </button>
+          <button type="button" className={styles.linkButton} onClick={this.logMe}>
+            About OpenGHG
+          </button>
+        </div>
         <div className={styles.footer}>
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
             <img src={GitHubLogo} alt="GitHub logo" />

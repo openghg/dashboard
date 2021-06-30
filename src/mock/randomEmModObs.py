@@ -71,7 +71,7 @@ sites = ["AAA", "BBB", "CCC"]
 
 dates = pd.date_range(start='2021-01-01', end='2021-01-31', freq='D')
 
-create_plots(dates)
+# create_plots(dates)
 
 data = {}
 
@@ -84,7 +84,7 @@ for site in sites:
 
     total = gas_a + gas_b + gas_c
 
-    df = pd.DataFrame(data={"sector_a": gas_a, "sector_b": gas_b, "sector_c": gas_c, "total": total}, index=dates)
+    df = pd.DataFrame(data={"waste": gas_a, "agr-nat": gas_b, "comb-prod": gas_c, "total": total}, index=dates)
 
     data[site] = json.loads(df.to_json())
 

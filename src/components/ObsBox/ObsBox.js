@@ -5,6 +5,7 @@ import GraphContainer from "../GraphContainer/GraphContainer";
 import LineChart from "../LineChart/LineChart";
 import VisLayout from "../VisLayout/VisLayout";
 import Dropdown from "../Dropdown/Dropdown";
+import DataSelector from "../DataSelector/DataSelector";
 
 import colours from "../../data/colours.json";
 import { isEmpty, getVisID } from "../../util/helpers";
@@ -15,16 +16,17 @@ class ObsBox extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = { oldSite: null };
+
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
-    // Select the first site
-    const selectedKeys = this.props.selectedKeys;
-    const firstSite = Object.keys(selectedKeys).sort()[0];
-    this.state = { defaultSite: firstSite };
-    this.handleDropdownChange({ target: { value: firstSite } });
   }
 
   handleDropdownChange(event) {
     const site = event.target.value;
+
+    if(site === this.state.oldSite) {
+        return
+    }
 
     const selected = this.props.selectedKeys;
 
@@ -39,7 +41,23 @@ class ObsBox extends React.Component {
     }
 
     this.props.dataSelector(selected);
+    this.props.setSelectedSite(site);
   }
+
+  //   handleInputChange(event) {
+  //     const target = event.target;
+  //     const value = target.type === "checkbox" ? target.checked : target.value;
+
+  //     const site = target.attributes["site"].value;
+  //     const species = target.attributes["species"].value;
+
+  //     // Update the state to have the new
+  //     const oldSelected = cloneDeep(this.state.selected);
+
+  //     oldSelected[site][species] = value;
+
+  //     this.setState({ selected: oldSelected });
+  //   }
 
   createEmissionsGraphs() {
     let visualisations = [];
@@ -116,10 +134,17 @@ class ObsBox extends React.Component {
         <div className={styles.select}>
           <Dropdown
             selectedKeys={this.props.selectedKeys}
-            defaultSite={this.state.defaultSite}
+            defaultSite={this.props.selectedSite}
             onChange={this.handleDropdownChange}
           />
         </div>
+        <DataSelector
+          dataKeys={this.props.selectedKeys}
+          dataSelector={this.props.dataSelector}
+          selectedSite={this.props.selectedSite}
+          autoUpdate={true}
+          singleSite={true}
+        />
         <div className={styles.plot}>{this.createEmissionsGraphs()}</div>
       </div>
     );

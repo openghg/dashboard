@@ -1,18 +1,21 @@
 .container {
   position: fixed;
   display: grid;
-  grid-template:
-    "sideHeader" 1fr
-    "sideContent" 5fr
-    "sideFooter" 1fr;
   grid-template-columns: minmax(180px, 15vw);
-  padding-right: 1vw;
-  color: black;
+  grid-template-rows: 0.4fr 2.4fr 0.2fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "header"
+    "content"
+    "footer";
+  color: white;
+  height: 90vh;
 }
 
 .header {
-  grid-area: sideHeader;
-  padding: 2vh 0vh 0vh 2vh;
+  grid-area: header;
+  padding-left: 2vh;
+  padding-top: 2vh;
   font-size: 3vh;
 }
 
@@ -25,7 +28,7 @@
 }
 
 .content {
-  grid-area: sideContent;
+  grid-area: content;
   padding: 2vh 0vh 0vh 2vh;
   display: flex;
   flex-direction: column;
@@ -45,10 +48,27 @@
 }
 
 .footer {
-  grid-area: "sideFooter";
+  grid-area: "footer";
   padding: 2vh 0vh 0vh 2vh;
 }
 
 .footer img {
   width: 1.5vw;
+}
+
+.linkButton {
+  font-size: 2vh;
+  font-family: inherit;
+  font-weight: inherit;
+  text-align: left;
+  color: white;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.linkButton:hover {
+  color: rgb(211, 211, 211);
 }
