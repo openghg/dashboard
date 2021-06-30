@@ -7,7 +7,7 @@
 
 .main {
   display: grid;
-  grid-auto-rows: 30vh;
+  grid-auto-rows: 20vh;
   grid-auto-columns: 100%;
   column-count: 1;
   margin: 1vw;

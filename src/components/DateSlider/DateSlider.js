@@ -41,7 +41,7 @@ class DateSlider extends React.Component {
             min={startDate}
           />
         </div>
-        <div className={styles.dateContainer}>Date: {new Date(this.state.selectedDate).toLocaleString()}</div>
+        {/* <div className={styles.dateContainer}>Date: {new Date(this.state.selectedDate).toLocaleString()}</div> */}
       </div>
     );
   }

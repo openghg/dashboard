@@ -20,10 +20,14 @@
 
 .body {
   grid-area: body;
-  padding-left: 10px;
+  padding-left: 0.5vw;
+  padding-bottom: 1vh;
+  padding-top: 1vh;
+
 }
 .select {
   grid-area: select;
+  padding-left: 0.5vw;
 }
 .plot {
   grid-area: plot;
