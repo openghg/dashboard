@@ -36,7 +36,10 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    const dates = Object.keys(measurementData["AAA"]["gas_a"]);
+    // TOOD - update this
+    // This only works on the assumption that all data has the same dates
+    // which the current mocked data does.
+    const dates = Object.keys(measurementData["AAA"]["sector_a"]);
 
     this.state = {
       error: null,
@@ -54,13 +57,10 @@ class Dashboard extends React.Component {
 
     // For the moment create some fake sites
     this.state.sites = londonGHGSites;
-    // Import the emissions PNG paths so we can select the image we want using
-    //  the slider
+    // Set the selected data to be the first date
+    this.state.selectedDate = parseInt(dates[0]);
+    // Import the emissions PNG paths so we can select the image we want using the slider
     this.state.emissionsPNGs = importEmissions();
-
-    console.log(this.state.emissionsPNGs);
-    // This data will come from a function but for now just read it in
-
     // Process data we have from JSON
     this.processData();
 
@@ -290,8 +290,6 @@ class Dashboard extends React.Component {
     const modelText = `Atmospheric models use meteorological data to simulate the dispersion of 
     greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here (LINK: PAGE ON MODELS)​`;
     const imagePath = this.state.emissionsPNGs[this.state.selectedDate];
-
-    console.log(imagePath);
 
     return (
       <div className={styles.model}>

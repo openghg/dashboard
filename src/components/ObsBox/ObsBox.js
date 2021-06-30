@@ -18,7 +18,6 @@ class ObsBox extends React.Component {
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     // Select the first site
     const selectedKeys = this.props.selectedKeys;
-
     const firstSite = Object.keys(selectedKeys).sort()[0];
     this.state = { defaultSite: firstSite };
     this.handleDropdownChange({ target: { value: firstSite } });
@@ -72,7 +71,6 @@ class ObsBox extends React.Component {
 
       if (!isEmpty(siteEmissions)) {
         for (const [site, emissionsData] of Object.entries(siteEmissions)) {
-          //   console.log(site, emissionsData);
           // Create a graph for each site
           const title = String(site).toUpperCase();
           const key = title.concat("-", Object.keys(emissionsData).join("-"));

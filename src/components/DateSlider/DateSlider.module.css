@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 1.5vh;
 }
 
 .marker {
@@ -34,6 +35,6 @@
 }
 
 .dateContainer {
-  font-size: 2vh;
+  font-size: 1.8vh;
   width: 80%;
 }

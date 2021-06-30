@@ -8,10 +8,44 @@ import numpy as np
 import json
 from pathlib import Path
 import rasterio
-from matplotlib.pyplot import colormaps
+# from matplotlib.pyplot import colormaps
 import matplotlib.pyplot as plt
 from rasterio.plot import show
 import random
+
+div_cmaps = [ 'PiYG',
+ 'PiYG_r',
+ 'PuBu',
+ 'PuBuGn',
+ 'PuBuGn_r',
+ 'PuBu_r',
+ 'PuOr',
+ 'PuOr_r',
+ 'PuRd',
+ 'PuRd_r',
+ 'Purples',
+ 'Purples_r',
+ 'RdBu',
+ 'RdBu_r',
+ 'RdGy',
+ 'RdGy_r',
+ 'RdPu',
+ 'RdPu_r',
+ 'RdYlBu',
+ 'RdYlBu_r',
+ 'RdYlGn',
+ 'RdYlGn_r',
+ 'Reds',
+ 'Reds_r',
+ 'Set1',
+ 'Set1_r',
+ 'Set2',
+ 'Set2_r',
+ 'Set3',
+ 'Set3_r',
+ 'Spectral',
+ 'Spectral_r',
+]
 
 def to_UNIX_ms(t):
     # Converts a date to a UNIX ms time string
@@ -21,12 +55,12 @@ def create_plots(dates):
     fp = "example_image.tif"
     img = rasterio.open(fp)
     fig, ax = plt.subplots(1,1, figsize=(6,6))
+    plt.gca().set_axis_off()
+    plt.subplots_adjust(top = 1, bottom = 0, right = 1, left = 0, hspace = 0, wspace = 0)
+    plt.margins(1,1)
     
-    cmaps = colormaps()
-
-
     for d in dates:
-        cmap = random.choice(cmaps)
+        cmap = random.choice(div_cmaps)
         a = show(img, cmap=cmap, ax=ax)
         date_str = f"{to_UNIX_ms(d)}.png"
         plt.savefig(date_str)
@@ -48,7 +82,9 @@ for site in sites:
     gas_b = np.random.default_rng().uniform(0.6, 0.9, n_dates)
     gas_c = np.random.default_rng().uniform(0.0, 0.3, n_dates)
 
-    df = pd.DataFrame(data={"gas_a": gas_a, "gas_b": gas_b, "gas_c": gas_c}, index=dates)
+    total = gas_a + gas_b + gas_c
+
+    df = pd.DataFrame(data={"sector_a": gas_a, "sector_b": gas_b, "sector_c": gas_c, "total": total}, index=dates)
 
     data[site] = json.loads(df.to_json())
 
