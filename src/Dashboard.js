@@ -14,10 +14,11 @@ import DateSlider from "./components/DateSlider/DateSlider";
 import colours from "./data/colours.json";
 import mockData from "./mock/randomSiteData.json";
 
-import { isEmpty, getVisID, importEmissions } from "./util/helpers";
+import { isEmpty, getVisID, importMockEmissions, importEmissions } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
 import { defaults } from "lodash";
+import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
 
 // import TMBData from "./data/TMB_data_LGHG.json";
 // import NPLData from "./data/NPL_data_LGHG.json";
@@ -60,7 +61,7 @@ class Dashboard extends React.Component {
     // Set the selected data to be the first date
     this.state.selectedDate = parseInt(dates[0]);
     // Import the emissions PNG paths so we can select the image we want using the slider
-    this.state.emissionsPNGs = importEmissions();
+    this.state.mockEmissionsPNGs = importMockEmissions();
     // Process data we have from JSON
     this.processData();
 
@@ -283,11 +284,9 @@ class Dashboard extends React.Component {
     const emissionsHeader = "Emissions";
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (LINK: NAEI). Learn more about how
        countries estimate and report there emissions here (LINK: PAGE EXPLAINING INVENTORY)`;
-    const imagePath = this.state.emissionsPNGs[this.state.selectedDate];
     return (
       <div className={styles.emissions}>
-        <PlotBox
-          imagePath={imagePath}
+        <EmissionsBox
           altText={"Example emissions"}
           headerText={emissionsHeader}
           bodyText={emissionsText}
@@ -301,7 +300,7 @@ class Dashboard extends React.Component {
     const modelHeader = "Model";
     const modelText = `Atmospheric models use meteorological data to simulate the dispersion of 
     greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here (LINK: PAGE ON MODELS)​`;
-    const imagePath = this.state.emissionsPNGs[this.state.selectedDate];
+    const imagePath = this.state.mockEmissionsPNGs[this.state.selectedDate];
 
     return (
       <div className={styles.model}>

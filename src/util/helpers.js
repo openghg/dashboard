@@ -33,7 +33,7 @@ export function importSVGs() {
   return footprints;
 }
 
-export function importEmissions() {
+export function importMockEmissions() {
     let emissions = {};
     try {
       const requiredPNGs = require.context("../images/mockEmissions", false, /\.png$/);
