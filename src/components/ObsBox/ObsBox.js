@@ -96,8 +96,11 @@ class ObsBox extends React.Component {
           //     tableau10.push(tableau10.shift());
           //   }
 
+          const widthScale = 0.9;
+          const heightScale = 0.9;
+
           const vis = (
-            <GraphContainer key={containerKey}>
+            <GraphContainer heightScale={heightScale} widthScale={widthScale} key={containerKey}>
               <LineChart
                 divID={getVisID()}
                 data={emissionsData}
@@ -117,7 +120,7 @@ class ObsBox extends React.Component {
         }
       }
     }
-    return <VisLayout>{visualisations}</VisLayout>;
+    return visualisations;
   }
 
   render() {

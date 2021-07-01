@@ -14,7 +14,7 @@ class VisUnit extends React.Component {
 
 VisUnit.propTypes = {
   testid: PropTypes.string.isRequired,
-  vis: PropTypes.node.isRequired
-}
+  vis: PropTypes.node.isRequired,
+};
 
 export default VisUnit;

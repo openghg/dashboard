@@ -12,9 +12,12 @@ class GraphContainer extends React.Component {
   updateDimensions() {
     const node = this.contRef.current;
     const dbcontent = document.getElementById("dbContent");
+    const widthScale = this.props.widthScale ? this.props.widthScale : 1.0;
+    const heightScale = this.props.heightScale ? this.props.heightScale : 1.0;
+
     if (node) {
-      const height = node.parentNode.clientHeight;
-      const width = dbcontent.clientWidth;
+      const height = heightScale * node.parentNode.clientHeight;
+      const width = widthScale * dbcontent.clientWidth;
       this.setState({ height: height, width: width });
     }
   }

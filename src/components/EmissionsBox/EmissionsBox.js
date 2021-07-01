@@ -19,7 +19,8 @@ class EmissionsBox extends React.Component {
     this.state = { images: images, selectedImage: "total" };
   }
 
-  setImage(name) {
+  setImage(e) {
+    const name = e.target.dataset.onclickparam;
     if (!this.state.images.hasOwnProperty(name)) {
       console.error(`$(name) not in images`);
       return;
@@ -53,38 +54,34 @@ class EmissionsBox extends React.Component {
         </div>
         <div className={styles.buttons}>
           <TextButton
+            onClickParam={"agri"}
             styling={styling["agri"]}
             extraStyling={extraStyling}
-            onClick={() => {
-              this.setImage("agri");
-            }}
+            onClick={this.setImage}
           >
             Argi + Natural
           </TextButton>
           <TextButton
+            onClickParam={"combProd"}
             styling={styling["combProd"]}
             extraStyling={extraStyling}
-            onClick={() => {
-              this.setImage("combProd");
-            }}
+            onClick={this.setImage}
           >
             Combustion + Production
           </TextButton>
           <TextButton
+            onClickParam={"waste"}
             styling={styling["waste"]}
             extraStyling={extraStyling}
-            onClick={() => {
-              this.setImage("waste");
-            }}
+            onClick={this.setImage}
           >
             Waste
           </TextButton>
           <TextButton
+            onClickParam={"total"}
             styling={styling["total"]}
             extraStyling={extraStyling}
-            onClick={() => {
-              this.setImage("total");
-            }}
+            onClick={this.setImage}
           >
             Total
           </TextButton>

@@ -14,9 +14,16 @@ class TextButton extends React.Component {
     }
 
     const extraStyling = this.props.extraStyling ? this.props.extraStyling : {};
+    const onClickParam = this.props.onClickParam;
 
     return (
-      <button type="button" className={style} style={extraStyling} onClick={this.props.onClick}>
+      <button
+        type="button"
+        data-onclickparam={onClickParam}
+        className={style}
+        style={extraStyling}
+        onClick={this.props.onClick}
+      >
         {this.props.children}
       </button>
     );
@@ -25,7 +32,10 @@ class TextButton extends React.Component {
 
 TextButton.propTypes = {
   children: PropTypes.string.isRequired,
+  extraStyling: PropTypes.object,
   onClick: PropTypes.func.isRequired,
+  onClickParam: PropTypes.string,
+  styling: PropTypes.string,
 };
 
 export default TextButton;

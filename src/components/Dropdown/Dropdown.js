@@ -23,7 +23,7 @@ class Dropdown extends React.Component {
 
     return (
       <div className={styles.plotSelector}>
-        Select site:
+        Select:
         <div>
           <form>
             <select
