@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/dashboard/static/css/main.52a174c5.chunk.css",
-    "main.js": "/dashboard/static/js/main.49c466fd.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.49c466fd.chunk.js.map",
+    "main.css": "/dashboard/static/css/main.4598381d.chunk.css",
+    "main.js": "/dashboard/static/js/main.748ed9dd.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.748ed9dd.chunk.js.map",
     "runtime-main.js": "/dashboard/static/js/runtime-main.08f935c8.js",
     "runtime-main.js.map": "/dashboard/static/js/runtime-main.08f935c8.js.map",
-    "static/js/2.0e6d7454.chunk.js": "/dashboard/static/js/2.0e6d7454.chunk.js",
-    "static/js/2.0e6d7454.chunk.js.map": "/dashboard/static/js/2.0e6d7454.chunk.js.map",
+    "static/js/2.b72d802f.chunk.js": "/dashboard/static/js/2.b72d802f.chunk.js",
+    "static/js/2.b72d802f.chunk.js.map": "/dashboard/static/js/2.b72d802f.chunk.js.map",
     "static/js/3.a39eaa96.chunk.js": "/dashboard/static/js/3.a39eaa96.chunk.js",
     "static/js/3.a39eaa96.chunk.js.map": "/dashboard/static/js/3.a39eaa96.chunk.js.map",
     "index.html": "/dashboard/index.html",
-    "static/css/main.52a174c5.chunk.css.map": "/dashboard/static/css/main.52a174c5.chunk.css.map",
-    "static/js/2.0e6d7454.chunk.js.LICENSE.txt": "/dashboard/static/js/2.0e6d7454.chunk.js.LICENSE.txt",
+    "static/css/main.4598381d.chunk.css.map": "/dashboard/static/css/main.4598381d.chunk.css.map",
+    "static/js/2.b72d802f.chunk.js.LICENSE.txt": "/dashboard/static/js/2.b72d802f.chunk.js.LICENSE.txt",
     "static/media/1609459200000.png": "/dashboard/static/media/1609459200000.f570ec53.png",
     "static/media/1609545600000.png": "/dashboard/static/media/1609545600000.c290e0f7.png",
     "static/media/1609632000000.png": "/dashboard/static/media/1609632000000.cfb35457.png",
@@ -40,6 +40,10 @@
     "static/media/1611792000000.png": "/dashboard/static/media/1611792000000.040de78b.png",
     "static/media/1611878400000.png": "/dashboard/static/media/1611878400000.5afbc84c.png",
     "static/media/1611964800000.png": "/dashboard/static/media/1611964800000.974dd322.png",
+    "static/media/ch4_ukghg_map_agriculture-and-natural.51d11944.png": "/dashboard/static/media/ch4_ukghg_map_agriculture-and-natural.51d11944.png",
+    "static/media/ch4_ukghg_map_combustion-and-production.8e298689.png": "/dashboard/static/media/ch4_ukghg_map_combustion-and-production.8e298689.png",
+    "static/media/ch4_ukghg_map_sectors_stacked.d2b043f6.png": "/dashboard/static/media/ch4_ukghg_map_sectors_stacked.d2b043f6.png",
+    "static/media/ch4_ukghg_map_waste.3ffec017.png": "/dashboard/static/media/ch4_ukghg_map_waste.3ffec017.png",
     "static/media/github.16a9304e.svg": "/dashboard/static/media/github.16a9304e.svg",
     "static/media/londonHighResFootprint_2020-08-01T00:00:00.svg": "/dashboard/static/media/londonHighResFootprint_2020-08-01T00:00:00.5f47371d.svg",
     "static/media/londonHighResFootprint_2020-08-01T04:00:00.svg": "/dashboard/static/media/londonHighResFootprint_2020-08-01T04:00:00.0d4d4427.svg",
@@ -230,8 +234,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.08f935c8.js",
-    "static/js/2.0e6d7454.chunk.js",
-    "static/css/main.52a174c5.chunk.css",
-    "static/js/main.49c466fd.chunk.js"
+    "static/js/2.b72d802f.chunk.js",
+    "static/css/main.4598381d.chunk.css",
+    "static/js/main.748ed9dd.chunk.js"
   ]
 }
