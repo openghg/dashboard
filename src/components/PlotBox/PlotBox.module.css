@@ -2,7 +2,7 @@
   background: white;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto;
   gap: 0px 0px;
   grid-template-areas:
     "header"

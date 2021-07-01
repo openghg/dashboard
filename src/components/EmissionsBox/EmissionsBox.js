@@ -16,7 +16,7 @@ class EmissionsBox extends React.Component {
     const images = { agri: agriNatural, combProd: combProd, total: total, waste: waste };
 
     this.setImage = this.setImage.bind(this);
-    this.state = { images: images, selectedImage: images["agri"] };
+    this.state = { images: images, selectedImage: "total" };
   }
 
   setImage(name) {
@@ -26,7 +26,6 @@ class EmissionsBox extends React.Component {
     }
 
     this.setState({ selectedImage: name });
-    console.log(this.state.selectedImage);
   }
 
   render() {
@@ -42,14 +41,15 @@ class EmissionsBox extends React.Component {
     }
 
     const extraStyling = { "font-size": "2.3vh" };
-    
+    const emissionsImage = this.state.images[this.state.selectedImage];
+
     return (
       <div className={styles.container}>
         <div className={styles.header}>{this.props.headerText}</div>
         <div className={styles.date}>Date: {new Date(this.props.selectedDate).toLocaleString()}</div>
         <div className={styles.body}>{this.props.bodyText}</div>
         <div className={styles.plot}>
-          <img src={this.state.selectedImage} alt={"Emissions graph"} />
+          <img src={emissionsImage} alt={"Emissions graph"} />
         </div>
         <div className={styles.buttons}>
           <TextButton
@@ -71,15 +71,6 @@ class EmissionsBox extends React.Component {
             Combustion + Production
           </TextButton>
           <TextButton
-            styling={styling["total"]}
-            extraStyling={extraStyling}
-            onClick={() => {
-              this.setImage("total");
-            }}
-          >
-            Total
-          </TextButton>
-          <TextButton
             styling={styling["waste"]}
             extraStyling={extraStyling}
             onClick={() => {
@@ -87,6 +78,15 @@ class EmissionsBox extends React.Component {
             }}
           >
             Waste
+          </TextButton>
+          <TextButton
+            styling={styling["total"]}
+            extraStyling={extraStyling}
+            onClick={() => {
+              this.setImage("total");
+            }}
+          >
+            Total
           </TextButton>
         </div>
       </div>

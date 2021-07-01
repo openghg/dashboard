@@ -23,6 +23,8 @@
 .body {
   grid-area: body;
   padding-left: 0.5vw;
+  display: flex;
+  align-items: flex-end;
 }
 
 .plot {
@@ -48,7 +50,8 @@
 }
 
 .buttons {
-    display: flex;
-    flex-direction: row;
-    gap: 1vw;
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+  justify-content: center;
 }
