@@ -23,6 +23,7 @@
 .body {
   grid-area: body;
   padding-left: 0.5vw;
+  padding-top: 1vh;
   display: flex;
   align-items: flex-end;
 }
@@ -50,7 +51,19 @@
 
 .buttons {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.speciesButtons {
+  display: flex;
   flex-direction: row;
   gap: 1vw;
-  justify-content: center;
+}
+
+.sectorButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
 }
