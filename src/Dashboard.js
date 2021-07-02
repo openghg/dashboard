@@ -14,10 +14,9 @@ import DateSlider from "./components/DateSlider/DateSlider";
 import colours from "./data/colours.json";
 import mockData from "./mock/randomSiteData.json";
 
-import { isEmpty, getVisID, importMockEmissions, importEmissions } from "./util/helpers";
+import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
-import { defaults } from "lodash";
 import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
 
 // import TMBData from "./data/TMB_data_LGHG.json";
@@ -367,7 +366,7 @@ class Dashboard extends React.Component {
               dataSelector={this.dataSelector}
             />
           </div>
-          <div className={styles.content} id="dbContent">
+          <div className={styles.content} id="graphContent">
             {this.createEmissionsBox()}
             {this.createModelBox()}
             {this.createDateSlider()}

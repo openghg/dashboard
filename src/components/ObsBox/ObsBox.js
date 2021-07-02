@@ -3,7 +3,6 @@ import React from "react";
 
 import GraphContainer from "../GraphContainer/GraphContainer";
 import LineChart from "../LineChart/LineChart";
-import VisLayout from "../VisLayout/VisLayout";
 import Dropdown from "../Dropdown/Dropdown";
 import DataSelector from "../DataSelector/DataSelector";
 

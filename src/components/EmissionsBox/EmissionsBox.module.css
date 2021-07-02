@@ -2,7 +2,7 @@
   background: white;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-rows: 6% auto auto auto auto;
   gap: 0px 0px;
   grid-template-areas:
     "header"
@@ -15,9 +15,9 @@
 
 .header {
   grid-area: header;
-  font-size: 2.5vh;
+  font-size: calc(12px + 0.7vw);
   font-weight: 300;
-  padding-left: 10px;
+  padding-left: 0.5vw;
 }
 
 .body {
@@ -43,9 +43,8 @@
 }
 
 .date {
-  font-size: 1.8vh;
+  font-size: calc(12px + 0.3vw);
   padding-left: 0.5vw;
-  padding-top: 0.5vh;
   width: 80%;
 }
 
