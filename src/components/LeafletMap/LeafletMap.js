@@ -1,6 +1,6 @@
 import PropTypes, { object } from "prop-types";
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
+import { LayerGroup, MapContainer, ImageOverlay, TileLayer, Marker, Popup } from "react-leaflet";
 import styles from "./LeafletMap.module.css";
 
 class LeafletMap extends React.Component {
@@ -66,8 +66,8 @@ class LeafletMap extends React.Component {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {markers}
-          {imgOverlay}
+          <LayerGroup>{markers}</LayerGroup>
+          <LayerGroup>{imgOverlay}</LayerGroup>
         </MapContainer>
       </div>
     );
@@ -81,7 +81,7 @@ LeafletMap.propTypes = {
   overlayImg: PropTypes.string,
   sites: PropTypes.objectOf(object),
   width: PropTypes.string.isRequired,
-  zoom: PropTypes.number.isRequired
-}
+  zoom: PropTypes.number.isRequired,
+};
 
 export default LeafletMap;

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import TextButton from "../TextButton/TextButton";
+import LeafletMap from "../LeafletMap/LeafletMap";
 
 import styles from "./EmissionsBox.module.css";
 import agriNatural from "../../images/emissionsPNGs/ch4_ukghg_map_agriculture-and-natural.png";
@@ -50,7 +51,7 @@ class EmissionsBox extends React.Component {
         <div className={styles.date}>Date: {new Date(this.props.selectedDate).toLocaleString()}</div>
         <div className={styles.body}>{this.props.bodyText}</div>
         <div className={styles.plot}>
-          <img src={emissionsImage} alt={"Emissions graph"} />
+          <LeafletMap centre={[51.5, -0.0482]} zoom={9} />
         </div>
         <div className={styles.buttons}>
           <TextButton
