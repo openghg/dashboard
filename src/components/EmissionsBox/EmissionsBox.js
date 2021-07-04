@@ -6,39 +6,60 @@ import LeafletMap from "../LeafletMap/LeafletMap";
 
 import styles from "./EmissionsBox.module.css";
 
-import agriNatural_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_agriculture-and-natural.svg";
-import combProd_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_combustion-and-production.svg";
-import total_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_total.svg";
-import waste_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_waste.svg";
+import agriNatural_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_agriculture-and-natural_20190101T00.svg";
+import combProd_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_combustion-and-production_20190101T00.svg";
+import total_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_total_20190101T00.svg";
+import waste_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_waste_20190101T00.svg";
 
-import agriNatural_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_agriculture-and-natural_colorbar.svg";
-import combProd_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_combustion-and-production_colorbar.svg";
-import total_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_total_colorbar.svg";
-import waste_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_waste_colorbar.svg";
+import agriNatural_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_agriculture-and-natural_20190101T00_colorbar.svg";
+import combProd_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_combustion-and-production_20190101T00_colorbar.svg";
+import total_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_total_20190101T00_colorbar.svg";
+import waste_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_waste_20190101T00_colorbar.svg";
+
+import agriNatural_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_agriculture-and-natural_20190101T00.svg";
+import combProd_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_combustion_20190101T00.svg";
+import total_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_total_20190101T00.svg";
+import production_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_production_20190101T00.svg";
+
+import agriNatural_co2_cbar from "../../images/emissionsSVGs/co2/co2_ukghg_map_agriculture-and-natural_20190101T00_colorbar.svg";
+import combustion_co2_cbar from "../../images/emissionsSVGs/co2/co2_ukghg_map_combustion_20190101T00_colorbar.svg";
+import total_co2_cbar from "../../images/emissionsSVGs/co2/co2_ukghg_map_total_20190101T00_colorbar.svg";
+import production_co2_cbar from "../../images/emissionsSVGs/co2/co2_ukghg_map_production_20190101T00_colorbar.svg";
 
 class EmissionsBox extends React.Component {
   constructor(props) {
     super(props);
 
     const images = {
-      ch4: {
-        agri: agriNatural_ch4,
-        combProd: combProd_ch4,
-        total: total_ch4,
-        waste: waste_ch4,
+      CH4: {
+        "Agri+Natural": agriNatural_ch4,
+        "Comb+Production": combProd_ch4,
+        Total: total_ch4,
+        Waste: waste_ch4,
         colorbars: {
-          agri: agriNatural_ch4_cbar,
-          combProd: combProd_ch4_cbar,
-          total: total_ch4_cbar,
-          waste: waste_ch4_cbar,
+          "Agri+Natural": agriNatural_ch4_cbar,
+          "Comb+Production": combProd_ch4_cbar,
+          Total: total_ch4_cbar,
+          Waste: waste_ch4_cbar,
         },
       },
-      co2: {},
+      CO2: {
+        "Agri+Natural": agriNatural_co2,
+        Combustion: combProd_co2,
+        Total: total_co2,
+        Production: production_co2,
+        colorbars: {
+          "Agri+Nature": agriNatural_co2_cbar,
+          Combustion: combustion_co2_cbar,
+          Total: total_co2_cbar,
+          Production: production_co2_cbar,
+        },
+      },
     };
 
     this.setImage = this.setImage.bind(this);
     this.setSpecies = this.setSpecies.bind(this);
-    this.state = { images: images, selectedSector: "total", selectedSpecies: "ch4" };
+    this.state = { images: images, selectedSector: "Total", selectedSpecies: "CO2" };
   }
 
   setImage(e) {
@@ -59,40 +80,56 @@ class EmissionsBox extends React.Component {
       return;
     }
 
-    this.setState({ selectedSpecies: species });
+    this.setState({ selectedSpecies: species, selectedSector: "Total" });
   }
 
   render() {
-    let sectorStyling = {};
-    let speciesStyling = {};
-
     const selectedSector = this.state.selectedSector;
     const selectedSpecies = this.state.selectedSpecies;
 
     const selectedImages = this.state.images[selectedSpecies];
 
-    for (const key of Object.keys(selectedImages)) {
-      if (key === selectedSector) {
-        sectorStyling[key] = "selected";
-      } else {
-        sectorStyling[key] = "dark";
-      }
-    }
-
-    for (const key of Object.keys(this.state.images)) {
-      if (key === selectedSpecies) {
-        speciesStyling[key] = "selected";
-      } else {
-        speciesStyling[key] = "dark";
-      }
-    }
-
+    let sectorButtons = [];
     const extraStyling = { "font-size": "2.3vh" };
+
+    for (const key of Object.keys(selectedImages)) {
+      if (key === "colorbars") continue;
+
+      let styling = "dark";
+      if (key === selectedSector) {
+        styling = "selected";
+      }
+
+      const button = (
+        <TextButton key={key} onClickParam={key} extraStyling={extraStyling} styling={styling} onClick={this.setImage}>
+          {key}
+        </TextButton>
+      );
+
+      sectorButtons.push(button);
+    }
+
+    let speciesButtons = [];
+    for (const key of Object.keys(this.state.images)) {
+      let styling = "dark";
+      if (key === selectedSpecies) {
+        styling = "speciesSelected";
+      }
+      const button = (
+        <TextButton styling={styling} onClickParam={key} extraStyling={extraStyling} onClick={this.setSpecies}>
+          {key}
+        </TextButton>
+      );
+
+      speciesButtons.push(button);
+    }
+
     const emissionsImage = this.state.images[this.state.selectedSpecies][this.state.selectedSector];
 
+    // TODO - get the correct bounds for the box
     const overlayBounds = [
-      [50.87063, -1.26],
-      [52.0193672, 0.46799811],
+      [50.87063, -1.16],
+      [52.0193672, 0.56799811],
     ];
 
     return (
@@ -110,59 +147,8 @@ class EmissionsBox extends React.Component {
           />
         </div>
         <div className={styles.buttons}>
-          <div className={styles.speciesButtons}>
-          <TextButton
-              styling={speciesStyling["ch4"]}
-              onClickParam={"ch4"}
-              extraStyling={extraStyling}
-              onClick={this.setSpecies}
-            >
-              CH4
-            </TextButton>
-            <TextButton
-              styling={speciesStyling["co2"]}
-              onClickParam={"co2"}
-              extraStyling={extraStyling}
-              onClick={this.setSpecies}
-            >
-              CO2
-            </TextButton>
-          </div>
-          <div className={styles.sectorButtons}>
-            
-            <TextButton
-              onClickParam={"agri"}
-              extraStyling={extraStyling}
-              styling={sectorStyling["agri"]}
-              onClick={this.setImage}
-            >
-              Agri + Natural
-            </TextButton>
-            <TextButton
-              onClickParam={"combProd"}
-              styling={sectorStyling["combProd"]}
-              extraStyling={extraStyling}
-              onClick={this.setImage}
-            >
-              Combustion + Production
-            </TextButton>
-            <TextButton
-              onClickParam={"waste"}
-              styling={sectorStyling["waste"]}
-              extraStyling={extraStyling}
-              onClick={this.setImage}
-            >
-              Waste
-            </TextButton>
-            <TextButton
-              onClickParam={"total"}
-              styling={sectorStyling["total"]}
-              extraStyling={extraStyling}
-              onClick={this.setImage}
-            >
-              Total
-            </TextButton>
-          </div>
+          <div className={styles.speciesButtons}>{speciesButtons}</div>
+          <div className={styles.sectorButtons}>{sectorButtons}</div>
         </div>
       </div>
     );

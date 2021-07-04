@@ -11,6 +11,8 @@ class TextButton extends React.Component {
       style = styles.dark;
     } else if (styling === "selected") {
       style = styles.selected;
+    } else if (styling === "speciesSelected") {
+      style = styles.speciesSelected;
     }
 
     const extraStyling = this.props.extraStyling ? this.props.extraStyling : {};

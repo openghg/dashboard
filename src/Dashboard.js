@@ -6,7 +6,7 @@ import LineChart from "./components/LineChart/LineChart";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
 // import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
-import PlotBox from "./components/PlotBox/PlotBox";
+// import PlotBox from "./components/PlotBox/PlotBox";
 import ObsBox from "./components/ObsBox/ObsBox";
 import DateSlider from "./components/DateSlider/DateSlider";
 
@@ -18,6 +18,7 @@ import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
 import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
+import ModelBox from "./components/ModelBox/ModelBox";
 
 // import TMBData from "./data/TMB_data_LGHG.json";
 // import NPLData from "./data/NPL_data_LGHG.json";
@@ -303,12 +304,12 @@ class Dashboard extends React.Component {
 
     return (
       <div className={styles.model}>
-        <PlotBox
-          imagePath={imagePath}
+        <ModelBox
           altText={"Example model"}
           headerText={modelHeader}
           bodyText={modelText}
           selectedDate={this.state.selectedDate}
+          imagePath={imagePath}
         />
       </div>
     );

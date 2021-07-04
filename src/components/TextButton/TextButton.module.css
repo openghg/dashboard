@@ -33,18 +33,35 @@
 }
 
 .selected {
-    font-size: 2vh;
-    font-family: inherit;
-    font-weight: 400;
-    text-align: left;
-    color: #BC2C1A;
-    background: none;
-    margin: 0;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .selected:hover {
-    color: rgb(211, 211, 211);
-  }
+  font-size: 2vh;
+  font-family: inherit;
+  font-weight: 400;
+  text-align: left;
+  color: #bc2c1a;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.selected:hover {
+  color: rgb(211, 211, 211);
+}
+
+.speciesSelected {
+  font-size: 2vh;
+  font-family: inherit;
+  font-weight: 400;
+  text-align: left;
+  color: #105885;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.speciesSelected:hover {
+  color: rgb(211, 211, 211);
+}
