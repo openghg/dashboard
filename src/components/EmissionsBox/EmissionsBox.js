@@ -146,6 +146,9 @@ class EmissionsBox extends React.Component {
             overlayImg={emissionsImage}
           />
         </div>
+        {/* <div className={styles.cbar}>
+            Something
+        </div> */}
         <div className={styles.buttons}>
           <div className={styles.speciesButtons}>{speciesButtons}</div>
           <div className={styles.sectorButtons}>{sectorButtons}</div>

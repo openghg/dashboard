@@ -12,7 +12,7 @@ import DateSlider from "./components/DateSlider/DateSlider";
 
 // import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
-import mockData from "./mock/randomSiteData.json";
+import mockEmissionsData from "./mock/randomSiteData.json";
 
 import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
 
@@ -22,7 +22,7 @@ import ModelBox from "./components/ModelBox/ModelBox";
 
 // import TMBData from "./data/TMB_data_LGHG.json";
 // import NPLData from "./data/NPL_data_LGHG.json";
-// import BTTData from "./data/BTT_data_LGHG.json";
+import BTTData from "./data/BTT_data_LGHG.json";
 
 // const measurementData = {
 //   ...TMBData,
@@ -30,7 +30,9 @@ import ModelBox from "./components/ModelBox/ModelBox";
 //   ...BTTData,
 // };
 
-const measurementData = mockData;
+let measurementData = {
+  ...BTTData,
+};
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -39,7 +41,24 @@ class Dashboard extends React.Component {
     // TOOD - update this
     // This only works on the assumption that all data has the same dates
     // which the current mocked data does.
-    const dates = Object.keys(measurementData["AAA"]["waste"]);
+    const allDates = Object.keys(measurementData["BTT"]["CO2"]);
+    // We don't want to use every timestamp for the slider so just take every nth
+    let dates = [];
+    // Take every nth
+    const nSkip = 70;
+    for (let i = 0; i < allDates.length; i += nSkip) {
+      dates.push(allDates[i]);
+    }
+
+    // For now just use the same data for each site
+    measurementData["NPL"] = measurementData["BTT"];
+    measurementData["TMB"] = measurementData["BTT"];
+    // Now add in the mocked up sectors for each site
+    for (const key of Object.keys(mockEmissionsData)) {
+      if (measurementData.hasOwnProperty(key)) {
+        measurementData[key] = {...measurementData[key], ...mockEmissionsData[key]};
+      }
+    }
 
     this.state = {
       error: null,
@@ -63,7 +82,7 @@ class Dashboard extends React.Component {
     // Import the emissions PNG paths so we can select the image we want using the slider
     this.state.mockEmissionsPNGs = importMockEmissions();
     // Process data we have from JSON
-    this.processData();
+    this.processData(measurementData);
 
     // Select the data
     this.dataSelector = this.dataSelector.bind(this);
@@ -83,9 +102,9 @@ class Dashboard extends React.Component {
   }
 
   // Need a function to process the data that's keyed
-  processData() {
+  processData(data) {
     // const data = this.state.apiData;
-    const data = measurementData;
+    // const data = measurementData;
 
     // Process the data and create the correct Javascript time objects
     let dataKeys = {};
@@ -243,7 +262,7 @@ class Dashboard extends React.Component {
   //           zoom={9}
   //           width={"75vw"}
   //           height={"40vh"}
-  //           measurementData={this.state.processedData}
+  //           mockData={this.state.processedData}
   //           siteData={siteData}
   //         />
   //       );
