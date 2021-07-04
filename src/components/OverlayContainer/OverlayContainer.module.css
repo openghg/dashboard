@@ -1,0 +1,30 @@
+.overlay {
+  position: fixed;
+  background: rgba(34, 34, 34, 0.7);
+  z-index: 5000;
+  width: 99%;
+  height: 99%;
+  left: 0.5%;
+  top: 0.5%;
+}
+
+.overlayNoBackground {
+  position: fixed;
+  background: transparent;
+}
+
+.container {
+  position: fixed;
+  background: white;
+  font-family: inherit;
+  width: 75%;
+  height: 75%;
+  left: 12.5%;
+  top: 12.5%;
+  opacity: 1;
+  background-color: white;
+  z-index: 5001;
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  display: flex;
+  flex-direction: row;
+}

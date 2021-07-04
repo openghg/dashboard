@@ -1,14 +1,13 @@
 import React from "react";
 
-import londonGHGSites from "./data/siteMetadata.json";
 
 import LineChart from "./components/LineChart/LineChart";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
-// import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
-// import PlotBox from "./components/PlotBox/PlotBox";
 import ObsBox from "./components/ObsBox/ObsBox";
 import DateSlider from "./components/DateSlider/DateSlider";
+import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
+import ModelBox from "./components/ModelBox/ModelBox";
 
 // import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
@@ -17,12 +16,12 @@ import mockEmissionsData from "./mock/randomSiteData.json";
 import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
-import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
-import ModelBox from "./components/ModelBox/ModelBox";
 
 // import TMBData from "./data/TMB_data_LGHG.json";
 // import NPLData from "./data/NPL_data_LGHG.json";
 import BTTData from "./data/BTT_data_LGHG.json";
+import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
+import londonGHGSites from "./data/siteMetadata.json";
 
 // const measurementData = {
 //   ...TMBData,
@@ -56,7 +55,7 @@ class Dashboard extends React.Component {
     // Now add in the mocked up sectors for each site
     for (const key of Object.keys(mockEmissionsData)) {
       if (measurementData.hasOwnProperty(key)) {
-        measurementData[key] = {...measurementData[key], ...mockEmissionsData[key]};
+        measurementData[key] = { ...measurementData[key], ...mockEmissionsData[key] };
       }
     }
 
@@ -71,6 +70,8 @@ class Dashboard extends React.Component {
       selectedKeys: {},
       footprintView: true,
       emptySelection: true,
+      overlayOpen: false,
+      overlay: null,
       plotType: "footprint",
       selectedSite: null,
     };
@@ -90,6 +91,8 @@ class Dashboard extends React.Component {
     this.dateSelector = this.dateSelector.bind(this);
     this.selectPlotType = this.selectPlotType.bind(this);
     this.siteSelector = this.siteSelector.bind(this);
+    this.toggleOverlay = this.toggleOverlay.bind(this);
+    this.setOverlay = this.setOverlay.bind(this);
   }
 
   dateSelector(date) {
@@ -101,11 +104,15 @@ class Dashboard extends React.Component {
     this.setState({ selectedSite: site });
   }
 
-  // Need a function to process the data that's keyed
-  processData(data) {
-    // const data = this.state.apiData;
-    // const data = measurementData;
+  toggleOverlay() {
+    this.setState({ overlayOpen: !this.state.overlayOpen });
+  }
 
+  setOverlay(overlay) {
+    this.setState({ overlayOpen: true, overlay: overlay });
+  }
+
+  processData(data) {
     // Process the data and create the correct Javascript time objects
     let dataKeys = {};
     let processedData = {};
@@ -251,26 +258,6 @@ class Dashboard extends React.Component {
     this.setState({ plotType: value });
   }
 
-  //   createPlots() {
-  //     if (this.state.plotType === "footprint") {
-  //       // TODO - Find a better way of doing this
-  //       const siteMarkers = { TMB: { long_name: "Thames Barrier", latitude: 51.497, longitude: 0.037 } };
-  //       return (
-  //         <FootprintAnalysis
-  //           sites={siteMarkers}
-  //           centre={[51.5, -0.0482]}
-  //           zoom={9}
-  //           width={"75vw"}
-  //           height={"40vh"}
-  //           mockData={this.state.processedData}
-  //           siteData={siteData}
-  //         />
-  //       );
-  //     } else {
-  //       return <VisLayout>{this.createGraphs()}</VisLayout>;
-  //     }
-  //   }
-
   anySelected() {
     for (const subdict of Object.values(this.state.selectedKeys)) {
       for (const value of Object.values(subdict)) {
@@ -281,22 +268,6 @@ class Dashboard extends React.Component {
     }
 
     return false;
-  }
-
-  plotHeader() {
-    if (this.state.plotType === "footprint") {
-      return <div className={"plot-header"}>Footprint Analysis</div>;
-    } else {
-      return <div className={"plot-header"}>Timeseries Comparison</div>;
-    }
-  }
-
-  plotAdvice() {
-    if (this.state.plotType === "timeseries") {
-      if (!this.state.selectedKeys || !this.anySelected()) {
-        return <div className={styles.plotAdvice}>Please select species to plot.</div>;
-      }
-    }
   }
 
   createEmissionsBox() {
@@ -370,6 +341,11 @@ class Dashboard extends React.Component {
   render() {
     let { error, isLoaded } = this.state;
 
+    let overlay = null;
+    if (this.state.overlayOpen) {
+      overlay = <OverlayContainer toggleOverlay={this.toggleOverlay}>{this.state.overlay}</OverlayContainer>;
+    }
+
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -379,12 +355,7 @@ class Dashboard extends React.Component {
         <div className={styles.gridContainer}>
           <div className={styles.header}>OpenGHG Dashboard</div>
           <div className={styles.sidebar}>
-            <ControlPanel
-              selectPlotType={this.selectPlotType}
-              plotType={this.state.plotType}
-              dataKeys={this.state.selectedKeys}
-              dataSelector={this.dataSelector}
-            />
+            <ControlPanel setOverlay={this.setOverlay} toggleOverlay={this.toggleOverlay} />
           </div>
           <div className={styles.content} id="graphContent">
             {this.createEmissionsBox()}
@@ -392,6 +363,7 @@ class Dashboard extends React.Component {
             {this.createDateSlider()}
             {this.createObsBox()}
           </div>
+          {overlay}
         </div>
       );
     }

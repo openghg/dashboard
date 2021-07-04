@@ -1,24 +1,20 @@
 import PropTypes from "prop-types";
 import React from "react";
-import DataSelector from "../DataSelector/DataSelector";
 import styles from "./ControlPanel.module.css";
 
 import GitHubLogo from "../../images/github.svg";
+import TextOverlay from "../TextOverlay/TextOverlay";
 
 class ControlPanel extends React.Component {
-  plottingInterface() {
-    if (this.props.plotType === "timeseries") {
-      return (
-        <div>
-          <div className={styles.mainHeader}>Sites</div>
-          <DataSelector dataKeys={this.props.dataKeys} dataSelector={this.props.dataSelector} />
-        </div>
-      );
-    }
+  constructor(props) {
+    super(props);
+
+    this.createOverlay = this.createOverlay.bind(this);
   }
 
-  logMe() {
-    console.log("Clicked yah");
+  createOverlay() {
+    this.props.toggleOverlay();
+    this.props.setOverlay(<TextOverlay />);
   }
 
   render() {
@@ -29,16 +25,16 @@ class ControlPanel extends React.Component {
           <div className={styles.headerTag}>A COP26 dashboard</div>
         </div>
         <div className={styles.content}>
-          <button type="button" className={styles.linkButton} onClick={this.logMe}>
+          <button type="button" className={styles.linkButton} onClick={this.createOverlay}>
             Emissions
           </button>
-          <button type="button" className={styles.linkButton} onClick={this.logMe}>
+          <button type="button" className={styles.linkButton} onClick={this.createOverlay}>
             Model
           </button>
-          <button type="button" className={styles.linkButton} onClick={this.logMe}>
+          <button type="button" className={styles.linkButton} onClick={this.createOverlay}>
             Obervations
           </button>
-          <button type="button" className={styles.linkButton} onClick={this.logMe}>
+          <button type="button" className={styles.linkButton} onClick={this.createOverlay}>
             About OpenGHG
           </button>
         </div>
@@ -53,10 +49,7 @@ class ControlPanel extends React.Component {
 }
 
 ControlPanel.propTypes = {
-  dataKeys: PropTypes.object.isRequired,
-  dataSelector: PropTypes.func.isRequired,
-  plotType: PropTypes.string.isRequired,
-  selectPlotType: PropTypes.func.isRequired,
+  toggleOverlay: PropTypes.func.isRequired,
 };
 
 export default ControlPanel;
