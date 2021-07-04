@@ -76,8 +76,8 @@ class LeafletMap extends React.Component {
 
 LeafletMap.propTypes = {
   centre: PropTypes.arrayOf(PropTypes.number).isRequired,
-  height: PropTypes.string.isRequired,
-  overlayBounds: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.array)),
+  height: PropTypes.string,
+  overlayBounds: PropTypes.arrayOf(PropTypes.array),
   overlayImg: PropTypes.string,
   sites: PropTypes.objectOf(object),
   width: PropTypes.string.isRequired,

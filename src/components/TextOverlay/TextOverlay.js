@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+import TextButton from "../TextButton/TextButton";
+
 import styles from "./TextOverlay.module.css";
 
 class TextOverlay extends React.Component {
@@ -8,9 +10,7 @@ class TextOverlay extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.closeButton}>
-          <button onClick={this.props.toggleOverlay} style={{ background: "none", border: "none", fontSize: "2.4vh" }}>
-            x
-          </button>
+          <TextButton onClick={this.props.toggleOverlay} styling={"dark"} extraStyling={{fontSize: "1.5vw"}}>x</TextButton>
         </div>
         <div className={styles.textContainer}>
           <div className={styles.header}>Atmospheric Modelling</div>

@@ -14,8 +14,6 @@ function Overlay(props) {
       style = styles.overlayNoBackground;
     }
 
-    console.log("Opened overlay");
-
     return (
       <div
         data-testid="overlay"

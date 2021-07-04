@@ -14,7 +14,7 @@ class ControlPanel extends React.Component {
 
   createOverlay() {
     this.props.toggleOverlay();
-    this.props.setOverlay(<TextOverlay />);
+    this.props.setOverlay(<TextOverlay toggleOverlay={this.props.toggleOverlay} />);
   }
 
   render() {

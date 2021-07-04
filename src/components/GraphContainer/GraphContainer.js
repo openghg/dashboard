@@ -19,7 +19,6 @@ class GraphContainer extends React.Component {
       const height = heightScale * node.parentNode.clientHeight;
       const width = widthScale * dbcontent.clientWidth;
       this.setState({ height: height, width: width });
-      console.log(width, height);
     }
   }
 
