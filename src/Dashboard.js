@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import LineChart from "./components/LineChart/LineChart";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
@@ -74,6 +73,7 @@ class Dashboard extends React.Component {
       overlay: null,
       plotType: "footprint",
       selectedSite: null,
+      selectedSpecies: "CO2",
     };
 
     // For the moment create some fake sites
@@ -93,6 +93,7 @@ class Dashboard extends React.Component {
     this.siteSelector = this.siteSelector.bind(this);
     this.toggleOverlay = this.toggleOverlay.bind(this);
     this.setOverlay = this.setOverlay.bind(this);
+    this.speciesSelector = this.speciesSelector.bind(this);
   }
 
   dateSelector(date) {
@@ -102,6 +103,10 @@ class Dashboard extends React.Component {
 
   siteSelector(site) {
     this.setState({ selectedSite: site });
+  }
+
+  speciesSelector(species) {
+    this.setState({ selectedSpecies: species });
   }
 
   toggleOverlay() {
@@ -272,11 +277,12 @@ class Dashboard extends React.Component {
 
   createEmissionsBox() {
     const emissionsHeader = "Emissions";
-    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (LINK: NAEI). Learn more about how
-       countries estimate and report there emissions here (LINK: PAGE EXPLAINING INVENTORY)`;
+    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI). Learn more about how
+       countries estimate and report their emissions here.`;
     return (
       <div className={styles.emissions}>
         <EmissionsBox
+          speciesSelector={this.speciesSelector}
           altText={"Example emissions"}
           headerText={emissionsHeader}
           bodyText={emissionsText}
@@ -289,7 +295,7 @@ class Dashboard extends React.Component {
   createModelBox() {
     const modelHeader = "Model";
     const modelText = `Atmospheric models use meteorological data to simulate the dispersion of 
-    greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here (LINK: PAGE ON MODELS)​`;
+    greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here.​`;
     const imagePath = this.state.mockEmissionsPNGs[this.state.selectedDate];
 
     return (
@@ -320,6 +326,7 @@ class Dashboard extends React.Component {
           dataSelector={this.dataSelector}
           selectedDate={this.state.selectedDate}
           selectedSite={this.state.selectedSite}
+          selectedSpecies={this.state.selectedSpecies}
           setSelectedSite={this.siteSelector}
         ></ObsBox>
       </div>

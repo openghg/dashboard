@@ -80,6 +80,7 @@ class EmissionsBox extends React.Component {
       return;
     }
 
+    this.props.speciesSelector(species);
     this.setState({ selectedSpecies: species, selectedSector: "Total" });
   }
 
@@ -90,7 +91,7 @@ class EmissionsBox extends React.Component {
     const selectedImages = this.state.images[selectedSpecies];
 
     let sectorButtons = [];
-    const extraStyling = { "fontSize": "2.3vh" };
+    const extraStyling = { fontSize: "2.3vh" };
 
     for (const key of Object.keys(selectedImages)) {
       if (key === "colorbars") continue;
@@ -116,7 +117,13 @@ class EmissionsBox extends React.Component {
         styling = "speciesSelected";
       }
       const button = (
-        <TextButton key={key} styling={styling} onClickParam={key} extraStyling={extraStyling} onClick={this.setSpecies}>
+        <TextButton
+          key={key}
+          styling={styling}
+          onClickParam={key}
+          extraStyling={extraStyling}
+          onClick={this.setSpecies}
+        >
           {key}
         </TextButton>
       );
@@ -132,11 +139,24 @@ class EmissionsBox extends React.Component {
       [52.0193672, 0.56799811],
     ];
 
+    const emissionsHeader = "Emissions";
+    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI). Learn more about how
+       countries estimate and report their emissions here.`;
+    // const button = (
+    //   <TextButton
+    //     onClick={this.props.setEmisisonsOverlay}
+    //     styling="dark"
+    //     extraSyling={{ fontSize: "inherit", fontFace: "inherit" }}
+    //   >
+    //     report their emissions here
+    //   </TextButton>
+    // );
+
     return (
       <div className={styles.container}>
-        <div className={styles.header}>{this.props.headerText}</div>
+        <div className={styles.header}>{emissionsHeader}</div>
         <div className={styles.date}>Date: {new Date(this.props.selectedDate).toLocaleString()}</div>
-        <div className={styles.body}>{this.props.bodyText}</div>
+        <div className={styles.body}>{emissionsText}</div>
         <div className={styles.plot}>
           <LeafletMap
             centre={[51.5, -0.0482]}
@@ -164,6 +184,7 @@ EmissionsBox.propTypes = {
   headerText: PropTypes.string,
   imagePath: PropTypes.string,
   selectedDate: PropTypes.number,
+  speciesSelector: PropTypes.func.isRequired,
 };
 
 export default EmissionsBox;

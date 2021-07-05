@@ -2,8 +2,11 @@ import PropTypes from "prop-types";
 import React from "react";
 import styles from "./ControlPanel.module.css";
 
+import textData from "../../data/overlayText.json";
+
 import GitHubLogo from "../../images/github.svg";
 import TextOverlay from "../TextOverlay/TextOverlay";
+import TextButton from "../TextButton/TextButton";
 
 class ControlPanel extends React.Component {
   constructor(props) {
@@ -12,9 +15,17 @@ class ControlPanel extends React.Component {
     this.createOverlay = this.createOverlay.bind(this);
   }
 
-  createOverlay() {
+  createOverlay(e) {
+    const area = e.target.dataset.onclickparam;
+
+    if (!textData.hasOwnProperty(area)) {
+      console.error(`No data for $(area) in overlayText`);
+      return;
+    }
+
+    const text = textData[area];
     this.props.toggleOverlay();
-    this.props.setOverlay(<TextOverlay toggleOverlay={this.props.toggleOverlay} />);
+    this.props.setOverlay(<TextOverlay text={text} toggleOverlay={this.props.toggleOverlay} />);
   }
 
   render() {
@@ -25,18 +36,18 @@ class ControlPanel extends React.Component {
           <div className={styles.headerTag}>A COP26 dashboard</div>
         </div>
         <div className={styles.content}>
-          <button type="button" className={styles.linkButton} onClick={this.createOverlay}>
+          <TextButton onClick={this.createOverlay} onClickParam="emissions">
             Emissions
-          </button>
-          <button type="button" className={styles.linkButton} onClick={this.createOverlay}>
+          </TextButton>
+          <TextButton onClick={this.createOverlay} onClickParam="model">
             Model
-          </button>
-          <button type="button" className={styles.linkButton} onClick={this.createOverlay}>
-            Obervations
-          </button>
-          <button type="button" className={styles.linkButton} onClick={this.createOverlay}>
+          </TextButton>
+          <TextButton onClick={this.createOverlay} onClickParam="observations">
+            Observations
+          </TextButton>
+          <TextButton onClick={this.createOverlay} onClickParam="about">
             About OpenGHG
-          </button>
+          </TextButton>
         </div>
         <div className={styles.footer}>
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">

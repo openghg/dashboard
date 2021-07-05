@@ -13,8 +13,8 @@ class ModelBox extends React.Component {
 
   render() {
     const overlayBounds = [
-      [51.725372, -0.554322],
-      [51.24402, 0.304529],
+      [51.759372, -0.554322],
+      [51.21702, 0.304529],
     ];
 
     return (

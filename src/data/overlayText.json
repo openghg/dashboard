@@ -1,0 +1,14 @@
+{
+  "emissions": {
+    "header": "Emissions",
+    "intro": "An introduction to emissions",
+    "body": "Some text describing emissions"
+  },
+  "observations": {
+    "header": "Observations",
+    "intro": "An introduction to observations",
+    "body": "Some text describing observations"
+  },
+  "model": { "header": "Model", "intro": "An introduction to modelling", "body": "Some text describing modelling" },
+  "about": { "header": "OpenGHG", "intro": "An introduction to OpenGHG", "body": "Some text describing OpenGHG" }
+}
