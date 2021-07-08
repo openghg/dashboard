@@ -59,13 +59,18 @@ class LeafletMap extends React.Component {
       imgOverlay = <ImageOverlay url={imgPath} bounds={bounds} opacity={0.7} zIndex={10} />;
     }
 
+    let url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    let attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+    if (this.props.mapstyle && this.props.mapstyle === "proton") {
+      url = "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png";
+      attribution =
+        '&copy; <a href="http://osm.org/copyright">Map tiles by Carto, under CC BY 3.0.</a> &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+    }
+
     return (
       <div className={styles.container}>
         <MapContainer center={this.props.centre} zoom={zoom} scrollWheelZoom={true} style={style}>
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">Map tiles by Carto, under CC BY 3.0.</a>'
-            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-          />
+          <TileLayer attribution={attribution} url={url} />
           <LayerGroup>{markers}</LayerGroup>
           <LayerGroup>{imgOverlay}</LayerGroup>
         </MapContainer>

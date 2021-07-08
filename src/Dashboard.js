@@ -21,6 +21,8 @@ import styles from "./Dashboard.module.css";
 import BTTData from "./data/BTT_data_LGHG.json";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
 import londonGHGSites from "./data/siteMetadata.json";
+import SelectorMap from "./components/SelectorMap/SelectorMap";
+import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
 
 // const measurementData = {
 //   ...TMBData,
@@ -279,15 +281,13 @@ class Dashboard extends React.Component {
     const emissionsHeader = "Emissions";
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
     return (
-      <div className={styles.emissions}>
-        <EmissionsBox
-          speciesSelector={this.speciesSelector}
-          altText={"Example emissions"}
-          headerText={emissionsHeader}
-          bodyText={emissionsText}
-          selectedDate={this.state.selectedDate}
-        />
-      </div>
+      <EmissionsBox
+        speciesSelector={this.speciesSelector}
+        altText={"Example emissions"}
+        headerText={emissionsHeader}
+        bodyText={emissionsText}
+        selectedDate={this.state.selectedDate}
+      />
     );
   }
 
@@ -311,24 +311,16 @@ class Dashboard extends React.Component {
   }
 
   createObsBox() {
-    const obsHeader = "Observations";
-    const obsText = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
-      Learn more about evaluating GHG emissions inventories using atmospheric data (LINK: PAGE ON INVERSIONS)​`;
-
     return (
-      <div className={styles.observations}>
-        <ObsBox
-          headerText={obsHeader}
-          bodyText={obsText}
-          selectedKeys={this.state.selectedKeys}
-          processedData={this.state.processedData}
-          dataSelector={this.dataSelector}
-          selectedDate={this.state.selectedDate}
-          selectedSite={this.state.selectedSite}
-          selectedSpecies={this.state.selectedSpecies}
-          setSelectedSite={this.siteSelector}
-        ></ObsBox>
-      </div>
+      <ObsBox
+        selectedKeys={this.state.selectedKeys}
+        processedData={this.state.processedData}
+        dataSelector={this.dataSelector}
+        selectedDate={this.state.selectedDate}
+        selectedSite={this.state.selectedSite}
+        selectedSpecies={this.state.selectedSpecies}
+        setSelectedSite={this.siteSelector}
+      ></ObsBox>
     );
   }
 
@@ -342,6 +334,14 @@ class Dashboard extends React.Component {
         />
       </div>
     );
+  }
+
+  createMapExplainer() {
+    const header = "Observations";
+    const body = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
+    Learn more about evaluating GHG emissions inventories using atmospheric data. ​
+    Select a site on the map to view observations taken by an instrument at that site.`;
+    return <ExplanationBox header={header} body={body} />;
   }
 
   render() {
@@ -364,10 +364,11 @@ class Dashboard extends React.Component {
             <ControlPanel setOverlay={this.setOverlay} toggleOverlay={this.toggleOverlay} />
           </div>
           <div className={styles.content} id="graphContent">
-            {this.createEmissionsBox()}
-            {this.createModelBox()}
-            {this.createDateSlider()}
-            {this.createObsBox()}
+            <div className={styles.observations}>{this.createObsBox()}</div>
+            <div className={styles.mapexplainer}>{this.createMapExplainer()}</div>
+            <div className={styles.sitemap}>
+              <SelectorMap sites={londonGHGSites} />
+            </div>
           </div>
           {overlay}
         </div>

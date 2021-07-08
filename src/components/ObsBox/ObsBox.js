@@ -125,14 +125,7 @@ class ObsBox extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <div className={styles.header}>{this.props.headerText}</div>
-        <div className={styles.body}>{this.props.bodyText}</div>
         <div className={styles.select}>
-          <Dropdown
-            selectedKeys={this.props.selectedKeys}
-            defaultSite={this.props.selectedSite}
-            onChange={this.handleDropdownChange}
-          />
           <DataSelector
             dataKeys={this.props.selectedKeys}
             dataSelector={this.props.dataSelector}
