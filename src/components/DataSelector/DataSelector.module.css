@@ -1,11 +1,16 @@
 .container {
   padding-top: 2vh;
-  display: flex;
-  flex-direction: column;
-  column-gap: 2vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1.5fr 0.5fr;
+  gap: 0px 2vh;
+  grid-template-areas:
+    "blocks"
+    "buttons";
 }
 
 .blocks {
+  grid-area: blocks;
   font-size: 1.5vh;
   display: grid;
   /* grid-template-columns: 1fr 1fr; */
@@ -19,6 +24,7 @@
 }
 
 .buttons {
+  grid-area: buttons;
   display: flex;
   column-gap: 1vh;
   padding-top: 1vh;
@@ -28,11 +34,11 @@
   font-family: inherit;
   font-weight: 350;
   width: 3.5vw;
-  font-size: 2vh;
+  font-size: calc(12px + 0.4vw);
   cursor: pointer;
   box-shadow: rgba(255, 255, 255, 0.05) 0px 3px 20px;
   border-width: initial;
-  background-color: #01497c;
+  background-color: #8ba6a9;
   color: white;
   border-style: none;
   border-color: initial;
@@ -41,6 +47,6 @@
 }
 
 .betterButton:hover {
-  background-color: #61a5c2;
+  background-color: #648ca6;
   color: white;
 }

@@ -4,6 +4,16 @@ import { LayerGroup, MapContainer, ImageOverlay, TileLayer, Marker, Popup } from
 import styles from "./LeafletMap.module.css";
 
 class LeafletMap extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    this.props.siteSelector(e.target.options.data);
+  }
+
   processSites() {
     const sites = this.props.sites;
 
@@ -20,7 +30,14 @@ class LeafletMap extends React.Component {
       const location = [latitude, longitude];
 
       const marker = (
-        <Marker key={locationStr} position={location}>
+        <Marker
+          key={locationStr}
+          position={location}
+          data={key}
+          eventHandlers={{
+            click: this.handleClick,
+          }}
+        >
           <Popup>
             <div className={styles.marker}>
               <div className={styles.markerHeader}>{String(key).toUpperCase()}</div>
@@ -63,8 +80,9 @@ class LeafletMap extends React.Component {
     let attribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
     if (this.props.mapstyle && this.props.mapstyle === "proton") {
       url = "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png";
-      attribution =
-        '&copy; <a href="http://osm.org/copyright">Map tiles by Carto, under CC BY 3.0.</a> &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+      const extraAttr = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+      const attrTiles = '&copy; <a href="http://osm.org/copyright">Map tiles by Carto, under CC BY 3.0.</a> ';
+      attribution = extraAttr + attrTiles;
     }
 
     return (
@@ -87,6 +105,7 @@ LeafletMap.propTypes = {
   sites: PropTypes.objectOf(object),
   width: PropTypes.string.isRequired,
   zoom: PropTypes.number.isRequired,
+  siteSelector: PropTypes.func,
 };
 
 export default LeafletMap;

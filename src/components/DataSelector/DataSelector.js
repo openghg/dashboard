@@ -62,7 +62,12 @@ class DataSelector extends React.Component {
       dataKeys = this.state.selected;
     }
 
+    const selectedSites = this.props.selectedSites;
+
     for (const site of Object.keys(dataKeys)) {
+      if (!selectedSites.has(site)) {
+        continue;
+      }
       const siteName = String(site).toUpperCase();
       const siteDataKeys = dataKeys[site];
 
@@ -79,7 +84,16 @@ class DataSelector extends React.Component {
     }
 
     let buttons = null;
-    if (!this.props.autoUpdate) {
+
+    if (this.props.autoUpdate) {
+      buttons = (
+        <div>
+          <button className={styles.betterButton} onClick={this.props.clearSelectedSites}>
+            Clear
+          </button>
+        </div>
+      );
+    } else {
       buttons = (
         <div>
           <button className={styles.betterButton} onClick={this.callSelector}>

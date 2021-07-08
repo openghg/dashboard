@@ -8,7 +8,7 @@ class SelectorMap extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <LeafletMap sites={this.props.sites} centre={[51.5, -0.0782]} zoom={10} width={"40vw"} />
+        <LeafletMap siteSelector={this.props.siteSelector} sites={this.props.sites} centre={[51.5, -0.0782]} zoom={10} width={"40vw"} />
       </div>
     );
   }

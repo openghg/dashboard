@@ -20,10 +20,11 @@ import styles from "./Dashboard.module.css";
 // import NPLData from "./data/NPL_data_LGHG.json";
 import BTTData from "./data/BTT_data_LGHG.json";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
-import londonGHGSites from "./data/siteMetadata.json";
+import londonGHGSites from "./data/siteMetadataSimple.json";
 import SelectorMap from "./components/SelectorMap/SelectorMap";
 import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
 
+import { cloneDeep } from "lodash";
 // const measurementData = {
 //   ...TMBData,
 //   ...NPLData,
@@ -74,10 +75,10 @@ class Dashboard extends React.Component {
       overlayOpen: false,
       overlay: null,
       plotType: "footprint",
-      selectedSite: null,
       selectedSpecies: "CO2",
     };
 
+    this.state.selectedSites = new Set(["BTT"]);
     // For the moment create some fake sites
     this.state.sites = londonGHGSites;
     // Set the selected data to be the first date
@@ -96,6 +97,7 @@ class Dashboard extends React.Component {
     this.toggleOverlay = this.toggleOverlay.bind(this);
     this.setOverlay = this.setOverlay.bind(this);
     this.speciesSelector = this.speciesSelector.bind(this);
+    this.clearSites = this.clearSites.bind(this);
   }
 
   dateSelector(date) {
@@ -104,7 +106,24 @@ class Dashboard extends React.Component {
   }
 
   siteSelector(site) {
-    this.setState({ selectedSite: site });
+    // Here we change all the sites and select all species / sectors at that site
+    let selectedSites = this.state.selectedSites;
+    selectedSites.add(site);
+    // Now update the selectedKeys
+    let selectedKeys = cloneDeep(this.state.selectedKeys);
+
+    for (const [site, subObj] of Object.entries(selectedKeys)) {
+      const value = selectedSites.has(site);
+      for (const subKey of Object.keys(subObj)) {
+        selectedKeys[site][subKey] = value;
+      }
+    }
+
+    this.setState({ selectedKeys: selectedKeys, selectedSites: selectedSites });
+  }
+
+  clearSites() {
+    this.setState({ selectedSites: new Set() });
   }
 
   speciesSelector(species) {
@@ -160,7 +179,6 @@ class Dashboard extends React.Component {
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
-    this.state.selectedSite = defaultSite;
     this.state.selectedKeys = dataKeys;
     this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
@@ -317,9 +335,9 @@ class Dashboard extends React.Component {
         processedData={this.state.processedData}
         dataSelector={this.dataSelector}
         selectedDate={this.state.selectedDate}
-        selectedSite={this.state.selectedSite}
+        selectedSites={this.state.selectedSites}
         selectedSpecies={this.state.selectedSpecies}
-        setSelectedSite={this.siteSelector}
+        clearSelectedSites={this.clearSites}
       ></ObsBox>
     );
   }
@@ -367,7 +385,7 @@ class Dashboard extends React.Component {
             <div className={styles.observations}>{this.createObsBox()}</div>
             <div className={styles.mapexplainer}>{this.createMapExplainer()}</div>
             <div className={styles.sitemap}>
-              <SelectorMap sites={londonGHGSites} />
+              <SelectorMap siteSelector={this.siteSelector} sites={londonGHGSites} />
             </div>
           </div>
           {overlay}

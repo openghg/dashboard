@@ -3,7 +3,6 @@ import React from "react";
 
 import GraphContainer from "../GraphContainer/GraphContainer";
 import LineChart from "../LineChart/LineChart";
-import Dropdown from "../Dropdown/Dropdown";
 import DataSelector from "../DataSelector/DataSelector";
 
 import colours from "../../data/colours.json";
@@ -12,51 +11,12 @@ import { isEmpty, getVisID } from "../../util/helpers";
 import styles from "./ObsBox.module.css";
 
 class ObsBox extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleDropdownChange = this.handleDropdownChange.bind(this);
-  }
-
-  handleDropdownChange(event) {
-    const site = event.target.value;
-
-    const selected = this.props.selectedKeys;
-
-    for (let [key, subdict] of Object.entries(selected)) {
-      for (const subkey of Object.keys(subdict)) {
-        if (key === site) {
-          selected[key][subkey] = true;
-        } else {
-          selected[key][subkey] = false;
-        }
-      }
-    }
-
-    this.props.dataSelector(selected);
-    this.props.setSelectedSite(site);
-  }
-
-  //   handleInputChange(event) {
-  //     const target = event.target;
-  //     const value = target.type === "checkbox" ? target.checked : target.value;
-
-  //     const site = target.attributes["site"].value;
-  //     const species = target.attributes["species"].value;
-
-  //     // Update the state to have the new
-  //     const oldSelected = cloneDeep(this.state.selected);
-
-  //     oldSelected[site][species] = value;
-
-  //     this.setState({ selected: oldSelected });
-  //   }
-
   createEmissionsGraphs() {
     let visualisations = [];
 
     const selectedKeys = this.props.selectedKeys;
     const processedData = this.props.processedData;
+    const selectedSites = this.props.selectedSites;
 
     let siteEmissions = {};
 
@@ -129,9 +89,9 @@ class ObsBox extends React.Component {
           <DataSelector
             dataKeys={this.props.selectedKeys}
             dataSelector={this.props.dataSelector}
-            selectedSite={this.props.selectedSite}
+            selectedSites={this.props.selectedSites}
+            clearSelectedSites={this.props.clearSelectedSites}
             autoUpdate={true}
-            singleSite={true}
           />
         </div>
         <div className={styles.plot}>{this.createEmissionsGraphs()}</div>
