@@ -5,18 +5,20 @@ import GraphContainer from "../GraphContainer/GraphContainer";
 import LineChart from "../LineChart/LineChart";
 import DataSelector from "../DataSelector/DataSelector";
 
-import colours from "../../data/colours.json";
 import { isEmpty, getVisID } from "../../util/helpers";
 
 import styles from "./ObsBox.module.css";
+import MultiSiteLineChart from "../MultiSiteLineChart/MultiSiteLineChart";
 
 class ObsBox extends React.Component {
   createEmissionsGraphs() {
-    let visualisations = [];
-
     const selectedKeys = this.props.selectedKeys;
     const processedData = this.props.processedData;
     const selectedSites = this.props.selectedSites;
+
+    if (selectedSites.size === 0) {
+      return <div className={styles.emptyMessage}>Please select a site</div>;
+    }
 
     let siteEmissions = {};
 
@@ -36,50 +38,28 @@ class ObsBox extends React.Component {
         }
       }
 
-      let totalSites = 0;
-
-      const tableau10 = colours["tableau10"];
-
       if (!isEmpty(siteEmissions)) {
-        for (const [site, emissionsData] of Object.entries(siteEmissions)) {
-          // Create a graph for each site
-          const title = String(site).toUpperCase();
-          const key = title.concat("-", Object.keys(emissionsData).join("-"));
-          const containerKey = `container-${key}`;
+        const key = Object.keys(siteEmissions).join("-");
 
-          const nTypes = Object.keys(emissionsData).length;
+        const widthScale = 0.9;
+        const heightScale = 0.9;
 
-          const selectedColours = tableau10.slice(totalSites, totalSites + nTypes);
+        const vis = (
+          <GraphContainer heightScale={heightScale} widthScale={widthScale} key={key}>
+            <MultiSiteLineChart
+              divID={getVisID()}
+              data={siteEmissions}
+              xLabel="Date"
+              yLabel="Concentration"
+              key={key}
+              selectedDate={this.props.selectedDate}
+            />
+          </GraphContainer>
+        );
 
-          //   for (let i = 0; i < nTypes; i++) {
-          //     tableau10.push(tableau10.shift());
-          //   }
-
-          const widthScale = 0.9;
-          const heightScale = 0.9;
-
-          const vis = (
-            <GraphContainer heightScale={heightScale} widthScale={widthScale} key={containerKey}>
-              <LineChart
-                divID={getVisID()}
-                data={emissionsData}
-                colours={selectedColours}
-                title={title}
-                xLabel="Date"
-                yLabel="Concentration"
-                key={key}
-                selectedDate={this.props.selectedDate}
-              />
-            </GraphContainer>
-          );
-
-          visualisations.push(vis);
-
-          totalSites += nTypes;
-        }
+        return vis;
       }
     }
-    return visualisations;
   }
 
   render() {

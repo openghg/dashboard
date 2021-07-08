@@ -36,3 +36,11 @@
   display: flex;
   /* justify-content: right; */
 }
+
+.emptyMessage {
+    display: flex;
+    padding-top: 15vh;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+}

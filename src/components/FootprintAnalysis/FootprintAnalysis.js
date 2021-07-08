@@ -53,7 +53,7 @@ class FootprintAnalysis extends React.Component {
 
       let totalSites = 0;
 
-      const tableau10 = colours["tableau10"];
+      const tab20 = colours["tab20"];
 
       if (!isEmpty(speciesData)) {
         for (const [species, siteData] of Object.entries(speciesData)) {
@@ -62,10 +62,10 @@ class FootprintAnalysis extends React.Component {
           const key = title.concat("-fp-", Object.keys(siteData).join("-"));
           const containerKey = `footprint-plot-${key}`;
           const nSites = Object.keys(siteData).length;
-          const selectedColours = tableau10.slice(totalSites, totalSites + nSites);
+          const selectedColours = tab20.slice(totalSites, totalSites + nSites);
 
           //   for (let i = 0; i < nSites; i++) {
-          //     tableau10.push(tableau10.shift());
+          //     tab20.push(tab20.shift());
           //   }
 
           const vis = (
