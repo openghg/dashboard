@@ -23,7 +23,7 @@ class Dropdown extends React.Component {
 
     return (
       <div className={styles.plotSelector}>
-        Select site:
+        Select:
         <div>
           <form>
             <select
@@ -42,8 +42,11 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = {
-  handleDropdownChange: PropTypes.func,
-  selectedKeys: PropTypes.object,
-};
+  defaultSite: PropTypes.string,
+  onChange: PropTypes.func,
+  selectedKeys: PropTypes.object
+}
+
+
 
 export default Dropdown;

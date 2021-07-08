@@ -1,6 +1,6 @@
 import PropTypes, { object } from "prop-types";
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
+import { LayerGroup, MapContainer, ImageOverlay, TileLayer, Marker, Popup } from "react-leaflet";
 import styles from "./LeafletMap.module.css";
 
 class LeafletMap extends React.Component {
@@ -63,11 +63,11 @@ class LeafletMap extends React.Component {
       <div className={styles.container}>
         <MapContainer center={this.props.centre} zoom={zoom} scrollWheelZoom={true} style={style}>
           <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">Map tiles by Carto, under CC BY 3.0.</a>'
+            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
           />
-          {markers}
-          {imgOverlay}
+          <LayerGroup>{markers}</LayerGroup>
+          <LayerGroup>{imgOverlay}</LayerGroup>
         </MapContainer>
       </div>
     );
@@ -76,12 +76,12 @@ class LeafletMap extends React.Component {
 
 LeafletMap.propTypes = {
   centre: PropTypes.arrayOf(PropTypes.number).isRequired,
-  height: PropTypes.string.isRequired,
-  overlayBounds: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.array)),
+  height: PropTypes.string,
+  overlayBounds: PropTypes.arrayOf(PropTypes.array),
   overlayImg: PropTypes.string,
   sites: PropTypes.objectOf(object),
   width: PropTypes.string.isRequired,
-  zoom: PropTypes.number.isRequired
-}
+  zoom: PropTypes.number.isRequired,
+};
 
 export default LeafletMap;

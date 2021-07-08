@@ -1,6 +1,8 @@
 .plotSelector {
     display: flex;
-    flex-direction: column;
-    gap: 2vh;
-    justify-content: center;
+    /* flex-direction: column; */
+    gap: 1vh;
+    padding-top: 2vh;
+    /* justify-content: flex-end; */
+
   }

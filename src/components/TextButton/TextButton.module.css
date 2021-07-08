@@ -1,0 +1,67 @@
+.light {
+  font-size: 2vh;
+  font-family: inherit;
+  font-weight: inherit;
+  text-align: left;
+  color: white;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.light:hover {
+  color: rgb(211, 211, 211);
+}
+
+.dark {
+  font-size: 2vh;
+  font-family: inherit;
+  font-weight: inherit;
+  text-align: left;
+  color: black;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.dark:hover {
+  color: rgb(211, 211, 211);
+}
+
+.selected {
+  font-size: 2vh;
+  font-family: inherit;
+  font-weight: 400;
+  text-align: left;
+  color: #bc2c1a;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.selected:hover {
+  color: rgb(211, 211, 211);
+}
+
+.speciesSelected {
+  font-size: 2vh;
+  font-family: inherit;
+  font-weight: 400;
+  text-align: left;
+  color: #105885;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.speciesSelected:hover {
+  color: rgb(211, 211, 211);
+}

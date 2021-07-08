@@ -1,0 +1,77 @@
+.container {
+  background: white;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 6% 4% auto auto auto auto;
+  gap: 0px 0px;
+  grid-template-areas:
+    "header"
+    "date"
+    "plot"
+    "cbar"
+    "buttons"
+    "body";
+  height: 100%;
+}
+
+.header {
+  grid-area: header;
+  font-size: calc(12px + 0.7vw);
+  font-weight: 300;
+  padding-left: 0.5vw;
+}
+
+.body {
+  grid-area: body;
+  padding-left: 0.5vw;
+  padding-top: 1vh;
+  display: flex;
+  align-items: flex-end;
+}
+
+.plot {
+  grid-area: plot;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.plot > img {
+  height: auto;
+  width: auto;
+  max-width: 450px;
+  max-height: 450px;
+}
+
+.date {
+  font-size: calc(12px + 0.3vw);
+  padding-left: 0.5vw;
+  width: 80%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.speciesButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+}
+
+.sectorButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+}
+
+.cbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

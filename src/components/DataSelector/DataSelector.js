@@ -28,6 +28,10 @@ class DataSelector extends React.Component {
     oldSelected[site][species] = value;
 
     this.setState({ selected: oldSelected });
+
+    if (this.props.autoUpdate) {
+      this.props.dataSelector(oldSelected);
+    }
   }
 
   callSelector() {
@@ -48,7 +52,15 @@ class DataSelector extends React.Component {
 
   render() {
     let blocks = [];
-    const dataKeys = this.state.selected;
+
+    let dataKeys = null;
+    if (this.props.singleSite) {
+      const selectedSite = this.props.selectedSite;
+      dataKeys = {};
+      dataKeys[selectedSite] = this.state.selected[selectedSite];
+    } else {
+      dataKeys = this.state.selected;
+    }
 
     for (const site of Object.keys(dataKeys)) {
       const siteName = String(site).toUpperCase();
@@ -66,10 +78,10 @@ class DataSelector extends React.Component {
       blocks.push(block);
     }
 
-    return (
-      <div className={styles.container}>
-        <div className={styles.blocks}>{blocks}</div>
-        <div className={styles.buttons}>
+    let buttons = null;
+    if (!this.props.autoUpdate) {
+      buttons = (
+        <div>
           <button className={styles.betterButton} onClick={this.callSelector}>
             Plot
           </button>
@@ -77,6 +89,13 @@ class DataSelector extends React.Component {
             Clear
           </button>
         </div>
+      );
+    }
+
+    return (
+      <div className={styles.container}>
+        <div className={styles.blocks}>{blocks}</div>
+        <div className={styles.buttons}>{buttons}</div>
       </div>
     );
   }
@@ -84,7 +103,9 @@ class DataSelector extends React.Component {
 
 DataSelector.propTypes = {
   dataKeys: PropTypes.object,
-  dataSelector: PropTypes.func
-}
+  dataSelector: PropTypes.func,
+  autoUpdate: PropTypes.bool,
+  singleSite: PropTypes.bool,
+};
 
 export default DataSelector;

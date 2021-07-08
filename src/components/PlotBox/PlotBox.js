@@ -9,10 +9,10 @@ class PlotBox extends React.Component {
       <div className={styles.container}>
         <div className={styles.header}>{this.props.headerText}</div>
         <div className={styles.date}>Date: {new Date(this.props.selectedDate).toLocaleString()}</div>
-        <div className={styles.body}>{this.props.bodyText}</div>
         <div className={styles.plot}>
           <img src={this.props.imagePath} alt={this.props.altText} />
         </div>
+        <div className={styles.body}>{this.props.bodyText}</div>
       </div>
     );
   }

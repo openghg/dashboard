@@ -5,16 +5,19 @@ class GraphContainer extends React.Component {
   constructor(props) {
     super(props);
     // Set the initial size of the plot
-    this.state = { width: 1000, height: 250 };
+    this.state = { width: 1600, height: 300 };
     this.contRef = React.createRef();
   }
 
   updateDimensions() {
     const node = this.contRef.current;
-    const dbcontent = document.getElementById("dbContent");
+    const dbcontent = document.getElementById("graphContent");
+    const widthScale = this.props.widthScale ? this.props.widthScale : 1.0;
+    const heightScale = this.props.heightScale ? this.props.heightScale : 1.0;
+
     if (node) {
-      const height = node.parentNode.clientHeight;
-      const width = dbcontent.clientWidth;
+      const height = heightScale * node.parentNode.clientHeight;
+      const width = widthScale * dbcontent.clientWidth;
       this.setState({ height: height, width: width });
     }
   }

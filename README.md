@@ -2,7 +2,7 @@
 
 ![OpenGHG Dashboard CI](https://github.com/openghg/dashboard/workflows/OpenGHG%20Dashboard%20CI/badge.svg)
 
-A simple React and Plotly.js based visualisation dashboard for the [LondonGHG project](https://openghg.org/londonGHG/).
+A simple React and Plotly.js based visualisation dashboard for the [OpenGHG project](https://openghg.org/).
 
 ![Screenshot of app](./img/screenshot.jpg?raw=true)
 

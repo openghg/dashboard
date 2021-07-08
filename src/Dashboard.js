@@ -1,26 +1,26 @@
 import React from "react";
 
-import londonGHGSites from "./data/siteMetadata.json";
-
 import LineChart from "./components/LineChart/LineChart";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import GraphContainer from "./components/GraphContainer/GraphContainer";
-// import FootprintAnalysis from "./components/FootprintAnalysis/FootprintAnalysis";
-import PlotBox from "./components/PlotBox/PlotBox";
 import ObsBox from "./components/ObsBox/ObsBox";
 import DateSlider from "./components/DateSlider/DateSlider";
+import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
+import ModelBox from "./components/ModelBox/ModelBox";
 
 // import siteData from "./mock/LGHGSitesRandomData.json";
 import colours from "./data/colours.json";
-import mockData from "./mock/randomSiteData.json";
+import mockEmissionsData from "./mock/randomSiteData.json";
 
-import { isEmpty, getVisID, importEmissions } from "./util/helpers";
+import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
 
 import styles from "./Dashboard.module.css";
 
 // import TMBData from "./data/TMB_data_LGHG.json";
 // import NPLData from "./data/NPL_data_LGHG.json";
-// import BTTData from "./data/BTT_data_LGHG.json";
+import BTTData from "./data/BTT_data_LGHG.json";
+import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
+import londonGHGSites from "./data/siteMetadata.json";
 
 // const measurementData = {
 //   ...TMBData,
@@ -28,7 +28,9 @@ import styles from "./Dashboard.module.css";
 //   ...BTTData,
 // };
 
-const measurementData = mockData;
+let measurementData = {
+  ...BTTData,
+};
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -37,7 +39,24 @@ class Dashboard extends React.Component {
     // TOOD - update this
     // This only works on the assumption that all data has the same dates
     // which the current mocked data does.
-    const dates = Object.keys(measurementData["AAA"]["sector_a"]);
+    const allDates = Object.keys(measurementData["BTT"]["CO2"]);
+    // We don't want to use every timestamp for the slider so just take every nth
+    let dates = [];
+    // Take every nth
+    const nSkip = 70;
+    for (let i = 0; i < allDates.length; i += nSkip) {
+      dates.push(allDates[i]);
+    }
+
+    // For now just use the same data for each site
+    measurementData["NPL"] = measurementData["BTT"];
+    measurementData["TMB"] = measurementData["BTT"];
+    // Now add in the mocked up sectors for each site
+    for (const key of Object.keys(mockEmissionsData)) {
+      if (measurementData.hasOwnProperty(key)) {
+        measurementData[key] = { ...measurementData[key], ...mockEmissionsData[key] };
+      }
+    }
 
     this.state = {
       error: null,
@@ -50,7 +69,11 @@ class Dashboard extends React.Component {
       selectedKeys: {},
       footprintView: true,
       emptySelection: true,
+      overlayOpen: false,
+      overlay: null,
       plotType: "footprint",
+      selectedSite: null,
+      selectedSpecies: "CO2",
     };
 
     // For the moment create some fake sites
@@ -58,15 +81,19 @@ class Dashboard extends React.Component {
     // Set the selected data to be the first date
     this.state.selectedDate = parseInt(dates[0]);
     // Import the emissions PNG paths so we can select the image we want using the slider
-    this.state.emissionsPNGs = importEmissions();
+    this.state.mockEmissionsPNGs = importMockEmissions();
     // Process data we have from JSON
-    this.processData();
+    this.processData(measurementData);
 
     // Select the data
     this.dataSelector = this.dataSelector.bind(this);
     // Selects the dates
     this.dateSelector = this.dateSelector.bind(this);
     this.selectPlotType = this.selectPlotType.bind(this);
+    this.siteSelector = this.siteSelector.bind(this);
+    this.toggleOverlay = this.toggleOverlay.bind(this);
+    this.setOverlay = this.setOverlay.bind(this);
+    this.speciesSelector = this.speciesSelector.bind(this);
   }
 
   dateSelector(date) {
@@ -74,14 +101,28 @@ class Dashboard extends React.Component {
     this.setState({ selectedDate: parseInt(date) });
   }
 
-  // Need a function to process the data that's keyed
-  processData() {
-    // const data = this.state.apiData;
-    const data = measurementData;
+  siteSelector(site) {
+    this.setState({ selectedSite: site });
+  }
 
+  speciesSelector(species) {
+    this.setState({ selectedSpecies: species });
+  }
+
+  toggleOverlay() {
+    this.setState({ overlayOpen: !this.state.overlayOpen });
+  }
+
+  setOverlay(overlay) {
+    this.setState({ overlayOpen: true, overlay: overlay });
+  }
+
+  processData(data) {
     // Process the data and create the correct Javascript time objects
     let dataKeys = {};
     let processedData = {};
+
+    const defaultSite = Object.keys(data).sort()[0];
 
     try {
       for (const site of Object.keys(data)) {
@@ -89,7 +130,11 @@ class Dashboard extends React.Component {
         processedData[site] = {};
 
         for (const species of Object.keys(data[site])) {
-          dataKeys[site][species] = false;
+          if (site === defaultSite) {
+            dataKeys[site][species] = true;
+          } else {
+            dataKeys[site][species] = false;
+          }
 
           const gas_data = data[site][species];
 
@@ -113,6 +158,7 @@ class Dashboard extends React.Component {
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
+    this.state.selectedSite = defaultSite;
     this.state.selectedKeys = dataKeys;
     this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
@@ -217,26 +263,6 @@ class Dashboard extends React.Component {
     this.setState({ plotType: value });
   }
 
-  //   createPlots() {
-  //     if (this.state.plotType === "footprint") {
-  //       // TODO - Find a better way of doing this
-  //       const siteMarkers = { TMB: { long_name: "Thames Barrier", latitude: 51.497, longitude: 0.037 } };
-  //       return (
-  //         <FootprintAnalysis
-  //           sites={siteMarkers}
-  //           centre={[51.5, -0.0482]}
-  //           zoom={9}
-  //           width={"75vw"}
-  //           height={"40vh"}
-  //           measurementData={this.state.processedData}
-  //           siteData={siteData}
-  //         />
-  //       );
-  //     } else {
-  //       return <VisLayout>{this.createGraphs()}</VisLayout>;
-  //     }
-  //   }
-
   anySelected() {
     for (const subdict of Object.values(this.state.selectedKeys)) {
       for (const value of Object.values(subdict)) {
@@ -249,31 +275,13 @@ class Dashboard extends React.Component {
     return false;
   }
 
-  plotHeader() {
-    if (this.state.plotType === "footprint") {
-      return <div className={"plot-header"}>Footprint Analysis</div>;
-    } else {
-      return <div className={"plot-header"}>Timeseries Comparison</div>;
-    }
-  }
-
-  plotAdvice() {
-    if (this.state.plotType === "timeseries") {
-      if (!this.state.selectedKeys || !this.anySelected()) {
-        return <div className={styles.plotAdvice}>Please select species to plot.</div>;
-      }
-    }
-  }
-
   createEmissionsBox() {
     const emissionsHeader = "Emissions";
-    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (LINK: NAEI). Learn more about how
-       countries estimate and report there emissions here (LINK: PAGE EXPLAINING INVENTORY)`;
-    const imagePath = this.state.emissionsPNGs[this.state.selectedDate];
+    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
     return (
       <div className={styles.emissions}>
-        <PlotBox
-          imagePath={imagePath}
+        <EmissionsBox
+          speciesSelector={this.speciesSelector}
           altText={"Example emissions"}
           headerText={emissionsHeader}
           bodyText={emissionsText}
@@ -286,17 +294,17 @@ class Dashboard extends React.Component {
   createModelBox() {
     const modelHeader = "Model";
     const modelText = `Atmospheric models use meteorological data to simulate the dispersion of 
-    greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here (LINK: PAGE ON MODELS)​`;
-    const imagePath = this.state.emissionsPNGs[this.state.selectedDate];
+    greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here.​`;
+    const imagePath = this.state.mockEmissionsPNGs[this.state.selectedDate];
 
     return (
       <div className={styles.model}>
-        <PlotBox
-          imagePath={imagePath}
+        <ModelBox
           altText={"Example model"}
           headerText={modelHeader}
           bodyText={modelText}
           selectedDate={this.state.selectedDate}
+          imagePath={imagePath}
         />
       </div>
     );
@@ -316,6 +324,9 @@ class Dashboard extends React.Component {
           processedData={this.state.processedData}
           dataSelector={this.dataSelector}
           selectedDate={this.state.selectedDate}
+          selectedSite={this.state.selectedSite}
+          selectedSpecies={this.state.selectedSpecies}
+          setSelectedSite={this.siteSelector}
         ></ObsBox>
       </div>
     );
@@ -336,6 +347,11 @@ class Dashboard extends React.Component {
   render() {
     let { error, isLoaded } = this.state;
 
+    let overlay = null;
+    if (this.state.overlayOpen) {
+      overlay = <OverlayContainer toggleOverlay={this.toggleOverlay}>{this.state.overlay}</OverlayContainer>;
+    }
+
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -345,19 +361,15 @@ class Dashboard extends React.Component {
         <div className={styles.gridContainer}>
           <div className={styles.header}>OpenGHG Dashboard</div>
           <div className={styles.sidebar}>
-            <ControlPanel
-              selectPlotType={this.selectPlotType}
-              plotType={this.state.plotType}
-              dataKeys={this.state.selectedKeys}
-              dataSelector={this.dataSelector}
-            />
+            <ControlPanel setOverlay={this.setOverlay} toggleOverlay={this.toggleOverlay} />
           </div>
-          <div className={styles.content} id="dbContent">
+          <div className={styles.content} id="graphContent">
             {this.createEmissionsBox()}
             {this.createModelBox()}
             {this.createDateSlider()}
             {this.createObsBox()}
           </div>
+          {overlay}
         </div>
       );
     }

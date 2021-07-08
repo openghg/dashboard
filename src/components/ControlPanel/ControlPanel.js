@@ -1,20 +1,31 @@
 import PropTypes from "prop-types";
 import React from "react";
-import DataSelector from "../DataSelector/DataSelector";
 import styles from "./ControlPanel.module.css";
 
+import textData from "../../data/overlayText.json";
+
 import GitHubLogo from "../../images/github.svg";
+import TextOverlay from "../TextOverlay/TextOverlay";
+import TextButton from "../TextButton/TextButton";
 
 class ControlPanel extends React.Component {
-  plottingInterface() {
-    if (this.props.plotType === "timeseries") {
-      return (
-        <div>
-          <div className={styles.mainHeader}>Sites</div>
-          <DataSelector dataKeys={this.props.dataKeys} dataSelector={this.props.dataSelector} />
-        </div>
-      );
+  constructor(props) {
+    super(props);
+
+    this.createOverlay = this.createOverlay.bind(this);
+  }
+
+  createOverlay(e) {
+    const area = e.target.dataset.onclickparam;
+
+    if (!textData.hasOwnProperty(area)) {
+      console.error(`No data for $(area) in overlayText`);
+      return;
     }
+
+    const text = textData[area];
+    this.props.toggleOverlay();
+    this.props.setOverlay(<TextOverlay text={text} toggleOverlay={this.props.toggleOverlay} />);
   }
 
   render() {
@@ -24,7 +35,20 @@ class ControlPanel extends React.Component {
           <div className={styles.headerText}>OpenGHG</div>
           <div className={styles.headerTag}>A COP26 dashboard</div>
         </div>
-        <div className={styles.content}></div>
+        <div className={styles.content}>
+          <TextButton onClick={this.createOverlay} onClickParam="emissions">
+            Emissions
+          </TextButton>
+          <TextButton onClick={this.createOverlay} onClickParam="model">
+            Model
+          </TextButton>
+          <TextButton onClick={this.createOverlay} onClickParam="observations">
+            Observations
+          </TextButton>
+          <TextButton onClick={this.createOverlay} onClickParam="about">
+            About OpenGHG
+          </TextButton>
+        </div>
         <div className={styles.footer}>
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
             <img src={GitHubLogo} alt="GitHub logo" />
@@ -36,10 +60,7 @@ class ControlPanel extends React.Component {
 }
 
 ControlPanel.propTypes = {
-  dataKeys: PropTypes.object.isRequired,
-  dataSelector: PropTypes.func.isRequired,
-  plotType: PropTypes.string.isRequired,
-  selectPlotType: PropTypes.func.isRequired,
+  toggleOverlay: PropTypes.func.isRequired,
 };
 
 export default ControlPanel;
