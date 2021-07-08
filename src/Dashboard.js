@@ -277,8 +277,7 @@ class Dashboard extends React.Component {
 
   createEmissionsBox() {
     const emissionsHeader = "Emissions";
-    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI). Learn more about how
-       countries estimate and report their emissions here.`;
+    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
     return (
       <div className={styles.emissions}>
         <EmissionsBox

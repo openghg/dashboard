@@ -24,8 +24,8 @@ class ModelBox extends React.Component {
         <div className={styles.body}>{this.props.bodyText}</div>
         <div className={styles.plot}>
           <LeafletMap
-            centre={[51.5, -0.0482]}
-            zoom={9}
+            centre={[51.5, -0.0782]}
+            zoom={10}
             width={"30vw"}
             overlayBounds={overlayBounds}
             overlayImg={this.props.imagePath}

@@ -8,23 +8,13 @@ import styles from "./EmissionsBox.module.css";
 
 import agriNatural_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_agriculture-and-natural_20190101T00.svg";
 import combProd_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_combustion-and-production_20190101T00.svg";
-import total_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_total_20190101T00.svg";
+import stacked_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_sectors_stacked.svg";
 import waste_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_waste_20190101T00.svg";
-
-import agriNatural_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_agriculture-and-natural_20190101T00_colorbar.svg";
-import combProd_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_combustion-and-production_20190101T00_colorbar.svg";
-import total_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_total_20190101T00_colorbar.svg";
-import waste_ch4_cbar from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_waste_20190101T00_colorbar.svg";
 
 import agriNatural_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_agriculture-and-natural_20190101T00.svg";
 import combProd_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_combustion_20190101T00.svg";
-import total_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_total_20190101T00.svg";
+import stacked_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_sectors_stacked.svg";
 import production_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_production_20190101T00.svg";
-
-import agriNatural_co2_cbar from "../../images/emissionsSVGs/co2/co2_ukghg_map_agriculture-and-natural_20190101T00_colorbar.svg";
-import combustion_co2_cbar from "../../images/emissionsSVGs/co2/co2_ukghg_map_combustion_20190101T00_colorbar.svg";
-import total_co2_cbar from "../../images/emissionsSVGs/co2/co2_ukghg_map_total_20190101T00_colorbar.svg";
-import production_co2_cbar from "../../images/emissionsSVGs/co2/co2_ukghg_map_production_20190101T00_colorbar.svg";
 
 class EmissionsBox extends React.Component {
   constructor(props) {
@@ -34,32 +24,32 @@ class EmissionsBox extends React.Component {
       CH4: {
         "Agri+Natural": agriNatural_ch4,
         "Comb+Production": combProd_ch4,
-        Total: total_ch4,
+        Stacked: stacked_ch4,
         Waste: waste_ch4,
         colorbars: {
-          "Agri+Natural": agriNatural_ch4_cbar,
-          "Comb+Production": combProd_ch4_cbar,
-          Total: total_ch4_cbar,
-          Waste: waste_ch4_cbar,
+          "Agri+Natural": null,
+          "Comb+Production": null,
+          Total: null,
+          Waste: null,
         },
       },
       CO2: {
         "Agri+Natural": agriNatural_co2,
         Combustion: combProd_co2,
-        Total: total_co2,
+        Stacked: stacked_co2,
         Production: production_co2,
         colorbars: {
-          "Agri+Nature": agriNatural_co2_cbar,
-          Combustion: combustion_co2_cbar,
-          Total: total_co2_cbar,
-          Production: production_co2_cbar,
+          "Agri+Nature": null,
+          Combustion: null,
+          Total: null,
+          Production: null,
         },
       },
     };
 
     this.setImage = this.setImage.bind(this);
     this.setSpecies = this.setSpecies.bind(this);
-    this.state = { images: images, selectedSector: "Total", selectedSpecies: "CO2" };
+    this.state = { images: images, selectedSector: "Stacked", selectedSpecies: "CO2" };
   }
 
   setImage(e) {
@@ -81,7 +71,7 @@ class EmissionsBox extends React.Component {
     }
 
     this.props.speciesSelector(species);
-    this.setState({ selectedSpecies: species, selectedSector: "Total" });
+    this.setState({ selectedSpecies: species, selectedSector: "Stacked" });
   }
 
   render() {
@@ -159,8 +149,8 @@ class EmissionsBox extends React.Component {
         <div className={styles.body}>{emissionsText}</div>
         <div className={styles.plot}>
           <LeafletMap
-            centre={[51.5, -0.0482]}
-            zoom={9}
+            centre={[51.5, -0.0782]}
+            zoom={10}
             width={"30vw"}
             overlayBounds={overlayBounds}
             overlayImg={emissionsImage}
