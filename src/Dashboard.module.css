@@ -11,7 +11,7 @@ body {
 .gridContainer {
   display: grid;
   grid-template-columns: minmax(180px, 15vw) 85vw;
-  grid-template-rows: 4fr 96fr;
+  grid-template-rows: minmax(28px, 4vh) auto;
   grid-template-areas:
     "header  header"
     "sidebar content";
@@ -33,29 +33,42 @@ body {
   /* position: relative; */
   background: #2d5d7b;
   overflow: hidden;
-  height: 1fr;
+  height: 100%;
 }
 
 .content {
   grid-area: content;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.8fr 1.2fr;
-  gap: 0px 0px;
+  grid-template-rows: 0.9fr auto auto auto;
+  gap: 4vh 2vw;
   grid-template-areas:
     "observations observations"
-    "mapexplainer sitemap";
-  height: 100vh;
+    "mapExplainer sitemap"
+    "emissionsMap emissionsExplainer"
+    "modelExplainer modelMap";
 }
 
 .observations {
   grid-area: observations;
 }
+.mapExplainer {
+  grid-area: mapExplainer;
+}
 .sitemap {
   grid-area: sitemap;
 }
-.mapexplainer {
-  grid-area: mapexplainer;
+.emissionsMap {
+  grid-area: emissionsMap;
+}
+.emissionsExplainer {
+  grid-area: emissionsExplainer;
+}
+.modelMap {
+  grid-area: modelMap;
+}
+.modelExplainer {
+  grid-area: modelExplainer;
 }
 
 .plotAdvice {

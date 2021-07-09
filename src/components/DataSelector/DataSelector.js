@@ -9,7 +9,7 @@ class DataSelector extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { selected: cloneDeep(this.props.dataKeys) };
+    this.state = { selected: cloneDeep(this.props.selectedKeys) };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.callSelector = this.callSelector.bind(this);
     this.clearSelection = this.clearSelection.bind(this);
@@ -22,16 +22,11 @@ class DataSelector extends React.Component {
     const site = target.attributes["site"].value;
     const species = target.attributes["species"].value;
 
-    // Update the state to have the new
-    const oldSelected = cloneDeep(this.state.selected);
+    let oldSelected = this.props.selectedKeys;
 
     oldSelected[site][species] = value;
 
-    this.setState({ selected: oldSelected });
-
-    if (this.props.autoUpdate) {
-      this.props.dataSelector(oldSelected);
-    }
+    this.props.dataSelector(oldSelected);
   }
 
   callSelector() {
@@ -59,7 +54,7 @@ class DataSelector extends React.Component {
       dataKeys = {};
       dataKeys[selectedSite] = this.state.selected[selectedSite];
     } else {
-      dataKeys = this.state.selected;
+      dataKeys = this.props.selectedKeys;
     }
 
     const selectedSites = this.props.selectedSites;

@@ -3,11 +3,12 @@
   display: grid;
   grid-auto-columns: 1fr;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.3fr 1.7fr;
-  gap: 0px 0px;
+  grid-template-rows: 0.3fr auto auto;
+  gap: 2vh 0px;
   grid-template-areas:
     "header"
-    "body";
+    "intro"
+    "explain";
 }
 
 .header {
@@ -15,12 +16,21 @@
   font-size: calc(12px + 0.7vw);
   font-weight: 700;
   padding-left: 1.5vw;
-  color: #82AEB1
+  color: #82aeb1;
 }
 
-.body {
-  grid-area: body;
+.intro {
+  grid-area: intro;
   padding-left: 1.5vw;
   padding-top: 1vh;
+  padding-right: 1.5vw;
+  font-size: calc(12px + 0.4vw);
+}
+
+.explain {
+  grid-area: explain;
+  padding-left: 1.5vw;
+  padding-top: 1vh;
+  padding-right: 1.5vw;
   font-size: calc(12px + 0.4vw);
 }

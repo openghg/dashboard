@@ -16,6 +16,8 @@ class SelectionBlock extends React.Component {
       const speciesName = String(species).toUpperCase();
       const checkedStatus = siteDataKeys[species];
 
+      console.log(siteName, species, checkedStatus);
+
       const checkbox = (
         <Checkbox
           label={speciesName}

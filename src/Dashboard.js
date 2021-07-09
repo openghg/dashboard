@@ -7,33 +7,21 @@ import ObsBox from "./components/ObsBox/ObsBox";
 import DateSlider from "./components/DateSlider/DateSlider";
 import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
 import ModelBox from "./components/ModelBox/ModelBox";
-
-// import siteData from "./mock/LGHGSitesRandomData.json";
-import colours from "./data/colours.json";
-import mockEmissionsData from "./mock/randomSiteData.json";
-
-import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
-
-import styles from "./Dashboard.module.css";
-
-// import TMBData from "./data/TMB_data_LGHG.json";
-// import NPLData from "./data/NPL_data_LGHG.json";
-import BTTData from "./data/BTT_data_LGHG.json";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
-import londonGHGSites from "./data/siteMetadataSimple.json";
+import londonGHGSites from "./data/siteMetadata.json";
 import SelectorMap from "./components/SelectorMap/SelectorMap";
 import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
 
-import { cloneDeep } from "lodash";
-// const measurementData = {
-//   ...TMBData,
-//   ...NPLData,
-//   ...BTTData,
-// };
+import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
+import styles from "./Dashboard.module.css";
 
-let measurementData = {
-  ...BTTData,
-};
+import { cloneDeep } from "lodash";
+
+import co2Data from "./data/co2_oct19.json";
+import ch4Data from "./data/ch4_oct19.json";
+import mockEmissionsDataCO2 from "./mock/randomSiteDataCO2.json";
+import mockEmissionsDataCH4 from "./mock/randomSiteDataCH4.json";
+import colours from "./data/colours.json";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -42,7 +30,7 @@ class Dashboard extends React.Component {
     // TOOD - update this
     // This only works on the assumption that all data has the same dates
     // which the current mocked data does.
-    const allDates = Object.keys(measurementData["BTT"]["CO2"]);
+    const allDates = Object.keys(co2Data["BTT"]["CO2"]);
     // We don't want to use every timestamp for the slider so just take every nth
     let dates = [];
     // Take every nth
@@ -51,15 +39,20 @@ class Dashboard extends React.Component {
       dates.push(allDates[i]);
     }
 
-    // For now just use the same data for each site
-    measurementData["NPL"] = measurementData["BTT"];
-    measurementData["TMB"] = measurementData["BTT"];
     // Now add in the mocked up sectors for each site
-    for (const key of Object.keys(mockEmissionsData)) {
-      if (measurementData.hasOwnProperty(key)) {
-        measurementData[key] = { ...measurementData[key], ...mockEmissionsData[key] };
+    for (const key of Object.keys(co2Data)) {
+      if (co2Data.hasOwnProperty(key)) {
+        co2Data[key] = { ...co2Data[key], ...mockEmissionsDataCO2[key] };
       }
     }
+
+    for (const key of Object.keys(ch4Data)) {
+      if (ch4Data.hasOwnProperty(key)) {
+        ch4Data[key] = { ...ch4Data[key], ...mockEmissionsDataCH4[key] };
+      }
+    }
+
+    const completeData = {"CO2": co2Data, "CH4": ch4Data}
 
     this.state = {
       error: null,
@@ -79,14 +72,20 @@ class Dashboard extends React.Component {
     };
 
     this.state.selectedSites = new Set(["BTT"]);
-    // For the moment create some fake sites
-    this.state.sites = londonGHGSites;
+
+    // Just take these sites out for now
+    const sites = {};
+    sites["TMB"] = londonGHGSites["TMB"];
+    sites["BTT"] = londonGHGSites["BTT"];
+    sites["NPL"] = londonGHGSites["NPL"];
+
+    this.state.sites = sites;
     // Set the selected data to be the first date
     this.state.selectedDate = parseInt(dates[0]);
     // Import the emissions PNG paths so we can select the image we want using the slider
     this.state.mockEmissionsPNGs = importMockEmissions();
     // Process data we have from JSON
-    this.processData(measurementData);
+    this.processData(completeData);
 
     // Select the data
     this.dataSelector = this.dataSelector.bind(this);
@@ -107,9 +106,11 @@ class Dashboard extends React.Component {
 
   siteSelector(site) {
     // Here we change all the sites and select all species / sectors at that site
-    let selectedSites = this.state.selectedSites;
+    let selectedSites = cloneDeep(this.state.selectedSites);
     selectedSites.add(site);
-    // Now update the selectedKeys
+
+    // Now update the selectedKeys so each selected site has all its
+    // keys set to true
     let selectedKeys = cloneDeep(this.state.selectedKeys);
 
     for (const [site, subObj] of Object.entries(selectedKeys)) {
@@ -139,6 +140,7 @@ class Dashboard extends React.Component {
   }
 
   processData(data) {
+    // TODO - update this so it's keyed by species
     // Process the data and create the correct Javascript time objects
     let dataKeys = {};
     let processedData = {};
@@ -357,9 +359,30 @@ class Dashboard extends React.Component {
   createMapExplainer() {
     const header = "Observations";
     const body = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
-    Learn more about evaluating GHG emissions inventories using atmospheric data. ​
+    Learn more about evaluating GHG emissions inventories using atmospheric data.`;
+    const explanation = `Select a site on the map to view observations taken by an instrument at that site.`;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createEmissionsExplainer() {
+    const header = "Emissions";
+    const body = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
+    Learn more about evaluating GHG emissions inventories using atmospheric data.
     Select a site on the map to view observations taken by an instrument at that site.`;
-    return <ExplanationBox header={header} body={body} />;
+    const explanation = `By clicking on the species (CO2 or CH4) buttons below the map you can select the emissions for that gas.
+    Below the species are the specific sectors those emissions come from. Stacked shows the combinations of each of the other three
+    sectors onto a single plot.`;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createModelExplainer() {
+    const header = "Modelling emissions";
+    const body = `Atmospheric models use meteorological data to simulate the dispersion of greenhouse gases through the atmosphere. 
+    Learn more about simulating atmospheric gas transport here.​`;
+    const explanation = `Using computational models it is possible to model the emissions we'd expect to have been created in specific
+    places from observations we've previously observed. By comparing the model output with the observed emissions we can further improve
+    our modelling capabilities.`;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
   }
 
   render() {
@@ -383,10 +406,14 @@ class Dashboard extends React.Component {
           </div>
           <div className={styles.content} id="graphContent">
             <div className={styles.observations}>{this.createObsBox()}</div>
-            <div className={styles.mapexplainer}>{this.createMapExplainer()}</div>
+            <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
             <div className={styles.sitemap}>
-              <SelectorMap siteSelector={this.siteSelector} sites={londonGHGSites} />
+              <SelectorMap siteSelector={this.siteSelector} sites={this.state.sites} />
             </div>
+            <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
+            <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
+            <div className={styles.modelExplainer}>{this.createModelExplainer()}</div>
+            <div className={styles.modelMap}>{this.createModelBox()}</div>
           </div>
           {overlay}
         </div>

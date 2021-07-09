@@ -8,15 +8,17 @@ class ExplanationBox extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.header}>{this.props.header}</div>
-        <div className={styles.body}>{this.props.body}</div>
+        <div className={styles.intro}>{this.props.intro}</div>
+        <div className={styles.explain}>{this.props.explain}</div>
       </div>
     );
   }
 }
 
 ExplanationBox.propTypes = {
-  bodyText: PropTypes.string.isRequired,
-  headerText: PropTypes.string.isRequired,
+  explain: PropTypes.any,
+  header: PropTypes.any,
+  intro: PropTypes.any,
 };
 
 export default ExplanationBox;

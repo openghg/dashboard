@@ -26,13 +26,11 @@ class ObsBox extends React.Component {
       for (const [site, subObj] of Object.entries(selectedKeys)) {
         for (const [species, value] of Object.entries(subObj)) {
           if (value) {
-            // Create a visualisation and add it to the list
-            const data = processedData[site][species];
-
             if (!siteEmissions.hasOwnProperty(site)) {
               siteEmissions[site] = {};
             }
 
+            const data = processedData[site][species];
             siteEmissions[site][species] = data;
           }
         }
@@ -67,7 +65,7 @@ class ObsBox extends React.Component {
       <div className={styles.container}>
         <div className={styles.select}>
           <DataSelector
-            dataKeys={this.props.selectedKeys}
+            selectedKeys={this.props.selectedKeys}
             dataSelector={this.props.dataSelector}
             selectedSites={this.props.selectedSites}
             clearSelectedSites={this.props.clearSelectedSites}
