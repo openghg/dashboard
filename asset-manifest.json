@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/dashboard/static/css/main.8f7b5209.chunk.css",
-    "main.js": "/dashboard/static/js/main.869df677.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.869df677.chunk.js.map",
-    "runtime-main.js": "/dashboard/static/js/runtime-main.6e640c31.js",
-    "runtime-main.js.map": "/dashboard/static/js/runtime-main.6e640c31.js.map",
-    "static/js/2.57e0a39d.chunk.js": "/dashboard/static/js/2.57e0a39d.chunk.js",
-    "static/js/2.57e0a39d.chunk.js.map": "/dashboard/static/js/2.57e0a39d.chunk.js.map",
-    "static/js/3.5dbc3309.chunk.js": "/dashboard/static/js/3.5dbc3309.chunk.js",
-    "static/js/3.5dbc3309.chunk.js.map": "/dashboard/static/js/3.5dbc3309.chunk.js.map",
+    "main.css": "/dashboard/static/css/main.61259e16.chunk.css",
+    "main.js": "/dashboard/static/js/main.2715a437.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.2715a437.chunk.js.map",
+    "runtime-main.js": "/dashboard/static/js/runtime-main.8d8d83f5.js",
+    "runtime-main.js.map": "/dashboard/static/js/runtime-main.8d8d83f5.js.map",
+    "static/js/2.97d06a04.chunk.js": "/dashboard/static/js/2.97d06a04.chunk.js",
+    "static/js/2.97d06a04.chunk.js.map": "/dashboard/static/js/2.97d06a04.chunk.js.map",
+    "static/js/3.a2e54031.chunk.js": "/dashboard/static/js/3.a2e54031.chunk.js",
+    "static/js/3.a2e54031.chunk.js.map": "/dashboard/static/js/3.a2e54031.chunk.js.map",
     "index.html": "/dashboard/index.html",
-    "static/css/main.8f7b5209.chunk.css.map": "/dashboard/static/css/main.8f7b5209.chunk.css.map",
-    "static/js/2.57e0a39d.chunk.js.LICENSE.txt": "/dashboard/static/js/2.57e0a39d.chunk.js.LICENSE.txt",
+    "static/css/main.61259e16.chunk.css.map": "/dashboard/static/css/main.61259e16.chunk.css.map",
+    "static/js/2.97d06a04.chunk.js.LICENSE.txt": "/dashboard/static/js/2.97d06a04.chunk.js.LICENSE.txt",
     "static/media/1547458200000.png": "/dashboard/static/media/1547458200000.71befc1b.png",
     "static/media/1548091800000.png": "/dashboard/static/media/1548091800000.c249e3c9.png",
     "static/media/1549357200000.png": "/dashboard/static/media/1549357200000.1446f456.png",
@@ -241,9 +241,9 @@
     "static/media/londonHighResFootprint_2020-08-31T20:00:00.svg": "/dashboard/static/media/londonHighResFootprint_2020-08-31T20:00:00.5e796e77.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.6e640c31.js",
-    "static/js/2.57e0a39d.chunk.js",
-    "static/css/main.8f7b5209.chunk.css",
-    "static/js/main.869df677.chunk.js"
+    "static/js/runtime-main.8d8d83f5.js",
+    "static/js/2.97d06a04.chunk.js",
+    "static/css/main.61259e16.chunk.css",
+    "static/js/main.2715a437.chunk.js"
   ]
 }
