@@ -1,14 +1,11 @@
 .container {
   background: white;
   display: grid;
-  grid-template-columns: 0.3fr 0.7fr;
-  grid-template-rows: 0.2fr auto 2.1fr;
+  grid-template-columns: 10% 90%;
+  grid-template-rows: 30vh;
   gap: 0px 0px;
   grid-template-areas:
-    "header header"
-    "body body"
     "select plot";
-  height: 100%;
 }
 
 .header {
@@ -27,7 +24,7 @@
 
 .select {
   grid-area: select;
-  padding-left: 0.5vw;
+  padding-left: 1.5vw;
   display: flex;
   flex-direction: row;
   gap: 1vw;
@@ -37,4 +34,12 @@
   grid-area: plot;
   display: flex;
   /* justify-content: right; */
+}
+
+.emptyMessage {
+    display: flex;
+    padding-top: 15vh;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
 }

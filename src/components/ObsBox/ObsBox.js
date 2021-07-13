@@ -2,143 +2,80 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import GraphContainer from "../GraphContainer/GraphContainer";
-import LineChart from "../LineChart/LineChart";
-import Dropdown from "../Dropdown/Dropdown";
 import DataSelector from "../DataSelector/DataSelector";
+import MultiSiteLineChart from "../MultiSiteLineChart/MultiSiteLineChart";
 
-import colours from "../../data/colours.json";
 import { isEmpty, getVisID } from "../../util/helpers";
 
 import styles from "./ObsBox.module.css";
 
 class ObsBox extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleDropdownChange = this.handleDropdownChange.bind(this);
-  }
-
-  handleDropdownChange(event) {
-    const site = event.target.value;
-
-    const selected = this.props.selectedKeys;
-
-    for (let [key, subdict] of Object.entries(selected)) {
-      for (const subkey of Object.keys(subdict)) {
-        if (key === site) {
-          selected[key][subkey] = true;
-        } else {
-          selected[key][subkey] = false;
-        }
-      }
-    }
-
-    this.props.dataSelector(selected);
-    this.props.setSelectedSite(site);
-  }
-
-  //   handleInputChange(event) {
-  //     const target = event.target;
-  //     const value = target.type === "checkbox" ? target.checked : target.value;
-
-  //     const site = target.attributes["site"].value;
-  //     const species = target.attributes["species"].value;
-
-  //     // Update the state to have the new
-  //     const oldSelected = cloneDeep(this.state.selected);
-
-  //     oldSelected[site][species] = value;
-
-  //     this.setState({ selected: oldSelected });
-  //   }
-
   createEmissionsGraphs() {
-    let visualisations = [];
-
     const selectedKeys = this.props.selectedKeys;
     const processedData = this.props.processedData;
+    const selectedSites = this.props.selectedSites;
+    const selectedSpecies = this.props.selectedSpecies;
 
-    let siteEmissions = {};
+    if (selectedSites.size === 0) {
+      return <div className={styles.emptyMessage}>Please select a site</div>;
+    }
+
+    let speciesEmissions = {};
 
     if (selectedKeys) {
-      for (const [site, subObj] of Object.entries(selectedKeys)) {
-        for (const [species, value] of Object.entries(subObj)) {
-          if (value) {
-            // Create a visualisation and add it to the list
-            const data = processedData[site][species];
+      const siteData = selectedKeys[selectedSpecies];
 
-            if (!siteEmissions.hasOwnProperty(site)) {
-              siteEmissions[site] = {};
+      for (const [site, sectorData] of Object.entries(siteData)) {
+        for (const [sector, value] of Object.entries(sectorData)) {
+          if (value) {
+            if (!speciesEmissions.hasOwnProperty(site)) {
+              speciesEmissions[site] = {};
             }
 
-            siteEmissions[site][species] = data;
+            const data = processedData[selectedSpecies][site][sector];
+            speciesEmissions[site][sector] = data;
           }
         }
       }
 
-      let totalSites = 0;
+      if (!isEmpty(speciesEmissions)) {
+        const key = Object.keys(speciesEmissions).join("-");
 
-      const tableau10 = colours["tableau10"];
+        const widthScale = 0.9;
+        const heightScale = 0.9;
 
-      if (!isEmpty(siteEmissions)) {
-        for (const [site, emissionsData] of Object.entries(siteEmissions)) {
-          // Create a graph for each site
-          const title = String(site).toUpperCase();
-          const key = title.concat("-", Object.keys(emissionsData).join("-"));
-          const containerKey = `container-${key}`;
+        const vis = (
+          <GraphContainer heightScale={heightScale} widthScale={widthScale} key={key}>
+            <MultiSiteLineChart
+              divID={getVisID()}
+              data={speciesEmissions}
+              xLabel="Date"
+              yLabel="Concentration"
+              key={key}
+              selectedDate={this.props.selectedDate}
+            />
+          </GraphContainer>
+        );
 
-          const nTypes = Object.keys(emissionsData).length;
-
-          const selectedColours = tableau10.slice(totalSites, totalSites + nTypes);
-
-          //   for (let i = 0; i < nTypes; i++) {
-          //     tableau10.push(tableau10.shift());
-          //   }
-
-          const widthScale = 0.9;
-          const heightScale = 0.9;
-
-          const vis = (
-            <GraphContainer heightScale={heightScale} widthScale={widthScale} key={containerKey}>
-              <LineChart
-                divID={getVisID()}
-                data={emissionsData}
-                colours={selectedColours}
-                title={title}
-                xLabel="Date"
-                yLabel="Concentration"
-                key={key}
-                selectedDate={this.props.selectedDate}
-              />
-            </GraphContainer>
-          );
-
-          visualisations.push(vis);
-
-          totalSites += nTypes;
-        }
+        return vis;
+      } else {
+        console.error("No data to plot.");
+        return null;
       }
     }
-    return visualisations;
   }
 
   render() {
     return (
       <div className={styles.container}>
-        <div className={styles.header}>{this.props.headerText}</div>
-        <div className={styles.body}>{this.props.bodyText}</div>
         <div className={styles.select}>
-          <Dropdown
-            selectedKeys={this.props.selectedKeys}
-            defaultSite={this.props.selectedSite}
-            onChange={this.handleDropdownChange}
-          />
           <DataSelector
-            dataKeys={this.props.selectedKeys}
+            selectedKeys={this.props.selectedKeys}
+            selectedSpecies={this.props.selectedSpecies}
             dataSelector={this.props.dataSelector}
-            selectedSite={this.props.selectedSite}
+            selectedSites={this.props.selectedSites}
+            clearSelectedSites={this.props.clearSelectedSites}
             autoUpdate={true}
-            singleSite={true}
           />
         </div>
         <div className={styles.plot}>{this.createEmissionsGraphs()}</div>

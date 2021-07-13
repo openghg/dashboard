@@ -67,5 +67,6 @@
   },
   "prettier": {
     "printWidth": 120
-  }
+  },
+  "setupFiles": [".jest/register-context.js"]
 }

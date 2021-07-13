@@ -7,30 +7,21 @@ import ObsBox from "./components/ObsBox/ObsBox";
 import DateSlider from "./components/DateSlider/DateSlider";
 import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
 import ModelBox from "./components/ModelBox/ModelBox";
-
-// import siteData from "./mock/LGHGSitesRandomData.json";
-import colours from "./data/colours.json";
-import mockEmissionsData from "./mock/randomSiteData.json";
-
-import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
-
-import styles from "./Dashboard.module.css";
-
-// import TMBData from "./data/TMB_data_LGHG.json";
-// import NPLData from "./data/NPL_data_LGHG.json";
-import BTTData from "./data/BTT_data_LGHG.json";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
 import londonGHGSites from "./data/siteMetadata.json";
+import SelectorMap from "./components/SelectorMap/SelectorMap";
+import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
 
-// const measurementData = {
-//   ...TMBData,
-//   ...NPLData,
-//   ...BTTData,
-// };
+import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
+import styles from "./Dashboard.module.css";
 
-let measurementData = {
-  ...BTTData,
-};
+import { cloneDeep } from "lodash";
+
+import co2Data from "./data/co2_oct19.json";
+import ch4Data from "./data/ch4_oct19.json";
+import mockEmissionsDataCO2 from "./mock/randomSiteDataCO2.json";
+import mockEmissionsDataCH4 from "./mock/randomSiteDataCH4.json";
+import colours from "./data/colours.json";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -39,7 +30,7 @@ class Dashboard extends React.Component {
     // TOOD - update this
     // This only works on the assumption that all data has the same dates
     // which the current mocked data does.
-    const allDates = Object.keys(measurementData["BTT"]["CO2"]);
+    const allDates = Object.keys(co2Data["TMB"]["CO2"]);
     // We don't want to use every timestamp for the slider so just take every nth
     let dates = [];
     // Take every nth
@@ -48,15 +39,20 @@ class Dashboard extends React.Component {
       dates.push(allDates[i]);
     }
 
-    // For now just use the same data for each site
-    measurementData["NPL"] = measurementData["BTT"];
-    measurementData["TMB"] = measurementData["BTT"];
     // Now add in the mocked up sectors for each site
-    for (const key of Object.keys(mockEmissionsData)) {
-      if (measurementData.hasOwnProperty(key)) {
-        measurementData[key] = { ...measurementData[key], ...mockEmissionsData[key] };
+    for (const key of Object.keys(co2Data)) {
+      if (co2Data.hasOwnProperty(key)) {
+        co2Data[key] = { ...co2Data[key], ...mockEmissionsDataCO2[key] };
       }
     }
+
+    for (const key of Object.keys(ch4Data)) {
+      if (ch4Data.hasOwnProperty(key)) {
+        ch4Data[key] = { ...ch4Data[key], ...mockEmissionsDataCH4[key] };
+      }
+    }
+
+    const completeData = { CO2: co2Data, CH4: ch4Data };
 
     this.state = {
       error: null,
@@ -72,28 +68,35 @@ class Dashboard extends React.Component {
       overlayOpen: false,
       overlay: null,
       plotType: "footprint",
-      selectedSite: null,
       selectedSpecies: "CO2",
     };
 
-    // For the moment create some fake sites
-    this.state.sites = londonGHGSites;
+    const defaultSite = Object.keys(co2Data).sort()[0];
+    this.state.selectedSites = new Set([defaultSite]);
+
+    // Just take these sites out for now
+    const sites = {};
+    sites["TMB"] = londonGHGSites["TMB"];
+    sites["BTT"] = londonGHGSites["BTT"];
+    sites["NPL"] = londonGHGSites["NPL"];
+
+    this.state.sites = sites;
     // Set the selected data to be the first date
     this.state.selectedDate = parseInt(dates[0]);
     // Import the emissions PNG paths so we can select the image we want using the slider
     this.state.mockEmissionsPNGs = importMockEmissions();
     // Process data we have from JSON
-    this.processData(measurementData);
+    this.processData(completeData);
 
     // Select the data
     this.dataSelector = this.dataSelector.bind(this);
     // Selects the dates
     this.dateSelector = this.dateSelector.bind(this);
-    this.selectPlotType = this.selectPlotType.bind(this);
     this.siteSelector = this.siteSelector.bind(this);
     this.toggleOverlay = this.toggleOverlay.bind(this);
     this.setOverlay = this.setOverlay.bind(this);
     this.speciesSelector = this.speciesSelector.bind(this);
+    this.clearSites = this.clearSites.bind(this);
   }
 
   dateSelector(date) {
@@ -102,7 +105,28 @@ class Dashboard extends React.Component {
   }
 
   siteSelector(site) {
-    this.setState({ selectedSite: site });
+    // Here we change all the sites and select all species / sectors at that site
+    let selectedSites = cloneDeep(this.state.selectedSites);
+    selectedSites.add(site);
+
+    // Now update the selectedKeys so each selected site has all its
+    // keys set to true
+    let selectedKeys = cloneDeep(this.state.selectedKeys);
+
+    for (const [species, siteData] of Object.entries(selectedKeys)) {
+      for (const [site, sectorData] of Object.entries(siteData)) {
+        const value = selectedSites.has(site);
+        for (const sector of Object.keys(sectorData)) {
+          selectedKeys[species][site][sector] = value;
+        }
+      }
+    }
+
+    this.setState({ selectedKeys: selectedKeys, selectedSites: selectedSites });
+  }
+
+  clearSites() {
+    this.setState({ selectedSites: new Set() });
   }
 
   speciesSelector(species) {
@@ -117,48 +141,48 @@ class Dashboard extends React.Component {
     this.setState({ overlayOpen: true, overlay: overlay });
   }
 
-  processData(data) {
+  processData(rawData) {
     // Process the data and create the correct Javascript time objects
+    // expected by plotly
     let dataKeys = {};
     let processedData = {};
 
-    const defaultSite = Object.keys(data).sort()[0];
+    let iter = this.state.selectedSites.values();
+    const defaultSite = iter.next().value;
 
     try {
-      for (const site of Object.keys(data)) {
-        dataKeys[site] = {};
-        processedData[site] = {};
+      for (const [species, siteData] of Object.entries(rawData)) {
+        dataKeys[species] = {};
+        processedData[species] = {};
 
-        for (const species of Object.keys(data[site])) {
-          if (site === defaultSite) {
-            dataKeys[site][species] = true;
-          } else {
-            dataKeys[site][species] = false;
+        for (const [site, gasData] of Object.entries(siteData)) {
+          const defaultValue = site === defaultSite;
+          dataKeys[species][site] = {};
+          processedData[species][site] = {};
+
+          for (const [sector, data] of Object.entries(gasData)) {
+            dataKeys[species][site][sector] = defaultValue;
+            const x_timestamps = Object.keys(data);
+            const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+            // Extract the count values
+            const y_values = Object.values(data);
+
+            // Create a structure that plotly expects
+            processedData[species][site][sector] = {
+              x_values: x_values,
+              y_values: y_values,
+            };
           }
-
-          const gas_data = data[site][species];
-
-          const x_timestamps = Object.keys(gas_data);
-          const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
-          // Extract the count values
-          const y_values = Object.values(gas_data);
-
-          // Create a structure that plotly expects
-          processedData[site][species] = {
-            x_values: x_values,
-            y_values: y_values,
-          };
         }
       }
     } catch (error) {
       console.error("Error reading data: ", error);
     }
 
-    // Disabled the no direct mutation rule here as this only gets called from the ctor
+    // Disabled the no direct mutation rule here as this only gets called from the constructor
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
-    this.state.selectedSite = defaultSite;
     this.state.selectedKeys = dataKeys;
     this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
@@ -194,7 +218,7 @@ class Dashboard extends React.Component {
 
       let totalSites = 0;
 
-      const tableau10 = colours["tableau10"];
+      const tab20 = colours["tab20"];
 
       if (!isEmpty(speciesData)) {
         for (const [species, siteData] of Object.entries(speciesData)) {
@@ -205,10 +229,10 @@ class Dashboard extends React.Component {
 
           const nSites = Object.keys(siteData).length;
 
-          const selectedColours = tableau10.slice(totalSites, totalSites + nSites);
+          const selectedColours = tab20.slice(totalSites, totalSites + nSites);
 
           //   for (let i = 0; i < nSites; i++) {
-          //     tableau10.push(tableau10.shift());
+          //     tab20.push(tab20.shift());
           //   }
 
           const vis = (
@@ -258,11 +282,6 @@ class Dashboard extends React.Component {
     //   );
   }
 
-  selectPlotType(event) {
-    const value = event.target.value;
-    this.setState({ plotType: value });
-  }
-
   anySelected() {
     for (const subdict of Object.values(this.state.selectedKeys)) {
       for (const value of Object.values(subdict)) {
@@ -279,15 +298,13 @@ class Dashboard extends React.Component {
     const emissionsHeader = "Emissions";
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
     return (
-      <div className={styles.emissions}>
-        <EmissionsBox
-          speciesSelector={this.speciesSelector}
-          altText={"Example emissions"}
-          headerText={emissionsHeader}
-          bodyText={emissionsText}
-          selectedDate={this.state.selectedDate}
-        />
-      </div>
+      <EmissionsBox
+        speciesSelector={this.speciesSelector}
+        altText={"Example emissions"}
+        headerText={emissionsHeader}
+        bodyText={emissionsText}
+        selectedDate={this.state.selectedDate}
+      />
     );
   }
 
@@ -311,24 +328,16 @@ class Dashboard extends React.Component {
   }
 
   createObsBox() {
-    const obsHeader = "Observations";
-    const obsText = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
-      Learn more about evaluating GHG emissions inventories using atmospheric data (LINK: PAGE ON INVERSIONS)​`;
-
     return (
-      <div className={styles.observations}>
-        <ObsBox
-          headerText={obsHeader}
-          bodyText={obsText}
-          selectedKeys={this.state.selectedKeys}
-          processedData={this.state.processedData}
-          dataSelector={this.dataSelector}
-          selectedDate={this.state.selectedDate}
-          selectedSite={this.state.selectedSite}
-          selectedSpecies={this.state.selectedSpecies}
-          setSelectedSite={this.siteSelector}
-        ></ObsBox>
-      </div>
+      <ObsBox
+        selectedKeys={this.state.selectedKeys}
+        processedData={this.state.processedData}
+        dataSelector={this.dataSelector}
+        selectedDate={this.state.selectedDate}
+        selectedSites={this.state.selectedSites}
+        selectedSpecies={this.state.selectedSpecies}
+        clearSelectedSites={this.clearSites}
+      ></ObsBox>
     );
   }
 
@@ -342,6 +351,56 @@ class Dashboard extends React.Component {
         />
       </div>
     );
+  }
+
+  createMapExplainer() {
+    const header = "Observations";
+    const body = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
+    Learn more about evaluating GHG emissions inventories using atmospheric data.`;
+    const explanation = `Select a site on the map to view observations taken by an instrument at that site.`;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createEmissionsExplainer() {
+    const header = "Emissions";
+    const body = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
+    Learn more about evaluating GHG emissions inventories using atmospheric data.
+    Select a site on the map to view observations taken by an instrument at that site.`;
+    const explanation = `Above is the amount of carbon dioxide we measure at each location, 
+    but what we really want to know is where these greenhouse gases came from. This is one way we can make sure we’re hitting planned targets.
+    We can build a map of expected emissions (an inventory) by adding together different sources. 
+    But how can we check these expected emissions match what we see? [sources infographic?]`;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createModelExplainer() {
+    const header = "Modelling emissions";
+    const body = `Atmospheric models use meteorological data to simulate the dispersion of greenhouse gases through the atmosphere. 
+    Learn more about simulating atmospheric gas transport here.​`;
+    const explanation = `Using computational models it is possible to model the emissions we'd expect to have been created in specific
+    places from observations we've previously observed. By comparing the model output with the observed emissions we can further improve
+    our modelling capabilities.`;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createIntro() {
+    const explanation = `Welcome to the OpenGHG dashboard, view live observation data from our network of gas sensors across London.`;
+    return <ExplanationBox nogap={true} explain={explanation} />;
+  }
+
+  createProcessExplainer() {
+    const header = "Improving the model";
+    const body = `To try and improve on this, we can run simulations where, by making small changes to the possible emissions, 
+    we can continually improve to better match the measurements made at each site. `;
+    const explanation = `One way this has been used is to improve UK national methane estimates [nice plot showing Alistair’s InTeM 
+    estimates from the paper]. In this way, we can use measurements to help learn where these greenhouse gases came from.`;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createObsExplainer() {
+    const explanation = `If we plot the modelled emissions from each sector overlain on the actual measure observations we can
+    visualise how the model is improving with the changes we make in the steps described above.`;
+    return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
   render() {
@@ -364,10 +423,18 @@ class Dashboard extends React.Component {
             <ControlPanel setOverlay={this.setOverlay} toggleOverlay={this.toggleOverlay} />
           </div>
           <div className={styles.content} id="graphContent">
-            {this.createEmissionsBox()}
-            {this.createModelBox()}
-            {this.createDateSlider()}
-            {this.createObsBox()}
+            <div className={styles.intro}>{this.createIntro()}</div>
+            <div className={styles.observations}>{this.createObsBox()}</div>
+            <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
+            <div className={styles.sitemap}>
+              <SelectorMap siteSelector={this.siteSelector} sites={this.state.sites} />
+            </div>
+            <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
+            <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
+            <div className={styles.processExplainer}>{this.createProcessExplainer()}</div>
+            <div className={styles.processInfographic}>Infographic</div>
+            <div className={styles.detailedObs}>{this.createObsBox()}</div>
+            <div className={styles.detailedObsExplainer}>{this.createObsExplainer()}</div>
           </div>
           {overlay}
         </div>

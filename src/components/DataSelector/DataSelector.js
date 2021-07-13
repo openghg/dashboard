@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { cloneDeep } from "lodash";
 import SelectionBlock from "../SelectionBlock/SelectionBlock";
 
 import styles from "./DataSelector.module.css";
@@ -9,86 +8,46 @@ class DataSelector extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { selected: cloneDeep(this.props.dataKeys) };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.callSelector = this.callSelector.bind(this);
-    this.clearSelection = this.clearSelection.bind(this);
   }
 
   handleInputChange(event) {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
 
-    const site = target.attributes["site"].value;
-    const species = target.attributes["species"].value;
+    const sector = target.attributes["species"].value;
 
-    // Update the state to have the new
-    const oldSelected = cloneDeep(this.state.selected);
+    const selectedSpecies = this.props.selectedSpecies;
+    const selectedSites = this.props.selectedSites;
 
-    oldSelected[site][species] = value;
+    let oldSelected = this.props.selectedKeys;
 
-    this.setState({ selected: oldSelected });
-
-    if (this.props.autoUpdate) {
-      this.props.dataSelector(oldSelected);
-    }
-  }
-
-  callSelector() {
-    this.props.dataSelector(this.state.selected);
-  }
-
-  clearSelection() {
-    const selected = this.state.selected;
-
-    for (let [key, subdict] of Object.entries(selected)) {
-      for (const subkey of Object.keys(subdict)) {
-        selected[key][subkey] = false;
-      }
+    for (const site of selectedSites) {
+      oldSelected[selectedSpecies][site][sector] = value;
     }
 
-    this.props.dataSelector(selected);
+    this.props.dataSelector(oldSelected);
   }
 
   render() {
-    let blocks = [];
+    const selectedKeys = this.props.selectedKeys;
+    const selectedSites = this.props.selectedSites;
+    const selectedSpecies = this.props.selectedSpecies;
 
-    let dataKeys = null;
-    if (this.props.singleSite) {
-      const selectedSite = this.props.selectedSite;
-      dataKeys = {};
-      dataKeys[selectedSite] = this.state.selected[selectedSite];
-    } else {
-      dataKeys = this.state.selected;
-    }
-
-    for (const site of Object.keys(dataKeys)) {
-      const siteName = String(site).toUpperCase();
-      const siteDataKeys = dataKeys[site];
-
-      const block = (
-        <SelectionBlock
-          siteDataKeys={siteDataKeys}
-          siteName={siteName}
-          onChange={this.handleInputChange}
-          key={siteName}
-        ></SelectionBlock>
-      );
-
-      blocks.push(block);
-    }
-
+    // Only create the buttons and selection blocks if we have a site selected
+    let blocks = null;
     let buttons = null;
-    if (!this.props.autoUpdate) {
+
+    if (this.props.selectedSites.size !== 0) {
+      let iter = selectedSites.values();
+      const aSite = iter.next().value;
+      const siteDataKeys = selectedKeys[selectedSpecies][aSite];
+      blocks = <SelectionBlock siteDataKeys={siteDataKeys} siteName={"Select"} onChange={this.handleInputChange} />;
+      
       buttons = (
-        <div>
-          <button className={styles.betterButton} onClick={this.callSelector}>
-            Plot
-          </button>
-          <button className={styles.betterButton} onClick={this.clearSelection}>
-            Clear
-          </button>
-        </div>
+        <button className={styles.betterButton} onClick={this.props.clearSelectedSites}>
+          Clear
+        </button>
       );
     }
 
@@ -102,10 +61,11 @@ class DataSelector extends React.Component {
 }
 
 DataSelector.propTypes = {
-  dataKeys: PropTypes.object,
-  dataSelector: PropTypes.func,
-  autoUpdate: PropTypes.bool,
-  singleSite: PropTypes.bool,
+  clearSelectedSites: PropTypes.func.isRequired,
+  dataSelector: PropTypes.func.isRequired,
+  selectedKeys: PropTypes.object.isRequired,
+  selectedSites: PropTypes.object.isRequired,
+  selectedSpecies: PropTypes.string.isRequired
 };
 
 export default DataSelector;

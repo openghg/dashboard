@@ -11,20 +11,11 @@ body {
 .gridContainer {
   display: grid;
   grid-template-columns: minmax(180px, 15vw) 85vw;
-  grid-template-rows: 4fr 96fr;
+  grid-template-rows: minmax(28px, 4vh) auto;
   grid-template-areas:
     "header  header"
     "sidebar content";
 }
-
-/* .gridContainer {
-    display: grid;
-    grid-template-columns: minmax(180px, 15vw) 85vw;
-    grid-template-rows: 4fr 96fr;
-    grid-template-areas:
-      "header  header"
-      "sidebar content";
-  } */
 
 .header {
   grid-area: header;
@@ -40,42 +31,70 @@ body {
 .sidebar {
   grid-area: sidebar;
   /* position: relative; */
-  background: #2D5D7B;
+  background: #2d5d7b;
   overflow: hidden;
-  height: 1fr;
+  height: 100%;
 }
 
 .content {
-  background-color: white;
-  /* display: grid;
-  grid-template:
-    "plotHeader" 7.5fr
-    "plotContent" 92.5fr;
-  height: 100vh; */
+  grid-area: content;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1.6fr 0.2fr 1.3fr;
-  gap: 0px 0px;
-  /* grid-auto-flow: row; */
+  grid-template-rows: auto 0.9fr auto auto auto auto auto;
+  gap: 4vh 2vw;
   grid-template-areas:
-    "emissions model"
-    "dateSlider dateSlider"
-    "observations observations";
-  height: 100vh;
+    "intro intro"
+    "observations observations"
+    "mapExplainer sitemap"
+    "emissionsMap emissionsExplainer"
+    "processExplainer processInfographic"
+    "detailedObs detailedObs"
+    "detailedObsExplainer detailedObsExplainer";
 }
 
-.emissions {
-  grid-area: emissions;
+.intro {
+  grid-area: intro;
 }
-.model {
-  grid-area: model;
-}
-.dateSlider {
-  grid-area: dateSlider;
-}
+
 .observations {
   grid-area: observations;
 }
+.mapExplainer {
+  grid-area: mapExplainer;
+}
+.sitemap {
+  grid-area: sitemap;
+}
+.emissionsMap {
+  grid-area: emissionsMap;
+}
+.emissionsExplainer {
+  grid-area: emissionsExplainer;
+}
+.modelMap {
+  grid-area: modelMap;
+}
+.modelExplainer {
+  grid-area: modelExplainer;
+}
+
+.processExplainer {
+  grid-area: processExplainer;
+}
+
+.processInfographic {
+  grid-area: processInfographic;
+}
+
+.detailedObs {
+  grid-area: detailedObs;
+}
+
+.detailedObsExplainer {
+  grid-area: detailedObsExplainer;
+  padding-bottom: 5vh;
+}
+
 
 .plotAdvice {
   color: #222222;
