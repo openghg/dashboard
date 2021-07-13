@@ -6,20 +6,19 @@ import styles from "./MultiSiteLineChart.module.css";
 
 class MultiSiteLineChart extends React.Component {
   render() {
-    const data = this.props.data;
-
-    // Data keyed by species
     let plotData = [];
     let plotNumber = 0;
     let maxY = 0;
     let minY = Infinity;
 
+    const data = this.props.data;
+
     const tab10 = colours["tab20"];
 
     for (const [site, siteData] of Object.entries(data)) {
-      for (const [species, speciesData] of Object.entries(siteData)) {
-        const xValues = speciesData["x_values"];
-        const yValues = speciesData["y_values"];
+      for (const [sector, sectorData] of Object.entries(siteData)) {
+        const xValues = sectorData["x_values"];
+        const yValues = sectorData["y_values"];
 
         const max = Math.max(...yValues);
         const min = Math.min(...yValues);
@@ -32,7 +31,7 @@ class MultiSiteLineChart extends React.Component {
           minY = min;
         }
 
-        const name = site + " - " + String(species).toUpperCase();
+        const name = site + " - " + String(sector).toUpperCase();
 
         const selectedColour = tab10[plotNumber];
         const colour = selectedColour ? selectedColour : "black";

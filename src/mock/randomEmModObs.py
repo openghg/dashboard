@@ -99,6 +99,8 @@ def create_mock_emissions(sites, dates, val_min, val_max):
 
         data[site] = json.loads(df.to_json())
 
+    return data
+
 ch4_data = create_mock_emissions(sites=sites, dates=dates, val_min=2000, val_max=2400)
 co2_data = create_mock_emissions(sites=sites, dates=dates, val_min=400, val_max=475)
     

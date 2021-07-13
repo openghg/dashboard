@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
     // TOOD - update this
     // This only works on the assumption that all data has the same dates
     // which the current mocked data does.
-    const allDates = Object.keys(co2Data["BTT"]["CO2"]);
+    const allDates = Object.keys(co2Data["TMB"]["CO2"]);
     // We don't want to use every timestamp for the slider so just take every nth
     let dates = [];
     // Take every nth
@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
       }
     }
 
-    const completeData = {"CO2": co2Data, "CH4": ch4Data}
+    const completeData = { CO2: co2Data, CH4: ch4Data };
 
     this.state = {
       error: null,
@@ -71,7 +71,8 @@ class Dashboard extends React.Component {
       selectedSpecies: "CO2",
     };
 
-    this.state.selectedSites = new Set(["BTT"]);
+    const defaultSite = Object.keys(co2Data).sort()[0];
+    this.state.selectedSites = new Set([defaultSite]);
 
     // Just take these sites out for now
     const sites = {};
@@ -91,7 +92,6 @@ class Dashboard extends React.Component {
     this.dataSelector = this.dataSelector.bind(this);
     // Selects the dates
     this.dateSelector = this.dateSelector.bind(this);
-    this.selectPlotType = this.selectPlotType.bind(this);
     this.siteSelector = this.siteSelector.bind(this);
     this.toggleOverlay = this.toggleOverlay.bind(this);
     this.setOverlay = this.setOverlay.bind(this);
@@ -113,10 +113,12 @@ class Dashboard extends React.Component {
     // keys set to true
     let selectedKeys = cloneDeep(this.state.selectedKeys);
 
-    for (const [site, subObj] of Object.entries(selectedKeys)) {
-      const value = selectedSites.has(site);
-      for (const subKey of Object.keys(subObj)) {
-        selectedKeys[site][subKey] = value;
+    for (const [species, siteData] of Object.entries(selectedKeys)) {
+      for (const [site, sectorData] of Object.entries(siteData)) {
+        const value = selectedSites.has(site);
+        for (const sector of Object.keys(sectorData)) {
+          selectedKeys[species][site][sector] = value;
+        }
       }
     }
 
@@ -139,45 +141,45 @@ class Dashboard extends React.Component {
     this.setState({ overlayOpen: true, overlay: overlay });
   }
 
-  processData(data) {
-    // TODO - update this so it's keyed by species
+  processData(rawData) {
     // Process the data and create the correct Javascript time objects
+    // expected by plotly
     let dataKeys = {};
     let processedData = {};
 
-    const defaultSite = Object.keys(data).sort()[0];
+    let iter = this.state.selectedSites.values();
+    const defaultSite = iter.next().value;
 
     try {
-      for (const site of Object.keys(data)) {
-        dataKeys[site] = {};
-        processedData[site] = {};
+      for (const [species, siteData] of Object.entries(rawData)) {
+        dataKeys[species] = {};
+        processedData[species] = {};
 
-        for (const species of Object.keys(data[site])) {
-          if (site === defaultSite) {
-            dataKeys[site][species] = true;
-          } else {
-            dataKeys[site][species] = false;
+        for (const [site, gasData] of Object.entries(siteData)) {
+          const defaultValue = site === defaultSite;
+          dataKeys[species][site] = {};
+          processedData[species][site] = {};
+
+          for (const [sector, data] of Object.entries(gasData)) {
+            dataKeys[species][site][sector] = defaultValue;
+            const x_timestamps = Object.keys(data);
+            const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+            // Extract the count values
+            const y_values = Object.values(data);
+
+            // Create a structure that plotly expects
+            processedData[species][site][sector] = {
+              x_values: x_values,
+              y_values: y_values,
+            };
           }
-
-          const gas_data = data[site][species];
-
-          const x_timestamps = Object.keys(gas_data);
-          const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
-          // Extract the count values
-          const y_values = Object.values(gas_data);
-
-          // Create a structure that plotly expects
-          processedData[site][species] = {
-            x_values: x_values,
-            y_values: y_values,
-          };
         }
       }
     } catch (error) {
       console.error("Error reading data: ", error);
     }
 
-    // Disabled the no direct mutation rule here as this only gets called from the ctor
+    // Disabled the no direct mutation rule here as this only gets called from the constructor
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
     this.state.dataKeys = dataKeys;
@@ -278,11 +280,6 @@ class Dashboard extends React.Component {
     //       });
     //     }
     //   );
-  }
-
-  selectPlotType(event) {
-    const value = event.target.value;
-    this.setState({ plotType: value });
   }
 
   anySelected() {
