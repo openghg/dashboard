@@ -15,66 +15,35 @@ class DataSelector extends React.Component {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
 
-    const site = target.attributes["site"].value;
     const sector = target.attributes["species"].value;
 
     const selectedSpecies = this.props.selectedSpecies;
+    const selectedSites = this.props.selectedSites;
 
     let oldSelected = this.props.selectedKeys;
 
-    oldSelected[selectedSpecies][site][sector] = value;
+    for (const site of selectedSites) {
+      oldSelected[selectedSpecies][site][sector] = value;
+    }
 
     this.props.dataSelector(oldSelected);
   }
 
   render() {
-    let blocks = [];
-
     const selectedKeys = this.props.selectedKeys;
     const selectedSites = this.props.selectedSites;
     const selectedSpecies = this.props.selectedSpecies;
 
-    const speciesKeys = selectedKeys[selectedSpecies];
-
-    for (const [site, siteDataKeys] of Object.entries(speciesKeys)) {
-      if (!selectedSites.has(site)) {
-        continue;
-      }
-      const siteName = String(site).toUpperCase();
-
-      const block = (
-        <SelectionBlock
-          siteDataKeys={siteDataKeys}
-          siteName={siteName}
-          onChange={this.handleInputChange}
-          key={siteName}
-        ></SelectionBlock>
-      );
-
-      blocks.push(block);
-    }
-
-    for (const site of Object.keys(selectedKeys)) {
-      if (!selectedSites.has(site)) {
-        continue;
-      }
-      const siteName = String(site).toUpperCase();
-      const siteDataKeys = selectedKeys[site];
-
-      const block = (
-        <SelectionBlock
-          siteDataKeys={siteDataKeys}
-          siteName={siteName}
-          onChange={this.handleInputChange}
-          key={siteName}
-        ></SelectionBlock>
-      );
-
-      blocks.push(block);
-    }
-
+    // Only create the buttons and selection blocks if we have a site selected
+    let blocks = null;
     let buttons = null;
+
     if (this.props.selectedSites.size !== 0) {
+      let iter = selectedSites.values();
+      const aSite = iter.next().value;
+      const siteDataKeys = selectedKeys[selectedSpecies][aSite];
+      blocks = <SelectionBlock siteDataKeys={siteDataKeys} siteName={"Select"} onChange={this.handleInputChange} />;
+      
       buttons = (
         <button className={styles.betterButton} onClick={this.props.clearSelectedSites}>
           Clear
@@ -96,7 +65,7 @@ DataSelector.propTypes = {
   dataSelector: PropTypes.func.isRequired,
   selectedKeys: PropTypes.object.isRequired,
   selectedSites: PropTypes.object.isRequired,
-  selectedSpecies: PropTypes.string.isRequired,
+  selectedSpecies: PropTypes.string.isRequired
 };
 
 export default DataSelector;

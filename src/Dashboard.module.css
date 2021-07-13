@@ -40,13 +40,20 @@ body {
   grid-area: content;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.9fr auto auto auto;
+  grid-template-rows: auto 0.9fr auto auto auto auto auto;
   gap: 4vh 2vw;
   grid-template-areas:
+    "intro intro"
     "observations observations"
     "mapExplainer sitemap"
     "emissionsMap emissionsExplainer"
-    "modelExplainer modelMap";
+    "processExplainer processInfographic"
+    "detailedObs detailedObs"
+    "detailedObsExplainer detailedObsExplainer";
+}
+
+.intro {
+  grid-area: intro;
 }
 
 .observations {
@@ -70,6 +77,24 @@ body {
 .modelExplainer {
   grid-area: modelExplainer;
 }
+
+.processExplainer {
+  grid-area: processExplainer;
+}
+
+.processInfographic {
+  grid-area: processInfographic;
+}
+
+.detailedObs {
+  grid-area: detailedObs;
+}
+
+.detailedObsExplainer {
+  grid-area: detailedObsExplainer;
+  padding-bottom: 5vh;
+}
+
 
 .plotAdvice {
   color: #222222;

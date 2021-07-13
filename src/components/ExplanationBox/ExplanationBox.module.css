@@ -11,6 +11,19 @@
     "explain";
 }
 
+.containerNoGap {
+    background: white;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.3fr auto auto;
+    gap: 0vh 0px;
+    grid-template-areas:
+      "header"
+      "intro"
+      "explain";
+  }
+
 .header {
   grid-area: header;
   font-size: calc(12px + 0.7vw);

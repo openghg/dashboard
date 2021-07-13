@@ -366,9 +366,10 @@ class Dashboard extends React.Component {
     const body = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
     Learn more about evaluating GHG emissions inventories using atmospheric data.
     Select a site on the map to view observations taken by an instrument at that site.`;
-    const explanation = `By clicking on the species (CO2 or CH4) buttons below the map you can select the emissions for that gas.
-    Below the species are the specific sectors those emissions come from. Stacked shows the combinations of each of the other three
-    sectors onto a single plot.`;
+    const explanation = `Above is the amount of carbon dioxide we measure at each location, 
+    but what we really want to know is where these greenhouse gases came from. This is one way we can make sure we’re hitting planned targets.
+    We can build a map of expected emissions (an inventory) by adding together different sources. 
+    But how can we check these expected emissions match what we see? [sources infographic?]`;
     return <ExplanationBox header={header} intro={body} explain={explanation} />;
   }
 
@@ -380,6 +381,26 @@ class Dashboard extends React.Component {
     places from observations we've previously observed. By comparing the model output with the observed emissions we can further improve
     our modelling capabilities.`;
     return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createIntro() {
+    const explanation = `Welcome to the OpenGHG dashboard, view live observation data from our network of gas sensors across Glasgow.`;
+    return <ExplanationBox nogap={true} explain={explanation} />;
+  }
+
+  createProcessExplainer() {
+    const header = "Improving the model";
+    const body = `To try and improve on this, we can run simulations where, by making small changes to the possible emissions, 
+    we can continually improve to better match the measurements made at each site. `;
+    const explanation = `One way this has been used is to improve UK national methane estimates [nice plot showing Alistair’s InTeM 
+    estimates from the paper]. In this way, we can use measurements to help learn where these greenhouse gases came from.`;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createObsExplainer() {
+    const explanation = `If we plot the modelled emissions from each sector overlain on the actual measure observations we can
+    visualise how the model is improving with the changes we make in the steps described above.`;
+    return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
   render() {
@@ -402,6 +423,7 @@ class Dashboard extends React.Component {
             <ControlPanel setOverlay={this.setOverlay} toggleOverlay={this.toggleOverlay} />
           </div>
           <div className={styles.content} id="graphContent">
+            <div className={styles.intro}>{this.createIntro()}</div>
             <div className={styles.observations}>{this.createObsBox()}</div>
             <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
             <div className={styles.sitemap}>
@@ -409,8 +431,10 @@ class Dashboard extends React.Component {
             </div>
             <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
             <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
-            <div className={styles.modelExplainer}>{this.createModelExplainer()}</div>
-            <div className={styles.modelMap}>{this.createModelBox()}</div>
+            <div className={styles.processExplainer}>{this.createProcessExplainer()}</div>
+            <div className={styles.processInfographic}>Infographic</div>
+            <div className={styles.detailedObs}>{this.createObsBox()}</div>
+            <div className={styles.detailedObsExplainer}>{this.createObsExplainer()}</div>
           </div>
           {overlay}
         </div>

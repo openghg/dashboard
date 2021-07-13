@@ -2,7 +2,7 @@
   padding-bottom: 2vh;
 }
 .header {
-  font-size: 1.8vh;
+  font-size: calc(12px + 0.2vw);
   padding-bottom: 1vh;
   font-weight: 400;
 }
@@ -10,10 +10,11 @@
 .checkboxes {
   display: flex;
   flex-direction: column;
-  font-size: 1.5vh;
+  font-size: calc(12px + 0.2vw);
   font-weight: 300;
   /* top | right | bottom | left */
-  padding: 0vh 1vw 0vw 0vh;
+  padding-right: 2vw;
+  width: 100%;
 }
 
 .checkboxes input {

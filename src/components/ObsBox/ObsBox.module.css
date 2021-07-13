@@ -1,7 +1,7 @@
 .container {
   background: white;
   display: grid;
-  grid-template-columns: 15% 90%;
+  grid-template-columns: 10% 90%;
   grid-template-rows: 30vh;
   gap: 0px 0px;
   grid-template-areas:
