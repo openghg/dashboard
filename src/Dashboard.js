@@ -384,7 +384,7 @@ class Dashboard extends React.Component {
   }
 
   createIntro() {
-    const explanation = `Welcome to the OpenGHG dashboard, view live observation data from our network of gas sensors across Glasgow.`;
+    const explanation = `Welcome to the OpenGHG dashboard, view live observation data from our network of gas sensors across London.`;
     return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
