@@ -23,6 +23,8 @@ import mockEmissionsDataCO2 from "./mock/randomSiteDataCO2.json";
 import mockEmissionsDataCH4 from "./mock/randomSiteDataCH4.json";
 import colours from "./data/colours.json";
 
+import infographic from "./images/infographic_mock.png";
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -390,16 +392,25 @@ class Dashboard extends React.Component {
 
   createProcessExplainer() {
     const header = "Improving the model";
-    const body = `To try and improve on this, we can run simulations where, by making small changes to the possible emissions, 
-    we can continually improve to better match the measurements made at each site. `;
-    const explanation = `One way this has been used is to improve UK national methane estimates [nice plot showing Alistair’s InTeM 
-    estimates from the paper]. In this way, we can use measurements to help learn where these greenhouse gases came from.`;
+    const body = `To compare these expected emissions to our observations, we need to work out which directions the 
+    gases came from. We can do this based on wind patterns. [Infographic for this?].`;
+    const explanation = `For example, a site could be near to a power station but if the wind blows in the opposite 
+    direction then our site won’t measure the gases emitted. `;
+    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+  }
+
+  createComparisonExplainer() {
+    const header = "Comparing model with observations";
+    const body = `To compare these expected emissions to our observations, we need to work out which directions the gases came from. We can do this based on wind patterns. [Infographic for this?]. 
+    For example, a site could be near to a power station but if the wind blows in the opposite direction then our site won’t measure the gases emitted. `;
+    const explanation = `By combining this with our “best guess” emissions we can compare this to what we actually saw.`;
     return <ExplanationBox header={header} intro={body} explain={explanation} />;
   }
 
   createObsExplainer() {
-    const explanation = `If we plot the modelled emissions from each sector overlain on the actual measure observations we can
-    visualise how the model is improving with the changes we make in the steps described above.`;
+    const explanation = `To try and improve on this, we can run simulations where, by making small changes to the possible emissions, 
+    we can continually improve to better match the measurements made at each site. One way this has been used is to improve UK national methane estimates [nice plot showing Alistair’s InTeM 
+        estimates from the paper]. In this way, we can use measurements to help learn where these greenhouse gases came from.`;
     return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
@@ -427,12 +438,18 @@ class Dashboard extends React.Component {
             <div className={styles.observations}>{this.createObsBox()}</div>
             <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
             <div className={styles.sitemap}>
-              <SelectorMap siteSelector={this.siteSelector} sites={this.state.sites} />
+              <SelectorMap width="30vw" siteSelector={this.siteSelector} sites={this.state.sites} />
             </div>
             <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
             <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
             <div className={styles.processExplainer}>{this.createProcessExplainer()}</div>
-            <div className={styles.processInfographic}>Infographic</div>
+            <div className={styles.processInfographic}>
+              <img src={infographic} alt="Model process infographic"></img>
+            </div>
+            <div className={styles.improveExplainer}>
+              <SelectorMap width="30vw" />
+            </div>
+            <div className={styles.improveMap}>{this.createComparisonExplainer()}</div>
             <div className={styles.detailedObs}>{this.createObsBox()}</div>
             <div className={styles.detailedObsExplainer}>{this.createObsExplainer()}</div>
           </div>
