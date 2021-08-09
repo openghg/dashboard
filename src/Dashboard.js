@@ -433,19 +433,19 @@ class Dashboard extends React.Component {
     let pageContent = (
       <div className={contentStyle}>
         <div className={styles.intro}>{this.createIntro()}</div>
-        <div className={styles.observations}  >{this.createObsBox()}</div>
+        <div className={styles.observations}>{this.createObsBox()}</div>
         <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
         <div className={styles.sitemap}>
           <SelectorMap width="30vw" siteSelector={this.siteSelector} sites={this.state.sites} />
         </div>
-        <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
-        <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
       </div>
     );
 
     if (!this.state.dashboardMode) {
       pageContent = (
         <div className={contentStyle}>
+          <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
+          <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
           <div className={styles.processExplainer}>{this.createProcessExplainer()}</div>
           <div className={styles.processInfographic}>
             <img src={infographic} alt="Model process infographic"></img>

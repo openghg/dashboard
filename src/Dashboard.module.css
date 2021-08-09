@@ -46,8 +46,7 @@ body {
   grid-template-areas:
     "intro intro"
     "observations observations"
-    "mapExplainer sitemap"
-    "emissionsMap emissionsExplainer";
+    "mapExplainer sitemap";
 }
 
 .explainerMode {
@@ -58,8 +57,9 @@ body {
   gap: 4vh 2vw;
   padding-bottom: 3vh;
   grid-template-areas:
+    "emissionsMap emissionsExplainer"
     "processExplainer processInfographic"
-    "improveExplainer improveMap "
+    "improveExplainer improveMap";
 }
 
 .intro {
