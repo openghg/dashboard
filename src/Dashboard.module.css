@@ -36,21 +36,30 @@ body {
   height: 100%;
 }
 
-.content {
+.dashboardMode {
   grid-area: content;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 0.9fr auto auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto;
   gap: 4vh 2vw;
+  padding-bottom: 3vh;
   grid-template-areas:
     "intro intro"
     "observations observations"
     "mapExplainer sitemap"
-    "emissionsMap emissionsExplainer"
+    "emissionsMap emissionsExplainer";
+}
+
+.explainerMode {
+  grid-area: content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 4vh 2vw;
+  padding-bottom: 3vh;
+  grid-template-areas:
     "processExplainer processInfographic"
     "improveExplainer improveMap "
-    "detailedObs detailedObs"
-    "detailedObsExplainer detailedObsExplainer";
 }
 
 .intro {

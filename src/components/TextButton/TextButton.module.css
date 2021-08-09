@@ -1,5 +1,5 @@
 .light {
-  font-size: 2vh;
+  font-size: calc(12px + 0.5vw);
   font-family: inherit;
   font-weight: inherit;
   text-align: left;
@@ -16,7 +16,7 @@
 }
 
 .dark {
-  font-size: 2vh;
+  font-size: calc(12px + 0.5vw);
   font-family: inherit;
   font-weight: inherit;
   text-align: left;
@@ -33,7 +33,7 @@
 }
 
 .selected {
-  font-size: 2vh;
+  font-size: calc(12px + 0.5vw);
   font-family: inherit;
   font-weight: 400;
   text-align: left;
@@ -50,7 +50,7 @@
 }
 
 .speciesSelected {
-  font-size: 2vh;
+  font-size: calc(12px + 0.5vw);
   font-family: inherit;
   font-weight: 400;
   text-align: left;

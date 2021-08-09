@@ -71,6 +71,7 @@ class Dashboard extends React.Component {
       overlay: null,
       plotType: "footprint",
       selectedSpecies: "CO2",
+      dashboardMode: true,
     };
 
     const defaultSite = Object.keys(co2Data).sort()[0];
@@ -99,6 +100,7 @@ class Dashboard extends React.Component {
     this.setOverlay = this.setOverlay.bind(this);
     this.speciesSelector = this.speciesSelector.bind(this);
     this.clearSites = this.clearSites.bind(this);
+    this.toggleMode = this.toggleMode.bind(this);
   }
 
   dateSelector(date) {
@@ -137,6 +139,10 @@ class Dashboard extends React.Component {
 
   toggleOverlay() {
     this.setState({ overlayOpen: !this.state.overlayOpen });
+  }
+
+  toggleMode() {
+    this.setState({ dashboardMode: !this.state.dashboardMode });
   }
 
   setOverlay(overlay) {
@@ -422,6 +428,37 @@ class Dashboard extends React.Component {
       overlay = <OverlayContainer toggleOverlay={this.toggleOverlay}>{this.state.overlay}</OverlayContainer>;
     }
 
+    const contentStyle = this.state.dashboardMode ? styles.dashboardMode : styles.explainerMode;
+
+    let pageContent = (
+      <div className={contentStyle}>
+        <div className={styles.intro}>{this.createIntro()}</div>
+        <div className={styles.observations}  >{this.createObsBox()}</div>
+        <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
+        <div className={styles.sitemap}>
+          <SelectorMap width="30vw" siteSelector={this.siteSelector} sites={this.state.sites} />
+        </div>
+        <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
+        <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
+      </div>
+    );
+
+    if (!this.state.dashboardMode) {
+      pageContent = (
+        <div className={contentStyle}>
+          <div className={styles.processExplainer}>{this.createProcessExplainer()}</div>
+          <div className={styles.processInfographic}>
+            <img src={infographic} alt="Model process infographic"></img>
+          </div>
+          {/* Why is this in this div? */}
+          <div className={styles.improveExplainer}>
+            <SelectorMap width="30vw" />
+          </div>
+          <div className={styles.improveMap}>{this.createComparisonExplainer()}</div>
+        </div>
+      );
+    }
+
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -431,28 +468,14 @@ class Dashboard extends React.Component {
         <div className={styles.gridContainer}>
           <div className={styles.header}>OpenGHG Dashboard</div>
           <div className={styles.sidebar}>
-            <ControlPanel setOverlay={this.setOverlay} toggleOverlay={this.toggleOverlay} />
+            <ControlPanel
+              dashboardMode={this.state.dashboardMode}
+              toggleMode={this.toggleMode}
+              setOverlay={this.setOverlay}
+              toggleOverlay={this.toggleOverlay}
+            />
           </div>
-          <div className={styles.content} id="graphContent">
-            <div className={styles.intro}>{this.createIntro()}</div>
-            <div className={styles.observations}>{this.createObsBox()}</div>
-            <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
-            <div className={styles.sitemap}>
-              <SelectorMap width="30vw" siteSelector={this.siteSelector} sites={this.state.sites} />
-            </div>
-            <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
-            <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
-            <div className={styles.processExplainer}>{this.createProcessExplainer()}</div>
-            <div className={styles.processInfographic}>
-              <img src={infographic} alt="Model process infographic"></img>
-            </div>
-            <div className={styles.improveExplainer}>
-              <SelectorMap width="30vw" />
-            </div>
-            <div className={styles.improveMap}>{this.createComparisonExplainer()}</div>
-            <div className={styles.detailedObs}>{this.createObsBox()}</div>
-            <div className={styles.detailedObsExplainer}>{this.createObsExplainer()}</div>
-          </div>
+          <div id="graphContent">{pageContent}</div>
           {overlay}
         </div>
       );

@@ -2,7 +2,7 @@
   background: white;
   display: grid;
   grid-template-columns: 10% 90%;
-  grid-template-rows: 30vh;
+  grid-template-rows: 40vh;
   gap: 0px 0px;
   grid-template-areas:
     "select plot";
