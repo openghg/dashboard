@@ -6,7 +6,7 @@ import styles from "./SelectorMap.module.css";
 
 class SelectorMap extends React.Component {
   render() {
-    const width = this.props.width ? this.props.width : "30vw";
+    const width = this.props.width ? this.props.width : "40vw";
 
     return (
       <div className={styles.container}>
@@ -15,7 +15,7 @@ class SelectorMap extends React.Component {
           sites={this.props.sites}
           centre={[51.5, -0.0782]}
           zoom={10}
-          width={"40vw"}
+          width={width}
         />
       </div>
     );

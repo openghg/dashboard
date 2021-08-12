@@ -310,7 +310,7 @@ class Dashboard extends React.Component {
         <div className={styles.observations}>{this.createObsBox()}</div>
         <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
         <div className={styles.sitemap}>
-          <SelectorMap width="30vw" siteSelector={this.siteSelector} sites={this.state.sites} />
+          <SelectorMap width="40vw" siteSelector={this.siteSelector} sites={this.state.sites} />
         </div>
       </div>
     );
