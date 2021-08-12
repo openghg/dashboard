@@ -2,15 +2,13 @@
   background: white;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 6% 4% auto auto auto auto;
+  grid-template-rows: 6% auto auto auto;
   gap: 0px 0px;
   grid-template-areas:
     "header"
-    "date"
     "plot"
-    "cbar"
-    "buttons"
-    "body";
+    "body"
+    "buttons";
   height: 100%;
 }
 
@@ -26,7 +24,7 @@
   padding-left: 0.5vw;
   padding-top: 1vh;
   display: flex;
-  align-items: flex-end;
+  justify-content: center;
 }
 
 .plot {
@@ -51,6 +49,7 @@
 }
 
 .buttons {
+  padding-top: 1vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

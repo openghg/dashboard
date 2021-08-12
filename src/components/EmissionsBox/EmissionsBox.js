@@ -24,7 +24,7 @@ class EmissionsBox extends React.Component {
       CH4: {
         "Agri+Natural": agriNatural_ch4,
         "Comb+Production": combProd_ch4,
-        Stacked: stacked_ch4,
+        Total: stacked_ch4,
         Waste: waste_ch4,
         colorbars: {
           "Agri+Natural": null,
@@ -36,7 +36,7 @@ class EmissionsBox extends React.Component {
       CO2: {
         "Agri+Natural": agriNatural_co2,
         Combustion: combProd_co2,
-        Stacked: stacked_co2,
+        Total: stacked_co2,
         Production: production_co2,
         colorbars: {
           "Agri+Nature": null,
@@ -49,7 +49,7 @@ class EmissionsBox extends React.Component {
 
     this.setImage = this.setImage.bind(this);
     this.setSpecies = this.setSpecies.bind(this);
-    this.state = { images: images, selectedSector: "Stacked", selectedSpecies: "CO2" };
+    this.state = { images: images, selectedSector: "Total", selectedSpecies: "CO2" };
   }
 
   setImage(e) {
@@ -71,7 +71,7 @@ class EmissionsBox extends React.Component {
     }
 
     this.props.speciesSelector(species);
-    this.setState({ selectedSpecies: species, selectedSector: "Stacked" });
+    this.setState({ selectedSpecies: species, selectedSector: "Total" });
   }
 
   render() {
@@ -130,35 +130,21 @@ class EmissionsBox extends React.Component {
     ];
 
     const emissionsHeader = "Emissions";
-    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI). Learn more about how
-       countries estimate and report their emissions here.`;
-    // const button = (
-    //   <TextButton
-    //     onClick={this.props.setEmisisonsOverlay}
-    //     styling="dark"
-    //     extraSyling={{ fontSize: "inherit", fontFace: "inherit" }}
-    //   >
-    //     report their emissions here
-    //   </TextButton>
-    // );
+    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
 
     return (
       <div className={styles.container}>
         <div className={styles.header}>{emissionsHeader}</div>
-        <div className={styles.date}>Date: {new Date(this.props.selectedDate).toLocaleString()}</div>
         <div className={styles.body}>{emissionsText}</div>
         <div className={styles.plot}>
           <LeafletMap
             centre={[51.5, -0.0782]}
             zoom={10}
-            width={"30vw"}
+            width={"40vw"}
             overlayBounds={overlayBounds}
             overlayImg={emissionsImage}
           />
         </div>
-        {/* <div className={styles.cbar}>
-            Something
-        </div> */}
         <div className={styles.buttons}>
           <div className={styles.speciesButtons}>{speciesButtons}</div>
           <div className={styles.sectorButtons}>{sectorButtons}</div>

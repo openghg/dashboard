@@ -4,12 +4,21 @@ import React from "react";
 import styles from "./Dropdown.module.css";
 
 class Dropdown extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onChange = this.onChange.bind(this);
+  }
+  onChange(event) {
+    const species = event.target.value;
+    this.props.onChange(species);
+  }
   render() {
     const data = this.props.selectedKeys;
     let choices = [];
 
-    for (const site of Object.keys(data).sort()) {
-      const label = String(site).toUpperCase();
+    for (const key of Object.keys(data).sort()) {
+      const label = String(key).toUpperCase();
       const testID = "test-id-" + label;
 
       const choice = (
@@ -28,9 +37,9 @@ class Dropdown extends React.Component {
           <form>
             <select
               data-testid="select-form"
-              defaultValue={this.props.defaultSite}
+              defaultValue={this.props.defaultValue}
               name="obs-select"
-              onChange={this.props.onChange}
+              onChange={this.onChange}
             >
               {choices}
             </select>
@@ -42,11 +51,9 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = {
-  defaultSite: PropTypes.string,
+  defaultValue: PropTypes.string,
   onChange: PropTypes.func,
-  selectedKeys: PropTypes.object
-}
-
-
+  selectedKeys: PropTypes.object,
+};
 
 export default Dropdown;

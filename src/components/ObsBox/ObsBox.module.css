@@ -26,7 +26,8 @@
   grid-area: select;
   padding-left: 1.5vw;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content:space-between;
   gap: 1vw;
 }
 

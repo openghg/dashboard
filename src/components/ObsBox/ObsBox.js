@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+import Dropdown from "../Dropdown/Dropdown";
 import GraphContainer from "../GraphContainer/GraphContainer";
-import DataSelector from "../DataSelector/DataSelector";
 import MultiSiteLineChart from "../MultiSiteLineChart/MultiSiteLineChart";
 
 import { isEmpty, getVisID } from "../../util/helpers";
 
 import styles from "./ObsBox.module.css";
+import BetterButton from "../BetterButton/BetterButton";
 
 class ObsBox extends React.Component {
   createEmissionsGraphs() {
@@ -44,15 +45,34 @@ class ObsBox extends React.Component {
         const widthScale = 0.9;
         const heightScale = 0.9;
 
+        let title = null;
+        if (this.props.selectedSites.size === 1) {
+          let iter = this.props.selectedSites.values();
+          const selectedSite = iter.next().value;
+          title = selectedSite;
+        }
+
+        // TODO - Could we move this into the data dictionary so it has a "units" key?
+        let units = "";
+        const species = this.props.selectedSpecies;
+        if (species === "CH4") {
+          units = " (ppb)";
+        } else if (species === "CO2") {
+          units = " (ppm)";
+        }
+
+        const yLabel = "Concentration " + units;
+
         const vis = (
           <GraphContainer heightScale={heightScale} widthScale={widthScale} key={key}>
             <MultiSiteLineChart
+              title={title}
               divID={getVisID()}
               data={speciesEmissions}
               xLabel="Date"
-              yLabel="Concentration"
+              yLabel={yLabel}
               key={key}
-              selectedDate={this.props.selectedDate}
+              //   selectedDate={this.props.selectedDate}
             />
           </GraphContainer>
         );
@@ -66,17 +86,20 @@ class ObsBox extends React.Component {
   }
 
   render() {
+    let clearButton = null;
+    if (this.props.selectedSites.size > 0) {
+      clearButton = <BetterButton onClick={this.props.clearSelectedSites}>Clear</BetterButton>;
+    }
+
     return (
       <div className={styles.container}>
         <div className={styles.select}>
-          <DataSelector
+          <Dropdown
+            defaultValue={this.props.defaultSpecies}
+            onChange={this.props.speciesSelector}
             selectedKeys={this.props.selectedKeys}
-            selectedSpecies={this.props.selectedSpecies}
-            dataSelector={this.props.dataSelector}
-            selectedSites={this.props.selectedSites}
-            clearSelectedSites={this.props.clearSelectedSites}
-            autoUpdate={true}
           />
+          {clearButton}
         </div>
         <div className={styles.plot}>{this.createEmissionsGraphs()}</div>
       </div>
@@ -85,11 +108,16 @@ class ObsBox extends React.Component {
 }
 
 ObsBox.propTypes = {
-  bodyText: PropTypes.any,
-  headerText: PropTypes.any,
+  bodyText: PropTypes.string,
+  dataSelector: PropTypes.func,
+  defaultSpecies: PropTypes.string,
+  headerText: PropTypes.string,
   processedData: PropTypes.object,
   selectedKeys: PropTypes.object,
-  dataSelector: PropTypes.func,
+  selectedSites: PropTypes.object,
+  selectedSpecies: PropTypes.string,
+  speciesSelector: PropTypes.func,
+  clearSelectedSites: PropTypes.func,
 };
 
 export default ObsBox;

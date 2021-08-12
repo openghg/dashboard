@@ -42,6 +42,7 @@ body {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto auto;
   gap: 4vh 2vw;
+  padding-top: 1vh;
   padding-bottom: 3vh;
   grid-template-areas:
     "intro intro"
@@ -55,11 +56,13 @@ body {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
   gap: 4vh 2vw;
+  padding-top: 1vh;
   padding-bottom: 3vh;
   grid-template-areas:
     "emissionsMap emissionsExplainer"
-    "processExplainer processInfographic"
-    "improveExplainer improveMap";
+    "comparisonExplainer comparisonExplainer"
+    "modelImprovement modelImage"
+    "estimatesExplainer estimatesImage";
 }
 
 .intro {
@@ -86,6 +89,33 @@ body {
 }
 .modelExplainer {
   grid-area: modelExplainer;
+}
+
+.comparisonExplainer {
+  grid-area: comparisonExplainer;
+}
+
+.estimatesExplainer {
+  grid-area: estimatesExplainer;
+}
+
+.estimatesImage {
+  grid-area: estimatesImage;
+}
+
+.modelImprovement {
+  grid-area: modelImprovement;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+}
+
+.modelImage {
+  grid-area: modelImage;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .processExplainer {

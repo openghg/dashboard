@@ -15,7 +15,7 @@ class SelectorMap extends React.Component {
           sites={this.props.sites}
           centre={[51.5, -0.0782]}
           zoom={10}
-          width={width}
+          width={"40vw"}
         />
       </div>
     );
