@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import BetterButton from "../BetterButton/BetterButton";
 import SelectionBlock from "../SelectionBlock/SelectionBlock";
 
 import styles from "./DataSelector.module.css";
@@ -43,12 +44,8 @@ class DataSelector extends React.Component {
       const aSite = iter.next().value;
       const siteDataKeys = selectedKeys[selectedSpecies][aSite];
       blocks = <SelectionBlock siteDataKeys={siteDataKeys} siteName={"Select"} onChange={this.handleInputChange} />;
-      
-      buttons = (
-        <button className={styles.betterButton} onClick={this.props.clearSelectedSites}>
-          Clear
-        </button>
-      );
+
+      buttons = <BetterButton onClick={this.props.clearSelectedSites}>Clear</BetterButton>;
     }
 
     return (
@@ -65,7 +62,7 @@ DataSelector.propTypes = {
   dataSelector: PropTypes.func.isRequired,
   selectedKeys: PropTypes.object.isRequired,
   selectedSites: PropTypes.object.isRequired,
-  selectedSpecies: PropTypes.string.isRequired
+  selectedSpecies: PropTypes.string.isRequired,
 };
 
 export default DataSelector;

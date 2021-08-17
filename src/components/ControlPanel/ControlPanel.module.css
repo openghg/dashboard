@@ -21,10 +21,11 @@
 
 .headerText {
   font-weight: 700;
+  font-size: calc(20px + 0.5vw);
 }
 
 .headerTag {
-  font-size: 2vh;
+  font-size: calc(12px + 0.5vw);
 }
 
 .content {

@@ -6,7 +6,7 @@ import styles from "./SelectorMap.module.css";
 
 class SelectorMap extends React.Component {
   render() {
-    const width = this.props.width ? this.props.width : "30vw";
+    const width = this.props.width ? this.props.width : "40vw";
 
     return (
       <div className={styles.container}>

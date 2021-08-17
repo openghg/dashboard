@@ -1,29 +1,27 @@
 import React from "react";
 
-import LineChart from "./components/LineChart/LineChart";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
-import GraphContainer from "./components/GraphContainer/GraphContainer";
 import ObsBox from "./components/ObsBox/ObsBox";
-import DateSlider from "./components/DateSlider/DateSlider";
 import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
-import ModelBox from "./components/ModelBox/ModelBox";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
 import londonGHGSites from "./data/siteMetadata.json";
 import SelectorMap from "./components/SelectorMap/SelectorMap";
 import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
 
-import { isEmpty, getVisID, importMockEmissions } from "./util/helpers";
+import { importMockEmissions } from "./util/helpers";
 import styles from "./Dashboard.module.css";
 
 import { cloneDeep } from "lodash";
 
 import co2Data from "./data/co2_oct19.json";
 import ch4Data from "./data/ch4_oct19.json";
-import mockEmissionsDataCO2 from "./mock/randomSiteDataCO2.json";
-import mockEmissionsDataCH4 from "./mock/randomSiteDataCH4.json";
-import colours from "./data/colours.json";
 
-import infographic from "./images/infographic_mock.png";
+// Model improvement videos
+import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
+import mapUpdate from "./images/modelVideos/map_update_optim.gif";
+import inventoryComparison from "./images/Inventory_InverseModelling_comparison.jpg";
+
+// import infographic from "./images/infographic_mock.png";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -41,18 +39,18 @@ class Dashboard extends React.Component {
       dates.push(allDates[i]);
     }
 
-    // Now add in the mocked up sectors for each site
-    for (const key of Object.keys(co2Data)) {
-      if (co2Data.hasOwnProperty(key)) {
-        co2Data[key] = { ...co2Data[key], ...mockEmissionsDataCO2[key] };
-      }
-    }
+    // // Now add in the mocked up sectors for each site
+    // for (const key of Object.keys(co2Data)) {
+    //   if (co2Data.hasOwnProperty(key)) {
+    //     co2Data[key] = { ...co2Data[key], ...mockEmissionsDataCO2[key] };
+    //   }
+    // }
 
-    for (const key of Object.keys(ch4Data)) {
-      if (ch4Data.hasOwnProperty(key)) {
-        ch4Data[key] = { ...ch4Data[key], ...mockEmissionsDataCH4[key] };
-      }
-    }
+    // for (const key of Object.keys(ch4Data)) {
+    //   if (ch4Data.hasOwnProperty(key)) {
+    //     ch4Data[key] = { ...ch4Data[key], ...mockEmissionsDataCH4[key] };
+    //   }
+    // }
 
     const completeData = { CO2: co2Data, CH4: ch4Data };
 
@@ -71,6 +69,8 @@ class Dashboard extends React.Component {
       overlay: null,
       plotType: "footprint",
       selectedSpecies: "CO2",
+      defaultSpecies: "CO2",
+      dashboardMode: true,
     };
 
     const defaultSite = Object.keys(co2Data).sort()[0];
@@ -93,17 +93,12 @@ class Dashboard extends React.Component {
     // Select the data
     this.dataSelector = this.dataSelector.bind(this);
     // Selects the dates
-    this.dateSelector = this.dateSelector.bind(this);
     this.siteSelector = this.siteSelector.bind(this);
     this.toggleOverlay = this.toggleOverlay.bind(this);
     this.setOverlay = this.setOverlay.bind(this);
     this.speciesSelector = this.speciesSelector.bind(this);
     this.clearSites = this.clearSites.bind(this);
-  }
-
-  dateSelector(date) {
-    // Here date is a ms-based UNIX timestamp
-    this.setState({ selectedDate: parseInt(date) });
+    this.toggleMode = this.toggleMode.bind(this);
   }
 
   siteSelector(site) {
@@ -137,6 +132,10 @@ class Dashboard extends React.Component {
 
   toggleOverlay() {
     this.setState({ overlayOpen: !this.state.overlayOpen });
+  }
+
+  toggleMode() {
+    this.setState({ dashboardMode: !this.state.dashboardMode });
   }
 
   setOverlay(overlay) {
@@ -194,75 +193,6 @@ class Dashboard extends React.Component {
     this.setState({ selectedKeys: dataKeys });
   }
 
-  createGraphs() {
-    let visualisations = [];
-
-    const selectedKeys = this.state.selectedKeys;
-    const processedData = this.state.processedData;
-
-    let speciesData = {};
-
-    if (selectedKeys) {
-      for (const [site, subObj] of Object.entries(selectedKeys)) {
-        for (const [species, value] of Object.entries(subObj)) {
-          if (value) {
-            // Create a visualisation and add it to the list
-            const data = processedData[site][species];
-
-            if (!speciesData.hasOwnProperty(species)) {
-              speciesData[species] = {};
-            }
-
-            speciesData[species][site] = data;
-          }
-        }
-      }
-
-      let totalSites = 0;
-
-      const tab20 = colours["tab20"];
-
-      if (!isEmpty(speciesData)) {
-        for (const [species, siteData] of Object.entries(speciesData)) {
-          // Create a graph for each species
-          const title = String(species).toUpperCase();
-          const key = title.concat("-", Object.keys(siteData).join("-"));
-          const containerKey = `container-${key}`;
-
-          const nSites = Object.keys(siteData).length;
-
-          const selectedColours = tab20.slice(totalSites, totalSites + nSites);
-
-          //   for (let i = 0; i < nSites; i++) {
-          //     tab20.push(tab20.shift());
-          //   }
-
-          const vis = (
-            <GraphContainer key={containerKey}>
-              <LineChart
-                divID={getVisID()}
-                data={siteData}
-                colours={selectedColours}
-                title={title}
-                xLabel="Date"
-                yLabel="Concentration"
-                key={key}
-              />
-            </GraphContainer>
-          );
-
-          visualisations.push(vis);
-
-          totalSites += nSites;
-        }
-      }
-    }
-
-    return visualisations;
-  }
-
-  // Lets use the selections from the panel as different emissions values
-
   componentDidMount() {
     // const apiURL = "";
     // fetch(apiURL)
@@ -310,25 +240,6 @@ class Dashboard extends React.Component {
     );
   }
 
-  createModelBox() {
-    const modelHeader = "Model";
-    const modelText = `Atmospheric models use meteorological data to simulate the dispersion of 
-    greenhouse gases through the atmosphere. Learn more about simulating atmospheric gas transport here.​`;
-    const imagePath = this.state.mockEmissionsPNGs[this.state.selectedDate];
-
-    return (
-      <div className={styles.model}>
-        <ModelBox
-          altText={"Example model"}
-          headerText={modelHeader}
-          bodyText={modelText}
-          selectedDate={this.state.selectedDate}
-          imagePath={imagePath}
-        />
-      </div>
-    );
-  }
-
   createObsBox() {
     return (
       <ObsBox
@@ -339,19 +250,9 @@ class Dashboard extends React.Component {
         selectedSites={this.state.selectedSites}
         selectedSpecies={this.state.selectedSpecies}
         clearSelectedSites={this.clearSites}
+        speciesSelector={this.speciesSelector}
+        defaultSpecies={this.state.defaultSpecies}
       ></ObsBox>
-    );
-  }
-
-  createDateSlider() {
-    return (
-      <div className={styles.dateSlider}>
-        <DateSlider
-          dates={this.state.availableDates}
-          selectedDate={this.state.selectedDate}
-          dateSelector={this.dateSelector}
-        />
-      </div>
     );
   }
 
@@ -365,24 +266,10 @@ class Dashboard extends React.Component {
 
   createEmissionsExplainer() {
     const header = "Emissions";
-    const body = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
-    Learn more about evaluating GHG emissions inventories using atmospheric data.
-    Select a site on the map to view observations taken by an instrument at that site.`;
-    const explanation = `Above is the amount of carbon dioxide we measure at each location, 
-    but what we really want to know is where these greenhouse gases came from. This is one way we can make sure we’re hitting planned targets.
-    We can build a map of expected emissions (an inventory) by adding together different sources. 
-    But how can we check these expected emissions match what we see? [sources infographic?]`;
-    return <ExplanationBox header={header} intro={body} explain={explanation} />;
-  }
-
-  createModelExplainer() {
-    const header = "Modelling emissions";
-    const body = `Atmospheric models use meteorological data to simulate the dispersion of greenhouse gases through the atmosphere. 
-    Learn more about simulating atmospheric gas transport here.​`;
-    const explanation = `Using computational models it is possible to model the emissions we'd expect to have been created in specific
-    places from observations we've previously observed. By comparing the model output with the observed emissions we can further improve
-    our modelling capabilities.`;
-    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+    const intro = `On the live dashboard page we showed the amount of carbon dioxide we measure at each location, but what we really want to know is where these greenhouse gases came from.`;
+    const body = `This is one way we can make sure we’re hitting planned targets.
+    We can build a map of expected emissions (an inventory) by adding together different sources.`;
+    return <ExplanationBox header={header} intro={intro} explain={body} />;
   }
 
   createIntro() {
@@ -390,28 +277,21 @@ class Dashboard extends React.Component {
     return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
-  createProcessExplainer() {
-    const header = "Improving the model";
-    const body = `To compare these expected emissions to our observations, we need to work out which directions the 
-    gases came from. We can do this based on wind patterns. [Infographic for this?].`;
-    const explanation = `For example, a site could be near to a power station but if the wind blows in the opposite 
-    direction then our site won’t measure the gases emitted. `;
-    return <ExplanationBox header={header} intro={body} explain={explanation} />;
-  }
-
   createComparisonExplainer() {
     const header = "Comparing model with observations";
-    const body = `To compare these expected emissions to our observations, we need to work out which directions the gases came from. We can do this based on wind patterns. [Infographic for this?]. 
-    For example, a site could be near to a power station but if the wind blows in the opposite direction then our site won’t measure the gases emitted. `;
-    const explanation = `By combining this with our “best guess” emissions we can compare this to what we actually saw.`;
-    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+    const body = `We can compare these emissions to the measurements we made to see how well they compare. 
+    From this initial “best guess”, we can run simulations where, by making small changes to the possible emissions, 
+    we can continually improve to better match the measurements made at each site.`;
+    return <ExplanationBox header={header} intro={body} />;
   }
 
-  createObsExplainer() {
-    const explanation = `To try and improve on this, we can run simulations where, by making small changes to the possible emissions, 
-    we can continually improve to better match the measurements made at each site. One way this has been used is to improve UK national methane estimates [nice plot showing Alistair’s InTeM 
-        estimates from the paper]. In this way, we can use measurements to help learn where these greenhouse gases came from.`;
-    return <ExplanationBox nogap={true} explain={explanation} />;
+  createEstimatesExplainer() {
+    const header = "Improve national estimates";
+    const body = `One way this has been used is to improve UK national methane estimates – by looking at what emissions would better 
+    match to the data, the inventory itself could be improved over time and sources of these greenhouse gases better understood. `;
+    const explain = `In this way we can use measurements to help learn where greenhouse gases came from and are coming from and to see where they can be reduced.`;
+
+    return <ExplanationBox nogap={false} header={header} intro={body} explain={explain} />;
   }
 
   render() {
@@ -420,6 +300,42 @@ class Dashboard extends React.Component {
     let overlay = null;
     if (this.state.overlayOpen) {
       overlay = <OverlayContainer toggleOverlay={this.toggleOverlay}>{this.state.overlay}</OverlayContainer>;
+    }
+
+    const contentStyle = this.state.dashboardMode ? styles.dashboardMode : styles.explainerMode;
+
+    let pageContent = (
+      <div className={contentStyle}>
+        <div className={styles.intro}>{this.createIntro()}</div>
+        <div className={styles.observations}>{this.createObsBox()}</div>
+        <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
+        <div className={styles.sitemap}>
+          <SelectorMap width="40vw" siteSelector={this.siteSelector} sites={this.state.sites} />
+        </div>
+      </div>
+    );
+
+    if (!this.state.dashboardMode) {
+      pageContent = (
+        <div className={contentStyle}>
+          <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
+          <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
+          <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
+          <div className={styles.modelImprovement}>
+            <img src={measComparison} alt="Improvement of model estimates" />
+          </div>
+          <div className={styles.modelImage}>
+            <img src={mapUpdate} alt="Improvement of emissions map" />
+          </div>
+          <div className={styles.estimatesExplainer}>{this.createEstimatesExplainer()}</div>
+          <div className={styles.estimatesImage}>
+            <img src={inventoryComparison} alt="Inventory improvement" />
+            <div>
+            O'Doherty et al. 2018, "Annual report on long-term atmospheric measurement and interpretation", BEIS, 2018
+            </div>
+          </div>
+        </div>
+      );
     }
 
     if (error) {
@@ -431,28 +347,14 @@ class Dashboard extends React.Component {
         <div className={styles.gridContainer}>
           <div className={styles.header}>OpenGHG Dashboard</div>
           <div className={styles.sidebar}>
-            <ControlPanel setOverlay={this.setOverlay} toggleOverlay={this.toggleOverlay} />
+            <ControlPanel
+              dashboardMode={this.state.dashboardMode}
+              toggleMode={this.toggleMode}
+              setOverlay={this.setOverlay}
+              toggleOverlay={this.toggleOverlay}
+            />
           </div>
-          <div className={styles.content} id="graphContent">
-            <div className={styles.intro}>{this.createIntro()}</div>
-            <div className={styles.observations}>{this.createObsBox()}</div>
-            <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
-            <div className={styles.sitemap}>
-              <SelectorMap width="30vw" siteSelector={this.siteSelector} sites={this.state.sites} />
-            </div>
-            <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
-            <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
-            <div className={styles.processExplainer}>{this.createProcessExplainer()}</div>
-            <div className={styles.processInfographic}>
-              <img src={infographic} alt="Model process infographic"></img>
-            </div>
-            <div className={styles.improveExplainer}>
-              <SelectorMap width="30vw" />
-            </div>
-            <div className={styles.improveMap}>{this.createComparisonExplainer()}</div>
-            <div className={styles.detailedObs}>{this.createObsBox()}</div>
-            <div className={styles.detailedObsExplainer}>{this.createObsExplainer()}</div>
-          </div>
+          <div id="graphContent">{pageContent}</div>
           {overlay}
         </div>
       );
