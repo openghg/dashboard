@@ -72,6 +72,7 @@ class ObsBox extends React.Component {
               xLabel="Date"
               yLabel={yLabel}
               key={key}
+              colours={this.props.colours}
               //   selectedDate={this.props.selectedDate}
             />
           </GraphContainer>
@@ -118,6 +119,7 @@ ObsBox.propTypes = {
   selectedSpecies: PropTypes.string,
   speciesSelector: PropTypes.func,
   clearSelectedSites: PropTypes.func,
+  colours: PropTypes.object.isRequired,
 };
 
 export default ObsBox;

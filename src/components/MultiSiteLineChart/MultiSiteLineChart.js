@@ -1,21 +1,15 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Plot from "react-plotly.js";
-import colours from "../../data/colours.json";
 import styles from "./MultiSiteLineChart.module.css";
 
 class MultiSiteLineChart extends React.Component {
   render() {
     let plotData = [];
-    let plotNumber = 0;
     let maxY = 0;
     let minY = Infinity;
 
     const data = this.props.data;
-
-    const tab10 = colours["tab10"];
-
-    // const tab10 = this.props.colours;
 
     for (const [site, siteData] of Object.entries(data)) {
       for (const [sector, sectorData] of Object.entries(siteData)) {
@@ -35,8 +29,10 @@ class MultiSiteLineChart extends React.Component {
 
         const name = site + " - " + String(sector).toUpperCase();
 
-        const selectedColour = tab10[plotNumber];
-        const colour = selectedColour ? selectedColour : "black";
+        // const selectedColour = tab10[plotNumber];
+        // const colour = selectedColour ? selectedColour : "black";
+
+        const colour = this.props.colours[site];
 
         const trace = {
           x: xValues,
@@ -50,7 +46,7 @@ class MultiSiteLineChart extends React.Component {
         };
 
         plotData.push(trace);
-        plotNumber++;
+        // plotNumber++;
       }
     }
 
