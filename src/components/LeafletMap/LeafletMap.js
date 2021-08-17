@@ -1,6 +1,6 @@
 import PropTypes, { object } from "prop-types";
 import React from "react";
-import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
 
 import styles from "./LeafletMap.module.css";
 
@@ -46,7 +46,7 @@ class LeafletMap extends React.Component {
           fillOpacity={1.0}
           radius={10}
         >
-          <Popup>
+          <Tooltip>
             <div className={styles.marker}>
               <div className={styles.markerHeader}>{String(key).toUpperCase()}</div>
               <div className={styles.markerBody}>
@@ -57,7 +57,7 @@ class LeafletMap extends React.Component {
               </div>
               <div className={styles.markerLocation}>Location: {locationStr}</div>
             </div>
-          </Popup>
+          </Tooltip>
         </CircleMarker>
       );
 

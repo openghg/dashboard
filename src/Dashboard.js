@@ -117,7 +117,13 @@ class Dashboard extends React.Component {
   siteSelector(site) {
     // Here we change all the sites and select all species / sectors at that site
     let selectedSites = cloneDeep(this.state.selectedSites);
-    selectedSites.add(site);
+
+    if (selectedSites.has(site)) {
+      selectedSites.delete(site);
+    } else {
+      selectedSites.add(site);
+    }
+
     // Now update the selectedKeys so each selected site has all its
     // keys set to true
     let selectedKeys = cloneDeep(this.state.selectedKeys);
