@@ -323,15 +323,16 @@ class Dashboard extends React.Component {
           <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
           <div className={styles.modelImprovement}>
             <img src={measComparison} alt="Improvement of model estimates" />
-            Cartoon comparing data to modelled data and showing improvement
           </div>
           <div className={styles.modelImage}>
             <img src={mapUpdate} alt="Improvement of emissions map" />
-            Cartoon showing update of emissions
           </div>
           <div className={styles.estimatesExplainer}>{this.createEstimatesExplainer()}</div>
           <div className={styles.estimatesImage}>
             <img src={inventoryComparison} alt="Inventory improvement" />
+            <div>
+            O'Doherty et al. 2018, "Annual report on long-term atmospheric measurement and interpretation", BEIS, 2018
+            </div>
           </div>
         </div>
       );

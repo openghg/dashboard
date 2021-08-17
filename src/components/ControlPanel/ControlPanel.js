@@ -42,9 +42,9 @@ class ControlPanel extends React.Component {
             Select mode:
         </div>
           <TextButton onClick={this.props.toggleMode}>{modeButtonText}</TextButton>
-          <TextButton onClick={this.createOverlay} onClickParam="emissions">
+          {/* <TextButton onClick={this.createOverlay} onClickParam="emissions">
             Overlay
-          </TextButton>
+          </TextButton> */}
           {/* <TextButton onClick={this.createOverlay} onClickParam="model">
             Model
           </TextButton>
