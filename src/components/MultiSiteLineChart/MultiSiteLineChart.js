@@ -13,7 +13,9 @@ class MultiSiteLineChart extends React.Component {
 
     const data = this.props.data;
 
-    const tab10 = colours["tab20"];
+    const tab10 = colours["tab10"];
+
+    // const tab10 = this.props.colours;
 
     for (const [site, siteData] of Object.entries(data)) {
       for (const [sector, sectorData] of Object.entries(siteData)) {

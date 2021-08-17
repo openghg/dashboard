@@ -1,6 +1,7 @@
 import PropTypes, { object } from "prop-types";
 import React from "react";
-import { LayerGroup, MapContainer, ImageOverlay, TileLayer, Marker, Popup } from "react-leaflet";
+import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Popup } from "react-leaflet";
+
 import styles from "./LeafletMap.module.css";
 
 class LeafletMap extends React.Component {
@@ -29,14 +30,21 @@ class LeafletMap extends React.Component {
       const locationStr = `${latitude}, ${longitude}`;
       const location = [latitude, longitude];
 
+      const colourHex = this.props.colours[key];
+
       const marker = (
-        <Marker
+        <CircleMarker
           key={locationStr}
-          position={location}
+          center={location}
           data={key}
           eventHandlers={{
             click: this.handleClick,
           }}
+          fillColor={colourHex}
+          color={colourHex}
+          fill={true}
+          fillOpacity={1.0}
+          radius={10}
         >
           <Popup>
             <div className={styles.marker}>
@@ -50,7 +58,7 @@ class LeafletMap extends React.Component {
               <div className={styles.markerLocation}>Location: {locationStr}</div>
             </div>
           </Popup>
-        </Marker>
+        </CircleMarker>
       );
 
       markers.push(marker);

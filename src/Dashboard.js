@@ -20,6 +20,7 @@ import ch4Data from "./data/ch4_oct19.json";
 import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
 import mapUpdate from "./images/modelVideos/map_update_optim.gif";
 import inventoryComparison from "./images/Inventory_InverseModelling_comparison.jpg";
+import colourData from "./data/colours.json";
 
 // import infographic from "./images/infographic_mock.png";
 
@@ -71,6 +72,7 @@ class Dashboard extends React.Component {
       selectedSpecies: "CO2",
       defaultSpecies: "CO2",
       dashboardMode: true,
+      colours: {},
     };
 
     const defaultSite = Object.keys(co2Data).sort()[0];
@@ -82,6 +84,17 @@ class Dashboard extends React.Component {
     sites["BTT"] = londonGHGSites["BTT"];
     sites["NPL"] = londonGHGSites["NPL"];
 
+    let index = 0;
+    let siteColours = {};
+    const tab10 = colourData["tab10"];
+    for (const site of Object.keys(sites)) {
+      siteColours[site] = tab10[index];
+      index++;
+    }
+
+    // Give each site a colour
+    this.state.colours = siteColours;
+    // The locations of the sites for the selection map
     this.state.sites = sites;
     // Set the selected data to be the first date
     this.state.selectedDate = parseInt(dates[0]);
@@ -105,7 +118,6 @@ class Dashboard extends React.Component {
     // Here we change all the sites and select all species / sectors at that site
     let selectedSites = cloneDeep(this.state.selectedSites);
     selectedSites.add(site);
-
     // Now update the selectedKeys so each selected site has all its
     // keys set to true
     let selectedKeys = cloneDeep(this.state.selectedKeys);
@@ -252,6 +264,7 @@ class Dashboard extends React.Component {
         clearSelectedSites={this.clearSites}
         speciesSelector={this.speciesSelector}
         defaultSpecies={this.state.defaultSpecies}
+        colours={this.state.colours}
       ></ObsBox>
     );
   }
@@ -310,7 +323,12 @@ class Dashboard extends React.Component {
         <div className={styles.observations}>{this.createObsBox()}</div>
         <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
         <div className={styles.sitemap}>
-          <SelectorMap width="40vw" siteSelector={this.siteSelector} sites={this.state.sites} />
+          <SelectorMap
+            width="40vw"
+            siteSelector={this.siteSelector}
+            sites={this.state.sites}
+            colours={this.state.colours}
+          />
         </div>
       </div>
     );
@@ -331,7 +349,7 @@ class Dashboard extends React.Component {
           <div className={styles.estimatesImage}>
             <img src={inventoryComparison} alt="Inventory improvement" />
             <div>
-            O'Doherty et al. 2018, "Annual report on long-term atmospheric measurement and interpretation", BEIS, 2018
+              O'Doherty et al. 2018, "Annual report on long-term atmospheric measurement and interpretation", BEIS, 2018
             </div>
           </div>
         </div>
