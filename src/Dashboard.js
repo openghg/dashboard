@@ -258,15 +258,15 @@ class Dashboard extends React.Component {
 
   createMapExplainer() {
     const header = "Observations";
-    const body = `By comparing model simulations to observed concentrations, we can evaluate the emissions inventory. 
-    Learn more about evaluating GHG emissions inventories using atmospheric data.`;
-    const explanation = `Select a site on the map to view observations taken by an instrument at that site.`;
+    const body = `Greenhouse gases are monitored by a network of sites across the city which provide us with near real-time data.
+    This includes both carbon dioxide and methane, the most influential greenhouse gases.`;
+    const explanation = `Start exploring the sites and the data by selecting a measurement site from the map`;
     return <ExplanationBox header={header} intro={body} explain={explanation} />;
   }
 
   createEmissionsExplainer() {
     const header = "Emissions";
-    const intro = `On the live dashboard page we showed the amount of carbon dioxide we measure at each location, but what we really want to know is where these greenhouse gases came from.`;
+    const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure at each location, but what we really want to know is where these greenhouse gases came from.`;
     const body = `This is one way we can make sure we’re hitting planned targets.
     We can build a map of expected emissions (an inventory) by adding together different sources.`;
     return <ExplanationBox header={header} intro={intro} explain={body} />;
