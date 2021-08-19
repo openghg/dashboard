@@ -102,13 +102,24 @@ body {
 .estimatesImage {
   grid-area: estimatesImage;
 }
+  
+.estimatesImage img {
+  max-width: 100%;
+  max-height: 100%;
+}
 
 .modelImprovement {
   grid-area: modelImprovement;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1vh;
+}
+
+.modelImprovement img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .modelImage {
@@ -116,6 +127,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.modelImage img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.modelImprovement img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .processExplainer {

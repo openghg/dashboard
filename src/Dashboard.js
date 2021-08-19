@@ -347,8 +347,7 @@ class Dashboard extends React.Component {
           <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
           <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
           <div className={styles.modelImprovement}>
-            {/* <img src={measComparison} alt="Improvement of model estimates" /> */}
-            TextButton
+            <img src={measComparison} alt="Improvement of model estimates" />
           </div>
           <div className={styles.modelImage}>
             <img src={mapUpdate} alt="Improvement of emissions map" />
