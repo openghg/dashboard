@@ -29,8 +29,6 @@ class ControlPanel extends React.Component {
   }
 
   render() {
-    const modeButtonText = this.props.dashboardMode ? "Explainer" : "Dashboard";
-
     return (
       <div className={styles.container}>
         <div className={styles.header}>
@@ -38,22 +36,12 @@ class ControlPanel extends React.Component {
           <div className={styles.headerTag}>A COP26 dashboard</div>
         </div>
         <div className={styles.content}>
-        <div>
-            Select mode:
-        </div>
-          <TextButton onClick={this.props.toggleMode}>{modeButtonText}</TextButton>
-          {/* <TextButton onClick={this.createOverlay} onClickParam="emissions">
-            Overlay
-          </TextButton> */}
-          {/* <TextButton onClick={this.createOverlay} onClickParam="model">
-            Model
+          <TextButton onClickParam={true} onClick={this.props.setMode} selected={this.props.dashboardMode}>
+            Live Data
           </TextButton>
-          <TextButton onClick={this.createOverlay} onClickParam="observations">
-            Observations
+          <TextButton onClickParam={false} onClick={this.props.setMode} selected={!this.props.dashboardMode}>
+            Explainer
           </TextButton>
-          <TextButton onClick={this.createOverlay} onClickParam="about">
-            About OpenGHG
-          </TextButton> */}
         </div>
         <div className={styles.footer}>
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
@@ -68,8 +56,8 @@ class ControlPanel extends React.Component {
 ControlPanel.propTypes = {
   dashboardMode: PropTypes.bool.isRequired,
   setOverlay: PropTypes.func.isRequired,
-  toggleMode: PropTypes.func.isRequired,
-  toggleOverlay: PropTypes.func.isRequired
+  setMode: PropTypes.func.isRequired,
+  toggleOverlay: PropTypes.func.isRequired,
 };
 
 export default ControlPanel;

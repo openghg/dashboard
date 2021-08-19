@@ -140,7 +140,7 @@ class EmissionsBox extends React.Component {
           <LeafletMap
             centre={[51.5, -0.0782]}
             zoom={10}
-            width={"40vw"}
+            width={"100%"}
             overlayBounds={overlayBounds}
             overlayImg={emissionsImage}
           />

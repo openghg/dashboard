@@ -111,7 +111,7 @@ class Dashboard extends React.Component {
     this.setOverlay = this.setOverlay.bind(this);
     this.speciesSelector = this.speciesSelector.bind(this);
     this.clearSites = this.clearSites.bind(this);
-    this.toggleMode = this.toggleMode.bind(this);
+    this.setMode = this.setMode.bind(this);
   }
 
   siteSelector(site) {
@@ -152,8 +152,9 @@ class Dashboard extends React.Component {
     this.setState({ overlayOpen: !this.state.overlayOpen });
   }
 
-  toggleMode() {
-    this.setState({ dashboardMode: !this.state.dashboardMode });
+  setMode(e) {
+    const dashboardMode = e.target.dataset.onclickparam === "true" ? true : false;
+    this.setState({ dashboardMode: dashboardMode });
   }
 
   setOverlay(overlay) {
@@ -346,7 +347,8 @@ class Dashboard extends React.Component {
           <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
           <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
           <div className={styles.modelImprovement}>
-            <img src={measComparison} alt="Improvement of model estimates" />
+            {/* <img src={measComparison} alt="Improvement of model estimates" /> */}
+            TextButton
           </div>
           <div className={styles.modelImage}>
             <img src={mapUpdate} alt="Improvement of emissions map" />
@@ -373,7 +375,7 @@ class Dashboard extends React.Component {
           <div className={styles.sidebar}>
             <ControlPanel
               dashboardMode={this.state.dashboardMode}
-              toggleMode={this.toggleMode}
+              setMode={this.setMode}
               setOverlay={this.setOverlay}
               toggleOverlay={this.toggleOverlay}
             />

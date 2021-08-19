@@ -15,6 +15,11 @@ class TextButton extends React.Component {
       style = styles.speciesSelected;
     }
 
+    // Shoehorn another way of doing this in
+    if(this.props.selected) {
+      style = styles.dark;
+    }
+
     const extraStyling = this.props.extraStyling ? this.props.extraStyling : {};
     const onClickParam = this.props.onClickParam;
 
