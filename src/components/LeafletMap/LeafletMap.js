@@ -89,15 +89,11 @@ class LeafletMap extends React.Component {
 
     const markers = this.processSites();
     const zoom = this.props.zoom ? this.props.zoom : 5;
-    // const width = Number(this.props.width) ? this.props.width : "60vw";
-    // const height = Number(this.props.height) ? this.props.height : "40vh";
 
-    const style = { height: "300px", width: "100%"};
-
-    // console.log(style);
+    const style = { width: "90%"};
 
     return (
-      <div className={styles.container}>
+      <div className={styles.container} >
         <MapContainer center={this.props.centre} zoom={zoom} scrollWheelZoom={true} style={style}>
           <TileLayer attribution={attribution} url={url} />
           <LayerGroup>{markers}</LayerGroup>

@@ -15,7 +15,6 @@ import agriNatural_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_agricu
 import combProd_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_combustion_20190101T00.svg";
 import stacked_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_sectors_stacked.svg";
 import production_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_production_20190101T00.svg";
-import DynamicDimensions from "../DynamicDimensions/DynamicDimensions";
 
 class EmissionsBox extends React.Component {
   constructor(props) {
@@ -137,7 +136,7 @@ class EmissionsBox extends React.Component {
       <div className={styles.container}>
         <div className={styles.header}>{emissionsHeader}</div>
         <div className={styles.body}>{emissionsText}</div>
-        <div className={styles.plot} id="divEmissionsMap">
+        <div className={styles.plot}>
           <LeafletMap centre={[51.5, -0.0782]} zoom={10} overlayBounds={overlayBounds} overlayImg={emissionsImage} />
         </div>
         <div className={styles.buttons}>

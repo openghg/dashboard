@@ -17,6 +17,7 @@
   font-size: calc(12px + 0.7vw);
   font-weight: 300;
   padding-left: 0.5vw;
+  padding-bottom: 4vh;
 }
 
 .body {
@@ -59,13 +60,13 @@
 .speciesButtons {
   display: flex;
   flex-direction: row;
-  gap: 1vw;
+  gap: 2vw;
 }
 
 .sectorButtons {
   display: flex;
   flex-direction: row;
-  gap: 1vw;
+  gap: 2vw;
 }
 
 .cbar {
