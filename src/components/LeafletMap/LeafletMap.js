@@ -2,6 +2,8 @@ import PropTypes, { object } from "prop-types";
 import React from "react";
 import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
 
+// import "./LeafletMapResponsive.css";
+
 import styles from "./LeafletMap.module.css";
 
 class LeafletMap extends React.Component {
@@ -68,14 +70,6 @@ class LeafletMap extends React.Component {
   }
 
   render() {
-    const markers = this.processSites();
-
-    const zoom = this.props.zoom ? this.props.zoom : 5;
-    const width = this.props.width ? this.props.width : "60vw";
-    const height = this.props.height ? this.props.height : "40vh";
-
-    const style = { width: width, height: height };
-
     let imgOverlay = null;
     if (this.props.overlayImg && this.props.overlayBounds) {
       const imgPath = this.props.overlayImg;
@@ -92,6 +86,15 @@ class LeafletMap extends React.Component {
       const attrTiles = '&copy; <a href="http://osm.org/copyright">Map tiles by Carto, under CC BY 3.0.</a> ';
       attribution = extraAttr + attrTiles;
     }
+
+    const markers = this.processSites();
+    const zoom = this.props.zoom ? this.props.zoom : 5;
+    // const width = Number(this.props.width) ? this.props.width : "60vw";
+    // const height = Number(this.props.height) ? this.props.height : "40vh";
+
+    const style = { height: "300px", width: "100%"};
+
+    // console.log(style);
 
     return (
       <div className={styles.container}>
