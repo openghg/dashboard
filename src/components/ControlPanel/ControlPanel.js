@@ -32,10 +32,11 @@ class ControlPanel extends React.Component {
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <div className={styles.headerText}>OpenGHG</div>
-          <div className={styles.headerTag}>A COP26 dashboard</div>
+          Some text
+          {/* <div className={styles.headerText}>OpenGHG</div>
+          <div className={styles.headerTag}>A COP26 dashboard</div> */}
         </div>
-        <div className={styles.content}>
+        {/* <div className={styles.content}>
           <TextButton onClickParam={true} onClick={this.props.setMode} selected={this.props.dashboardMode}>
             Live Data
           </TextButton>
@@ -47,7 +48,7 @@ class ControlPanel extends React.Component {
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
             <img src={GitHubLogo} alt="GitHub logo" />
           </a>
-        </div>
+        </div> */}
       </div>
     );
   }

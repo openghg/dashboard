@@ -8,13 +8,34 @@ body {
   background-color: #fff;
 }
 
+/* Start with mobile friendly first */
 .gridContainer {
   display: grid;
-  grid-template-columns: minmax(180px, 15vw) 85vw;
+  grid-template-columns: 100vw;
   grid-template-rows: minmax(28px, 4vh) auto;
   grid-template-areas:
-    "header  header"
-    "sidebar content";
+    "header"
+    "content";
+}
+
+/* Medium screens breakpoint (1050px) */
+@media only screen and (min-width: 65.625em) {
+  .gridContainer {
+    display: grid;
+    grid-template-columns: minmax(180px, 15vw) 85vw;
+    grid-template-rows: minmax(28px, 4vh) auto;
+    grid-template-areas:
+      "header  header"
+      "sidebar content";
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+    /* position: relative; */
+    background: #2d5d7b;
+    overflow: hidden;
+    height: 100%;
+  }
 }
 
 .header {
@@ -28,13 +49,8 @@ body {
   color: white;
 }
 
-.sidebar {
-  grid-area: sidebar;
-  /* position: relative; */
-  background: #2d5d7b;
-  overflow: hidden;
-  height: 100%;
-}
+
+
 
 .dashboardMode {
   grid-area: content;
