@@ -1,23 +1,13 @@
 .container {
   background: white;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 6% auto auto auto;
-  gap: 0px 0px;
+  padding-top: 10px;
+  gap: 5px 0px;
   grid-template-areas:
-    "header"
     "plot"
     "body"
     "buttons";
   height: 100%;
-}
-
-.header {
-  grid-area: header;
-  font-size: calc(12px + 0.7vw);
-  font-weight: 300;
-  padding-left: 0.5vw;
-  padding-bottom: 4vh;
 }
 
 .body {
@@ -41,12 +31,6 @@
   width: auto;
   max-width: 450px;
   max-height: 450px;
-}
-
-.date {
-  font-size: calc(12px + 0.3vw);
-  padding-left: 0.5vw;
-  width: 80%;
 }
 
 .buttons {

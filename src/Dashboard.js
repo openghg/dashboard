@@ -323,24 +323,27 @@ class Dashboard extends React.Component {
     }
 
     let pageContent = (
-      <div>
-        <div className={styles.intro}>{this.createIntro()}</div>
-        <div className={styles.observations}>{this.createObsBox()}</div>
-        <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
-        <div className={styles.sitemap}>
-          <SelectorMap
-            width="40vw"
-            siteSelector={this.siteSelector}
-            sites={this.state.sites}
-            colours={this.state.colours}
-          />
+      <div className={styles.content}>
+        <div className={styles.timeseries} id="graphContent">
+          {this.createObsBox()}
+        </div>
+        <div className={styles.contentCards}>
+          <div className={styles.card}>{this.createMapExplainer()}</div>
+          <div className={styles.card}>
+            <SelectorMap
+              width="40vw"
+              siteSelector={this.siteSelector}
+              sites={this.state.sites}
+              colours={this.state.colours}
+            />
+          </div>
         </div>
       </div>
     );
 
-    if (!this.state.dashboardMode) {
+    if (this.state.dashboardMode) {
       pageContent = (
-        <div>
+        <div className={styles.explainerContent}>
           <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
           <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
           <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
@@ -373,32 +376,12 @@ class Dashboard extends React.Component {
         <div className={styles.gridContainer}>
           <div className={styles.header}>OpenGHG Dashboard</div>
           <div className={styles.sidebar}>
-            Side panel
+              <ControlPanel/>
           </div>
-          <div className={contentStyle} id="graphContent">
-            Some content
-          </div>
+          <div>{pageContent}</div>
           {/* {overlay} */}
         </div>
       );
-
-    //   return (
-    //     <div className={styles.gridContainer}>
-    //       <div className={styles.header}>OpenGHG Dashboard</div>
-    //       <div className={styles.sidebar}>
-    //         <ControlPanel
-    //           dashboardMode={this.state.dashboardMode}
-    //           setMode={this.setMode}
-    //           setOverlay={this.setOverlay}
-    //           toggleOverlay={this.toggleOverlay}
-    //         />
-    //       </div>
-    //       <div className={contentStyle} id="graphContent">
-    //         {pageContent}
-    //       </div>
-    //       {overlay}
-    //     </div>
-    //   );
     }
   }
 }

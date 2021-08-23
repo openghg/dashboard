@@ -4,7 +4,7 @@
   grid-auto-columns: 1fr;
   grid-template-columns: 1fr;
   grid-template-rows: 0.3fr auto auto;
-  gap: 2vh 0px;
+  gap: 2vh 0vw;
   grid-template-areas:
     "header"
     "intro"
@@ -12,21 +12,21 @@
 }
 
 .containerNoGap {
-    background: white;
-    display: grid;
-    grid-auto-columns: 1fr;
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.3fr auto auto;
-    gap: 0vh 0px;
-    grid-template-areas:
-      "header"
-      "intro"
-      "explain";
-  }
+  background: white;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.3fr auto auto;
+  gap: 0vh 0px;
+  grid-template-areas:
+    "header"
+    "intro"
+    "explain";
+}
 
 .header {
   grid-area: header;
-  font-size: calc(12px + 0.7vw);
+  font-size: 1.6em;
   font-weight: 700;
   padding-left: 1.5vw;
   color: #82aeb1;
@@ -37,7 +37,7 @@
   padding-left: 1.5vw;
   padding-top: 1vh;
   padding-right: 1.5vw;
-  font-size: calc(12px + 0.4vw);
+  font-size: 18px;
 }
 
 .explain {
@@ -45,5 +45,5 @@
   padding-left: 1.5vw;
   padding-top: 1vh;
   padding-right: 1.5vw;
-  font-size: calc(12px + 0.4vw);
+  font-size: 18px;
 }
