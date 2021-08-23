@@ -1,4 +1,4 @@
-/* This CSS is based on work at https://codepen.io/trooperandz/pen/YRpKjo */
+/* This CSS is based on code available at https://codepen.io/trooperandz/pen/YRpKjo */
 
 body {
   margin: 0;
@@ -78,6 +78,11 @@ body {
   cursor: pointer;
   font-size: 20px;
   color: #ddd;
+}
+
+.intro {
+  width: 80%;
+  padding-bottom: 3vh;
 }
 
 .timeseries {
@@ -170,6 +175,10 @@ body {
       "modelImprovement modelImage"
       "estimatesExplainer estimatesImage";
   }
+
+  .contentCards {
+    column-count: 2;
+  }
 }
 
 .content {
@@ -183,12 +192,7 @@ body {
 .observations {
   grid-area: observations;
 }
-.mapExplainer {
-  grid-area: mapExplainer;
-}
-.sitemap {
-  grid-area: sitemap;
-}
+
 .emissionsMap {
   grid-area: emissionsMap;
 }
@@ -243,83 +247,4 @@ body {
 .modelImage img {
   max-width: 100%;
   max-height: 100%;
-}
-
-.modelImprovement img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.processExplainer {
-  grid-area: processExplainer;
-}
-
-.processInfographic {
-  grid-area: processInfographic;
-  display: flex;
-  justify-content: center;
-}
-
-.improveExplainer {
-  grid-area: improveExplainer;
-}
-
-.improveMap {
-  grid-area: improveMap;
-}
-
-.detailedObs {
-  grid-area: detailedObs;
-}
-
-.detailedObsExplainer {
-  grid-area: detailedObsExplainer;
-  padding-bottom: 5vh;
-}
-
-.plotAdvice {
-  color: #222222;
-  font-size: 2vh;
-  font-weight: 300;
-  display: flex;
-  justify-content: center;
-}
-
-.main-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-  padding: 20px;
-  height: 30vh;
-  background-color: #f4f3ee;
-  color: slategray;
-}
-
-.nav-icon {
-  margin: 1em;
-  width: 40px;
-}
-
-.nav-icon:after,
-.nav-icon:before,
-.nav-icon div {
-  background-color: #fff;
-  border-radius: 3px;
-  content: "";
-  display: block;
-  height: 5px;
-  margin: 7px 0;
-  transition: all 0.2s ease-in-out;
-}
-
-.nav-icon:hover:before {
-  background-color: #222;
-}
-
-.nav-icon:hover:after {
-  background-color: #222;
-}
-
-.nav-icon:hover div {
-  background-color: #222;
 }

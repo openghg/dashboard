@@ -293,7 +293,8 @@ class Dashboard extends React.Component {
   }
 
   createIntro() {
-    const explanation = `Welcome to the OpenGHG dashboard, view live observation data from our network of gas sensors across London.`;
+    const explanation = `Welcome to the OpenGHG dashboard where you can view live observation data from 
+                        our network of gas sensors across London.`;
     return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
@@ -324,6 +325,9 @@ class Dashboard extends React.Component {
 
     let pageContent = (
       <div className={styles.content}>
+      <div className={styles.intro}>
+          {this.createIntro()}
+      </div>
         <div className={styles.timeseries} id="graphContent">
           {this.createObsBox()}
         </div>
@@ -341,7 +345,7 @@ class Dashboard extends React.Component {
       </div>
     );
 
-    if (this.state.dashboardMode) {
+    if (!this.state.dashboardMode) {
       pageContent = (
         <div className={styles.explainerContent}>
           <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
@@ -369,17 +373,19 @@ class Dashboard extends React.Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      // const contentStyle = this.state.dashboardMode ? styles.dashboardMode : styles.explainerMode;
-      const contentStyle = styles.dashboardMode;
-
       return (
         <div className={styles.gridContainer}>
           <div className={styles.header}>OpenGHG Dashboard</div>
           <div className={styles.sidebar}>
-              <ControlPanel/>
+            <ControlPanel
+              dashboardMode={this.state.dashboardMode}
+              setMode={this.setMode}
+              setOverlay={this.setOverlay}
+              toggleOverlay={this.toggleOverlay}
+            />
           </div>
           <div>{pageContent}</div>
-          {/* {overlay} */}
+          {overlay}
         </div>
       );
     }
