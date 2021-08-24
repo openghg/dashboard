@@ -10,22 +10,36 @@
     "footer";
   color: white;
   height: 90vh;
+  width: 100%;
 }
 
 .header {
   grid-area: header;
   padding-left: 2vh;
   padding-top: 2vh;
-  font-size: 3vh;
+  font-size: 1.6em;
 }
 
 .headerText {
   font-weight: 700;
-  font-size: calc(20px + 0.5vw);
+  font-size: 1.2em;
 }
 
 .headerTag {
-  font-size: calc(12px + 0.5vw);
+  font-size: 0.8em;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0px;
+  right: 5%;
+}
+
+/* Non-mobile styles, 750px breakpoint */
+@media only screen and (min-width: 60em) {
+  .closeButton {
+    visibility: hidden;
+  }
 }
 
 .content {
@@ -34,13 +48,6 @@
   display: flex;
   flex-direction: column;
   gap: 2vh;
-}
-
-.plotSelector {
-  display: flex;
-  flex-direction: column;
-  gap: 2vh;
-  justify-content: center;
 }
 
 .mainHeader {
@@ -54,22 +61,5 @@
 }
 
 .footer img {
-  width: 1.5vw;
-}
-
-.linkButton {
-  font-size: 2vh;
-  font-family: inherit;
-  font-weight: inherit;
-  text-align: left;
-  color: white;
-  background: none;
-  margin: 0;
-  padding: 0;
-  border: none;
-  cursor: pointer;
-}
-
-.linkButton:hover {
-  color: rgb(211, 211, 211);
+  width: 15%;
 }

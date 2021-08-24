@@ -21,8 +21,7 @@ import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
 import mapUpdate from "./images/modelVideos/map_update_optim.gif";
 import inventoryComparison from "./images/Inventory_InverseModelling_comparison.jpg";
 import colourData from "./data/colours.json";
-
-// import infographic from "./images/infographic_mock.png";
+import TextButton from "./components/TextButton/TextButton";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -58,7 +57,7 @@ class Dashboard extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      sidePanel: false,
+      showSidebar: false,
       selectedDate: 0,
       availableDates: dates,
       processedData: {},
@@ -112,6 +111,7 @@ class Dashboard extends React.Component {
     this.speciesSelector = this.speciesSelector.bind(this);
     this.clearSites = this.clearSites.bind(this);
     this.setMode = this.setMode.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
   }
 
   siteSelector(site) {
@@ -159,6 +159,10 @@ class Dashboard extends React.Component {
 
   setOverlay(overlay) {
     this.setState({ overlayOpen: true, overlay: overlay });
+  }
+
+  toggleSidebar() {
+    this.setState({ showSidebar: !this.state.showSidebar });
   }
 
   processData(rawData) {
@@ -323,11 +327,14 @@ class Dashboard extends React.Component {
       overlay = <OverlayContainer toggleOverlay={this.toggleOverlay}>{this.state.overlay}</OverlayContainer>;
     }
 
+    let extraSidebarStyle = {};
+    if (this.state.showSidebar) {
+      extraSidebarStyle = { transform: "translateX(0px)" };
+    }
+
     let pageContent = (
       <div className={styles.content}>
-      <div className={styles.intro}>
-          {this.createIntro()}
-      </div>
+        <div className={styles.intro}>{this.createIntro()}</div>
         <div className={styles.timeseries} id="graphContent">
           {this.createObsBox()}
         </div>
@@ -375,15 +382,22 @@ class Dashboard extends React.Component {
     } else {
       return (
         <div className={styles.gridContainer}>
-          <div className={styles.header}>OpenGHG Dashboard</div>
-          <div className={styles.sidebar}>
+          <div className={styles.header}>
+            <div class={styles.menuIcon}>
+              <TextButton styling="light" extraStyling={{fontSize: "1.6em"}} onClick={this.toggleSidebar}>
+                &#9776;
+              </TextButton>
+            </div>
+          </div>
+          <aside className={styles.sidebar} style={extraSidebarStyle}>
             <ControlPanel
               dashboardMode={this.state.dashboardMode}
               setMode={this.setMode}
               setOverlay={this.setOverlay}
               toggleOverlay={this.toggleOverlay}
+              closePanel={this.toggleSidebar}
             />
-          </div>
+          </aside>
           <div>{pageContent}</div>
           {overlay}
         </div>

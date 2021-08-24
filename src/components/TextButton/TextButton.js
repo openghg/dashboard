@@ -42,7 +42,8 @@ TextButton.propTypes = {
   extraStyling: PropTypes.object,
   onClick: PropTypes.func.isRequired,
   onClickParam: PropTypes.string,
-  styling: PropTypes.string,
+  selected: PropTypes.bool,
+  styling: PropTypes.string
 };
 
 export default TextButton;
