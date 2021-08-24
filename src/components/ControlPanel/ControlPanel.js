@@ -5,7 +5,7 @@ import styles from "./ControlPanel.module.css";
 import textData from "../../data/overlayText.json";
 
 import GitHubLogo from "../../images/github.svg";
-import TextOverlay from "../TextOverlay/TextOverlay";
+import Overlay from "../Overlay/Overlay";
 import TextButton from "../TextButton/TextButton";
 
 class ControlPanel extends React.Component {
@@ -25,7 +25,7 @@ class ControlPanel extends React.Component {
 
     const text = textData[area];
     this.props.toggleOverlay();
-    this.props.setOverlay(<TextOverlay text={text} toggleOverlay={this.props.toggleOverlay} />);
+    this.props.setOverlay(<Overlay text={text} toggleOverlay={this.props.toggleOverlay} />);
   }
 
   render() {

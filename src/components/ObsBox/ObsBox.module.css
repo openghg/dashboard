@@ -4,6 +4,7 @@
   grid-template-columns: 10% 90%;
   grid-template-rows: 40vh;
   gap: 0px 0px;
+  width: 100%;
   grid-template-areas:
     "select plot";
 }

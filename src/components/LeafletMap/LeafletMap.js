@@ -1,7 +1,7 @@
-import PropTypes, { object } from "prop-types";
+import PropTypes from "prop-types";
 import React from "react";
-import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
-
+import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import TextButton from "../TextButton/TextButton";
 // import "./LeafletMapResponsive.css";
 
 import styles from "./LeafletMap.module.css";
@@ -48,18 +48,25 @@ class LeafletMap extends React.Component {
           fillOpacity={1.0}
           radius={10}
         >
-          <Tooltip>
+          <Popup>
             <div className={styles.marker}>
               <div className={styles.markerHeader}>{String(key).toUpperCase()}</div>
               <div className={styles.markerBody}>
-                {value["long_name"]}
+                <TextButton
+                  styling="dark"
+                  onClickParam={key}
+                  extraStyling={{ fontSize: "1.2em" }}
+                  onClick={this.props.siteInfoOverlay}
+                >
+                  {value["long_name"]}
+                </TextButton>
                 <br />
                 <br />
                 Height: {value["height"]}
               </div>
               <div className={styles.markerLocation}>Location: {locationStr}</div>
             </div>
-          </Tooltip>
+          </Popup>
         </CircleMarker>
       );
 
@@ -90,10 +97,10 @@ class LeafletMap extends React.Component {
     const markers = this.processSites();
     const zoom = this.props.zoom ? this.props.zoom : 5;
 
-    const style = { width: "90%"};
+    const style = { width: "90%" };
 
     return (
-      <div className={styles.container} >
+      <div className={styles.container}>
         <MapContainer center={this.props.centre} zoom={zoom} scrollWheelZoom={true} style={style}>
           <TileLayer attribution={attribution} url={url} />
           <LayerGroup>{markers}</LayerGroup>
@@ -106,13 +113,16 @@ class LeafletMap extends React.Component {
 
 LeafletMap.propTypes = {
   centre: PropTypes.arrayOf(PropTypes.number).isRequired,
+  colours: PropTypes.object.isRequired,
   height: PropTypes.string,
+  mapstyle: PropTypes.string,
   overlayBounds: PropTypes.arrayOf(PropTypes.array),
   overlayImg: PropTypes.string,
-  sites: PropTypes.objectOf(object),
+  setOverlay: PropTypes.func,
+  siteSelector: PropTypes.func,
+  sites: PropTypes.objectOf(),
   width: PropTypes.string.isRequired,
   zoom: PropTypes.number.isRequired,
-  siteSelector: PropTypes.func,
 };
 
 export default LeafletMap;

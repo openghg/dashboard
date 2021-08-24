@@ -5,10 +5,10 @@ import ObsBox from "./components/ObsBox/ObsBox";
 import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
 import londonGHGSites from "./data/siteMetadata.json";
-import SelectorMap from "./components/SelectorMap/SelectorMap";
 import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
+import LeafletMap from "./components/LeafletMap/LeafletMap";
 
-import { importMockEmissions } from "./util/helpers";
+import { importMockEmissions, importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
 
 import { cloneDeep } from "lodash";
@@ -16,12 +16,16 @@ import { cloneDeep } from "lodash";
 import co2Data from "./data/co2_oct19.json";
 import ch4Data from "./data/ch4_oct19.json";
 
+// Site description information
+import siteInfoJSON from "./data/siteInfo.json";
+
 // Model improvement videos
 import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
 import mapUpdate from "./images/modelVideos/map_update_optim.gif";
 import inventoryComparison from "./images/Inventory_InverseModelling_comparison.jpg";
 import colourData from "./data/colours.json";
 import TextButton from "./components/TextButton/TextButton";
+import Overlay from "./components/Overlay/Overlay";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -101,6 +105,8 @@ class Dashboard extends React.Component {
     this.state.mockEmissionsPNGs = importMockEmissions();
     // Process data we have from JSON
     this.processData(completeData);
+    // Build the site info for the overlays
+    this.buildSiteInfo();
 
     // Select the data
     this.dataSelector = this.dataSelector.bind(this);
@@ -112,6 +118,27 @@ class Dashboard extends React.Component {
     this.clearSites = this.clearSites.bind(this);
     this.setMode = this.setMode.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.setSiteOverlay = this.setSiteOverlay.bind(this);
+  }
+
+  buildSiteInfo() {
+    const siteImages = importSiteImages();
+
+    let siteData = {};
+    for (const site of Object.keys(siteInfoJSON)) {
+      try {
+        siteData[site] = {};
+        siteData[site]["image"] = siteImages[site];
+        siteData[site]["description"] = siteInfoJSON[site]["description"];
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    // Disabled the no direct mutation rule here as this only gets called from the constructor
+    /* eslint-disable react/no-direct-mutation-state */
+    this.state.siteInfo = siteData;
+    /* eslint-enable react/no-direct-mutation-state */
   }
 
   siteSelector(site) {
@@ -249,6 +276,22 @@ class Dashboard extends React.Component {
     return false;
   }
 
+  setSiteOverlay(e) {
+    const siteCode = String(e.target.dataset.onclickparam).toUpperCase();
+    const siteInfo = this.state.siteInfo[siteCode];
+
+    const siteText = siteInfo["description"];
+    const image = siteInfo["image"];
+    const alt = `Image of ${siteCode}`;
+
+    const overlay = <Overlay header={siteCode} text={siteText} alt={alt} image={image} toggleOverlay={this.toggleOverlay} />;
+
+    this.toggleOverlay();
+    this.setOverlay(overlay);
+  }
+
+  // Component creation functions
+
   createEmissionsBox() {
     const emissionsHeader = "Emissions";
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
@@ -341,11 +384,14 @@ class Dashboard extends React.Component {
         <div className={styles.contentCards}>
           <div className={styles.card}>{this.createMapExplainer()}</div>
           <div className={styles.card}>
-            <SelectorMap
-              width="40vw"
+            <LeafletMap
               siteSelector={this.siteSelector}
               sites={this.state.sites}
+              centre={[51.5, -0.0782]}
+              zoom={10}
               colours={this.state.colours}
+              siteData={this.state.siteData}
+              siteInfoOverlay={this.setSiteOverlay}
             />
           </div>
         </div>
@@ -384,7 +430,7 @@ class Dashboard extends React.Component {
         <div className={styles.gridContainer}>
           <div className={styles.header}>
             <div class={styles.menuIcon}>
-              <TextButton styling="light" extraStyling={{fontSize: "1.6em"}} onClick={this.toggleSidebar}>
+              <TextButton styling="light" extraStyling={{ fontSize: "1.6em" }} onClick={this.toggleSidebar}>
                 &#9776;
               </TextButton>
             </div>

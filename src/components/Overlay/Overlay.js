@@ -3,10 +3,15 @@ import React from "react";
 
 import TextButton from "../TextButton/TextButton";
 
-import styles from "./TextOverlay.module.css";
+import styles from "./Overlay.module.css";
 
-class TextOverlay extends React.Component {
+class Overlay extends React.Component {
   render() {
+    let image = null;
+    if (this.props.image) {
+      image = <img src={this.props.image} alt={this.props.alt} />;
+    }
+
     return (
       <div className={styles.container}>
         <div className={styles.closeButton}>
@@ -15,19 +20,20 @@ class TextOverlay extends React.Component {
           </TextButton>
         </div>
         <div className={styles.textContainer}>
-          <div className={styles.header}>{this.props.text["header"]}</div>
-          <div className={styles.intro}>{this.props.text["intro"]}</div>
-          <div className={styles.body}>
-            {this.props.text["body"]}
-          </div>
+          <div className={styles.header}>{this.props.header}</div>
+          <div className={styles.body}>{this.props.text}</div>
         </div>
+        <div className={styles.image}>{image}</div>
       </div>
     );
   }
 }
 
-TextOverlay.propTypes = {
+Overlay.propTypes = {
+  alt: PropTypes.string,
+  image: PropTypes.object,
+  text: PropTypes.string,
   toggleOverlay: PropTypes.func.isRequired,
 };
 
-export default TextOverlay;
+export default Overlay;
