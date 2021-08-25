@@ -4,7 +4,7 @@
 
 A simple React and Plotly.js based visualisation dashboard for the [OpenGHG project](https://openghg.org/).
 
-![Screenshot of app](./img/screenshot.jpg?raw=true)
+![Screenshot of app](./img/dashboard_20210825.jpg?raw=true)
 
 ## Run locally
 
@@ -42,5 +42,6 @@ Code quality is checked using ESLint, this can be run using
 ```bash
 npm run lint
 ```
+
 
 
