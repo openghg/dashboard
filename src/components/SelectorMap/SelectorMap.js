@@ -1,4 +1,5 @@
 // import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import React from "react";
 import LeafletMap from "../LeafletMap/LeafletMap";
 
@@ -16,10 +17,18 @@ class SelectorMap extends React.Component {
           centre={[51.5, -0.0782]}
           zoom={10}
           width={width}
+          colours={this.props.colours}
         />
       </div>
     );
   }
 }
+
+SelectorMap.propTypes = {
+  colours: PropTypes.object.isRequired,
+  siteSelector: PropTypes.func.isRequired,
+  sites: PropTypes.object.isRequired,
+  width: PropTypes.string,
+};
 
 export default SelectorMap;

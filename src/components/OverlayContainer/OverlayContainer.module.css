@@ -2,8 +2,8 @@
   position: fixed;
   background: rgba(34, 34, 34, 0.7);
   z-index: 5000;
-  width: 99%;
-  height: 99%;
+  width: 99vw;
+  height: 99vh;
   left: 0.5%;
   top: 0.5%;
 }

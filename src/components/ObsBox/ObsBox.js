@@ -1,14 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import Dropdown from "../Dropdown/Dropdown";
 import GraphContainer from "../GraphContainer/GraphContainer";
 import MultiSiteLineChart from "../MultiSiteLineChart/MultiSiteLineChart";
 
 import { isEmpty, getVisID } from "../../util/helpers";
 
 import styles from "./ObsBox.module.css";
-import BetterButton from "../BetterButton/BetterButton";
+import RadioButtons from "../RadioButtons/RadioButtons";
 
 class ObsBox extends React.Component {
   createEmissionsGraphs() {
@@ -72,6 +71,7 @@ class ObsBox extends React.Component {
               xLabel="Date"
               yLabel={yLabel}
               key={key}
+              colours={this.props.colours}
               //   selectedDate={this.props.selectedDate}
             />
           </GraphContainer>
@@ -86,20 +86,14 @@ class ObsBox extends React.Component {
   }
 
   render() {
-    let clearButton = null;
-    if (this.props.selectedSites.size > 0) {
-      clearButton = <BetterButton onClick={this.props.clearSelectedSites}>Clear</BetterButton>;
-    }
-
     return (
       <div className={styles.container}>
         <div className={styles.select}>
-          <Dropdown
-            defaultValue={this.props.defaultSpecies}
+          <RadioButtons
             onChange={this.props.speciesSelector}
-            selectedKeys={this.props.selectedKeys}
+            options={this.props.selectedKeys}
+            selected={this.props.selectedSpecies}
           />
-          {clearButton}
         </div>
         <div className={styles.plot}>{this.createEmissionsGraphs()}</div>
       </div>
@@ -118,6 +112,7 @@ ObsBox.propTypes = {
   selectedSpecies: PropTypes.string,
   speciesSelector: PropTypes.func,
   clearSelectedSites: PropTypes.func,
+  colours: PropTypes.object.isRequired,
 };
 
 export default ObsBox;

@@ -81,7 +81,7 @@ class EmissionsBox extends React.Component {
     const selectedImages = this.state.images[selectedSpecies];
 
     let sectorButtons = [];
-    const extraStyling = { fontSize: "2.3vh" };
+    const extraStyling = { fontSize: "1.5em" };
 
     for (const key of Object.keys(selectedImages)) {
       if (key === "colorbars") continue;
@@ -129,21 +129,13 @@ class EmissionsBox extends React.Component {
       [52.0193672, 0.56799811],
     ];
 
-    const emissionsHeader = "Emissions";
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
 
     return (
       <div className={styles.container}>
-        <div className={styles.header}>{emissionsHeader}</div>
         <div className={styles.body}>{emissionsText}</div>
         <div className={styles.plot}>
-          <LeafletMap
-            centre={[51.5, -0.0782]}
-            zoom={10}
-            width={"40vw"}
-            overlayBounds={overlayBounds}
-            overlayImg={emissionsImage}
-          />
+          <LeafletMap centre={[51.5, -0.0782]} zoom={10} overlayBounds={overlayBounds} overlayImg={emissionsImage} />
         </div>
         <div className={styles.buttons}>
           <div className={styles.speciesButtons}>{speciesButtons}</div>

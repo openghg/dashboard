@@ -1,6 +1,9 @@
-import PropTypes, { object } from "prop-types";
+import PropTypes from "prop-types";
 import React from "react";
-import { LayerGroup, MapContainer, ImageOverlay, TileLayer, Marker, Popup } from "react-leaflet";
+import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import TextButton from "../TextButton/TextButton";
+// import "./LeafletMapResponsive.css";
+
 import styles from "./LeafletMap.module.css";
 
 class LeafletMap extends React.Component {
@@ -29,14 +32,21 @@ class LeafletMap extends React.Component {
       const locationStr = `${latitude}, ${longitude}`;
       const location = [latitude, longitude];
 
+      const colourHex = this.props.colours[key];
+
       const marker = (
-        <Marker
+        <CircleMarker
           key={locationStr}
-          position={location}
+          center={location}
           data={key}
           eventHandlers={{
             click: this.handleClick,
           }}
+          fillColor={colourHex}
+          color={colourHex}
+          fill={true}
+          fillOpacity={1.0}
+          radius={10}
         >
           <Popup>
             <div className={styles.marker}>
@@ -44,13 +54,22 @@ class LeafletMap extends React.Component {
               <div className={styles.markerBody}>
                 {value["long_name"]}
                 <br />
-                <br />
                 Height: {value["height"]}
+                <br />
+                <br />
+                <TextButton
+                  styling="dark"
+                  onClickParam={key}
+                  extraStyling={{ fontSize: "1.0em" }}
+                  onClick={this.props.siteInfoOverlay}
+                >
+                  Read site information
+                </TextButton>
               </div>
               <div className={styles.markerLocation}>Location: {locationStr}</div>
             </div>
           </Popup>
-        </Marker>
+        </CircleMarker>
       );
 
       markers.push(marker);
@@ -60,14 +79,6 @@ class LeafletMap extends React.Component {
   }
 
   render() {
-    const markers = this.processSites();
-
-    const zoom = this.props.zoom ? this.props.zoom : 5;
-    const width = this.props.width ? this.props.width : "60vw";
-    const height = this.props.height ? this.props.height : "40vh";
-
-    const style = { width: width, height: height };
-
     let imgOverlay = null;
     if (this.props.overlayImg && this.props.overlayBounds) {
       const imgPath = this.props.overlayImg;
@@ -85,6 +96,11 @@ class LeafletMap extends React.Component {
       attribution = extraAttr + attrTiles;
     }
 
+    const markers = this.processSites();
+    const zoom = this.props.zoom ? this.props.zoom : 5;
+
+    const style = { width: "90%" };
+
     return (
       <div className={styles.container}>
         <MapContainer center={this.props.centre} zoom={zoom} scrollWheelZoom={true} style={style}>
@@ -99,13 +115,16 @@ class LeafletMap extends React.Component {
 
 LeafletMap.propTypes = {
   centre: PropTypes.arrayOf(PropTypes.number).isRequired,
+  colours: PropTypes.object.isRequired,
   height: PropTypes.string,
+  mapstyle: PropTypes.string,
   overlayBounds: PropTypes.arrayOf(PropTypes.array),
   overlayImg: PropTypes.string,
-  sites: PropTypes.objectOf(object),
+  setOverlay: PropTypes.func,
+  siteSelector: PropTypes.func,
+  sites: PropTypes.objectOf(),
   width: PropTypes.string.isRequired,
   zoom: PropTypes.number.isRequired,
-  siteSelector: PropTypes.func,
 };
 
 export default LeafletMap;

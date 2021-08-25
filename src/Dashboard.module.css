@@ -1,3 +1,5 @@
+/* This CSS is based on code available at https://codepen.io/trooperandz/pen/YRpKjo */
+
 body {
   margin: 0;
   padding: 0;
@@ -8,13 +10,26 @@ body {
   background-color: #fff;
 }
 
+/* Start with mobile friendly first */
 .gridContainer {
   display: grid;
-  grid-template-columns: minmax(180px, 15vw) 85vw;
+  height: 100vh;
+  grid-template-columns: 1fr;
   grid-template-rows: minmax(28px, 4vh) auto;
   grid-template-areas:
-    "header  header"
-    "sidebar content";
+    "header"
+    "content";
+}
+
+.menuIcon {
+  position: fixed; /* Needs to stay visible for all mobile scrolling */
+  display: flex;
+  left: 10px;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  cursor: pointer;
+  padding: 12px;
 }
 
 .header {
@@ -28,41 +43,165 @@ body {
   color: white;
 }
 
+/* Make room for the menu icon on mobile */
+.header__search {
+  margin-left: 42px;
+}
+
 .sidebar {
   grid-area: sidebar;
-  /* position: relative; */
-  background: #2d5d7b;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  width: 240px;
+  position: fixed;
+  overflow-y: auto;
+  transform: translateX(-245px);
+  transition: all 0.6s ease-in-out;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  z-index: 1001; /* Needs to sit above the hamburger menu icon */
+  background: #2d5d7b;
 }
 
-.dashboardMode {
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.intro {
+  width: 80%;
+  padding-bottom: 3vh;
+}
+
+.timeseries {
+  grid-area: timeseries;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.mapExplainer {
+  grid-area: mapExplainer;
+}
+
+.siteMap {
+  grid-area: siteMap;
+  padding-bottom: 2vh;
+}
+
+/* Holds the content for the single column / explainer content */
+.contentCards {
+  column-count: 1;
+  column-gap: 20px;
+  margin: 20px;
+}
+
+/* Cards hold single column content */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  -webkit-column-break-inside: avoid;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.card img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.content {
   grid-area: content;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto auto;
-  gap: 4vh 2vw;
+  height: 100%;
+  row-gap: 1vh;
+  grid-auto-rows: auto;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "intro"
+    "timeseries"
+    "mapExplainer"
+    "siteMap";
+}
+
+.explainerContent {
+  grid-area: content;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto;
+  gap: 4vh;
   padding-top: 1vh;
   padding-bottom: 3vh;
   grid-template-areas:
-    "intro intro"
-    "observations observations"
-    "mapExplainer sitemap";
+    "emissionsMap"
+    "emissionsExplainer"
+    "comparisonExplainer"
+    "comparisonExplainer"
+    "modelImprovement"
+    "modelImage"
+    "estimatesExplainer"
+    "estimatesImage";
 }
 
-.explainerMode {
-  grid-area: content;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto;
-  gap: 4vh 2vw;
-  padding-top: 1vh;
-  padding-bottom: 3vh;
-  grid-template-areas:
-    "emissionsMap emissionsExplainer"
-    "comparisonExplainer comparisonExplainer"
-    "modelImprovement modelImage"
-    "estimatesExplainer estimatesImage";
+/* Non-mobile styles, 750px breakpoint */
+@media only screen and (min-width: 60em) {
+  /* Show the sidebar */
+  .gridContainer {
+    grid-template-columns: 240px 1fr;
+    grid-template-areas:
+      "header header"
+      "sidebar content";
+  }
+
+  .header__search {
+    margin-left: 0;
+  }
+
+  .sidebar {
+    position: relative;
+    transform: translateX(0);
+  }
+
+  .menuIcon {
+    visibility: hidden;
+  }
+}
+
+/* Medium screens breakpoint (1050px) */
+@media only screen and (min-width: 65.625em) {
+  .explainerContent {
+    grid-area: content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: 4vh 2vw;
+    padding-top: 1vh;
+    padding-bottom: 3vh;
+    grid-template-areas:
+      "emissionsMap emissionsExplainer"
+      "comparisonExplainer comparisonExplainer"
+      "modelImprovement modelImage"
+      "estimatesExplainer estimatesImage";
+  }
+
+  .sidebarCloseIcon {
+    display: none;
+  }
+
+  .contentCards {
+    column-count: 2;
+  }
+
+  .content {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "intro intro"
+      "timeseries timeseries"
+      "mapExplainer siteMap";
+  }
 }
 
 .intro {
@@ -72,12 +211,7 @@ body {
 .observations {
   grid-area: observations;
 }
-.mapExplainer {
-  grid-area: mapExplainer;
-}
-.sitemap {
-  grid-area: sitemap;
-}
+
 .emissionsMap {
   grid-area: emissionsMap;
 }
@@ -101,6 +235,15 @@ body {
 
 .estimatesImage {
   grid-area: estimatesImage;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.estimatesImage img {
+  width: 75%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .modelImprovement {
@@ -108,7 +251,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1vh;
+}
+
+.modelImprovement img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .modelImage {
@@ -118,76 +267,7 @@ body {
   align-items: center;
 }
 
-.processExplainer {
-  grid-area: processExplainer;
-}
-
-.processInfographic {
-  grid-area: processInfographic;
-  display: flex;
-  justify-content: center;
-}
-
-.improveExplainer {
-  grid-area: improveExplainer;
-}
-
-.improveMap {
-  grid-area: improveMap;
-}
-
-.detailedObs {
-  grid-area: detailedObs;
-}
-
-.detailedObsExplainer {
-  grid-area: detailedObsExplainer;
-  padding-bottom: 5vh;
-}
-
-.plotAdvice {
-  color: #222222;
-  font-size: 2vh;
-  font-weight: 300;
-  display: flex;
-  justify-content: center;
-}
-
-.main-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-  padding: 20px;
-  height: 30vh;
-  background-color: #f4f3ee;
-  color: slategray;
-}
-
-.nav-icon {
-  margin: 1em;
-  width: 40px;
-}
-
-.nav-icon:after,
-.nav-icon:before,
-.nav-icon div {
-  background-color: #fff;
-  border-radius: 3px;
-  content: "";
-  display: block;
-  height: 5px;
-  margin: 7px 0;
-  transition: all 0.2s ease-in-out;
-}
-
-.nav-icon:hover:before {
-  background-color: #222;
-}
-
-.nav-icon:hover:after {
-  background-color: #222;
-}
-
-.nav-icon:hover div {
-  background-color: #222;
+.modelImage img {
+  max-width: 100%;
+  max-height: 100%;
 }

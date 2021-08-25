@@ -5,7 +5,7 @@ import styles from "./ControlPanel.module.css";
 import textData from "../../data/overlayText.json";
 
 import GitHubLogo from "../../images/github.svg";
-import TextOverlay from "../TextOverlay/TextOverlay";
+import Overlay from "../Overlay/Overlay";
 import TextButton from "../TextButton/TextButton";
 
 class ControlPanel extends React.Component {
@@ -25,35 +25,28 @@ class ControlPanel extends React.Component {
 
     const text = textData[area];
     this.props.toggleOverlay();
-    this.props.setOverlay(<TextOverlay text={text} toggleOverlay={this.props.toggleOverlay} />);
+    this.props.setOverlay(<Overlay text={text} toggleOverlay={this.props.toggleOverlay} />);
   }
 
   render() {
-    const modeButtonText = this.props.dashboardMode ? "Explainer" : "Dashboard";
-
     return (
       <div className={styles.container}>
+        <div className={styles.closeButton}>
+          <TextButton styling="light" extraStyling={{ fontSize: "2em" }} onClick={this.props.closePanel}>
+            x
+          </TextButton>
+        </div>
         <div className={styles.header}>
           <div className={styles.headerText}>OpenGHG</div>
-          <div className={styles.headerTag}>A COP26 dashboard</div>
+          <div className={styles.headerTag}>Data dashboard</div>
         </div>
         <div className={styles.content}>
-        <div>
-            Select mode:
-        </div>
-          <TextButton onClick={this.props.toggleMode}>{modeButtonText}</TextButton>
-          {/* <TextButton onClick={this.createOverlay} onClickParam="emissions">
-            Overlay
-          </TextButton> */}
-          {/* <TextButton onClick={this.createOverlay} onClickParam="model">
-            Model
+          <TextButton onClickParam={true} onClick={this.props.setMode} selected={this.props.dashboardMode}>
+            Live Data
           </TextButton>
-          <TextButton onClick={this.createOverlay} onClickParam="observations">
-            Observations
+          <TextButton onClickParam={false} onClick={this.props.setMode} selected={!this.props.dashboardMode}>
+            Explainer
           </TextButton>
-          <TextButton onClick={this.createOverlay} onClickParam="about">
-            About OpenGHG
-          </TextButton> */}
         </div>
         <div className={styles.footer}>
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
@@ -66,10 +59,11 @@ class ControlPanel extends React.Component {
 }
 
 ControlPanel.propTypes = {
+  closePanel: PropTypes.func.isRequired,
   dashboardMode: PropTypes.bool.isRequired,
+  setMode: PropTypes.func.isRequired,
   setOverlay: PropTypes.func.isRequired,
-  toggleMode: PropTypes.func.isRequired,
-  toggleOverlay: PropTypes.func.isRequired
+  toggleOverlay: PropTypes.func.isRequired,
 };
 
 export default ControlPanel;
