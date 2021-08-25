@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/dashboard/static/css/main.c72222d8.chunk.css",
-    "main.js": "/dashboard/static/js/main.6f76395e.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.6f76395e.chunk.js.map",
-    "runtime-main.js": "/dashboard/static/js/runtime-main.08f935c8.js",
-    "runtime-main.js.map": "/dashboard/static/js/runtime-main.08f935c8.js.map",
-    "static/js/2.3e6f4ae4.chunk.js": "/dashboard/static/js/2.3e6f4ae4.chunk.js",
-    "static/js/2.3e6f4ae4.chunk.js.map": "/dashboard/static/js/2.3e6f4ae4.chunk.js.map",
-    "static/js/3.a39eaa96.chunk.js": "/dashboard/static/js/3.a39eaa96.chunk.js",
-    "static/js/3.a39eaa96.chunk.js.map": "/dashboard/static/js/3.a39eaa96.chunk.js.map",
+    "main.css": "/dashboard/static/css/main.52d9b897.chunk.css",
+    "main.js": "/dashboard/static/js/main.243be4ce.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.243be4ce.chunk.js.map",
+    "runtime-main.js": "/dashboard/static/js/runtime-main.69bd923e.js",
+    "runtime-main.js.map": "/dashboard/static/js/runtime-main.69bd923e.js.map",
+    "static/js/2.849be6db.chunk.js": "/dashboard/static/js/2.849be6db.chunk.js",
+    "static/js/2.849be6db.chunk.js.map": "/dashboard/static/js/2.849be6db.chunk.js.map",
+    "static/js/3.5ca8c216.chunk.js": "/dashboard/static/js/3.5ca8c216.chunk.js",
+    "static/js/3.5ca8c216.chunk.js.map": "/dashboard/static/js/3.5ca8c216.chunk.js.map",
     "index.html": "/dashboard/index.html",
-    "static/css/main.c72222d8.chunk.css.map": "/dashboard/static/css/main.c72222d8.chunk.css.map",
-    "static/js/2.3e6f4ae4.chunk.js.LICENSE.txt": "/dashboard/static/js/2.3e6f4ae4.chunk.js.LICENSE.txt",
+    "static/css/main.52d9b897.chunk.css.map": "/dashboard/static/css/main.52d9b897.chunk.css.map",
+    "static/js/2.849be6db.chunk.js.LICENSE.txt": "/dashboard/static/js/2.849be6db.chunk.js.LICENSE.txt",
     "static/media/1547458200000.png": "/dashboard/static/media/1547458200000.71befc1b.png",
     "static/media/1548091800000.png": "/dashboard/static/media/1548091800000.c249e3c9.png",
     "static/media/1549357200000.png": "/dashboard/static/media/1549357200000.1446f456.png",
@@ -44,7 +44,10 @@
     "static/media/1569850200000.png": "/dashboard/static/media/1569850200000.cb311e97.png",
     "static/media/1570480200000.png": "/dashboard/static/media/1570480200000.cbd09ba4.png",
     "static/media/1571124600000.png": "/dashboard/static/media/1571124600000.91c093e0.png",
+    "static/media/BTT.jpg": "/dashboard/static/media/BTT.611f21ae.jpg",
     "static/media/Inventory_InverseModelling_comparison.e1c14320.jpg": "/dashboard/static/media/Inventory_InverseModelling_comparison.e1c14320.jpg",
+    "static/media/NPL.jpg": "/dashboard/static/media/NPL.611f21ae.jpg",
+    "static/media/TMB.jpg": "/dashboard/static/media/TMB.611f21ae.jpg",
     "static/media/ch4_ukghg_map_agriculture-and-natural_20190101T00.1ab62a81.svg": "/dashboard/static/media/ch4_ukghg_map_agriculture-and-natural_20190101T00.1ab62a81.svg",
     "static/media/ch4_ukghg_map_combustion-and-production_20190101T00.f72b76f2.svg": "/dashboard/static/media/ch4_ukghg_map_combustion-and-production_20190101T00.f72b76f2.svg",
     "static/media/ch4_ukghg_map_sectors_stacked.a37c7d78.svg": "/dashboard/static/media/ch4_ukghg_map_sectors_stacked.a37c7d78.svg",
@@ -244,9 +247,9 @@
     "static/media/meas_comparison_optim.b32b4c38.gif": "/dashboard/static/media/meas_comparison_optim.b32b4c38.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.08f935c8.js",
-    "static/js/2.3e6f4ae4.chunk.js",
-    "static/css/main.c72222d8.chunk.css",
-    "static/js/main.6f76395e.chunk.js"
+    "static/js/runtime-main.69bd923e.js",
+    "static/js/2.849be6db.chunk.js",
+    "static/css/main.52d9b897.chunk.css",
+    "static/js/main.243be4ce.chunk.js"
   ]
 }
