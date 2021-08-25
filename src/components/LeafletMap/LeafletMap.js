@@ -52,17 +52,19 @@ class LeafletMap extends React.Component {
             <div className={styles.marker}>
               <div className={styles.markerHeader}>{String(key).toUpperCase()}</div>
               <div className={styles.markerBody}>
+                {value["long_name"]}
+                <br />
+                Height: {value["height"]}
+                <br />
+                <br />
                 <TextButton
                   styling="dark"
                   onClickParam={key}
-                  extraStyling={{ fontSize: "1.2em" }}
+                  extraStyling={{ fontSize: "1.0em" }}
                   onClick={this.props.siteInfoOverlay}
                 >
-                  {value["long_name"]}
+                  Read site information
                 </TextButton>
-                <br />
-                <br />
-                Height: {value["height"]}
               </div>
               <div className={styles.markerLocation}>Location: {locationStr}</div>
             </div>

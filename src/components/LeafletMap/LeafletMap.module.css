@@ -10,18 +10,23 @@
 
 .marker {
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
 }
 
 .markerHeader {
   font-size: 2vh;
   font-weight: 500;
   padding-bottom: 1vh;
+  align-content: space-between;
 }
 
 .markerBody {
   font-size: 1.5vh;
   font-weight: 300;
   padding-bottom: 1vh;
+  gap: 1vh;
 }
 
 .markerLocation {

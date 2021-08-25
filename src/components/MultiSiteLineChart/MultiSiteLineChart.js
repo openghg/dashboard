@@ -43,6 +43,8 @@ class MultiSiteLineChart extends React.Component {
             color: colour,
           },
           name: name,
+          hovertemplate: '<b>Date</b>: %{x}' +
+                        '<br><b>Concentration: </b>: %{y:.2f}<br>'
         };
 
         plotData.push(trace);

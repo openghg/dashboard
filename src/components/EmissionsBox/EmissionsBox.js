@@ -129,7 +129,6 @@ class EmissionsBox extends React.Component {
       [52.0193672, 0.56799811],
     ];
 
-    const emissionsHeader = "Emissions";
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
 
     return (

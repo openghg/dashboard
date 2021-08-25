@@ -13,8 +13,8 @@ import styles from "./Dashboard.module.css";
 
 import { cloneDeep } from "lodash";
 
-import co2Data from "./data/co2_oct19.json";
-import ch4Data from "./data/ch4_oct19.json";
+import co2Data from "./data/co2_jun20.json";
+import ch4Data from "./data/ch4_jun20.json";
 
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
@@ -31,31 +31,6 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    // TOOD - update this
-    // This only works on the assumption that all data has the same dates
-    // which the current mocked data does.
-    const allDates = Object.keys(co2Data["TMB"]["CO2"]);
-    // We don't want to use every timestamp for the slider so just take every nth
-    let dates = [];
-    // Take every nth
-    const nSkip = 70;
-    for (let i = 0; i < allDates.length; i += nSkip) {
-      dates.push(allDates[i]);
-    }
-
-    // // Now add in the mocked up sectors for each site
-    // for (const key of Object.keys(co2Data)) {
-    //   if (co2Data.hasOwnProperty(key)) {
-    //     co2Data[key] = { ...co2Data[key], ...mockEmissionsDataCO2[key] };
-    //   }
-    // }
-
-    // for (const key of Object.keys(ch4Data)) {
-    //   if (ch4Data.hasOwnProperty(key)) {
-    //     ch4Data[key] = { ...ch4Data[key], ...mockEmissionsDataCH4[key] };
-    //   }
-    // }
-
     const completeData = { CO2: co2Data, CH4: ch4Data };
 
     this.state = {
@@ -63,7 +38,6 @@ class Dashboard extends React.Component {
       isLoaded: false,
       showSidebar: false,
       selectedDate: 0,
-      availableDates: dates,
       processedData: {},
       dataKeys: {},
       selectedKeys: {},
@@ -84,7 +58,6 @@ class Dashboard extends React.Component {
     // Just take these sites out for now
     const sites = {};
     sites["TMB"] = londonGHGSites["TMB"];
-    sites["BTT"] = londonGHGSites["BTT"];
     sites["NPL"] = londonGHGSites["NPL"];
 
     let index = 0;
@@ -99,8 +72,6 @@ class Dashboard extends React.Component {
     this.state.colours = siteColours;
     // The locations of the sites for the selection map
     this.state.sites = sites;
-    // Set the selected data to be the first date
-    this.state.selectedDate = parseInt(dates[0]);
     // Import the emissions PNG paths so we can select the image we want using the slider
     this.state.mockEmissionsPNGs = importMockEmissions();
     // Process data we have from JSON
@@ -284,7 +255,9 @@ class Dashboard extends React.Component {
     const image = siteInfo["image"];
     const alt = `Image of ${siteCode}`;
 
-    const overlay = <Overlay header={siteCode} text={siteText} alt={alt} image={image} toggleOverlay={this.toggleOverlay} />;
+    const overlay = (
+      <Overlay header={siteCode} text={siteText} alt={alt} image={image} toggleOverlay={this.toggleOverlay} />
+    );
 
     this.toggleOverlay();
     this.setOverlay(overlay);
@@ -301,7 +274,6 @@ class Dashboard extends React.Component {
         altText={"Example emissions"}
         headerText={emissionsHeader}
         bodyText={emissionsText}
-        selectedDate={this.state.selectedDate}
       />
     );
   }
@@ -312,7 +284,6 @@ class Dashboard extends React.Component {
         selectedKeys={this.state.selectedKeys}
         processedData={this.state.processedData}
         dataSelector={this.dataSelector}
-        selectedDate={this.state.selectedDate}
         selectedSites={this.state.selectedSites}
         selectedSpecies={this.state.selectedSpecies}
         clearSelectedSites={this.clearSites}
@@ -381,19 +352,17 @@ class Dashboard extends React.Component {
         <div className={styles.timeseries} id="graphContent">
           {this.createObsBox()}
         </div>
-        <div className={styles.contentCards}>
-          <div className={styles.card}>{this.createMapExplainer()}</div>
-          <div className={styles.card}>
-            <LeafletMap
-              siteSelector={this.siteSelector}
-              sites={this.state.sites}
-              centre={[51.5, -0.0782]}
-              zoom={10}
-              colours={this.state.colours}
-              siteData={this.state.siteData}
-              siteInfoOverlay={this.setSiteOverlay}
-            />
-          </div>
+        <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
+        <div className={styles.siteMap}>
+          <LeafletMap
+            siteSelector={this.siteSelector}
+            sites={this.state.sites}
+            centre={[51.5, -0.0782]}
+            zoom={10}
+            colours={this.state.colours}
+            siteData={this.state.siteData}
+            siteInfoOverlay={this.setSiteOverlay}
+          />
         </div>
       </div>
     );
