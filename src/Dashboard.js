@@ -296,39 +296,52 @@ class Dashboard extends React.Component {
 
   createMapExplainer() {
     const header = "Observations";
-    const body = `Greenhouse gases are monitored by a network of sites across the city which provide us with near real-time data.
-    This includes both carbon dioxide and methane, the most influential greenhouse gases.`;
-    const explanation = `Start exploring the sites and the data by selecting a measurement site from the map`;
+    const body = `Greenhouse gas concentrations are monitored from a network of sites across the city.
+    Measurements are made of carbon dioxide and methane, the most important greenhouse gases.
+    Scientists are using these observations to learn more about the UK's methane emissions.`;
+    const explanation = `Start exploring the measurements by selecting a site from the map`;
     return <ExplanationBox header={header} intro={body} explain={explanation} />;
   }
 
   createEmissionsExplainer() {
     const header = "Emissions";
-    const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure at each location, but what we really want to know is where these greenhouse gases came from.`;
-    const body = `This is one way we can make sure we’re hitting planned targets.
-    We can build a map of expected emissions (an inventory) by adding together different sources.`;
+    const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure in the atmosphere.
+                  We make these measurements in order to infer emissions.`;
+    const body = `There are two primary methods for estimating greenhouse gas emissions:
+        a) Inventory methods, in which emissions are estimated using socioeconomic data (e.g., the amount of fuel sold and used in the UK).
+        A map showing the location of the UK's carbon dioxide and methane emissions, according to the inventory, is shown here.
+        b) Atmospheric data-based methods, in which concentration data and atmospheric models are compared to determine whether the inventory may need to be adjusted.`;
     return <ExplanationBox header={header} intro={intro} explain={body} />;
   }
 
   createIntro() {
-    const explanation = `Welcome to the OpenGHG dashboard where you can view live observation data from 
-                        our network of gas sensors across London.`;
+    const explanation = `Welcome to the OpenGHG dashboard, where you can view greenhouse gas concentration data from 
+                        our network sensors across London.`;
     return <ExplanationBox nogap={true} explain={explanation} />;
+  }
+
+  createModelExplainer() {
+    const header = "Simulating greenhouse gas concentrations";
+    const body = `In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
+    Here, we show a simulation in which XXXXXX.`;
+    return <ExplanationBox header={header} intro={body} />;
   }
 
   createComparisonExplainer() {
     const header = "Comparing model with observations";
-    const body = `We can compare these emissions to the measurements we made to see how well they compare. 
+    const body = `We can compare the inventory emissions to the atmospheric measurements to see how well they compare. 
     From this initial “best guess”, we can run simulations where, by making small changes to the possible emissions, 
     we can continually improve to better match the measurements made at each site.`;
     return <ExplanationBox header={header} intro={body} />;
   }
 
   createEstimatesExplainer() {
-    const header = "Improve national estimates";
-    const body = `One way this has been used is to improve UK national methane estimates – by looking at what emissions would better 
-    match to the data, the inventory itself could be improved over time and sources of these greenhouse gases better understood. `;
-    const explain = `In this way we can use measurements to help learn where greenhouse gases came from and are coming from and to see where they can be reduced.`;
+    const header = "Case study: Improved national emission estimates";
+    const body = `One way this has been used is to improve UK national methane estimates – by adjusting emissions to better 
+    match to the atmospheric data from the UK DECC network[LINK], we can help to evaluate the inventory. `;
+    const explain = `This study suggested that methane emissions from the inventory were consistent with atmospheric data in recent years. 
+    However, in the 1990s and early 2000s, the two methods disagreed. This information is now allowing the inventory teams to examine assumptions in the earlier record, 
+    and, hopefully, improve our understand of the UK's methane emissions.`;
 
     return <ExplanationBox nogap={false} header={header} intro={body} explain={explain} />;
   }
