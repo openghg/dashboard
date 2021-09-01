@@ -103,7 +103,7 @@ class LeafletMap extends React.Component {
 
     return (
       <div className={styles.container}>
-        <MapContainer center={this.props.centre} zoom={zoom} scrollWheelZoom={true} style={style}>
+        <MapContainer center={this.props.centre} zoom={zoom} scrollWheelZoom={true} style={style} tap={false}>
           <TileLayer attribution={attribution} url={url} />
           <LayerGroup>{markers}</LayerGroup>
           <LayerGroup>{imgOverlay}</LayerGroup>
@@ -115,15 +115,15 @@ class LeafletMap extends React.Component {
 
 LeafletMap.propTypes = {
   centre: PropTypes.arrayOf(PropTypes.number).isRequired,
-  colours: PropTypes.object.isRequired,
+  colours: PropTypes.object,
   height: PropTypes.string,
   mapstyle: PropTypes.string,
   overlayBounds: PropTypes.arrayOf(PropTypes.array),
   overlayImg: PropTypes.string,
   setOverlay: PropTypes.func,
   siteSelector: PropTypes.func,
-  sites: PropTypes.objectOf(),
-  width: PropTypes.string.isRequired,
+  sites: PropTypes.object,
+  width: PropTypes.string,
   zoom: PropTypes.number.isRequired,
 };
 

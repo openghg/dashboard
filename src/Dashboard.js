@@ -26,6 +26,7 @@ import inventoryComparison from "./images/Inventory_InverseModelling_comparison.
 import colourData from "./data/colours.json";
 import TextButton from "./components/TextButton/TextButton";
 import Overlay from "./components/Overlay/Overlay";
+import FAQ from "./components/FAQ/FAQ";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -48,8 +49,9 @@ class Dashboard extends React.Component {
       plotType: "footprint",
       selectedSpecies: "CO2",
       defaultSpecies: "CO2",
-      dashboardMode: true,
+      layoutMode: "dashboard",
       colours: {},
+      validModes: ["dashboard", "explainer", "faq"],
     };
 
     const defaultSite = Object.keys(co2Data).sort()[0];
@@ -151,8 +153,14 @@ class Dashboard extends React.Component {
   }
 
   setMode(e) {
-    const dashboardMode = e.target.dataset.onclickparam === "true" ? true : false;
-    this.setState({ dashboardMode: dashboardMode });
+    const layoutMode = e.target.dataset.onclickparam;
+    const validModes = this.state.validModes;
+
+    if (validModes.includes(layoutMode)) {
+      this.setState({ layoutMode: layoutMode });
+    } else {
+      console.error(`Invalid mode ${layoutMode}, should be one of ${validModes}`);
+    }
   }
 
   setOverlay(overlay) {
@@ -359,28 +367,31 @@ class Dashboard extends React.Component {
       extraSidebarStyle = { transform: "translateX(0px)" };
     }
 
-    let pageContent = (
-      <div className={styles.content}>
-        <div className={styles.intro}>{this.createIntro()}</div>
-        <div className={styles.timeseries} id="graphContent">
-          {this.createObsBox()}
-        </div>
-        <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
-        <div className={styles.siteMap}>
-          <LeafletMap
-            siteSelector={this.siteSelector}
-            sites={this.state.sites}
-            centre={[51.5, -0.0782]}
-            zoom={10}
-            colours={this.state.colours}
-            siteData={this.state.siteData}
-            siteInfoOverlay={this.setSiteOverlay}
-          />
-        </div>
-      </div>
-    );
+    const layoutMode = this.state.layoutMode;
 
-    if (!this.state.dashboardMode) {
+    let pageContent = "Select mode";
+    if (layoutMode === "dashboard") {
+      pageContent = (
+        <div className={styles.content}>
+          <div className={styles.intro}>{this.createIntro()}</div>
+          <div className={styles.timeseries} id="graphContent">
+            {this.createObsBox()}
+          </div>
+          <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
+          <div className={styles.siteMap}>
+            <LeafletMap
+              siteSelector={this.siteSelector}
+              sites={this.state.sites}
+              centre={[51.5, -0.0782]}
+              zoom={10}
+              colours={this.state.colours}
+              siteData={this.state.siteData}
+              siteInfoOverlay={this.setSiteOverlay}
+            />
+          </div>
+        </div>
+      );
+    } else if (layoutMode === "explainer") {
       pageContent = (
         <div className={styles.explainerContent}>
           <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
@@ -401,6 +412,12 @@ class Dashboard extends React.Component {
           </div>
         </div>
       );
+    } else if (layoutMode === "faq") {
+      pageContent = (
+        <div className={styles.faqContent}>
+          <FAQ />
+        </div>
+      );
     }
 
     if (error) {
@@ -411,7 +428,7 @@ class Dashboard extends React.Component {
       return (
         <div className={styles.gridContainer}>
           <div className={styles.header}>
-            <div class={styles.menuIcon}>
+            <div className={styles.menuIcon}>
               <TextButton styling="light" extraStyling={{ fontSize: "1.6em" }} onClick={this.toggleSidebar}>
                 &#9776;
               </TextButton>
@@ -419,7 +436,7 @@ class Dashboard extends React.Component {
           </div>
           <aside className={styles.sidebar} style={extraSidebarStyle}>
             <ControlPanel
-              dashboardMode={this.state.dashboardMode}
+              layoutMode={this.state.layoutMode}
               setMode={this.setMode}
               setOverlay={this.setOverlay}
               toggleOverlay={this.toggleOverlay}
