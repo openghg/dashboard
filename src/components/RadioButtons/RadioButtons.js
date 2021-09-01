@@ -20,9 +20,26 @@ class RadioButtons extends React.Component {
     for (const option of Object.keys(options)) {
       const checked = option === this.props.selected;
 
+      let label = "NA";
+      if (option === "CO2") {
+        label = (
+          <b>
+            CO<sub>2</sub>
+          </b>
+        );
+      } else if (option === "CH4") {
+        label = (
+          <b>
+            CH<sub>4</sub>
+          </b>
+        );
+      } else {
+        console.error("Invalid species.");
+      }
+
       const button = (
         <label key={option}>
-          {option}
+          {label}
           <input type="radio" value={option} checked={checked} onChange={this.handleChange} />
         </label>
       );
