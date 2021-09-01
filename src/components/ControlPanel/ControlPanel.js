@@ -29,6 +29,8 @@ class ControlPanel extends React.Component {
   }
 
   render() {
+    const mode = this.props.layoutMode;
+
     return (
       <div className={styles.container}>
         <div className={styles.closeButton}>
@@ -41,11 +43,14 @@ class ControlPanel extends React.Component {
           <div className={styles.headerTag}>Data dashboard</div>
         </div>
         <div className={styles.content}>
-          <TextButton onClickParam={true} onClick={this.props.setMode} selected={this.props.dashboardMode}>
+          <TextButton onClickParam="dashboard" onClick={this.props.setMode} selected={mode === "dashboard"}>
             Live Data
           </TextButton>
-          <TextButton onClickParam={false} onClick={this.props.setMode} selected={!this.props.dashboardMode}>
+          <TextButton onClickParam="explainer" onClick={this.props.setMode} selected={mode === "explainer"}>
             Explainer
+          </TextButton>
+          <TextButton onClickParam="faq" onClick={this.props.setMode} selected={mode === "faq"}>
+            FAQ
           </TextButton>
         </div>
         <div className={styles.footer}>
@@ -60,7 +65,7 @@ class ControlPanel extends React.Component {
 
 ControlPanel.propTypes = {
   closePanel: PropTypes.func.isRequired,
-  dashboardMode: PropTypes.bool.isRequired,
+  layoutMode: PropTypes.string.isRequired,
   setMode: PropTypes.func.isRequired,
   setOverlay: PropTypes.func.isRequired,
   toggleOverlay: PropTypes.func.isRequired,
