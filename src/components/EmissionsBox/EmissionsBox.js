@@ -64,7 +64,8 @@ class EmissionsBox extends React.Component {
   }
 
   setSpecies(e) {
-    const species = e.target.dataset.onclickparam;
+    // TODO - check this, using innerText could be fragile.
+    const species = e.target.innerText; //.dataset.onclickparam;
     if (!this.state.images.hasOwnProperty(species)) {
       console.error(`$(name) not in images`);
       return;
@@ -83,7 +84,7 @@ class EmissionsBox extends React.Component {
     let sectorButtons = [];
     const extraStyling = { fontSize: "1.5em" };
 
-    for (const key of Object.keys(selectedImages)) {
+    for (const key of Object.keys(selectedImages).sort()) {
       if (key === "colorbars") continue;
 
       let styling = "dark";
@@ -106,6 +107,24 @@ class EmissionsBox extends React.Component {
       if (key === selectedSpecies) {
         styling = "speciesSelected";
       }
+
+      let label = "NA";
+      if (key === "CO2") {
+        label = (
+          <text onClickParam={key}>
+            CO<sub>2</sub>
+          </text>
+        );
+      } else if (key === "CH4") {
+        label = (
+          <text onClickParam={key}>
+            CH<sub>4</sub>
+          </text>
+        );
+      } else {
+        console.error("Invalid species.");
+      }
+
       const button = (
         <TextButton
           key={key}
@@ -114,7 +133,7 @@ class EmissionsBox extends React.Component {
           extraStyling={extraStyling}
           onClick={this.setSpecies}
         >
-          {key}
+          {label}
         </TextButton>
       );
 
