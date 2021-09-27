@@ -47,3 +47,25 @@
   padding-right: 1.5vw;
   font-size: 18px;
 }
+
+.containerNoGap a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
+.containerNoGap a:hover {
+  text-decoration: none;
+  color: #2d5d7b;
+}
+
+.container a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
+.container a:hover {
+  text-decoration: none;
+  color: #2d5d7b;
+}

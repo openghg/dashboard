@@ -9,7 +9,7 @@ class EstimatesExplainer extends React.Component {
 
     return (
       <div className={style}>
-        <div className={styles.header}>"Case study: Improved national emission estimates";</div>
+        <div className={styles.header}>Case study: Improved national emission estimates</div>
         <div className={styles.intro}>
           One way this has been used is to improve UK national methane estimates – by adjusting emissions to better
           match to the atmospheric data from the{" "}

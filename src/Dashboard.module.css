@@ -278,3 +278,15 @@ body {
   max-width: 100%;
   max-height: 100%;
 }
+
+.linkType,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
+.linkType a:hover {
+  text-decoration: none;
+  color: #2d5d7b
+}

@@ -26,7 +26,7 @@ import siteInfoJSON from "./data/siteInfo.json";
 // Model improvement videos
 import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
 import mapUpdate from "./images/modelVideos/map_update_optim.gif";
-import inventoryComparison from "./images/Inventory_InverseModelling_comparison.jpg";
+import inventoryComparison from "./images/methane_BEIS_2019.png";
 import colourData from "./data/colours.json";
 
 class Dashboard extends React.Component {
@@ -395,8 +395,16 @@ class Dashboard extends React.Component {
           </div>
           <div className={styles.estimatesImage}>
             <img src={inventoryComparison} alt="Inventory improvement" />
-            <div>
-              O'Doherty et al. 2018, "Annual report on long-term atmospheric measurement and interpretation", BEIS, 2018
+            <div className={styles.linkType}>
+              O'Doherty et al. 2019, &nbsp;
+              <a
+                href="https://www.gov.uk/government/publications/uk-greenhouse-gas-emissions-monitoring-and-verification"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Annual report on long-term atmospheric measurement and interpretation
+              </a>
+              , BEIS, 2019
             </div>
           </div>
         </div>
