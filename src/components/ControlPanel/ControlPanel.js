@@ -29,8 +29,6 @@ class ControlPanel extends React.Component {
   }
 
   render() {
-    const mode = this.props.layoutMode;
-
     return (
       <div className={styles.container}>
         <div className={styles.closeButton}>
@@ -42,20 +40,10 @@ class ControlPanel extends React.Component {
           <div className={styles.headerText}>Data Dashboard</div>
           <div className={styles.headerTag}>by OpenGHG</div>
         </div>
-        <div className={styles.content}>
-          <TextButton onClickParam="dashboard" onClick={this.props.setMode} selected={mode === "dashboard"}>
-            Live Data
-          </TextButton>
-          <TextButton onClickParam="explainer" onClick={this.props.setMode} selected={mode === "explainer"}>
-            Explainer
-          </TextButton>
-          <TextButton onClickParam="faq" onClick={this.props.setMode} selected={mode === "faq"}>
-            FAQ
-          </TextButton>
-        </div>
+        <div className={styles.content}>{this.props.children}</div>
         <div className={styles.footer}>
-        <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
-          <img src={OpenGHGLogo} alt="OpenGHG Logo" />
+          <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
+            <img src={OpenGHGLogo} alt="OpenGHG Logo" />
           </a>
         </div>
       </div>

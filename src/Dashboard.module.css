@@ -153,6 +153,19 @@ body {
   height: 100%;
 }
 
+.navLink {
+  font-size: 1.4em;
+  color: white;
+}
+
+/* .navLink a:hover {
+  color: #648ca6;
+}
+
+.navLink :hover {
+    color: #648ca6;
+  } */
+
 /* Non-mobile styles, 750px breakpoint */
 @media only screen and (min-width: 60em) {
   /* Show the sidebar */
@@ -288,5 +301,5 @@ a:active {
 
 .linkType a:hover {
   text-decoration: none;
-  color: #2d5d7b
+  color: #2d5d7b;
 }
