@@ -7,7 +7,17 @@ class QnA extends React.Component {
   render() {
     const questionNumber = this.props.number;
     const questionText = this.props.question;
-    const answerText = this.props.answer;
+
+    let answerText = this.props.answer;
+    const split = this.props.split;
+
+    if (answerText && split === true) {
+      const splitText = answerText.split("\n").map((i) => {
+        return <p>{i}</p>;
+      });
+
+      answerText = splitText;
+    }
 
     let question = (
       <div className={styles.itemContainer}>

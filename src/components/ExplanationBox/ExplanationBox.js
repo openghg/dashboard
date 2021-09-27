@@ -6,8 +6,9 @@ import styles from "./ExplanationBox.module.css";
 class ExplanationBox extends React.Component {
   render() {
     const style = this.props.nogap ? styles.containerNoGap : styles.container;
-    let explainerText = this.props.explain;
 
+    let explainerText = this.props.explain;
+    
     if (explainerText) {
       const splitText = explainerText.split("\n").map((i) => {
         return <p>{i}</p>;

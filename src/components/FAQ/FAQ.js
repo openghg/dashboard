@@ -13,14 +13,10 @@ class FAQ extends React.Component {
     each of these factors, and the wind direction, change continuously.`;
 
     const Q2 = "What causes the amount of mixing in the atmosphere to change?";
-    const A2 = `Mixing of greenhouse gases is driven by turbulence. You experience this turbulence 
-    every day as gusts of wind. Turbulence tends to be high when winds are strong or when the surface 
-    is warm compared to the air higher up in the atmosphere (e.g., on a sunny day, the sun warms the 
-    ground more than the air). Conversely, when the wind speed is low, or when the ground is cooler 
-    than the air (e.g., during a clear night), turbulence tends to be weaker. During periods of strong 
-    turbulence, gases are mixed away from the surface more rapidly than during times with low turbulence,
-    or vice versa. Therefore, when the turbulence is strong and gases are mixed more rapidly, 
-    concentrations tend to be lower.`;
+    const A2 = `Mixing of greenhouse gases is driven by turbulence. You experience this turbulence every day as gusts of wind.\n
+    - Turbulence tends to be high when winds are strong or when the surface is warm compared to the air higher up in the atmosphere (e.g., on a sunny day, the sun warms the ground more than the air).\n 
+    - Turbulence is weaker when the wind speed is low, or when the ground is cooler than the air (e.g., during a clear night).\n
+    During periods of strong turbulence, gases are mixed away from the surface more rapidly than during times with low turbulence, or vice versa. Therefore, when the turbulence is strong and gases are mixed more rapidly, concentrations tend to be lower.`;
 
     const Q3 = "Why do the concentrations increase at night-time?";
     const A3 = `It may seem counter-intitive that concentrations tend to be high during the night, when we 
@@ -62,19 +58,19 @@ class FAQ extends React.Component {
     from space. These measurements are complementary to the ground-based data, because satellites can 'see' larger areas than the 
     in situ networks. However, there are some limitations at present, because they cannot 
     measure during the night, during cloudy conditions, and the measurements tend to be lower precision. Furthermore, there are many
-    lower-abundance greenhouse gases that would be difficult to measure for the lower atmosphere from space (e.g., HFCs). 
+    lower-abundance greenhouse gases that would be difficult to measure for the lower atmosphere from space (e.g. HFCs). 
     In future, greenhouse gas observing systems will likely rely on both space-based and ground-based data.`;
 
     return (
       <div className={styles.content}>
-        <QnA number="Q1" question={Q1} answer={A1} />
-        <QnA number="Q2" question={Q2} answer={A2} />
-        <QnA number="Q3" question={Q3} answer={A3} />
-        <QnA number="Q4" question={Q4} answer={A4} />
-        <QnA number="Q5" question={Q5} answer={A5} />
-        <QnA number="Q6" question={Q6} answer={A6} />
-        <QnA number="Q7" question={Q7} answer={A7} />
-        <QnA number="Q8" question={Q8} answer={A8} />
+        <QnA number="Q1" split={false} question={Q1} answer={A1} />
+        <QnA number="Q2" split={true} question={Q2} answer={A2} />
+        <QnA number="Q3" split={false} question={Q3} answer={A3} />
+        <QnA number="Q4" split={false} question={Q4} answer={A4} />
+        <QnA number="Q5" split={false} question={Q5} answer={A5} />
+        <QnA number="Q6" split={false} question={Q6} answer={A6} />
+        <QnA number="Q7" split={false} question={Q7} answer={A7} />
+        <QnA number="Q8" split={false} question={Q8} answer={A8} />
       </div>
     );
   }
