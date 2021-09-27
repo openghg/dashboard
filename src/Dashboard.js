@@ -7,6 +7,10 @@ import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
 import londonGHGSites from "./data/siteMetadata.json";
 import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
 import LeafletMap from "./components/LeafletMap/LeafletMap";
+import TextButton from "./components/TextButton/TextButton";
+import Overlay from "./components/Overlay/Overlay";
+import FAQ from "./components/FAQ/FAQ";
+import EstimatesExplainer from "./components/EstimatesExplainer/EstimatesExplainer";
 
 import { importMockEmissions, importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
@@ -24,9 +28,6 @@ import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
 import mapUpdate from "./images/modelVideos/map_update_optim.gif";
 import inventoryComparison from "./images/Inventory_InverseModelling_comparison.jpg";
 import colourData from "./data/colours.json";
-import TextButton from "./components/TextButton/TextButton";
-import Overlay from "./components/Overlay/Overlay";
-import FAQ from "./components/FAQ/FAQ";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -313,18 +314,15 @@ class Dashboard extends React.Component {
 
   createEmissionsExplainer() {
     const header = "Emissions";
-    const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure in the atmosphere.
-                  We make these measurements in order to infer emissions.`;
+    const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure in the atmosphere. We make these measurements in order to infer emissions.`;
     const body = `There are two primary methods for estimating greenhouse gas emissions:
-        a) Inventory methods, in which emissions are estimated using socioeconomic data (e.g., the amount of fuel sold and used in the UK).
-        A map showing the location of the UK's carbon dioxide and methane emissions, according to the inventory, is shown here.
+        a) Inventory methods, in which emissions are estimated using socioeconomic data (e.g., the amount of fuel sold and used in the UK). A map showing the location of the UK's carbon dioxide and methane emissions, according to the inventory, is shown here.\n
         b) Atmospheric data-based methods, in which concentration data and atmospheric models are compared to determine whether the inventory may need to be adjusted.`;
-    return <ExplanationBox header={header} intro={intro} explain={body} />;
+    return <ExplanationBox nogap={true} header={header} intro={intro} explain={body} />;
   }
 
   createIntro() {
-    const explanation = `Welcome to the OpenGHG dashboard, where you can view greenhouse gas concentration data from 
-                        our network sensors across London.`;
+    const explanation = `Welcome to the OpenGHG dashboard, where you can view greenhouse gas concentration data from our network sensors across London.`;
     return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
@@ -341,17 +339,6 @@ class Dashboard extends React.Component {
     From this initial “best guess”, we can run simulations where, by making small changes to the possible emissions, 
     we can continually improve to better match the measurements made at each site.`;
     return <ExplanationBox header={header} intro={body} />;
-  }
-
-  createEstimatesExplainer() {
-    const header = "Case study: Improved national emission estimates";
-    const body = `One way this has been used is to improve UK national methane estimates – by adjusting emissions to better 
-    match to the atmospheric data from the UK DECC network[LINK], we can help to evaluate the inventory. `;
-    const explain = `This study suggested that methane emissions from the inventory were consistent with atmospheric data in recent years. 
-    However, in the 1990s and early 2000s, the two methods disagreed. This information is now allowing the inventory teams to examine assumptions in the earlier record, 
-    and, hopefully, improve our understand of the UK's methane emissions.`;
-
-    return <ExplanationBox nogap={false} header={header} intro={body} explain={explain} />;
   }
 
   render() {
@@ -403,7 +390,9 @@ class Dashboard extends React.Component {
           <div className={styles.modelImage}>
             <img src={mapUpdate} alt="Improvement of emissions map" />
           </div>
-          <div className={styles.estimatesExplainer}>{this.createEstimatesExplainer()}</div>
+          <div className={styles.estimatesExplainer}>
+            <EstimatesExplainer />
+          </div>
           <div className={styles.estimatesImage}>
             <img src={inventoryComparison} alt="Inventory improvement" />
             <div>
