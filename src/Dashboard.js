@@ -338,6 +338,7 @@ class Dashboard extends React.Component {
                       dataSelector={this.dataSelector}
                       clearSelectedSites={this.clearSites}
                       speciesSelector={this.speciesSelector}
+                      siteSelector={this.siteSelector}
                       selectedKeys={this.state.selectedKeys}
                       processedData={this.state.processedData}
                       selectedSites={this.state.selectedSites}
@@ -345,6 +346,7 @@ class Dashboard extends React.Component {
                       defaultSpecies={this.state.defaultSpecies}
                       colours={this.state.colours}
                       setSiteOverlay={this.state.setSiteOverlay}
+                      sites={this.state.sites}
                     />
                   </Route>
                 </Switch>
