@@ -9,11 +9,11 @@ import ObsBox from "../ObsBox/ObsBox";
 class LiveData extends React.Component {
   createMapExplainer() {
     const header = "Observations";
-    const body = `Greenhouse gas concentrations are monitored from a network of sites across the city.
-        Measurements are made of carbon dioxide and methane, the most important greenhouse gases.
-        Scientists are using these observations to learn more about the UK's methane emissions.`;
-    const explanation = `Start exploring the measurements by selecting a site from the map`;
-    return <ExplanationBox header={header} intro={body} explain={explanation} />;
+    const explainer = `• Greenhouse gas concentrations are monitored from a network of sites across the city.\n
+    • Measurements are made of carbon dioxide and methane, the most important greenhouse gases.\n
+    • Scientists are using these observations to learn more about the UK's methane emissions.\n
+    Start exploring the measurements by selecting a site from the map`;
+    return <ExplanationBox header={header} explain={explainer} split={true} />;
   }
 
   createIntro() {
