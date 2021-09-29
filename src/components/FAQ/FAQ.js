@@ -62,15 +62,17 @@ class FAQ extends React.Component {
     In future, greenhouse gas observing systems will likely rely on both space-based and ground-based data.`;
 
     return (
-      <div className={styles.content}>
-        <QnA number="Q1" split={false} question={Q1} answer={A1} />
-        <QnA number="Q2" split={true} question={Q2} answer={A2} />
-        <QnA number="Q3" split={false} question={Q3} answer={A3} />
-        <QnA number="Q4" split={false} question={Q4} answer={A4} />
-        <QnA number="Q5" split={false} question={Q5} answer={A5} />
-        <QnA number="Q6" split={false} question={Q6} answer={A6} />
-        <QnA number="Q7" split={false} question={Q7} answer={A7} />
-        <QnA number="Q8" split={false} question={Q8} answer={A8} />
+      <div className={styles.main}>
+        <div className={styles.content}>
+          <QnA number="Q1" split={false} question={Q1} answer={A1} />
+          <QnA number="Q2" split={true} question={Q2} answer={A2} />
+          <QnA number="Q3" split={false} question={Q3} answer={A3} />
+          <QnA number="Q4" split={false} question={Q4} answer={A4} />
+          <QnA number="Q5" split={false} question={Q5} answer={A5} />
+          <QnA number="Q6" split={false} question={Q6} answer={A6} />
+          <QnA number="Q7" split={false} question={Q7} answer={A7} />
+          <QnA number="Q8" split={false} question={Q8} answer={A8} />
+        </div>
       </div>
     );
   }
