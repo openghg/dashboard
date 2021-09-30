@@ -23,6 +23,9 @@ import ch4Data from "./data/ch4_jun20.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
 
+// Model demonstration image
+import gasDispersionImage from "./images/modelImage/emissions_measurements_image.png"
+
 // Model improvement videos
 import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
 import mapUpdate from "./images/modelVideos/map_update_optim.gif";
@@ -327,16 +330,23 @@ class Dashboard extends React.Component {
   }
 
   createModelExplainer() {
-    const header = "Simulating greenhouse gas concentrations";
-    const body = `In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
-    Here, we show a simulation in which XXXXXX.`;
+    const header = "Simulating travel of greenhouse gases";
+    const body = `When greenhouse gases are emitted, where they travel is dependant
+    on many different factors including wind direction, speed and turbulence. 
+    When we measure greenhouse gases in the atmosphere, if we want to start to understand
+    where they came from, first we need to use a model that can simulate this.
+    Once we have done this we can then compare inventories, as described above, to atmospheric
+    observations and see how well our predictions match reality.`;
+    // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
+    // Here, we show a simulation in which XXXXXX.`;
     return <ExplanationBox header={header} intro={body} />;
   }
 
   createComparisonExplainer() {
-    const header = "Comparing model with observations";
-    const body = `We can compare the inventory emissions to the atmospheric measurements to see how well they compare. 
-    From this initial “best guess”, we can run simulations where, by making small changes to the possible emissions, 
+    const header = "Improving emissions estimates";
+    const body = `When we compare inventory emissions to atmospheric measurements, 
+    we can see how well this initial “best guess” compares. From this starting point, 
+    we can run simulations where, by making small changes to the possible emissions, 
     we can continually improve to better match the measurements made at each site.`;
     return <ExplanationBox header={header} intro={body} />;
   }
@@ -383,6 +393,10 @@ class Dashboard extends React.Component {
         <div className={styles.explainerContent}>
           <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
           <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
+          <div className={styles.dispersionExplainer}>{this.createModelExplainer()}</div>
+          <div className={styles.dispersionImage}>
+            <img src={gasDispersionImage} alt="How source gases disperse in the atmopshere" />
+          </div>
           <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
           <div className={styles.modelImprovement}>
             <img src={measComparison} alt="Improvement of model estimates" />
