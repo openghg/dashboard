@@ -10,6 +10,9 @@ import measComparison from "../../images/modelVideos/meas_comparison_optim.gif";
 import mapUpdate from "../../images/modelVideos/map_update_optim.gif";
 import inventoryComparison from "../../images/methane_BEIS_2019.png";
 
+// Model demonstration image
+import gasDispersionImage from "../../images/modelImage/emissions_measurements_image.png";
+
 class Explainer extends React.Component {
   createEmissionsBox() {
     const emissionsHeader = "Emissions";
@@ -41,11 +44,28 @@ class Explainer extends React.Component {
     return <ExplanationBox header={header} intro={body} />;
   }
 
+  createModelExplainer() {
+    const header = "Simulating travel of greenhouse gases";
+    const body = `When greenhouse gases are emitted, where they travel is dependant
+    on many different factors including wind direction, speed and turbulence. 
+    When we measure greenhouse gases in the atmosphere, if we want to start to understand
+    where they came from, first we need to use a model that can simulate this.
+    Once we have done this we can then compare inventories, as described above, to atmospheric
+    observations and see how well our predictions match reality.`;
+    // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
+    // Here, we show a simulation in which XXXXXX.`;
+    return <ExplanationBox header={header} intro={body} />;
+  }
+
   render() {
     return (
       <div className={styles.explainerContent}>
         <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
         <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
+        <div className={styles.dispersionExplainer}>{this.createModelExplainer()}</div>
+        <div className={styles.dispersionImage}>
+          <img src={gasDispersionImage} alt="How source gases disperse in the atmopshere" />
+        </div>
         <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
         <div className={styles.modelImprovement}>
           <img src={measComparison} alt="Improvement of model estimates" />

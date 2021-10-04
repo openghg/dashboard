@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
 import londonGHGSites from "./data/siteMetadata.json";
-import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
 import TextButton from "./components/TextButton/TextButton";
 import Overlay from "./components/Overlay/Overlay";
 import FAQ from "./components/FAQ/FAQ";
@@ -19,6 +18,7 @@ import ch4Data from "./data/ch4_jun20.json";
 
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
+
 
 // Model improvement videos
 import colourData from "./data/colours.json";
@@ -270,12 +270,28 @@ class Dashboard extends React.Component {
 
   // Component creation functions
 
-  createModelExplainer() {
-    const header = "Simulating greenhouse gas concentrations";
-    const body = `In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
-    Here, we show a simulation in which XXXXXX.`;
-    return <ExplanationBox header={header} intro={body} />;
-  }
+//   createModelExplainer() {
+//     const header = "Simulating travel of greenhouse gases";
+//     const body = `When greenhouse gases are emitted, where they travel is dependant
+//     on many different factors including wind direction, speed and turbulence. 
+//     When we measure greenhouse gases in the atmosphere, if we want to start to understand
+//     where they came from, first we need to use a model that can simulate this.
+//     Once we have done this we can then compare inventories, as described above, to atmospheric
+//     observations and see how well our predictions match reality.`;
+//     // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
+//     // Here, we show a simulation in which XXXXXX.`;
+//     return <ExplanationBox header={header} intro={body} />;
+//   }
+
+// <<<<<<< HEAD
+//   createComparisonExplainer() {
+//     const header = "Improving emissions estimates";
+//     const body = `When we compare inventory emissions to atmospheric measurements, 
+//     we can see how well this initial “best guess” compares. From this starting point, 
+//     we can run simulations where, by making small changes to the possible emissions, 
+//     we can continually improve to better match the measurements made at each site.`;
+//     return <ExplanationBox header={header} intro={body} />;
+//   }
 
   render() {
     let { error, isLoaded } = this.state;
