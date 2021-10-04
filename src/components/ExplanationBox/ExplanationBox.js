@@ -8,8 +8,9 @@ class ExplanationBox extends React.Component {
     const style = this.props.nogap ? styles.containerNoGap : styles.container;
 
     let explainerText = this.props.explain;
-    
-    if (explainerText) {
+    const split = this.props.split;
+
+    if (explainerText && split === true) {
       const splitText = explainerText.split("\n").map((i) => {
         return <p>{i}</p>;
       });

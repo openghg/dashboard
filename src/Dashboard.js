@@ -1,16 +1,12 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import ControlPanel from "./components/ControlPanel/ControlPanel";
-import ObsBox from "./components/ObsBox/ObsBox";
-import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
 import londonGHGSites from "./data/siteMetadata.json";
-import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
-import LeafletMap from "./components/LeafletMap/LeafletMap";
 import TextButton from "./components/TextButton/TextButton";
 import Overlay from "./components/Overlay/Overlay";
 import FAQ from "./components/FAQ/FAQ";
-import EstimatesExplainer from "./components/EstimatesExplainer/EstimatesExplainer";
 
 import { importMockEmissions, importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
@@ -23,14 +19,11 @@ import ch4Data from "./data/ch4_jun20.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
 
-// Model demonstration image
-import gasDispersionImage from "./images/modelImage/emissions_measurements_image.png"
 
 // Model improvement videos
-import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
-import mapUpdate from "./images/modelVideos/map_update_optim.gif";
-import inventoryComparison from "./images/methane_BEIS_2019.png";
 import colourData from "./data/colours.json";
+import LiveData from "./components/LiveData/LiveData";
+import Explainer from "./components/Explainer/Explainer";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -277,79 +270,28 @@ class Dashboard extends React.Component {
 
   // Component creation functions
 
-  createEmissionsBox() {
-    const emissionsHeader = "Emissions";
-    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
-    return (
-      <EmissionsBox
-        speciesSelector={this.speciesSelector}
-        altText={"Example emissions"}
-        headerText={emissionsHeader}
-        bodyText={emissionsText}
-      />
-    );
-  }
+//   createModelExplainer() {
+//     const header = "Simulating travel of greenhouse gases";
+//     const body = `When greenhouse gases are emitted, where they travel is dependant
+//     on many different factors including wind direction, speed and turbulence. 
+//     When we measure greenhouse gases in the atmosphere, if we want to start to understand
+//     where they came from, first we need to use a model that can simulate this.
+//     Once we have done this we can then compare inventories, as described above, to atmospheric
+//     observations and see how well our predictions match reality.`;
+//     // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
+//     // Here, we show a simulation in which XXXXXX.`;
+//     return <ExplanationBox header={header} intro={body} />;
+//   }
 
-  createObsBox() {
-    return (
-      <ObsBox
-        selectedKeys={this.state.selectedKeys}
-        processedData={this.state.processedData}
-        dataSelector={this.dataSelector}
-        selectedSites={this.state.selectedSites}
-        selectedSpecies={this.state.selectedSpecies}
-        clearSelectedSites={this.clearSites}
-        speciesSelector={this.speciesSelector}
-        defaultSpecies={this.state.defaultSpecies}
-        colours={this.state.colours}
-      ></ObsBox>
-    );
-  }
-
-  createMapExplainer() {
-    const header = "Observations";
-    const body = `Greenhouse gas concentrations are monitored from a network of sites across the city.
-    Measurements are made of carbon dioxide and methane, the most important greenhouse gases.
-    Scientists are using these observations to learn more about the UK's methane emissions.`;
-    const explanation = `Start exploring the measurements by selecting a site from the map`;
-    return <ExplanationBox header={header} intro={body} explain={explanation} />;
-  }
-
-  createEmissionsExplainer() {
-    const header = "Emissions";
-    const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure in the atmosphere. We make these measurements in order to infer emissions.`;
-    const body = `There are two primary methods for estimating greenhouse gas emissions:
-        a) Inventory methods, in which emissions are estimated using socioeconomic data (e.g., the amount of fuel sold and used in the UK). A map showing the location of the UK's carbon dioxide and methane emissions, according to the inventory, is shown here.\n
-        b) Atmospheric data-based methods, in which concentration data and atmospheric models are compared to determine whether the inventory may need to be adjusted.`;
-    return <ExplanationBox nogap={true} header={header} intro={intro} explain={body} />;
-  }
-
-  createIntro() {
-    const explanation = `Welcome to the OpenGHG dashboard, where you can view greenhouse gas concentration data from our network sensors across London.`;
-    return <ExplanationBox nogap={true} explain={explanation} />;
-  }
-
-  createModelExplainer() {
-    const header = "Simulating travel of greenhouse gases";
-    const body = `When greenhouse gases are emitted, where they travel is dependant
-    on many different factors including wind direction, speed and turbulence. 
-    When we measure greenhouse gases in the atmosphere, if we want to start to understand
-    where they came from, first we need to use a model that can simulate this.
-    Once we have done this we can then compare inventories, as described above, to atmospheric
-    observations and see how well our predictions match reality.`;
-    // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
-    // Here, we show a simulation in which XXXXXX.`;
-    return <ExplanationBox header={header} intro={body} />;
-  }
-
-  createComparisonExplainer() {
-    const header = "Improving emissions estimates";
-    const body = `When we compare inventory emissions to atmospheric measurements, 
-    we can see how well this initial “best guess” compares. From this starting point, 
-    we can run simulations where, by making small changes to the possible emissions, 
-    we can continually improve to better match the measurements made at each site.`;
-    return <ExplanationBox header={header} intro={body} />;
-  }
+// <<<<<<< HEAD
+//   createComparisonExplainer() {
+//     const header = "Improving emissions estimates";
+//     const body = `When we compare inventory emissions to atmospheric measurements, 
+//     we can see how well this initial “best guess” compares. From this starting point, 
+//     we can run simulations where, by making small changes to the possible emissions, 
+//     we can continually improve to better match the measurements made at each site.`;
+//     return <ExplanationBox header={header} intro={body} />;
+//   }
 
   render() {
     let { error, isLoaded } = this.state;
@@ -364,99 +306,71 @@ class Dashboard extends React.Component {
       extraSidebarStyle = { transform: "translateX(0px)" };
     }
 
-    const layoutMode = this.state.layoutMode;
-
-    let pageContent = "Select mode";
-    if (layoutMode === "dashboard") {
-      pageContent = (
-        <div className={styles.content}>
-          <div className={styles.intro}>{this.createIntro()}</div>
-          <div className={styles.timeseries} id="graphContent">
-            {this.createObsBox()}
-          </div>
-          <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
-          <div className={styles.siteMap}>
-            <LeafletMap
-              siteSelector={this.siteSelector}
-              sites={this.state.sites}
-              centre={[51.5, -0.0782]}
-              zoom={10}
-              colours={this.state.colours}
-              siteData={this.state.siteData}
-              siteInfoOverlay={this.setSiteOverlay}
-            />
-          </div>
-        </div>
-      );
-    } else if (layoutMode === "explainer") {
-      pageContent = (
-        <div className={styles.explainerContent}>
-          <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
-          <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
-          <div className={styles.dispersionExplainer}>{this.createModelExplainer()}</div>
-          <div className={styles.dispersionImage}>
-            <img src={gasDispersionImage} alt="How source gases disperse in the atmopshere" />
-          </div>
-          <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
-          <div className={styles.modelImprovement}>
-            <img src={measComparison} alt="Improvement of model estimates" />
-          </div>
-          <div className={styles.modelImage}>
-            <img src={mapUpdate} alt="Improvement of emissions map" />
-          </div>
-          <div className={styles.estimatesExplainer}>
-            <EstimatesExplainer />
-          </div>
-          <div className={styles.estimatesImage}>
-            <img src={inventoryComparison} alt="Inventory improvement" />
-            <div className={styles.linkType}>
-              O'Doherty et al. 2019, &nbsp;
-              <a
-                href="https://www.gov.uk/government/publications/uk-greenhouse-gas-emissions-monitoring-and-verification"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Annual report on long-term atmospheric measurement and interpretation
-              </a>
-              , BEIS, 2019
-            </div>
-          </div>
-        </div>
-      );
-    } else if (layoutMode === "faq") {
-      pageContent = (
-        <div className={styles.faqContent}>
-          <FAQ />
-        </div>
-      );
-    }
-
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <div className={styles.gridContainer}>
-          <div className={styles.header}>
-            <div className={styles.menuIcon}>
-              <TextButton styling="light" extraStyling={{ fontSize: "1.6em" }} onClick={this.toggleSidebar}>
-                &#9776;
-              </TextButton>
+        <Router>
+          <div className={styles.gridContainer}>
+            <div className={styles.header}>
+              <div className={styles.menuIcon}>
+                <TextButton styling="light" extraStyling={{ fontSize: "1.6em" }} onClick={this.toggleSidebar}>
+                  &#9776;
+                </TextButton>
+              </div>
             </div>
+            <aside className={styles.sidebar} style={extraSidebarStyle}>
+              <ControlPanel
+                layoutMode={this.state.layoutMode}
+                setMode={this.setMode}
+                setOverlay={this.setOverlay}
+                toggleOverlay={this.toggleOverlay}
+                closePanel={this.toggleSidebar}
+              >
+                <Link to="/" className={styles.navLink}>
+                  Live Data
+                </Link>
+                <Link to="/explainer" className={styles.navLink}>
+                  Explainer
+                </Link>
+                <Link to="/FAQ" className={styles.navLink}>
+                  FAQ
+                </Link>
+              </ControlPanel>
+            </aside>
+            <div>
+              <div>
+                <Switch>
+                  <Route path="/explainer">
+                    <Explainer />
+                  </Route>
+                  <Route path="/FAQ">
+                    <FAQ />
+                  </Route>
+                  <Route path="/">
+                    <LiveData
+                      dataSelector={this.dataSelector}
+                      clearSelectedSites={this.clearSites}
+                      speciesSelector={this.speciesSelector}
+                      siteSelector={this.siteSelector}
+                      selectedKeys={this.state.selectedKeys}
+                      processedData={this.state.processedData}
+                      selectedSites={this.state.selectedSites}
+                      selectedSpecies={this.state.selectedSpecies}
+                      defaultSpecies={this.state.defaultSpecies}
+                      colours={this.state.colours}
+                      setSiteOverlay={this.state.setSiteOverlay}
+                      sites={this.state.sites}
+                    />
+                  </Route>
+                </Switch>
+              </div>
+            </div>
+            {overlay}
           </div>
-          <aside className={styles.sidebar} style={extraSidebarStyle}>
-            <ControlPanel
-              layoutMode={this.state.layoutMode}
-              setMode={this.setMode}
-              setOverlay={this.setOverlay}
-              toggleOverlay={this.toggleOverlay}
-              closePanel={this.toggleSidebar}
-            />
-          </aside>
-          <div>{pageContent}</div>
-          {overlay}
-        </div>
+        </Router>
       );
     }
   }
