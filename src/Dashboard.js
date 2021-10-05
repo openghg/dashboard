@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
-import londonGHGSites from "./data/siteMetadata.json";
+
 import TextButton from "./components/TextButton/TextButton";
 import Overlay from "./components/Overlay/Overlay";
 import FAQ from "./components/FAQ/FAQ";
@@ -13,12 +13,11 @@ import styles from "./Dashboard.module.css";
 
 import { cloneDeep } from "lodash";
 
-import co2Data from "./data/co2_jun20.json";
-import ch4Data from "./data/ch4_jun20.json";
+import glasgowSiteData from "./data/glasgow_nodes_parsed.json";
+import glasgowData from "./data/glasgow_data.json";
 
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
-
 
 // Model improvement videos
 import colourData from "./data/colours.json";
@@ -29,7 +28,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    const completeData = { CO2: co2Data, CH4: ch4Data };
+    const completeData = glasgowData;
 
     this.state = {
       error: null,
@@ -44,21 +43,20 @@ class Dashboard extends React.Component {
       overlayOpen: false,
       overlay: null,
       plotType: "footprint",
-      selectedSpecies: "CO2",
-      defaultSpecies: "CO2",
       layoutMode: "dashboard",
       colours: {},
-      validModes: ["dashboard", "explainer", "faq"],
     };
 
-    const defaultSite = Object.keys(co2Data).sort()[0];
+    const defaultSpecies = Object.keys(completeData).sort()[0];
+    const defaultSite = Object.keys(completeData[defaultSpecies]).sort()[0];
+
     this.state.selectedSites = new Set([defaultSite]);
+    this.state.defaultSpecies = defaultSpecies;
+    this.state.selectedSpecies = defaultSpecies;
+    this.state.defaultSite = defaultSite;
 
-    // Just take these sites out for now
-    const sites = {};
-    sites["TMB"] = londonGHGSites["TMB"];
-    sites["NPL"] = londonGHGSites["NPL"];
-
+    const sites = glasgowSiteData;
+    // Assign some colours for the sites
     let index = 0;
     let siteColours = {};
     const tab10 = colourData["tab10"];
@@ -86,7 +84,6 @@ class Dashboard extends React.Component {
     this.setOverlay = this.setOverlay.bind(this);
     this.speciesSelector = this.speciesSelector.bind(this);
     this.clearSites = this.clearSites.bind(this);
-    this.setMode = this.setMode.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.setSiteOverlay = this.setSiteOverlay.bind(this);
   }
@@ -112,6 +109,7 @@ class Dashboard extends React.Component {
   }
 
   siteSelector(site) {
+    console.log(site);
     // Here we change all the sites and select all species / sectors at that site
     let selectedSites = cloneDeep(this.state.selectedSites);
 
@@ -128,8 +126,8 @@ class Dashboard extends React.Component {
     for (const [species, siteData] of Object.entries(selectedKeys)) {
       for (const [site, sectorData] of Object.entries(siteData)) {
         const value = selectedSites.has(site);
-        for (const sector of Object.keys(sectorData)) {
-          selectedKeys[species][site][sector] = value;
+        for (const dataVar of Object.keys(sectorData)) {
+          selectedKeys[species][site][dataVar] = value;
         }
       }
     }
@@ -149,17 +147,6 @@ class Dashboard extends React.Component {
     this.setState({ overlayOpen: !this.state.overlayOpen });
   }
 
-  setMode(e) {
-    const layoutMode = e.target.dataset.onclickparam;
-    const validModes = this.state.validModes;
-
-    if (validModes.includes(layoutMode)) {
-      this.setState({ layoutMode: layoutMode });
-    } else {
-      console.error(`Invalid mode ${layoutMode}, should be one of ${validModes}`);
-    }
-  }
-
   setOverlay(overlay) {
     this.setState({ overlayOpen: true, overlay: overlay });
   }
@@ -173,6 +160,7 @@ class Dashboard extends React.Component {
     // expected by plotly
     let dataKeys = {};
     let processedData = {};
+    let metadata = {};
 
     let iter = this.state.selectedSites.values();
     const defaultSite = iter.next().value;
@@ -181,24 +169,36 @@ class Dashboard extends React.Component {
       for (const [species, siteData] of Object.entries(rawData)) {
         dataKeys[species] = {};
         processedData[species] = {};
+        metadata[species] = {};
 
         for (const [site, gasData] of Object.entries(siteData)) {
           const defaultValue = site === defaultSite;
           dataKeys[species][site] = {};
           processedData[species][site] = {};
+          metadata[species][site] = {};
 
-          for (const [sector, data] of Object.entries(gasData)) {
-            dataKeys[species][site][sector] = defaultValue;
-            const x_timestamps = Object.keys(data);
-            const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
-            // Extract the count values
-            const y_values = Object.values(data);
+          for (const [dataVar, data] of Object.entries(gasData)) {
+            // Save metadata separately
+            if (dataVar === "data") {
+              // TODO - this feels a bit complicated but means we can bring in
+              // error data at a later stage
+              const speciesUpper = species.toUpperCase();
+              dataKeys[species][site][speciesUpper] = defaultValue;
 
-            // Create a structure that plotly expects
-            processedData[species][site][sector] = {
-              x_values: x_values,
-              y_values: y_values,
-            };
+              const timeseriesData = data[speciesUpper];
+              const x_timestamps = Object.keys(timeseriesData);
+              const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+              // Extract the count values
+              const y_values = Object.values(timeseriesData);
+
+              // Create a structure that plotly expects
+              processedData[species][site][speciesUpper] = {
+                x_values: x_values,
+                y_values: y_values,
+              };
+            } else if (dataVar === "metadata") {
+              metadata[species][site] = data;
+            }
           }
         }
       }
@@ -212,6 +212,7 @@ class Dashboard extends React.Component {
     this.state.dataKeys = dataKeys;
     this.state.selectedKeys = dataKeys;
     this.state.isLoaded = true;
+    this.state.metadata = metadata;
     /* eslint-enable react/no-direct-mutation-state */
   }
 
@@ -270,28 +271,28 @@ class Dashboard extends React.Component {
 
   // Component creation functions
 
-//   createModelExplainer() {
-//     const header = "Simulating travel of greenhouse gases";
-//     const body = `When greenhouse gases are emitted, where they travel is dependant
-//     on many different factors including wind direction, speed and turbulence. 
-//     When we measure greenhouse gases in the atmosphere, if we want to start to understand
-//     where they came from, first we need to use a model that can simulate this.
-//     Once we have done this we can then compare inventories, as described above, to atmospheric
-//     observations and see how well our predictions match reality.`;
-//     // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
-//     // Here, we show a simulation in which XXXXXX.`;
-//     return <ExplanationBox header={header} intro={body} />;
-//   }
+  //   createModelExplainer() {
+  //     const header = "Simulating travel of greenhouse gases";
+  //     const body = `When greenhouse gases are emitted, where they travel is dependant
+  //     on many different factors including wind direction, speed and turbulence.
+  //     When we measure greenhouse gases in the atmosphere, if we want to start to understand
+  //     where they came from, first we need to use a model that can simulate this.
+  //     Once we have done this we can then compare inventories, as described above, to atmospheric
+  //     observations and see how well our predictions match reality.`;
+  //     // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
+  //     // Here, we show a simulation in which XXXXXX.`;
+  //     return <ExplanationBox header={header} intro={body} />;
+  //   }
 
-// <<<<<<< HEAD
-//   createComparisonExplainer() {
-//     const header = "Improving emissions estimates";
-//     const body = `When we compare inventory emissions to atmospheric measurements, 
-//     we can see how well this initial “best guess” compares. From this starting point, 
-//     we can run simulations where, by making small changes to the possible emissions, 
-//     we can continually improve to better match the measurements made at each site.`;
-//     return <ExplanationBox header={header} intro={body} />;
-//   }
+  // <<<<<<< HEAD
+  //   createComparisonExplainer() {
+  //     const header = "Improving emissions estimates";
+  //     const body = `When we compare inventory emissions to atmospheric measurements,
+  //     we can see how well this initial “best guess” compares. From this starting point,
+  //     we can run simulations where, by making small changes to the possible emissions,
+  //     we can continually improve to better match the measurements made at each site.`;
+  //     return <ExplanationBox header={header} intro={body} />;
+  //   }
 
   render() {
     let { error, isLoaded } = this.state;
@@ -324,7 +325,6 @@ class Dashboard extends React.Component {
             <aside className={styles.sidebar} style={extraSidebarStyle}>
               <ControlPanel
                 layoutMode={this.state.layoutMode}
-                setMode={this.setMode}
                 setOverlay={this.setOverlay}
                 toggleOverlay={this.toggleOverlay}
                 closePanel={this.toggleSidebar}
@@ -363,6 +363,7 @@ class Dashboard extends React.Component {
                       colours={this.state.colours}
                       setSiteOverlay={this.state.setSiteOverlay}
                       sites={this.state.sites}
+                      metadata={this.state.metadata}
                     />
                   </Route>
                 </Switch>

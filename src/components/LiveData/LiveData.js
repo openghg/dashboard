@@ -33,6 +33,7 @@ class LiveData extends React.Component {
         selectedSpecies={this.props.selectedSpecies}
         defaultSpecies={this.props.defaultSpecies}
         colours={this.props.colours}
+        metadata={this.props.metadata}
       />
     );
   }
