@@ -44,7 +44,6 @@ class ObsBox extends React.Component {
         const widthScale = 0.9;
         const heightScale = 0.9;
 
-
         // # TODO - tidy this section
         let iter = this.props.selectedSites.values();
         const siteName = iter.next().value;
@@ -53,17 +52,14 @@ class ObsBox extends React.Component {
         const species = this.props.selectedSpecies;
         const units = this.props.metadata[species][siteName]["units"];
 
+
+        // We only set the title of the graph if there's one site selected
         let title = null;
         if (this.props.selectedSites.size === 1) {
           let iter = this.props.selectedSites.values();
           const siteName = iter.next().value;
           title = this.props.metadata[species][siteName]["long_name"];
         }
-        // if (species === "CH4") {
-        //   units = " (ppb)";
-        // } else if (species === "CO2") {
-        //   units = " (ppm)";
-        // }
 
         const yLabel = `Concentraion  (${units})`;
 
@@ -77,7 +73,8 @@ class ObsBox extends React.Component {
               yLabel={yLabel}
               key={key}
               colours={this.props.colours}
-              //   metadata={this.props.metadata}
+              units={units}
+              metadata={this.props.sites}
               //   selectedDate={this.props.selectedDate}
             />
           </GraphContainer>

@@ -34,11 +34,16 @@ class LiveData extends React.Component {
         defaultSpecies={this.props.defaultSpecies}
         colours={this.props.colours}
         metadata={this.props.metadata}
+        sites={this.props.sites}
       />
     );
   }
 
   render() {
+
+    // Map centre lat/long
+    const mapCentre = [55.861, -4.248]
+
     return (
       <div className={styles.content}>
         <div className={styles.intro}>{this.createIntro()}</div>
@@ -50,7 +55,7 @@ class LiveData extends React.Component {
           <LeafletMap
             siteSelector={this.props.siteSelector}
             sites={this.props.sites}
-            centre={[51.5, -0.0782]}
+            centre={mapCentre}
             zoom={10}
             colours={this.props.colours}
             siteData={this.props.siteData}

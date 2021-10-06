@@ -10,11 +10,14 @@ class MultiSiteLineChart extends React.Component {
     let minY = Infinity;
 
     const data = this.props.data;
+    const metadata = this.props.metadata;
 
     for (const [site, siteData] of Object.entries(data)) {
       for (const [sector, sectorData] of Object.entries(siteData)) {
         const xValues = sectorData["x_values"];
         const yValues = sectorData["y_values"];
+        const siteMetadata = metadata[site.toUpperCase()];
+        // const metadata = this.props.metadata[sector.toLowerCase()][site];
 
         const max = Math.max(...yValues);
         const min = Math.min(...yValues);
@@ -27,24 +30,33 @@ class MultiSiteLineChart extends React.Component {
           minY = min;
         }
 
-        const name = site + " - " + String(sector).toUpperCase();
+        // Set the name for the legend
+        // const name = site + " - " + String(sector).toUpperCase();
+
+        let name = null;
+        try {
+          name = siteMetadata["long_name"] + " - " + String(sector).toUpperCase();
+        } catch (error) {
+          console.error(`Error reading name for legend - ${error}`);
+        }
 
         // const selectedColour = tab10[plotNumber];
         // const colour = selectedColour ? selectedColour : "black";
 
         const colour = this.props.colours[site];
+        const units = this.props.units;
 
         const trace = {
           x: xValues,
           y: yValues,
+          units: this.props.units,
           mode: "lines",
           line: {
             width: 1,
             color: colour,
           },
           name: name,
-          hovertemplate: '<b>Date</b>: %{x}' +
-                        '<br><b>Concentration: </b>: %{y:.2f}<br>'
+          hovertemplate: `<b>Date</b>: %{x} <br><b>Concentration: </b>: %{y:.2f} ${units}<br>`,
         };
 
         plotData.push(trace);

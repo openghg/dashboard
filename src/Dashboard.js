@@ -108,15 +108,16 @@ class Dashboard extends React.Component {
     /* eslint-enable react/no-direct-mutation-state */
   }
 
-  siteSelector(site) {
-    console.log(site);
+  siteSelector(selectedSite) {
+    const siteLower = String(selectedSite).toLowerCase();
+
     // Here we change all the sites and select all species / sectors at that site
     let selectedSites = cloneDeep(this.state.selectedSites);
 
-    if (selectedSites.has(site)) {
-      selectedSites.delete(site);
+    if (selectedSites.has(siteLower)) {
+      selectedSites.delete(siteLower);
     } else {
-      selectedSites.add(site);
+      selectedSites.add(siteLower);
     }
 
     // Now update the selectedKeys so each selected site has all its
