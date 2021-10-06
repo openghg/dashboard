@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/dashboard/static/css/main.8ab91d20.chunk.css",
-    "main.js": "/dashboard/static/js/main.3ed6c6c7.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.3ed6c6c7.chunk.js.map",
-    "runtime-main.js": "/dashboard/static/js/runtime-main.7290ae78.js",
-    "runtime-main.js.map": "/dashboard/static/js/runtime-main.7290ae78.js.map",
-    "static/js/2.906820f4.chunk.js": "/dashboard/static/js/2.906820f4.chunk.js",
-    "static/js/2.906820f4.chunk.js.map": "/dashboard/static/js/2.906820f4.chunk.js.map",
-    "static/js/3.509dc875.chunk.js": "/dashboard/static/js/3.509dc875.chunk.js",
-    "static/js/3.509dc875.chunk.js.map": "/dashboard/static/js/3.509dc875.chunk.js.map",
+    "main.css": "/dashboard/static/css/main.e1d47347.chunk.css",
+    "main.js": "/dashboard/static/js/main.51462377.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.51462377.chunk.js.map",
+    "runtime-main.js": "/dashboard/static/js/runtime-main.642529d9.js",
+    "runtime-main.js.map": "/dashboard/static/js/runtime-main.642529d9.js.map",
+    "static/js/2.af9d41e3.chunk.js": "/dashboard/static/js/2.af9d41e3.chunk.js",
+    "static/js/2.af9d41e3.chunk.js.map": "/dashboard/static/js/2.af9d41e3.chunk.js.map",
+    "static/js/3.5d00f524.chunk.js": "/dashboard/static/js/3.5d00f524.chunk.js",
+    "static/js/3.5d00f524.chunk.js.map": "/dashboard/static/js/3.5d00f524.chunk.js.map",
     "index.html": "/dashboard/index.html",
-    "static/css/main.8ab91d20.chunk.css.map": "/dashboard/static/css/main.8ab91d20.chunk.css.map",
-    "static/js/2.906820f4.chunk.js.LICENSE.txt": "/dashboard/static/js/2.906820f4.chunk.js.LICENSE.txt",
+    "static/css/main.e1d47347.chunk.css.map": "/dashboard/static/css/main.e1d47347.chunk.css.map",
+    "static/js/2.af9d41e3.chunk.js.LICENSE.txt": "/dashboard/static/js/2.af9d41e3.chunk.js.LICENSE.txt",
     "static/media/1547458200000.png": "/dashboard/static/media/1547458200000.71befc1b.png",
     "static/media/1548091800000.png": "/dashboard/static/media/1548091800000.c249e3c9.png",
     "static/media/1549357200000.png": "/dashboard/static/media/1549357200000.1446f456.png",
@@ -45,7 +45,6 @@
     "static/media/1570480200000.png": "/dashboard/static/media/1570480200000.cbd09ba4.png",
     "static/media/1571124600000.png": "/dashboard/static/media/1571124600000.91c093e0.png",
     "static/media/BTT.jpg": "/dashboard/static/media/BTT.611f21ae.jpg",
-    "static/media/Inventory_InverseModelling_comparison.e1c14320.jpg": "/dashboard/static/media/Inventory_InverseModelling_comparison.e1c14320.jpg",
     "static/media/NPL.jpg": "/dashboard/static/media/NPL.611f21ae.jpg",
     "static/media/OpenGHG_Logo_Portrait.c51170ed.svg": "/dashboard/static/media/OpenGHG_Logo_Portrait.c51170ed.svg",
     "static/media/TMB.jpg": "/dashboard/static/media/TMB.611f21ae.jpg",
@@ -57,6 +56,7 @@
     "static/media/co2_ukghg_map_combustion_20190101T00.4f02683e.svg": "/dashboard/static/media/co2_ukghg_map_combustion_20190101T00.4f02683e.svg",
     "static/media/co2_ukghg_map_production_20190101T00.f2672f2a.svg": "/dashboard/static/media/co2_ukghg_map_production_20190101T00.f2672f2a.svg",
     "static/media/co2_ukghg_map_sectors_stacked.762bf3cd.svg": "/dashboard/static/media/co2_ukghg_map_sectors_stacked.762bf3cd.svg",
+    "static/media/emissions_measurements_image.b8562de1.png": "/dashboard/static/media/emissions_measurements_image.b8562de1.png",
     "static/media/londonHighResFootprint_2020-08-01T00:00:00.svg": "/dashboard/static/media/londonHighResFootprint_2020-08-01T00:00:00.5f47371d.svg",
     "static/media/londonHighResFootprint_2020-08-01T04:00:00.svg": "/dashboard/static/media/londonHighResFootprint_2020-08-01T04:00:00.0d4d4427.svg",
     "static/media/londonHighResFootprint_2020-08-01T08:00:00.svg": "/dashboard/static/media/londonHighResFootprint_2020-08-01T08:00:00.97f87e93.svg",
@@ -244,12 +244,13 @@
     "static/media/londonHighResFootprint_2020-08-31T16:00:00.svg": "/dashboard/static/media/londonHighResFootprint_2020-08-31T16:00:00.3fd5704d.svg",
     "static/media/londonHighResFootprint_2020-08-31T20:00:00.svg": "/dashboard/static/media/londonHighResFootprint_2020-08-31T20:00:00.5e796e77.svg",
     "static/media/map_update_optim.478935af.gif": "/dashboard/static/media/map_update_optim.478935af.gif",
-    "static/media/meas_comparison_optim.b32b4c38.gif": "/dashboard/static/media/meas_comparison_optim.b32b4c38.gif"
+    "static/media/meas_comparison_optim.b32b4c38.gif": "/dashboard/static/media/meas_comparison_optim.b32b4c38.gif",
+    "static/media/methane_BEIS_2019.ad61d719.png": "/dashboard/static/media/methane_BEIS_2019.ad61d719.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.7290ae78.js",
-    "static/js/2.906820f4.chunk.js",
-    "static/css/main.8ab91d20.chunk.css",
-    "static/js/main.3ed6c6c7.chunk.js"
+    "static/js/runtime-main.642529d9.js",
+    "static/js/2.af9d41e3.chunk.js",
+    "static/css/main.e1d47347.chunk.css",
+    "static/js/main.51462377.chunk.js"
   ]
 }
