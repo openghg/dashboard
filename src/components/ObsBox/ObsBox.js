@@ -8,7 +8,6 @@ import { isEmpty, getVisID } from "../../util/helpers";
 
 import styles from "./ObsBox.module.css";
 import RadioButtons from "../RadioButtons/RadioButtons";
-import TextButton from "../TextButton/TextButton";
 import NiceButton from "../NiceButton/NiceButton";
 
 class ObsBox extends React.Component {

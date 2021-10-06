@@ -5,6 +5,7 @@ import LeafletMap from "../LeafletMap/LeafletMap";
 
 import styles from "../../Dashboard.module.css";
 import ObsBox from "../ObsBox/ObsBox";
+import ObsExplainer from "../ObsExplainer/ObsExplainer";
 
 class LiveData extends React.Component {
   createMapExplainer() {
@@ -49,7 +50,9 @@ class LiveData extends React.Component {
         <div className={styles.timeseries} id="graphContent">
           {this.createObsBox()}
         </div>
-        <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
+        <div className={styles.mapExplainer}>
+          <ObsExplainer />
+        </div>
         <div className={styles.siteMap}>
           <LeafletMap
             siteSelector={this.props.siteSelector}
