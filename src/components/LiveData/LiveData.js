@@ -17,7 +17,7 @@ class LiveData extends React.Component {
   }
 
   createIntro() {
-    const explanation = `Welcome to the OpenGHG dashboard, where you can view greenhouse gas concentration data from our network sensors across London.`;
+    const explanation = `Welcome to the COP 26 greenhouse gas data dashboard, where you can view atmospheric greenhouse gas measurements made in Glasgow before and during the COP 26 event.`;
     return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
@@ -40,9 +40,8 @@ class LiveData extends React.Component {
   }
 
   render() {
-
     // Map centre lat/long
-    const mapCentre = [55.861, -4.248]
+    const mapCentre = [55.861, -4.248];
 
     return (
       <div className={styles.content}>

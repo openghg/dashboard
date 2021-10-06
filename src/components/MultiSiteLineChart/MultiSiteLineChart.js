@@ -32,7 +32,7 @@ class MultiSiteLineChart extends React.Component {
         // Set the name for the legend
         let name = null;
         try {
-          name = siteMetadata["long_name"] + " - " + String(sector).toUpperCase();
+          name = siteMetadata["long_name"];
         } catch (error) {
           console.error(`Error reading name for legend - ${error}`);
         }

@@ -8,6 +8,8 @@ import { isEmpty, getVisID } from "../../util/helpers";
 
 import styles from "./ObsBox.module.css";
 import RadioButtons from "../RadioButtons/RadioButtons";
+import TextButton from "../TextButton/TextButton";
+import NiceButton from "../NiceButton/NiceButton";
 
 class ObsBox extends React.Component {
   createEmissionsGraphs() {
@@ -16,7 +18,9 @@ class ObsBox extends React.Component {
     const selectedSites = this.props.selectedSites;
     const selectedSpecies = this.props.selectedSpecies;
 
-    if (selectedSites.size === 0) {
+    const noSiteSelected = selectedSites.size === 0;
+
+    if (noSiteSelected) {
       return <div className={styles.emptyMessage}>Please select a site</div>;
     }
 
@@ -50,8 +54,13 @@ class ObsBox extends React.Component {
 
         // TODO - Could we move this into the data dictionary so it has a "units" key?
         const species = this.props.selectedSpecies;
-        const units = this.props.metadata[species][siteName]["units"];
 
+        let units = null;
+        try {
+          units = this.props.metadata[species][siteName]["units"];
+        } catch (error) {
+          console.log("Error reading units - ", error);
+        }
 
         // We only set the title of the graph if there's one site selected
         let title = null;
@@ -61,7 +70,7 @@ class ObsBox extends React.Component {
           title = this.props.metadata[species][siteName]["long_name"];
         }
 
-        const yLabel = `Concentraion  (${units})`;
+        const yLabel = `Concentration  (${units})`;
 
         const vis = (
           <GraphContainer heightScale={heightScale} widthScale={widthScale} key={key}>
@@ -89,6 +98,13 @@ class ObsBox extends React.Component {
   }
 
   render() {
+    const siteSelected = this.props.selectedSites.size > 0;
+
+    let clearButton = null;
+    if (siteSelected) {
+      clearButton = <NiceButton onClick={this.props.clearSelectedSites}>Clear</NiceButton>;
+    }
+
     return (
       <div className={styles.container}>
         <div className={styles.select}>
@@ -97,6 +113,7 @@ class ObsBox extends React.Component {
             options={this.props.selectedKeys}
             selected={this.props.selectedSpecies}
           />
+          <div className={styles.clearButton}>{clearButton}</div>
         </div>
         <div className={styles.plot}>{this.createEmissionsGraphs()}</div>
       </div>

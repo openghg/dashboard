@@ -137,6 +137,7 @@ class Dashboard extends React.Component {
   }
 
   clearSites() {
+      console.log("Clickedsdsf")
     this.setState({ selectedSites: new Set() });
   }
 
@@ -353,7 +354,7 @@ class Dashboard extends React.Component {
                   <Route path="/">
                     <LiveData
                       dataSelector={this.dataSelector}
-                      clearSelectedSites={this.clearSites}
+                      clearSites={this.clearSites}
                       speciesSelector={this.speciesSelector}
                       siteSelector={this.siteSelector}
                       selectedKeys={this.state.selectedKeys}
