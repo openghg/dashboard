@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Popup } from "react-leaflet";
-import TextButton from "../TextButton/TextButton";
+// import TextButton from "../TextButton/TextButton";
 // import "./LeafletMapResponsive.css";
 
 import styles from "./LeafletMap.module.css";
@@ -57,6 +57,10 @@ class LeafletMap extends React.Component {
                 Height: {value["magl"]}
                 <br />
                 <br />
+                For more information please visit the &nbsp;
+                <a href="http://beacon.berkeley.edu/" target="_blank" rel="noopener noreferrer">
+                BEACO2N website
+                </a>
                 {/* <TextButton
                   styling="dark"
                   onClickParam={key}
