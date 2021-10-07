@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
+import { cloneDeep, set } from "lodash";
 
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
@@ -7,33 +9,18 @@ import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
 import TextButton from "./components/TextButton/TextButton";
 import Overlay from "./components/Overlay/Overlay";
 import FAQ from "./components/FAQ/FAQ";
+import LiveData from "./components/LiveData/LiveData";
+import Explainer from "./components/Explainer/Explainer";
 
 import { importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
 
-import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
-
-import { cloneDeep } from "lodash";
-
 // The actual timeseries data
 import measurementData from "./data/measurement_data.json";
-
 // Metadata such as lat/long etc
-import siteData from "./data/site_metadata.json";
-
-// Information regarding the site for the site explainer layover
-// import longSiteData from "./data/site_metadata_longformat.json";
-
-// import glasgowSiteData from "./data/glasgow_nodes_parsed.json";
-// import glasgowData from "./data/glasgow_data.json";
-
+import siteMetadata from "./data/site_metadata.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
-
-// Model improvement videos
-// import colourData from "./data/colours.json";
-import LiveData from "./components/LiveData/LiveData";
-import Explainer from "./components/Explainer/Explainer";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -75,11 +62,10 @@ class Dashboard extends React.Component {
     let networkIndex = 0;
 
     let siteColours = {};
-
-    for (const [network, localSiteData] of Object.entries(siteData)) {
-      siteColours[network] = {};
+    for (const [network, localSiteData] of Object.entries(siteMetadata)) {
       for (const site of Object.keys(localSiteData)) {
-        siteColours[network][site] = colourMaps[networkIndex][siteIndex];
+        const colourCode = colourMaps[networkIndex][siteIndex];
+        set(siteColours, `${network}.${site}`, colourCode);
         siteIndex++;
       }
       networkIndex++;
@@ -88,7 +74,7 @@ class Dashboard extends React.Component {
     // Give each site a colour
     this.state.colours = siteColours;
     // The locations of the sites for the selection map
-    this.state.sites = siteData;
+    this.state.sites = siteMetadata;
     // Process the Python outputted measurement data we have from JSON
     this.processData(measurementData);
     // Build the site info for the overlays
@@ -142,12 +128,12 @@ class Dashboard extends React.Component {
     // keys set to true
     let selectedKeys = cloneDeep(this.state.selectedKeys);
 
-    for (const [network, networkData] of Object.entries(selectedKeys)) {
-      for (const [species, siteData] of Object.entries(networkData)) {
-        for (const [site, sectorData] of Object.entries(siteData)) {
+    for (const [species, speciesData] of Object.entries(selectedKeys)) {
+      for (const [network, networkData] of Object.entries(speciesData)) {
+        for (const [site, sectorData] of Object.entries(networkData)) {
           const value = selectedSites.has(site);
           for (const dataVar of Object.keys(sectorData)) {
-            selectedKeys[network][species][site][dataVar] = value;
+            selectedKeys[species][network][site][dataVar] = value;
           }
         }
       }
@@ -188,19 +174,10 @@ class Dashboard extends React.Component {
 
     try {
       for (const [network, networkData] of Object.entries(rawData)) {
-        dataKeys[network] = {};
-        processedData[network] = {};
-        metadata[network] = {};
-        for (const [species, siteData] of Object.entries(networkData)) {
-          dataKeys[network][species] = {};
-          processedData[network][species] = {};
-          metadata[network][species] = {};
-
-          for (const [site, gasData] of Object.entries(siteData)) {
+        for (const [species, speciesData] of Object.entries(networkData)) {
+          for (const [site, gasData] of Object.entries(speciesData)) {
+            // We want all values from this site to be true
             const defaultValue = site === defaultSite;
-            dataKeys[network][species][site] = {};
-            processedData[network][species][site] = {};
-            metadata[network][species][site] = {};
 
             for (const [dataVar, data] of Object.entries(gasData)) {
               // Save metadata separately
@@ -208,21 +185,31 @@ class Dashboard extends React.Component {
                 // TODO - this feels a bit complicated but means we can bring in
                 // error data at a later stage
                 const speciesUpper = species.toUpperCase();
-                dataKeys[network][species][site][speciesUpper] = defaultValue;
+                // dataKeys[network][species][site][speciesUpper] = defaultValue;
 
+                set(dataKeys, `${species}.${network}.${site}.${speciesUpper}`, defaultValue);
+
+                // We need to use speciesUpper here as we've exported the variables
+                // from a pandas Dataframe and may want errors etc in the future
                 const timeseriesData = data[speciesUpper];
                 const x_timestamps = Object.keys(timeseriesData);
                 const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
-                // Extract the count values
+                // Measurement values
                 const y_values = Object.values(timeseriesData);
 
-                // Create a structure that plotly expects
-                processedData[network][species][site][speciesUpper] = {
+                const graphData = {
                   x_values: x_values,
                   y_values: y_values,
                 };
+
+                // Here use lodash set to create the nested structure
+                set(processedData, `${species}.${network}.${site}.${speciesUpper}`, graphData);
+
+                // Create a structure that plotly expects
+                // processedData[network][species][site][speciesUpper]
               } else if (dataVar === "metadata") {
-                metadata[network][species][site] = data;
+                // metadata[network][species][site] = data;
+                set(metadata, `${species}.${network}.${site}`, data);
               }
             }
           }

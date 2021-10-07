@@ -25,58 +25,58 @@ class LeafletMap extends React.Component {
     }
 
     let markers = [];
-    for (const [key, value] of Object.entries(sites)) {
-      const latitude = value["latitude"];
-      const longitude = value["longitude"];
+    //
+    for (const [network, networkData] of Object.entries(sites)) {
+      for (const [key, value] of Object.entries(networkData)) {
+        const latitude = value["latitude"];
+        const longitude = value["longitude"];
 
-      const locationStr = `${latitude}, ${longitude}`;
-      const location = [latitude, longitude];
+        const locationStr = `${latitude}, ${longitude}`;
+        const location = [latitude, longitude];
 
-      const colourHex = this.props.colours[key];
+        const colourHex = this.props.colours[key];
 
-      const marker = (
-        <CircleMarker
-          key={locationStr}
-          center={location}
-          data={key}
-          eventHandlers={{
-            click: this.handleClick,
-          }}
-          fillColor={colourHex}
-          color={colourHex}
-          fill={true}
-          fillOpacity={1.0}
-          radius={10}
-        >
-          <Popup>
-            <div className={styles.marker}>
-              <div className={styles.markerBody}>
-                {value["long_name"]}
-                <br />
-                <br />
-                Height: {value["magl"]}
-                <br />
-                <br />
-                For more information please visit the &nbsp;
-                <a href="http://beacon.berkeley.edu/" target="_blank" rel="noopener noreferrer">
-                BEACO2N website
-                </a>
-                {/* <TextButton
-                  styling="dark"
-                  onClickParam={key}
-                  extraStyling={{ fontSize: "1.0em" }}
-                  onClick={this.props.siteInfoOverlay}
-                >
-                  Read site information
-                </TextButton> */}
+        const marker = (
+          <CircleMarker
+            key={locationStr}
+            center={location}
+            data={key}
+            eventHandlers={{
+              click: this.handleClick,
+            }}
+            fillColor={colourHex}
+            color={colourHex}
+            fill={true}
+            fillOpacity={1.0}
+            radius={10}
+          >
+            <Popup>
+              <div className={styles.marker}>
+                <div className={styles.markerBody}>
+                  {value["long_name"]}
+                  <br />
+                  <br />
+                  Height: {value["magl"]}
+                  <br />
+                  <br />
+                  For more information please visit the network website - {`${network}`}
+                  {/* <TextButton
+                      styling="dark"
+                      onClickParam={key}
+                      extraStyling={{ fontSize: "1.0em" }}
+                      onClick={this.props.siteInfoOverlay}
+                    >
+                      Read site information
+                    </TextButton> */}
+                </div>
+                <div className={styles.markerLocation}>Location: {locationStr}</div>
               </div>
-              <div className={styles.markerLocation}>Location: {locationStr}</div>
-            </div>
-          </Popup>
-        </CircleMarker>
-      );
+            </Popup>
+          </CircleMarker>
+        );
 
-      markers.push(marker);
+        markers.push(marker);
+      }
     }
 
     return markers;

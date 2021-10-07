@@ -10,52 +10,54 @@ class MultiSiteLineChart extends React.Component {
     let minY = Infinity;
 
     const data = this.props.data;
-    const metadata = this.props.metadata;
+    const metadata = this.props.siteMetadata;
 
-    for (const [site, siteData] of Object.entries(data)) {
-      for (const sectorData of Object.values(siteData)) {
-        const xValues = sectorData["x_values"];
-        const yValues = sectorData["y_values"];
+    for (const [network, networkData] of Object.entries(data)) {
+      for (const [site, siteData] of Object.entries(networkData)) {
+        for (const sectorData of Object.values(siteData)) {
+          const xValues = sectorData["x_values"];
+          const yValues = sectorData["y_values"];
 
-        const siteUpper = site.toUpperCase()
-        const siteMetadata = metadata[siteUpper];
+          const siteUpper = site.toUpperCase();
+          const siteMetadata = metadata[siteUpper];
 
-        const max = Math.max(...yValues);
-        const min = Math.min(...yValues);
+          const max = Math.max(...yValues);
+          const min = Math.min(...yValues);
 
-        if (max > maxY) {
-          maxY = max;
+          if (max > maxY) {
+            maxY = max;
+          }
+
+          if (min < minY) {
+            minY = min;
+          }
+
+          // Set the name for the legend
+          let name = null;
+          try {
+            name = siteMetadata["long_name"];
+          } catch (error) {
+            console.error(`Error reading name for legend - ${error}`);
+          }
+
+          const colour = this.props.colours[siteUpper];
+          const units = this.props.units;
+
+          const trace = {
+            x: xValues,
+            y: yValues,
+            units: this.props.units,
+            mode: "lines",
+            line: {
+              width: 1,
+              color: colour,
+            },
+            name: name,
+            hovertemplate: `<b>Date</b>: %{x} <br><b>Concentration: </b>: %{y:.2f} ${units}<br>`,
+          };
+
+          plotData.push(trace);
         }
-
-        if (min < minY) {
-          minY = min;
-        }
-
-        // Set the name for the legend
-        let name = null;
-        try {
-          name = siteMetadata["long_name"];
-        } catch (error) {
-          console.error(`Error reading name for legend - ${error}`);
-        }
-
-        const colour = this.props.colours[siteUpper];
-        const units = this.props.units;
-
-        const trace = {
-          x: xValues,
-          y: yValues,
-          units: this.props.units,
-          mode: "lines",
-          line: {
-            width: 1,
-            color: colour,
-          },
-          name: name,
-          hovertemplate: `<b>Date</b>: %{x} <br><b>Concentration: </b>: %{y:.2f} ${units}<br>`,
-        };
-
-        plotData.push(trace);
       }
     }
 
