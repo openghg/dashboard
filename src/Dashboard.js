@@ -8,27 +8,36 @@ import TextButton from "./components/TextButton/TextButton";
 import Overlay from "./components/Overlay/Overlay";
 import FAQ from "./components/FAQ/FAQ";
 
-import { importMockEmissions, importSiteImages } from "./util/helpers";
+import { importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
+
+import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
 
 import { cloneDeep } from "lodash";
 
-import glasgowSiteData from "./data/glasgow_nodes_parsed.json";
-import glasgowData from "./data/glasgow_data.json";
+// The actual timeseries data
+import measurementData from "./data/measurement_data.json";
+
+// Metadata such as lat/long etc
+import siteData from "./data/site_metadata.json";
+
+// Information regarding the site for the site explainer layover
+// import longSiteData from "./data/site_metadata_longformat.json";
+
+// import glasgowSiteData from "./data/glasgow_nodes_parsed.json";
+// import glasgowData from "./data/glasgow_data.json";
 
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
 
 // Model improvement videos
-import colourData from "./data/colours.json";
+// import colourData from "./data/colours.json";
 import LiveData from "./components/LiveData/LiveData";
 import Explainer from "./components/Explainer/Explainer";
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-
-    const completeData = glasgowData;
 
     this.state = {
       error: null,
@@ -47,32 +56,41 @@ class Dashboard extends React.Component {
       colours: {},
     };
 
-    const defaultSpecies = Object.keys(completeData).sort()[0];
-    const defaultSite = Object.keys(completeData[defaultSpecies]).sort()[0];
+    // By default we'll just pick a species from a single site to show
+    // const defaultSpecies = Object.keys(measurementData).sort()[0];
+    const defaultNetwork = Object.keys(measurementData)[0];
+    const defaultSpecies = Object.keys(measurementData[defaultNetwork]).sort()[0];
+    const defaultSite = Object.keys(measurementData[defaultNetwork][defaultSpecies]).sort()[0];
 
-    this.state.selectedSites = new Set([defaultSite]);
     this.state.defaultSpecies = defaultSpecies;
-    this.state.selectedSpecies = defaultSpecies;
     this.state.defaultSite = defaultSite;
+    this.state.selectedSites = new Set([defaultSite]);
+    this.state.selectedSpecies = defaultSpecies;
 
-    const sites = glasgowSiteData;
+    // Only expecting three networks so use these for now
+    const colourMaps = [schemeTableau10, schemeSet3, schemeDark2];
+
     // Assign some colours for the sites
-    let index = 0;
+    let siteIndex = 0;
+    let networkIndex = 0;
+
     let siteColours = {};
-    const tab10 = colourData["tab10"];
-    for (const site of Object.keys(sites)) {
-      siteColours[site] = tab10[index];
-      index++;
+
+    for (const [network, localSiteData] of Object.entries(siteData)) {
+      siteColours[network] = {};
+      for (const site of Object.keys(localSiteData)) {
+        siteColours[network][site] = colourMaps[networkIndex][siteIndex];
+        siteIndex++;
+      }
+      networkIndex++;
     }
 
     // Give each site a colour
     this.state.colours = siteColours;
     // The locations of the sites for the selection map
-    this.state.sites = sites;
-    // Import the emissions PNG paths so we can select the image we want using the slider
-    this.state.mockEmissionsPNGs = importMockEmissions();
-    // Process data we have from JSON
-    this.processData(completeData);
+    this.state.sites = siteData;
+    // Process the Python outputted measurement data we have from JSON
+    this.processData(measurementData);
     // Build the site info for the overlays
     this.buildSiteInfo();
 
@@ -124,11 +142,13 @@ class Dashboard extends React.Component {
     // keys set to true
     let selectedKeys = cloneDeep(this.state.selectedKeys);
 
-    for (const [species, siteData] of Object.entries(selectedKeys)) {
-      for (const [site, sectorData] of Object.entries(siteData)) {
-        const value = selectedSites.has(site);
-        for (const dataVar of Object.keys(sectorData)) {
-          selectedKeys[species][site][dataVar] = value;
+    for (const [network, networkData] of Object.entries(selectedKeys)) {
+      for (const [species, siteData] of Object.entries(networkData)) {
+        for (const [site, sectorData] of Object.entries(siteData)) {
+          const value = selectedSites.has(site);
+          for (const dataVar of Object.keys(sectorData)) {
+            selectedKeys[network][species][site][dataVar] = value;
+          }
         }
       }
     }
@@ -137,7 +157,6 @@ class Dashboard extends React.Component {
   }
 
   clearSites() {
-      console.log("Clickedsdsf")
     this.setState({ selectedSites: new Set() });
   }
 
@@ -168,38 +187,43 @@ class Dashboard extends React.Component {
     const defaultSite = iter.next().value;
 
     try {
-      for (const [species, siteData] of Object.entries(rawData)) {
-        dataKeys[species] = {};
-        processedData[species] = {};
-        metadata[species] = {};
+      for (const [network, networkData] of Object.entries(rawData)) {
+        dataKeys[network] = {};
+        processedData[network] = {};
+        metadata[network] = {};
+        for (const [species, siteData] of Object.entries(networkData)) {
+          dataKeys[network][species] = {};
+          processedData[network][species] = {};
+          metadata[network][species] = {};
 
-        for (const [site, gasData] of Object.entries(siteData)) {
-          const defaultValue = site === defaultSite;
-          dataKeys[species][site] = {};
-          processedData[species][site] = {};
-          metadata[species][site] = {};
+          for (const [site, gasData] of Object.entries(siteData)) {
+            const defaultValue = site === defaultSite;
+            dataKeys[network][species][site] = {};
+            processedData[network][species][site] = {};
+            metadata[network][species][site] = {};
 
-          for (const [dataVar, data] of Object.entries(gasData)) {
-            // Save metadata separately
-            if (dataVar === "data") {
-              // TODO - this feels a bit complicated but means we can bring in
-              // error data at a later stage
-              const speciesUpper = species.toUpperCase();
-              dataKeys[species][site][speciesUpper] = defaultValue;
+            for (const [dataVar, data] of Object.entries(gasData)) {
+              // Save metadata separately
+              if (dataVar === "data") {
+                // TODO - this feels a bit complicated but means we can bring in
+                // error data at a later stage
+                const speciesUpper = species.toUpperCase();
+                dataKeys[network][species][site][speciesUpper] = defaultValue;
 
-              const timeseriesData = data[speciesUpper];
-              const x_timestamps = Object.keys(timeseriesData);
-              const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
-              // Extract the count values
-              const y_values = Object.values(timeseriesData);
+                const timeseriesData = data[speciesUpper];
+                const x_timestamps = Object.keys(timeseriesData);
+                const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+                // Extract the count values
+                const y_values = Object.values(timeseriesData);
 
-              // Create a structure that plotly expects
-              processedData[species][site][speciesUpper] = {
-                x_values: x_values,
-                y_values: y_values,
-              };
-            } else if (dataVar === "metadata") {
-              metadata[species][site] = data;
+                // Create a structure that plotly expects
+                processedData[network][species][site][speciesUpper] = {
+                  x_values: x_values,
+                  y_values: y_values,
+                };
+              } else if (dataVar === "metadata") {
+                metadata[network][species][site] = data;
+              }
             }
           }
         }
@@ -211,10 +235,9 @@ class Dashboard extends React.Component {
     // Disabled the no direct mutation rule here as this only gets called from the constructor
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
-    this.state.dataKeys = dataKeys;
     this.state.selectedKeys = dataKeys;
-    this.state.isLoaded = true;
     this.state.metadata = metadata;
+    this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
   }
 
@@ -270,31 +293,6 @@ class Dashboard extends React.Component {
     this.toggleOverlay();
     this.setOverlay(overlay);
   }
-
-  // Component creation functions
-
-  //   createModelExplainer() {
-  //     const header = "Simulating travel of greenhouse gases";
-  //     const body = `When greenhouse gases are emitted, where they travel is dependant
-  //     on many different factors including wind direction, speed and turbulence.
-  //     When we measure greenhouse gases in the atmosphere, if we want to start to understand
-  //     where they came from, first we need to use a model that can simulate this.
-  //     Once we have done this we can then compare inventories, as described above, to atmospheric
-  //     observations and see how well our predictions match reality.`;
-  //     // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
-  //     // Here, we show a simulation in which XXXXXX.`;
-  //     return <ExplanationBox header={header} intro={body} />;
-  //   }
-
-  // <<<<<<< HEAD
-  //   createComparisonExplainer() {
-  //     const header = "Improving emissions estimates";
-  //     const body = `When we compare inventory emissions to atmospheric measurements,
-  //     we can see how well this initial “best guess” compares. From this starting point,
-  //     we can run simulations where, by making small changes to the possible emissions,
-  //     we can continually improve to better match the measurements made at each site.`;
-  //     return <ExplanationBox header={header} intro={body} />;
-  //   }
 
   render() {
     let { error, isLoaded } = this.state;
