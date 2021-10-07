@@ -34,7 +34,7 @@ class LeafletMap extends React.Component {
         const locationStr = `${latitude}, ${longitude}`;
         const location = [latitude, longitude];
 
-        const colourHex = this.props.colours[key];
+        const colourHex = this.props.colours[network][key];
 
         const marker = (
           <CircleMarker
