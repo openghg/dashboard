@@ -19,7 +19,6 @@ class Explainer extends React.Component {
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
     return (
       <EmissionsBox
-        speciesSelector={this.speciesSelector}
         altText={"Example emissions"}
         headerText={emissionsHeader}
         bodyText={emissionsText}

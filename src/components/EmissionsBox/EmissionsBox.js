@@ -71,7 +71,6 @@ class EmissionsBox extends React.Component {
       return;
     }
 
-    this.props.speciesSelector(species);
     this.setState({ selectedSpecies: species, selectedSector: "Total" });
   }
 
@@ -171,7 +170,6 @@ EmissionsBox.propTypes = {
   headerText: PropTypes.string,
   imagePath: PropTypes.string,
   selectedDate: PropTypes.number,
-  speciesSelector: PropTypes.func.isRequired,
 };
 
 export default EmissionsBox;
