@@ -54,7 +54,7 @@ class ControlPanel extends React.Component {
 ControlPanel.propTypes = {
   closePanel: PropTypes.func.isRequired,
   layoutMode: PropTypes.string.isRequired,
-  setMode: PropTypes.func.isRequired,
+  setMode: PropTypes.func,
   setOverlay: PropTypes.func.isRequired,
   toggleOverlay: PropTypes.func.isRequired,
 };

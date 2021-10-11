@@ -24,7 +24,7 @@ class NiceButton extends React.Component {
 }
 
 NiceButton.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.string.isRequired,
   extraStyling: PropTypes.object,
   onClick: PropTypes.func,
   onClickParam: PropTypes.string,
