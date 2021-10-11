@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/dashboard/static/css/main.7030b893.chunk.css",
-    "main.js": "/dashboard/static/js/main.677cba34.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.677cba34.chunk.js.map",
-    "runtime-main.js": "/dashboard/static/js/runtime-main.c318eaf7.js",
-    "runtime-main.js.map": "/dashboard/static/js/runtime-main.c318eaf7.js.map",
-    "static/js/2.58cdfae1.chunk.js": "/dashboard/static/js/2.58cdfae1.chunk.js",
-    "static/js/2.58cdfae1.chunk.js.map": "/dashboard/static/js/2.58cdfae1.chunk.js.map",
-    "static/js/3.b257f9f0.chunk.js": "/dashboard/static/js/3.b257f9f0.chunk.js",
-    "static/js/3.b257f9f0.chunk.js.map": "/dashboard/static/js/3.b257f9f0.chunk.js.map",
+    "main.css": "/dashboard/static/css/main.402e025f.chunk.css",
+    "main.js": "/dashboard/static/js/main.bbc69233.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.bbc69233.chunk.js.map",
+    "runtime-main.js": "/dashboard/static/js/runtime-main.462669c6.js",
+    "runtime-main.js.map": "/dashboard/static/js/runtime-main.462669c6.js.map",
+    "static/js/2.f13d2e6a.chunk.js": "/dashboard/static/js/2.f13d2e6a.chunk.js",
+    "static/js/2.f13d2e6a.chunk.js.map": "/dashboard/static/js/2.f13d2e6a.chunk.js.map",
+    "static/js/3.50b32772.chunk.js": "/dashboard/static/js/3.50b32772.chunk.js",
+    "static/js/3.50b32772.chunk.js.map": "/dashboard/static/js/3.50b32772.chunk.js.map",
     "index.html": "/dashboard/index.html",
-    "static/css/main.7030b893.chunk.css.map": "/dashboard/static/css/main.7030b893.chunk.css.map",
-    "static/js/2.58cdfae1.chunk.js.LICENSE.txt": "/dashboard/static/js/2.58cdfae1.chunk.js.LICENSE.txt",
+    "static/css/main.402e025f.chunk.css.map": "/dashboard/static/css/main.402e025f.chunk.css.map",
+    "static/js/2.f13d2e6a.chunk.js.LICENSE.txt": "/dashboard/static/js/2.f13d2e6a.chunk.js.LICENSE.txt",
     "static/media/1547458200000.png": "/dashboard/static/media/1547458200000.71befc1b.png",
     "static/media/1548091800000.png": "/dashboard/static/media/1548091800000.c249e3c9.png",
     "static/media/1549357200000.png": "/dashboard/static/media/1549357200000.1446f456.png",
@@ -248,9 +248,9 @@
     "static/media/methane_BEIS_2019.ad61d719.png": "/dashboard/static/media/methane_BEIS_2019.ad61d719.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.c318eaf7.js",
-    "static/js/2.58cdfae1.chunk.js",
-    "static/css/main.7030b893.chunk.css",
-    "static/js/main.677cba34.chunk.js"
+    "static/js/runtime-main.462669c6.js",
+    "static/js/2.f13d2e6a.chunk.js",
+    "static/css/main.402e025f.chunk.css",
+    "static/js/main.bbc69233.chunk.js"
   ]
 }
