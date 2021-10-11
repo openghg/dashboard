@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link, HashRouter } from "react-router-dom";
+import { BrowserRouter as Switch, Route, Link, HashRouter } from "react-router-dom";
 import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
 import { cloneDeep, set } from "lodash";
 
