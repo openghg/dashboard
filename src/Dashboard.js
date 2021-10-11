@@ -333,7 +333,7 @@ class Dashboard extends React.Component {
               <div>
                 <Switch>
                   <Route path="/explainer">
-                    <Explainer />
+                    <Explainer speciesSelector={this.speciesSelector} />
                   </Route>
                   <Route path="/FAQ">
                     <FAQ />
