@@ -90,8 +90,9 @@ This will then tell the dashboard to import and process the correct site data. I
 
 ## Data Specification
 
-The dashboard expects data in a JSON format
+The dashboard expects data in a JSON format like this:
 
+```
 {
     network: {
         species: {
@@ -106,4 +107,5 @@ The dashboard expects data in a JSON format
         }
     }
 }
+```
 
