@@ -15,7 +15,7 @@ body {
   display: grid;
   height: 100vh;
   grid-template-columns: 1fr;
-  grid-template-rows: minmax(28px, 4vh) auto;
+  grid-template-rows: 28px auto;
   grid-template-areas:
     "header"
     "content";
@@ -61,6 +61,10 @@ body {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
   z-index: 1001; /* Needs to sit above the hamburger menu icon */
   background: #2d5d7b;
+}
+
+.sidebar a:hover {
+    color: #aaa;
 }
 
 .sidebar.active {
@@ -138,6 +142,8 @@ body {
   grid-template-areas:
     "emissionsMap"
     "emissionsExplainer"
+    "dispersionExplainer"
+    "dispersionImage"
     "comparisonExplainer"
     "comparisonExplainer"
     "modelImprovement"
@@ -145,6 +151,26 @@ body {
     "estimatesExplainer"
     "estimatesImage";
 }
+
+.faqContent {
+  grid-area: content;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.navLink {
+  font-size: 1.4em;
+  color: white;
+}
+
+/* .navLink a:hover {
+  color: #648ca6;
+}
+
+.navLink :hover {
+    color: #648ca6;
+  } */
 
 /* Non-mobile styles, 750px breakpoint */
 @media only screen and (min-width: 60em) {
@@ -182,6 +208,7 @@ body {
     padding-bottom: 3vh;
     grid-template-areas:
       "emissionsMap emissionsExplainer"
+      "dispersionExplainer dispersionImage"
       "comparisonExplainer comparisonExplainer"
       "modelImprovement modelImage"
       "estimatesExplainer estimatesImage";
@@ -218,11 +245,30 @@ body {
 .emissionsExplainer {
   grid-area: emissionsExplainer;
 }
+
 .modelMap {
   grid-area: modelMap;
 }
 .modelExplainer {
   grid-area: modelExplainer;
+}
+
+.dispersionExplainer {
+  grid-area: dispersionExplainer;
+}
+
+.dispersionImage {
+  grid-area: dispersionImage;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dispersionImage img {
+  width: 90%;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 10px;
 }
 
 .comparisonExplainer {
@@ -270,4 +316,16 @@ body {
 .modelImage img {
   max-width: 100%;
   max-height: 100%;
+}
+
+.linkType,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
+.linkType a:hover {
+  text-decoration: none;
+  color: #2d5d7b;
 }

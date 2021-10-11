@@ -1,0 +1,13 @@
+.main {
+  grid-area: content;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto;
+  row-gap: 2vh;
+  padding: 1vw;
+}

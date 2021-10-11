@@ -1,37 +1,30 @@
 import React from "react";
+import { BrowserRouter as Switch, Route, Link, HashRouter } from "react-router-dom";
+import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
+import { cloneDeep, set } from "lodash";
 
 import ControlPanel from "./components/ControlPanel/ControlPanel";
-import ObsBox from "./components/ObsBox/ObsBox";
-import EmissionsBox from "./components/EmissionsBox/EmissionsBox";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
-import londonGHGSites from "./data/siteMetadata.json";
-import ExplanationBox from "./components/ExplanationBox/ExplanationBox";
-import LeafletMap from "./components/LeafletMap/LeafletMap";
 
-import { importMockEmissions, importSiteImages } from "./util/helpers";
-import styles from "./Dashboard.module.css";
-
-import { cloneDeep } from "lodash";
-
-import co2Data from "./data/co2_jun20.json";
-import ch4Data from "./data/ch4_jun20.json";
-
-// Site description information
-import siteInfoJSON from "./data/siteInfo.json";
-
-// Model improvement videos
-import measComparison from "./images/modelVideos/meas_comparison_optim.gif";
-import mapUpdate from "./images/modelVideos/map_update_optim.gif";
-import inventoryComparison from "./images/Inventory_InverseModelling_comparison.jpg";
-import colourData from "./data/colours.json";
 import TextButton from "./components/TextButton/TextButton";
 import Overlay from "./components/Overlay/Overlay";
+import FAQ from "./components/FAQ/FAQ";
+import LiveData from "./components/LiveData/LiveData";
+import Explainer from "./components/Explainer/Explainer";
+
+import { importSiteImages } from "./util/helpers";
+import styles from "./Dashboard.module.css";
+
+// The actual timeseries data
+import measurementData from "./data/measurement_data.json";
+// Metadata such as lat/long etc
+import siteMetadata from "./data/site_metadata.json";
+// Site description information
+import siteInfoJSON from "./data/siteInfo.json";
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
-
-    const completeData = { CO2: co2Data, CH4: ch4Data };
 
     this.state = {
       error: null,
@@ -46,36 +39,44 @@ class Dashboard extends React.Component {
       overlayOpen: false,
       overlay: null,
       plotType: "footprint",
-      selectedSpecies: "CO2",
-      defaultSpecies: "CO2",
-      dashboardMode: true,
+      layoutMode: "dashboard",
       colours: {},
     };
 
-    const defaultSite = Object.keys(co2Data).sort()[0];
+    // By default we'll just pick a species from a single site to show
+    // const defaultSpecies = Object.keys(measurementData).sort()[0];
+    const defaultNetwork = Object.keys(measurementData)[0];
+    const defaultSpecies = Object.keys(measurementData[defaultNetwork]).sort()[0];
+    const defaultSite = Object.keys(measurementData[defaultNetwork][defaultSpecies]).sort()[0];
+
+    this.state.defaultSpecies = defaultSpecies;
+    this.state.defaultSite = defaultSite;
     this.state.selectedSites = new Set([defaultSite]);
+    this.state.selectedSpecies = defaultSpecies;
 
-    // Just take these sites out for now
-    const sites = {};
-    sites["TMB"] = londonGHGSites["TMB"];
-    sites["NPL"] = londonGHGSites["NPL"];
+    // Only expecting three networks so use these for now
+    const colourMaps = [schemeTableau10, schemeSet3, schemeDark2];
 
-    let index = 0;
+    // Assign some colours for the sites
+    let siteIndex = 0;
+    let networkIndex = 0;
+
     let siteColours = {};
-    const tab10 = colourData["tab10"];
-    for (const site of Object.keys(sites)) {
-      siteColours[site] = tab10[index];
-      index++;
+    for (const [network, localSiteData] of Object.entries(siteMetadata)) {
+      for (const site of Object.keys(localSiteData)) {
+        const colourCode = colourMaps[networkIndex][siteIndex];
+        set(siteColours, `${network}.${site}`, colourCode);
+        siteIndex++;
+      }
+      networkIndex++;
     }
 
     // Give each site a colour
     this.state.colours = siteColours;
     // The locations of the sites for the selection map
-    this.state.sites = sites;
-    // Import the emissions PNG paths so we can select the image we want using the slider
-    this.state.mockEmissionsPNGs = importMockEmissions();
-    // Process data we have from JSON
-    this.processData(completeData);
+    this.state.sites = siteMetadata;
+    // Process the Python outputted measurement data we have from JSON
+    this.processData(measurementData);
     // Build the site info for the overlays
     this.buildSiteInfo();
 
@@ -87,7 +88,6 @@ class Dashboard extends React.Component {
     this.setOverlay = this.setOverlay.bind(this);
     this.speciesSelector = this.speciesSelector.bind(this);
     this.clearSites = this.clearSites.bind(this);
-    this.setMode = this.setMode.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.setSiteOverlay = this.setSiteOverlay.bind(this);
   }
@@ -112,25 +112,29 @@ class Dashboard extends React.Component {
     /* eslint-enable react/no-direct-mutation-state */
   }
 
-  siteSelector(site) {
+  siteSelector(selectedSite) {
+    const siteLower = String(selectedSite).toLowerCase();
+
     // Here we change all the sites and select all species / sectors at that site
     let selectedSites = cloneDeep(this.state.selectedSites);
 
-    if (selectedSites.has(site)) {
-      selectedSites.delete(site);
+    if (selectedSites.has(siteLower)) {
+      selectedSites.delete(siteLower);
     } else {
-      selectedSites.add(site);
+      selectedSites.add(siteLower);
     }
 
     // Now update the selectedKeys so each selected site has all its
     // keys set to true
     let selectedKeys = cloneDeep(this.state.selectedKeys);
 
-    for (const [species, siteData] of Object.entries(selectedKeys)) {
-      for (const [site, sectorData] of Object.entries(siteData)) {
-        const value = selectedSites.has(site);
-        for (const sector of Object.keys(sectorData)) {
-          selectedKeys[species][site][sector] = value;
+    for (const [species, speciesData] of Object.entries(selectedKeys)) {
+      for (const [network, networkData] of Object.entries(speciesData)) {
+        for (const [site, sectorData] of Object.entries(networkData)) {
+          const value = selectedSites.has(site);
+          for (const dataVar of Object.keys(sectorData)) {
+            selectedKeys[species][network][site][dataVar] = value;
+          }
         }
       }
     }
@@ -150,11 +154,6 @@ class Dashboard extends React.Component {
     this.setState({ overlayOpen: !this.state.overlayOpen });
   }
 
-  setMode(e) {
-    const dashboardMode = e.target.dataset.onclickparam === "true" ? true : false;
-    this.setState({ dashboardMode: dashboardMode });
-  }
-
   setOverlay(overlay) {
     this.setState({ overlayOpen: true, overlay: overlay });
   }
@@ -168,32 +167,51 @@ class Dashboard extends React.Component {
     // expected by plotly
     let dataKeys = {};
     let processedData = {};
+    let metadata = {};
 
     let iter = this.state.selectedSites.values();
     const defaultSite = iter.next().value;
 
     try {
-      for (const [species, siteData] of Object.entries(rawData)) {
-        dataKeys[species] = {};
-        processedData[species] = {};
+      for (const [network, networkData] of Object.entries(rawData)) {
+        for (const [species, speciesData] of Object.entries(networkData)) {
+          for (const [site, gasData] of Object.entries(speciesData)) {
+            // We want all values from this site to be true
+            const defaultValue = site === defaultSite;
 
-        for (const [site, gasData] of Object.entries(siteData)) {
-          const defaultValue = site === defaultSite;
-          dataKeys[species][site] = {};
-          processedData[species][site] = {};
+            for (const [dataVar, data] of Object.entries(gasData)) {
+              // Save metadata separately
+              if (dataVar === "data") {
+                // TODO - this feels a bit complicated but means we can bring in
+                // error data at a later stage
+                const speciesUpper = species.toUpperCase();
+                // dataKeys[network][species][site][speciesUpper] = defaultValue;
 
-          for (const [sector, data] of Object.entries(gasData)) {
-            dataKeys[species][site][sector] = defaultValue;
-            const x_timestamps = Object.keys(data);
-            const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
-            // Extract the count values
-            const y_values = Object.values(data);
+                set(dataKeys, `${species}.${network}.${site}.${speciesUpper}`, defaultValue);
 
-            // Create a structure that plotly expects
-            processedData[species][site][sector] = {
-              x_values: x_values,
-              y_values: y_values,
-            };
+                // We need to use speciesUpper here as we've exported the variables
+                // from a pandas Dataframe and may want errors etc in the future
+                const timeseriesData = data[speciesUpper];
+                const x_timestamps = Object.keys(timeseriesData);
+                const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
+                // Measurement values
+                const y_values = Object.values(timeseriesData);
+
+                const graphData = {
+                  x_values: x_values,
+                  y_values: y_values,
+                };
+
+                // Here use lodash set to create the nested structure
+                set(processedData, `${species}.${network}.${site}.${speciesUpper}`, graphData);
+
+                // Create a structure that plotly expects
+                // processedData[network][species][site][speciesUpper]
+              } else if (dataVar === "metadata") {
+                // metadata[network][species][site] = data;
+                set(metadata, `${species}.${network}.${site}`, data);
+              }
+            }
           }
         }
       }
@@ -204,8 +222,8 @@ class Dashboard extends React.Component {
     // Disabled the no direct mutation rule here as this only gets called from the constructor
     /* eslint-disable react/no-direct-mutation-state */
     this.state.processedData = processedData;
-    this.state.dataKeys = dataKeys;
     this.state.selectedKeys = dataKeys;
+    this.state.metadata = metadata;
     this.state.isLoaded = true;
     /* eslint-enable react/no-direct-mutation-state */
   }
@@ -263,76 +281,6 @@ class Dashboard extends React.Component {
     this.setOverlay(overlay);
   }
 
-  // Component creation functions
-
-  createEmissionsBox() {
-    const emissionsHeader = "Emissions";
-    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
-    return (
-      <EmissionsBox
-        speciesSelector={this.speciesSelector}
-        altText={"Example emissions"}
-        headerText={emissionsHeader}
-        bodyText={emissionsText}
-      />
-    );
-  }
-
-  createObsBox() {
-    return (
-      <ObsBox
-        selectedKeys={this.state.selectedKeys}
-        processedData={this.state.processedData}
-        dataSelector={this.dataSelector}
-        selectedSites={this.state.selectedSites}
-        selectedSpecies={this.state.selectedSpecies}
-        clearSelectedSites={this.clearSites}
-        speciesSelector={this.speciesSelector}
-        defaultSpecies={this.state.defaultSpecies}
-        colours={this.state.colours}
-      ></ObsBox>
-    );
-  }
-
-  createMapExplainer() {
-    const header = "Observations";
-    const body = `Greenhouse gases are monitored by a network of sites across the city which provide us with near real-time data.
-    This includes both carbon dioxide and methane, the most influential greenhouse gases.`;
-    const explanation = `Start exploring the sites and the data by selecting a measurement site from the map`;
-    return <ExplanationBox header={header} intro={body} explain={explanation} />;
-  }
-
-  createEmissionsExplainer() {
-    const header = "Emissions";
-    const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure at each location, but what we really want to know is where these greenhouse gases came from.`;
-    const body = `This is one way we can make sure we’re hitting planned targets.
-    We can build a map of expected emissions (an inventory) by adding together different sources.`;
-    return <ExplanationBox header={header} intro={intro} explain={body} />;
-  }
-
-  createIntro() {
-    const explanation = `Welcome to the OpenGHG dashboard where you can view live observation data from 
-                        our network of gas sensors across London.`;
-    return <ExplanationBox nogap={true} explain={explanation} />;
-  }
-
-  createComparisonExplainer() {
-    const header = "Comparing model with observations";
-    const body = `We can compare these emissions to the measurements we made to see how well they compare. 
-    From this initial “best guess”, we can run simulations where, by making small changes to the possible emissions, 
-    we can continually improve to better match the measurements made at each site.`;
-    return <ExplanationBox header={header} intro={body} />;
-  }
-
-  createEstimatesExplainer() {
-    const header = "Improve national estimates";
-    const body = `One way this has been used is to improve UK national methane estimates – by looking at what emissions would better 
-    match to the data, the inventory itself could be improved over time and sources of these greenhouse gases better understood. `;
-    const explain = `In this way we can use measurements to help learn where greenhouse gases came from and are coming from and to see where they can be reduced.`;
-
-    return <ExplanationBox nogap={false} header={header} intro={body} explain={explain} />;
-  }
-
   render() {
     let { error, isLoaded } = this.state;
 
@@ -346,76 +294,71 @@ class Dashboard extends React.Component {
       extraSidebarStyle = { transform: "translateX(0px)" };
     }
 
-    let pageContent = (
-      <div className={styles.content}>
-        <div className={styles.intro}>{this.createIntro()}</div>
-        <div className={styles.timeseries} id="graphContent">
-          {this.createObsBox()}
-        </div>
-        <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
-        <div className={styles.siteMap}>
-          <LeafletMap
-            siteSelector={this.siteSelector}
-            sites={this.state.sites}
-            centre={[51.5, -0.0782]}
-            zoom={10}
-            colours={this.state.colours}
-            siteData={this.state.siteData}
-            siteInfoOverlay={this.setSiteOverlay}
-          />
-        </div>
-      </div>
-    );
-
-    if (!this.state.dashboardMode) {
-      pageContent = (
-        <div className={styles.explainerContent}>
-          <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
-          <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
-          <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
-          <div className={styles.modelImprovement}>
-            <img src={measComparison} alt="Improvement of model estimates" />
-          </div>
-          <div className={styles.modelImage}>
-            <img src={mapUpdate} alt="Improvement of emissions map" />
-          </div>
-          <div className={styles.estimatesExplainer}>{this.createEstimatesExplainer()}</div>
-          <div className={styles.estimatesImage}>
-            <img src={inventoryComparison} alt="Inventory improvement" />
-            <div>
-              O'Doherty et al. 2018, "Annual report on long-term atmospheric measurement and interpretation", BEIS, 2018
-            </div>
-          </div>
-        </div>
-      );
-    }
-
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <div className={styles.gridContainer}>
-          <div className={styles.header}>
-            <div class={styles.menuIcon}>
-              <TextButton styling="light" extraStyling={{ fontSize: "1.6em" }} onClick={this.toggleSidebar}>
-                &#9776;
-              </TextButton>
+        <HashRouter>
+          <div className={styles.gridContainer}>
+            <div className={styles.header}>
+              <div className={styles.menuIcon}>
+                <TextButton styling="light" extraStyling={{ fontSize: "1.6em" }} onClick={this.toggleSidebar}>
+                  &#9776;
+                </TextButton>
+              </div>
             </div>
+            <aside className={styles.sidebar} style={extraSidebarStyle}>
+              <ControlPanel
+                layoutMode={this.state.layoutMode}
+                setOverlay={this.setOverlay}
+                toggleOverlay={this.toggleOverlay}
+                closePanel={this.toggleSidebar}
+              >
+                <Link to="/" className={styles.navLink}>
+                  Live Data
+                </Link>
+                <Link to="/explainer" className={styles.navLink}>
+                  Explainer
+                </Link>
+                <Link to="/FAQ" className={styles.navLink}>
+                  FAQ
+                </Link>
+              </ControlPanel>
+            </aside>
+            <div>
+              <div>
+                <Switch>
+                  <Route path="/explainer">
+                    <Explainer />
+                  </Route>
+                  <Route path="/FAQ">
+                    <FAQ />
+                  </Route>
+                  <Route path="/">
+                    <LiveData
+                      dataSelector={this.dataSelector}
+                      clearSites={this.clearSites}
+                      speciesSelector={this.speciesSelector}
+                      siteSelector={this.siteSelector}
+                      selectedKeys={this.state.selectedKeys}
+                      processedData={this.state.processedData}
+                      selectedSites={this.state.selectedSites}
+                      selectedSpecies={this.state.selectedSpecies}
+                      defaultSpecies={this.state.defaultSpecies}
+                      colours={this.state.colours}
+                      setSiteOverlay={this.state.setSiteOverlay}
+                      sites={this.state.sites}
+                      metadata={this.state.metadata}
+                    />
+                  </Route>
+                </Switch>
+              </div>
+            </div>
+            {overlay}
           </div>
-          <aside className={styles.sidebar} style={extraSidebarStyle}>
-            <ControlPanel
-              dashboardMode={this.state.dashboardMode}
-              setMode={this.setMode}
-              setOverlay={this.setOverlay}
-              toggleOverlay={this.toggleOverlay}
-              closePanel={this.toggleSidebar}
-            />
-          </aside>
-          <div>{pageContent}</div>
-          {overlay}
-        </div>
+        </HashRouter>
       );
     }
   }

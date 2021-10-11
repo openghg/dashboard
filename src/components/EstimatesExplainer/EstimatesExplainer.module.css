@@ -1,0 +1,71 @@
+.container {
+  background: white;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.3fr auto auto;
+  gap: 2vh 0vw;
+  grid-template-areas:
+    "header"
+    "intro"
+    "explain";
+}
+
+.containerNoGap {
+  background: white;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.3fr auto auto;
+  gap: 0vh 0px;
+  grid-template-areas:
+    "header"
+    "intro"
+    "explain";
+}
+
+.header {
+  grid-area: header;
+  font-size: 1.6em;
+  font-weight: 700;
+  padding-left: 1.5vw;
+  color: #82aeb1;
+}
+
+.intro {
+  grid-area: intro;
+  padding-left: 1.5vw;
+  padding-top: 1vh;
+  padding-right: 1.5vw;
+  font-size: 18px;
+}
+
+.explain {
+  grid-area: explain;
+  padding-left: 1.5vw;
+  padding-top: 1vh;
+  padding-right: 1.5vw;
+  font-size: 18px;
+}
+
+.containerNoGap a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
+.containerNoGap a:hover {
+  text-decoration: none;
+  color: #2d5d7b;
+}
+
+.container a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
+.container a:hover {
+  text-decoration: none;
+  color: #2d5d7b;
+}

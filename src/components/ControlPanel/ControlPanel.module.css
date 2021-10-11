@@ -17,12 +17,15 @@
   grid-area: header;
   padding-left: 2vh;
   padding-top: 2vh;
-  font-size: 1.6em;
+  font-size: 1.5em;
+  width: 95%;
+  word-wrap: break-word;
 }
 
 .headerText {
   font-weight: 700;
   font-size: 1.2em;
+  padding-bottom: 1vh;
 }
 
 .headerTag {
@@ -44,7 +47,7 @@
 
 .content {
   grid-area: content;
-  padding: 2vh 0vh 0vh 2vh;
+  padding: 5vh 0vh 0vh 2vh;
   display: flex;
   flex-direction: column;
   gap: 2vh;
@@ -58,8 +61,10 @@
 .footer {
   grid-area: "footer";
   padding: 2vh 0vh 0vh 2vh;
+  color: white;
+  font-size: 0.8em;
 }
 
 .footer img {
-  width: 15%;
+  width: 60%;
 }

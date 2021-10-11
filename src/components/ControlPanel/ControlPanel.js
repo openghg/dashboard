@@ -4,7 +4,7 @@ import styles from "./ControlPanel.module.css";
 
 import textData from "../../data/overlayText.json";
 
-import GitHubLogo from "../../images/github.svg";
+import OpenGHGLogo from "../../images/OpenGHG_Logo_Portrait.svg";
 import Overlay from "../Overlay/Overlay";
 import TextButton from "../TextButton/TextButton";
 
@@ -37,20 +37,13 @@ class ControlPanel extends React.Component {
           </TextButton>
         </div>
         <div className={styles.header}>
-          <div className={styles.headerText}>OpenGHG</div>
-          <div className={styles.headerTag}>Data dashboard</div>
+          <div className={styles.headerText}>Greenhouse gas data dashboard</div>
+          <div className={styles.headerTag}>by OpenGHG</div>
         </div>
-        <div className={styles.content}>
-          <TextButton onClickParam={true} onClick={this.props.setMode} selected={this.props.dashboardMode}>
-            Live Data
-          </TextButton>
-          <TextButton onClickParam={false} onClick={this.props.setMode} selected={!this.props.dashboardMode}>
-            Explainer
-          </TextButton>
-        </div>
+        <div className={styles.content}>{this.props.children}</div>
         <div className={styles.footer}>
           <a href="https://github.com/openghg/dashboard" rel="noreferrer" target="_blank">
-            <img src={GitHubLogo} alt="GitHub logo" />
+            <img src={OpenGHGLogo} alt="OpenGHG Logo" />
           </a>
         </div>
       </div>
@@ -60,8 +53,8 @@ class ControlPanel extends React.Component {
 
 ControlPanel.propTypes = {
   closePanel: PropTypes.func.isRequired,
-  dashboardMode: PropTypes.bool.isRequired,
-  setMode: PropTypes.func.isRequired,
+  layoutMode: PropTypes.string.isRequired,
+  setMode: PropTypes.func,
   setOverlay: PropTypes.func.isRequired,
   toggleOverlay: PropTypes.func.isRequired,
 };

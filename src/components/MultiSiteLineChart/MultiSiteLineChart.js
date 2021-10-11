@@ -11,44 +11,52 @@ class MultiSiteLineChart extends React.Component {
 
     const data = this.props.data;
 
-    for (const [site, siteData] of Object.entries(data)) {
-      for (const [sector, sectorData] of Object.entries(siteData)) {
-        const xValues = sectorData["x_values"];
-        const yValues = sectorData["y_values"];
+    for (const [network, networkData] of Object.entries(data)) {
+      for (const [site, siteData] of Object.entries(networkData)) {
+        for (const sectorData of Object.values(siteData)) {
+          const metadata = this.props.siteMetadata[network][site.toUpperCase()];
+          const xValues = sectorData["x_values"];
+          const yValues = sectorData["y_values"];
 
-        const max = Math.max(...yValues);
-        const min = Math.min(...yValues);
+          const siteUpper = site.toUpperCase();
 
-        if (max > maxY) {
-          maxY = max;
+          const max = Math.max(...yValues);
+          const min = Math.min(...yValues);
+
+          if (max > maxY) {
+            maxY = max;
+          }
+
+          if (min < minY) {
+            minY = min;
+          }
+
+          // Set the name for the legend
+          let name = null;
+          try {
+            name = metadata["long_name"];
+          } catch (error) {
+            console.error(`Error reading name for legend - ${error}`);
+          }
+
+          const colour = this.props.colours[network][siteUpper];
+          const units = this.props.units;
+
+          const trace = {
+            x: xValues,
+            y: yValues,
+            units: this.props.units,
+            mode: "lines",
+            line: {
+              width: 1,
+              color: colour,
+            },
+            name: name,
+            hovertemplate: `<b>Date</b>: %{x} <br><b>Concentration: </b>: %{y:.2f} ${units}<br>`,
+          };
+
+          plotData.push(trace);
         }
-
-        if (min < minY) {
-          minY = min;
-        }
-
-        const name = site + " - " + String(sector).toUpperCase();
-
-        // const selectedColour = tab10[plotNumber];
-        // const colour = selectedColour ? selectedColour : "black";
-
-        const colour = this.props.colours[site];
-
-        const trace = {
-          x: xValues,
-          y: yValues,
-          mode: "lines",
-          line: {
-            width: 1,
-            color: colour,
-          },
-          name: name,
-          hovertemplate: '<b>Date</b>: %{x}' +
-                        '<br><b>Concentration: </b>: %{y:.2f}<br>'
-        };
-
-        plotData.push(trace);
-        // plotNumber++;
       }
     }
 

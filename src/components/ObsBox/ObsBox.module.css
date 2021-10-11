@@ -32,6 +32,10 @@
   gap: 1vw;
 }
 
+.clearButton {
+    padding-bottom: 2vh;
+}
+
 .plot {
   grid-area: plot;
   display: flex;
