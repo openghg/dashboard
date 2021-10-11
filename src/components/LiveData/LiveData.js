@@ -5,6 +5,7 @@ import LeafletMap from "../LeafletMap/LeafletMap";
 
 import styles from "../../Dashboard.module.css";
 import ObsBox from "../ObsBox/ObsBox";
+import ObsExplainer from "../ObsExplainer/ObsExplainer";
 
 class LiveData extends React.Component {
   createMapExplainer() {
@@ -17,7 +18,7 @@ class LiveData extends React.Component {
   }
 
   createIntro() {
-    const explanation = `Welcome to the OpenGHG dashboard, where you can view greenhouse gas concentration data from our network sensors across London.`;
+    const explanation = `Welcome to the COP 26 greenhouse gas data dashboard, where you can view atmospheric greenhouse gas measurements made in Glasgow before and during the COP 26 event.`;
     return <ExplanationBox nogap={true} explain={explanation} />;
   }
 
@@ -33,23 +34,30 @@ class LiveData extends React.Component {
         selectedSpecies={this.props.selectedSpecies}
         defaultSpecies={this.props.defaultSpecies}
         colours={this.props.colours}
+        metadata={this.props.metadata}
+        sites={this.props.sites}
       />
     );
   }
 
   render() {
+    // Map centre lat/long
+    const mapCentre = [55.861, -4.248];
+
     return (
       <div className={styles.content}>
         <div className={styles.intro}>{this.createIntro()}</div>
         <div className={styles.timeseries} id="graphContent">
           {this.createObsBox()}
         </div>
-        <div className={styles.mapExplainer}>{this.createMapExplainer()}</div>
+        <div className={styles.mapExplainer}>
+          <ObsExplainer />
+        </div>
         <div className={styles.siteMap}>
           <LeafletMap
             siteSelector={this.props.siteSelector}
             sites={this.props.sites}
-            centre={[51.5, -0.0782]}
+            centre={mapCentre}
             zoom={10}
             colours={this.props.colours}
             siteData={this.props.siteData}

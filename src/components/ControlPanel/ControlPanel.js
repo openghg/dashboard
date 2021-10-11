@@ -37,7 +37,7 @@ class ControlPanel extends React.Component {
           </TextButton>
         </div>
         <div className={styles.header}>
-          <div className={styles.headerText}>Data Dashboard</div>
+          <div className={styles.headerText}>Greenhouse gas data dashboard</div>
           <div className={styles.headerTag}>by OpenGHG</div>
         </div>
         <div className={styles.content}>{this.props.children}</div>
@@ -54,7 +54,7 @@ class ControlPanel extends React.Component {
 ControlPanel.propTypes = {
   closePanel: PropTypes.func.isRequired,
   layoutMode: PropTypes.string.isRequired,
-  setMode: PropTypes.func.isRequired,
+  setMode: PropTypes.func,
   setOverlay: PropTypes.func.isRequired,
   toggleOverlay: PropTypes.func.isRequired,
 };

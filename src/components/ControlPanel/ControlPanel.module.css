@@ -18,11 +18,14 @@
   padding-left: 2vh;
   padding-top: 2vh;
   font-size: 1.5em;
+  width: 95%;
+  word-wrap: break-word;
 }
 
 .headerText {
   font-weight: 700;
   font-size: 1.2em;
+  padding-bottom: 1vh;
 }
 
 .headerTag {

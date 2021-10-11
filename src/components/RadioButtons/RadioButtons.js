@@ -20,21 +20,23 @@ class RadioButtons extends React.Component {
     for (const option of Object.keys(options)) {
       const checked = option === this.props.selected;
 
+      const optionUpper = option.toUpperCase();
+
       let label = "NA";
-      if (option === "CO2") {
+      if (optionUpper === "CO2") {
         label = (
           <b>
             CO<sub>2</sub>
           </b>
         );
-      } else if (option === "CH4") {
+      } else if (optionUpper === "CH4") {
         label = (
           <b>
             CH<sub>4</sub>
           </b>
         );
       } else {
-        console.error("Invalid species.");
+        label = <b>{optionUpper}</b>;
       }
 
       const button = (
