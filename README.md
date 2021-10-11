@@ -88,5 +88,22 @@ const sites = glasgowSiteData;
 
 This will then tell the dashboard to import and process the correct site data. If you haven't already, start the dashboard using `npm start` and you should have a freshly updated version.
 
+## Data Specification
 
-### Customising 
+The dashboard expects data in a JSON format
+
+{
+    network: {
+        species: {
+            site: {
+                data: {
+                    unix_timestamp_ms: measurement
+                },
+                metadata: {
+                    site: "site_name"
+                }
+            }
+        }
+    }
+}
+
