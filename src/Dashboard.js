@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, HashRouter } from "react-router-dom";
 import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
 import { cloneDeep, set } from "lodash";
 
@@ -300,7 +300,7 @@ class Dashboard extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <Router>
+        <HashRouter>
           <div className={styles.gridContainer}>
             <div className={styles.header}>
               <div className={styles.menuIcon}>
@@ -358,7 +358,7 @@ class Dashboard extends React.Component {
             </div>
             {overlay}
           </div>
-        </Router>
+        </HashRouter>
       );
     }
   }
