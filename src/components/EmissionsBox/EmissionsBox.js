@@ -6,15 +6,16 @@ import LeafletMap from "../LeafletMap/LeafletMap";
 
 import styles from "./EmissionsBox.module.css";
 
-import agriNatural_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_agriculture-and-natural_20190101T00.svg";
-import combProd_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_combustion-and-production_20190101T00.svg";
-import stacked_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_sectors_stacked.svg";
-import waste_ch4 from "../../images/emissionsSVGs/ch4/ch4_ukghg_map_waste_20190101T00.svg";
+import comb_ch4 from "../../images/emissionsSVGs/ch4/uk05/ch4_ukghg_map_combustion_20170101T00.svg";
+import prod_ch4 from "../../images/emissionsSVGs/ch4/uk05/ch4_ukghg_map_production_20170101T00.svg";
+import waste_ch4 from "../../images/emissionsSVGs/ch4/uk05/ch4_ukghg_map_waste_20170101T00.svg";
+import stacked_ch4 from "../../images/emissionsSVGs/ch4/uk05/ch4_ukghg_map_sectors_stacked_20170101T00.svg";
 
-import agriNatural_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_agriculture-and-natural_20190101T00.svg";
-import combProd_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_combustion_20190101T00.svg";
-import stacked_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_sectors_stacked.svg";
-import production_co2 from "../../images/emissionsSVGs/co2/co2_ukghg_map_production_20190101T00.svg";
+import natural_co2 from "../../images/emissionsSVGs/co2/uk05/co2_ukghg_map_natural_20170101T00.svg";
+import comb_co2 from "../../images/emissionsSVGs/co2/uk05/co2_ukghg_map_combustion_20170101T00.svg";
+import production_co2 from "../../images/emissionsSVGs/co2/uk05/co2_ukghg_map_production_20170101T00.svg";
+import stacked_co2 from "../../images/emissionsSVGs/co2/uk05/co2_ukghg_map_sectors_stacked_20170101T00.svg";
+
 
 class EmissionsBox extends React.Component {
   constructor(props) {
@@ -22,24 +23,24 @@ class EmissionsBox extends React.Component {
 
     const images = {
       CH4: {
-        "Agri+Natural": agriNatural_ch4,
-        "Comb+Production": combProd_ch4,
+        Combustion: comb_ch4,
+        Production: prod_ch4,
         Total: stacked_ch4,
         Waste: waste_ch4,
         colorbars: {
-          "Agri+Natural": null,
-          "Comb+Production": null,
+          Combustion: null,
+          Production: null,
           Total: null,
           Waste: null,
         },
       },
       CO2: {
-        "Agri+Natural": agriNatural_co2,
-        Combustion: combProd_co2,
+        Natural: natural_co2,
+        Combustion: comb_co2,
         Total: stacked_co2,
         Production: production_co2,
         colorbars: {
-          "Agri+Nature": null,
+          Natural: null,
           Combustion: null,
           Total: null,
           Production: null,
@@ -143,9 +144,13 @@ class EmissionsBox extends React.Component {
 
     // TODO - get the correct bounds for the box
     const overlayBounds = [
-      [50.87063, -1.16],
-      [52.0193672, 0.56799811],
+      [49.2109147409668, -10.562146891479602],
+      [62.2109147409668, 4.9378531085203985],
     ];
+
+    const midpointLat = overlayBounds[0][0] + (overlayBounds[1][0] - overlayBounds[0][0]) / 2
+    const midpointLon = overlayBounds[0][1] + (overlayBounds[1][1] - overlayBounds[0][1]) / 2
+    const overlayMidpoint = [midpointLat, midpointLon]
 
     const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
 
@@ -153,7 +158,7 @@ class EmissionsBox extends React.Component {
       <div className={styles.container}>
         <div className={styles.body}>{emissionsText}</div>
         <div className={styles.plot}>
-          <LeafletMap centre={[51.5, -0.0782]} zoom={10} overlayBounds={overlayBounds} overlayImg={emissionsImage} />
+          <LeafletMap centre={overlayMidpoint} zoom={5} overlayBounds={overlayBounds} overlayImg={emissionsImage} />
         </div>
         <div className={styles.buttons}>
           <div className={styles.speciesButtons}>{speciesButtons}</div>
