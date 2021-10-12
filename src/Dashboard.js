@@ -1,6 +1,4 @@
 import React from "react";
-// import { BrowserRouter as Switch, Route, Link, HashRouter } from "react-router-dom";
-// import React from "react";
 import { Switch, Route, Link, HashRouter } from "react-router-dom";
 import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
 import { cloneDeep, set } from "lodash";
@@ -17,7 +15,7 @@ import Explainer from "./components/Explainer/Explainer";
 import { importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
 
-// The actual timeseries data
+// Timeseries data
 import measurementData from "./data/measurement_data.json";
 // Metadata such as lat/long etc
 import siteMetadata from "./data/site_metadata.json";
@@ -149,7 +147,8 @@ class Dashboard extends React.Component {
   }
 
   speciesSelector(species) {
-    this.setState({ selectedSpecies: species });
+    const speciesLower = species.toLowerCase();
+    this.setState({ selectedSpecies: speciesLower });
   }
 
   toggleOverlay() {
@@ -184,16 +183,16 @@ class Dashboard extends React.Component {
             for (const [dataVar, data] of Object.entries(gasData)) {
               // Save metadata separately
               if (dataVar === "data") {
-                // TODO - this feels a bit complicated but means we can bring in
+                // This feels a bit complicated but means we can bring in
                 // error data at a later stage
-                const speciesUpper = species.toUpperCase();
-                // dataKeys[network][species][site][speciesUpper] = defaultValue;
+                const speciesLower = species.toLowerCase();
 
-                set(dataKeys, `${species}.${network}.${site}.${speciesUpper}`, defaultValue);
+                // Here use lodash set to create the nested structure
+                set(dataKeys, `${species}.${network}.${site}.${speciesLower}`, defaultValue);
 
-                // We need to use speciesUpper here as we've exported the variables
+                // We need to use speciesLower here as we've exported the variables
                 // from a pandas Dataframe and may want errors etc in the future
-                const timeseriesData = data[speciesUpper];
+                const timeseriesData = data[speciesLower];
                 const x_timestamps = Object.keys(timeseriesData);
                 const x_values = x_timestamps.map((d) => new Date(parseInt(d)));
                 // Measurement values
@@ -204,13 +203,8 @@ class Dashboard extends React.Component {
                   y_values: y_values,
                 };
 
-                // Here use lodash set to create the nested structure
-                set(processedData, `${species}.${network}.${site}.${speciesUpper}`, graphData);
-
-                // Create a structure that plotly expects
-                // processedData[network][species][site][speciesUpper]
+                set(processedData, `${species}.${network}.${site}.${speciesLower}`, graphData);
               } else if (dataVar === "metadata") {
-                // metadata[network][species][site] = data;
                 set(metadata, `${species}.${network}.${site}`, data);
               }
             }
