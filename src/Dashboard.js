@@ -323,35 +323,31 @@ class Dashboard extends React.Component {
                 </Link>
               </ControlPanel>
             </aside>
-            <div>
-              <div>
-                <Switch>
-                  <Route path="/explainer">
-                    <Explainer speciesSelector={this.speciesSelector} />
-                  </Route>
-                  <Route path="/FAQ">
-                    <FAQ />
-                  </Route>
-                  <Route path="/">
-                    <LiveData
-                      dataSelector={this.dataSelector}
-                      clearSites={this.clearSites}
-                      speciesSelector={this.speciesSelector}
-                      siteSelector={this.siteSelector}
-                      selectedKeys={this.state.selectedKeys}
-                      processedData={this.state.processedData}
-                      selectedSites={this.state.selectedSites}
-                      selectedSpecies={this.state.selectedSpecies}
-                      defaultSpecies={this.state.defaultSpecies}
-                      colours={this.state.colours}
-                      setSiteOverlay={this.state.setSiteOverlay}
-                      sites={this.state.sites}
-                      metadata={this.state.metadata}
-                    />
-                  </Route>
-                </Switch>
-              </div>
-            </div>
+            <Switch>
+              <Route path="/explainer">
+                <Explainer speciesSelector={this.speciesSelector} />
+              </Route>
+              <Route path="/FAQ">
+                <FAQ />
+              </Route>
+              <Route path="/">
+                <LiveData
+                  dataSelector={this.dataSelector}
+                  clearSites={this.clearSites}
+                  speciesSelector={this.speciesSelector}
+                  siteSelector={this.siteSelector}
+                  selectedKeys={this.state.selectedKeys}
+                  processedData={this.state.processedData}
+                  selectedSites={this.state.selectedSites}
+                  selectedSpecies={this.state.selectedSpecies}
+                  defaultSpecies={this.state.defaultSpecies}
+                  colours={this.state.colours}
+                  setSiteOverlay={this.state.setSiteOverlay}
+                  sites={this.state.sites}
+                  metadata={this.state.metadata}
+                />
+              </Route>
+            </Switch>
             {overlay}
           </div>
         </HashRouter>
