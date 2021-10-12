@@ -16,9 +16,9 @@ import { importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
 
 // Timeseries data
-import measurementData from "./data/measurement_data.json";
+import measurementData from "./data/measurementData.json";
 // Metadata such as lat/long etc
-import siteMetadata from "./data/site_metadata.json";
+import siteMetadata from "./data/siteMetadata.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
 
