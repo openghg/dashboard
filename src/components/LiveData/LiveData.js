@@ -35,7 +35,7 @@ class LiveData extends React.Component {
         defaultSpecies={this.props.defaultSpecies}
         colours={this.props.colours}
         metadata={this.props.metadata}
-        sites={this.props.sites}
+        // sites={this.props.sites}
       />
     );
   }
@@ -56,7 +56,7 @@ class LiveData extends React.Component {
         <div className={styles.siteMap}>
           <LeafletMap
             siteSelector={this.props.siteSelector}
-            sites={this.props.sites}
+            metadata={this.props.metadata}
             centre={mapCentre}
             zoom={10}
             colours={this.props.colours}

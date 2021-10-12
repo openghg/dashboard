@@ -17,8 +17,6 @@ import styles from "./Dashboard.module.css";
 
 // Timeseries data
 import measurementData from "./data/measurementData.json";
-// Metadata such as lat/long etc
-import siteMetadata from "./data/siteMetadata.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
 
@@ -54,27 +52,6 @@ class Dashboard extends React.Component {
     this.state.selectedSites = new Set([defaultSite]);
     this.state.selectedSpecies = defaultSpecies;
 
-    // Only expecting three networks so use these for now
-    const colourMaps = [schemeTableau10, schemeSet3, schemeDark2];
-
-    // Assign some colours for the sites
-    let siteIndex = 0;
-    let networkIndex = 0;
-
-    let siteColours = {};
-    for (const [network, localSiteData] of Object.entries(siteMetadata)) {
-      for (const site of Object.keys(localSiteData)) {
-        const colourCode = colourMaps[networkIndex][siteIndex];
-        set(siteColours, `${network}.${site}`, colourCode);
-        siteIndex++;
-      }
-      networkIndex++;
-    }
-
-    // Give each site a colour
-    this.state.colours = siteColours;
-    // The locations of the sites for the selection map
-    this.state.sites = siteMetadata;
     // Process the Python outputted measurement data we have from JSON
     this.processData(measurementData);
     // Build the site info for the overlays
@@ -173,10 +150,14 @@ class Dashboard extends React.Component {
     let iter = this.state.selectedSites.values();
     const defaultSite = iter.next().value;
 
+    let uniqueSites = {};
+
     try {
       for (const [network, networkData] of Object.entries(rawData)) {
+        uniqueSites[network] = {};
         for (const [species, speciesData] of Object.entries(networkData)) {
           for (const [site, gasData] of Object.entries(speciesData)) {
+            uniqueSites[network][site] = null;
             // We want all values from this site to be true
             const defaultValue = site === defaultSite;
 
@@ -215,8 +196,27 @@ class Dashboard extends React.Component {
       console.error("Error reading data: ", error);
     }
 
+    // Only expecting three networks so use these for now
+    const colourMaps = [schemeTableau10, schemeSet3, schemeDark2];
+
+    // Assign some colours for the sites
+    let siteIndex = 0;
+    let networkIndex = 0;
+    let siteColours = {};
+
+    for (const [network, localSiteData] of Object.entries(uniqueSites)) {
+      for (const site of Object.keys(localSiteData)) {
+        const colourCode = colourMaps[networkIndex][siteIndex];
+        set(siteColours, `${network}.${site}`, colourCode);
+        siteIndex++;
+      }
+      networkIndex++;
+    }
+
     // Disabled the no direct mutation rule here as this only gets called from the constructor
     /* eslint-disable react/no-direct-mutation-state */
+    // Give each site a colour
+    this.state.colours = siteColours;
     this.state.processedData = processedData;
     this.state.selectedKeys = dataKeys;
     this.state.metadata = metadata;
@@ -343,7 +343,7 @@ class Dashboard extends React.Component {
                   defaultSpecies={this.state.defaultSpecies}
                   colours={this.state.colours}
                   setSiteOverlay={this.state.setSiteOverlay}
-                  sites={this.state.sites}
+                  //   sites={this.state.sites}
                   metadata={this.state.metadata}
                 />
               </Route>
