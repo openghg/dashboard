@@ -9,52 +9,52 @@ export function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
-export function importSVGs() {
-  let footprints = {};
-  try {
-    const requiredSVGs = require.context("../images/londonFootprints/TMB", false, /\.svg$/);
-    const paths = requiredSVGs.keys();
+// export function importSVGs() {
+//   let footprints = {};
+//   try {
+//     const requiredSVGs = require.context("../images/londonFootprints/TMB", false, /\.svg$/);
+//     const paths = requiredSVGs.keys();
 
-    // This is quite a bit of work but it means we can have human-readable filenames
-    // and pass a list of UNIX timestamps to the SliderMap component
-    for (const path of paths) {
-      // Here we need to read the filename and convert it to a UNIX timestamp
-      const filename = String(path).split("_")[1];
-      const timestampStr = String(filename).split(".")[0];
+//     // This is quite a bit of work but it means we can have human-readable filenames
+//     // and pass a list of UNIX timestamps to the SliderMap component
+//     for (const path of paths) {
+//       // Here we need to read the filename and convert it to a UNIX timestamp
+//       const filename = String(path).split("_")[1];
+//       const timestampStr = String(filename).split(".")[0];
 
-      const timestamp = new Date(timestampStr).getTime();
+//       const timestamp = new Date(timestampStr).getTime();
 
-      footprints[timestamp] = requiredSVGs(path)["default"];
-    }
-  } catch (error) {
-    console.error("Could not import images. We expect image filenames of the form siteName-2021-01-01T00:00:00.svg");
-  }
+//       footprints[timestamp] = requiredSVGs(path)["default"];
+//     }
+//   } catch (error) {
+//     console.error("Could not import images. We expect image filenames of the form siteName-2021-01-01T00:00:00.svg");
+//   }
 
-  return footprints;
-}
+//   return footprints;
+// }
 
-export function importMockEmissions() {
-  let emissions = {};
-  try {
-    const requiredPNGs = require.context("../images/mockEmissions", false, /\.png$/);
-    const paths = requiredPNGs.keys();
+// export function importMockEmissions() {
+//   let emissions = {};
+//   try {
+//     const requiredPNGs = require.context("../images/mockEmissions", false, /\.png$/);
+//     const paths = requiredPNGs.keys();
 
-    // This is quite a bit of work but it means we can have human-readable filenames
-    // and pass a list of UNIX timestamps to the SliderMap component
-    for (const path of paths) {
-      // Here we need to read the filename and convert it to a UNIX timestamp
-      const filename = String(path).split("./")[1];
-      const timestampStr = String(filename).split(".")[0];
-      const timestamp = parseInt(timestampStr);
+//     // This is quite a bit of work but it means we can have human-readable filenames
+//     // and pass a list of UNIX timestamps to the SliderMap component
+//     for (const path of paths) {
+//       // Here we need to read the filename and convert it to a UNIX timestamp
+//       const filename = String(path).split("./")[1];
+//       const timestampStr = String(filename).split(".")[0];
+//       const timestamp = parseInt(timestampStr);
 
-      emissions[timestamp] = requiredPNGs(path)["default"];
-    }
-  } catch (error) {
-    console.error("Could not import images. We expect image filenames of the form 1610323200000.png");
-  }
+//       emissions[timestamp] = requiredPNGs(path)["default"];
+//     }
+//   } catch (error) {
+//     console.error("Could not import images. We expect image filenames of the form 1610323200000.png");
+//   }
 
-  return emissions;
-}
+//   return emissions;
+// }
 
 export function importSiteImages() {
   // For all three types /\.(png|jpe?g|svg)$/

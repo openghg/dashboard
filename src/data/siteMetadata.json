@@ -1,55 +1,104 @@
 {
-  "TMB": {
-    "long_name": "Thames Barrier",
-    "latitude": 51.49694,
-    "longitude": 0.036614,
-    "height": "5m"
-  },
-  "BTT": {
-    "long_name": "BT Tower",
-    "latitude": 51.5215,
-    "longitude": -0.1389,
-    "height": "185m"
-  },
-  "NPL": {
-    "long_name": "National Physical Laboratory",
-    "latitude": 51.4241,
-    "longitude": -0.3487,
-    "height": "NA"
-  },
-  "UOW": {
-    "long_name": "University of Westminster, Harrow Campus",
-    "latitude": 51.577558,
-    "longitude": -0.324358,
-    "height": "40m"
-  },
-  "STJ": {
-    "long_name": "St Jude's Church",
-    "latitude": 51.580154,
-    "longitude": -0.189911,
-    "height": "20m"
-  },
-  "HFT": {
-    "long_name": "Highfield Tower",
-    "latitude": 51.608031,
-    "longitude": 0.174544,
-    "height": "45m"
-  },
-  "SMA": {
-    "long_name": "St Mary's Church",
-    "latitude": 51.504423,
-    "longitude": -0.305762,
-    "height": "36m"
-  },
-  "RHO": {
-    "long_name": "Royal Holloway",
-    "latitude": 51.427582,
-    "longitude": -0.56278
-  },
-  "WGF": {
-    "long_name": "Woodgreen Farm",
-    "latitude": 51.700313,
-    "longitude": -0.083932,
-    "height": "6m"
+  "beaco2n": {
+    "bellahoustonacademy": {
+      "deployed": "2021-07-15",
+      "id": 175,
+      "latitude": 55.848,
+      "long_name": "Bellahouston Academy",
+      "longitude": -4.301,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 932
+    },
+    "glasgows12002": {
+      "deployed": "2021-01-20",
+      "id": 157,
+      "latitude": 55.826,
+      "long_name": "GlasgowS12002",
+      "longitude": -4.226,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 872
+    },
+    "hillparksecondaryschool": {
+      "deployed": "2021-07-28",
+      "id": 174,
+      "latitude": 55.815,
+      "long_name": "Hillpark Secondary School",
+      "longitude": -4.299,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 931
+    },
+    "johnpaulacademy": {
+      "deployed": "2021-07-15",
+      "id": 179,
+      "latitude": 55.904,
+      "long_name": "John Paul Academy",
+      "longitude": -4.295,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 936
+    },
+    "killearnstirlingshireglasgows22002": {
+      "deployed": "2020-03-26",
+      "id": 156,
+      "latitude": 56.043,
+      "long_name": "Killearn Stirlingshire GlasgowS22002",
+      "longitude": -4.381,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 873
+    },
+    "knightswoodsecondary": {
+      "deployed": "2021-07-12",
+      "id": 193,
+      "latitude": 55.891,
+      "long_name": "Knightswood Secondary",
+      "longitude": -4.339,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 913
+    },
+    "notredamehighschool": {
+      "deployed": "2021-07-12",
+      "id": 197,
+      "latitude": 55.878,
+      "long_name": "Notre Dame High School",
+      "longitude": -4.299,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 918
+    },
+    "stpaulshighschool": {
+      "deployed": "2021-07-28",
+      "id": 172,
+      "latitude": 55.824,
+      "long_name": "St Pauls High School",
+      "longitude": -4.338,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 929
+    },
+    "stthomasaquinasrcsecondaryschool": {
+      "deployed": "2021-07-28",
+      "id": 178,
+      "latitude": 55.881,
+      "long_name": "St Thomas Aquinas R C Secondary School",
+      "longitude": -4.336,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 935
+    },
+    "universityofstrathclyde": {
+      "deployed": "2021-01-01",
+      "id": 171,
+      "latitude": 55.861,
+      "long_name": "University of Strathclyde",
+      "longitude": -4.247,
+      "magl": "NA",
+      "masl": "NA",
+      "node_folder_id": 928
+    }
   }
 }

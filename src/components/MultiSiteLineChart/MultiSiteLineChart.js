@@ -14,11 +14,9 @@ class MultiSiteLineChart extends React.Component {
     for (const [network, networkData] of Object.entries(data)) {
       for (const [site, siteData] of Object.entries(networkData)) {
         for (const sectorData of Object.values(siteData)) {
-          const metadata = this.props.siteMetadata[network][site.toUpperCase()];
+          const metadata = this.props.siteMetadata[network][site];
           const xValues = sectorData["x_values"];
           const yValues = sectorData["y_values"];
-
-          const siteUpper = site.toUpperCase();
 
           const max = Math.max(...yValues);
           const min = Math.min(...yValues);
@@ -39,7 +37,7 @@ class MultiSiteLineChart extends React.Component {
             console.error(`Error reading name for legend - ${error}`);
           }
 
-          const colour = this.props.colours[network][siteUpper];
+          const colour = this.props.colours[network][site];
           const units = this.props.units;
 
           const trace = {
