@@ -109,6 +109,12 @@ class MultiSiteLineChart extends React.Component {
         ticks: "outside",
         zeroline: false,
       },
+      showlegend: true,
+      legend: {
+        x: 1,
+        xanchor: "right",
+        y: 1,
+      },
       width: widthScaleFactor * this.props.width,
       height: this.props.height,
       margin: {
