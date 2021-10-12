@@ -16,14 +16,14 @@
 }
 
 .markerHeader {
-  font-size: 2vh;
+  font-size: 1.5em;
   font-weight: 500;
   padding-bottom: 1vh;
   align-content: space-between;
 }
 
 .markerBody {
-  font-size: 1.5vh;
+  font-size: 1.2em;
   font-weight: 300;
   padding-bottom: 1vh;
   gap: 1vh;
