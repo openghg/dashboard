@@ -16,7 +16,7 @@ import { importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
 
 // Timeseries data
-import measurementData from "./data/measurementData.json";
+import measurementData from "./data/aqmesh_beaco2n_comb.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
 
@@ -211,6 +211,7 @@ class Dashboard extends React.Component {
         siteIndex++;
       }
       networkIndex++;
+      siteIndex = 0;
     }
 
     // Disabled the no direct mutation rule here as this only gets called from the constructor
