@@ -6,15 +6,15 @@ import LeafletMap from "../LeafletMap/LeafletMap";
 
 import styles from "./EmissionsBox.module.css";
 
-import comb_ch4 from "../../images/emissionsSVGs/ch4/uk05/ch4_ukghg_map_combustion_20170101T00.svg";
-import prod_ch4 from "../../images/emissionsSVGs/ch4/uk05/ch4_ukghg_map_production_20170101T00.svg";
-import waste_ch4 from "../../images/emissionsSVGs/ch4/uk05/ch4_ukghg_map_waste_20170101T00.svg";
-import stacked_ch4 from "../../images/emissionsSVGs/ch4/uk05/ch4_ukghg_map_sectors_stacked_20170101T00.svg";
+import comb_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_combustion_20170101T00_optim.svg";
+import prod_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_production_20170101T00_optim.svg";
+import waste_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_waste_20170101T00_optim.svg";
+import stacked_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_sectors_stacked_20170101T00_optim.svg";
 
-import natural_co2 from "../../images/emissionsSVGs/co2/uk05/co2_ukghg_map_natural_20170101T00.svg";
-import comb_co2 from "../../images/emissionsSVGs/co2/uk05/co2_ukghg_map_combustion_20170101T00.svg";
-import production_co2 from "../../images/emissionsSVGs/co2/uk05/co2_ukghg_map_production_20170101T00.svg";
-import stacked_co2 from "../../images/emissionsSVGs/co2/uk05/co2_ukghg_map_sectors_stacked_20170101T00.svg";
+import natural_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_natural_20170101T00_optim.svg";
+import comb_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_combustion_20170101T00_optim.svg";
+import production_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_production_20170101T00_optim.svg";
+import stacked_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_sectors_stacked_20170101T00_optim.svg";
 
 
 class EmissionsBox extends React.Component {
@@ -145,7 +145,7 @@ class EmissionsBox extends React.Component {
     // TODO - get the correct bounds for the box
     const overlayBounds = [
       [49.2109147409668, -10.562146891479602],
-      [62.2109147409668, 4.9378531085203985],
+      [61.91091474096698, 4.937853108520343],
     ];
 
     const midpointLat = overlayBounds[0][0] + (overlayBounds[1][0] - overlayBounds[0][0]) / 2
