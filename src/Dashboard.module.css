@@ -147,7 +147,6 @@ body {
     "comparisonExplainer"
     "comparisonExplainer"
     "modelImprovement"
-    "modelImage"
     "estimatesExplainer"
     "estimatesImage";
 }
@@ -210,7 +209,7 @@ body {
       "emissionsMap emissionsExplainer"
       "dispersionExplainer dispersionImage"
       "comparisonExplainer comparisonExplainer"
-      "modelImprovement modelImage"
+      "modelImprovement modelImprovement"
       "estimatesExplainer estimatesImage";
   }
 
@@ -306,7 +305,7 @@ body {
   max-height: 100%;
 }
 
-.modelImage {
+/* .modelImage {
   grid-area: modelImage;
   display: flex;
   flex-direction: column;
@@ -316,7 +315,7 @@ body {
 .modelImage img {
   max-width: 100%;
   max-height: 100%;
-}
+} */
 
 .linkType,
 a:visited,
