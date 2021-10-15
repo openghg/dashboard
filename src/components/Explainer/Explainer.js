@@ -6,8 +6,7 @@ import EmissionsBox from "../EmissionsBox/EmissionsBox";
 
 import styles from "../../Dashboard.module.css";
 
-import measComparison from "../../images/modelVideos/meas_comparison_optim.gif";
-import mapUpdate from "../../images/modelVideos/map_update_optim.gif";
+import inversionDemo from "../../images/modelVideos/inversion_demo_UK_optim.gif";
 import inventoryComparison from "../../images/methane_BEIS_2019.png";
 
 // Model demonstration image
@@ -67,10 +66,7 @@ class Explainer extends React.Component {
         </div>
         <div className={styles.comparisonExplainer}>{this.createComparisonExplainer()}</div>
         <div className={styles.modelImprovement}>
-          <img src={measComparison} alt="Improvement of model estimates" />
-        </div>
-        <div className={styles.modelImage}>
-          <img src={mapUpdate} alt="Improvement of emissions map" />
+          <img src={inversionDemo} alt="Improvement of model estimates" />
         </div>
         <div className={styles.estimatesExplainer}>
           <EstimatesExplainer />
