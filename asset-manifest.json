@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/dashboard/static/css/main.5ea34b10.chunk.css",
-    "main.js": "/dashboard/static/js/main.153349bc.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.153349bc.chunk.js.map",
-    "runtime-main.js": "/dashboard/static/js/runtime-main.d38ce3b3.js",
-    "runtime-main.js.map": "/dashboard/static/js/runtime-main.d38ce3b3.js.map",
-    "static/js/2.177890ed.chunk.js": "/dashboard/static/js/2.177890ed.chunk.js",
-    "static/js/2.177890ed.chunk.js.map": "/dashboard/static/js/2.177890ed.chunk.js.map",
-    "static/js/3.2cd8b440.chunk.js": "/dashboard/static/js/3.2cd8b440.chunk.js",
-    "static/js/3.2cd8b440.chunk.js.map": "/dashboard/static/js/3.2cd8b440.chunk.js.map",
+    "main.css": "/dashboard/static/css/main.0f2733a1.chunk.css",
+    "main.js": "/dashboard/static/js/main.d330bc4e.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.d330bc4e.chunk.js.map",
+    "runtime-main.js": "/dashboard/static/js/runtime-main.899ed7f1.js",
+    "runtime-main.js.map": "/dashboard/static/js/runtime-main.899ed7f1.js.map",
+    "static/js/2.72307275.chunk.js": "/dashboard/static/js/2.72307275.chunk.js",
+    "static/js/2.72307275.chunk.js.map": "/dashboard/static/js/2.72307275.chunk.js.map",
+    "static/js/3.6715c649.chunk.js": "/dashboard/static/js/3.6715c649.chunk.js",
+    "static/js/3.6715c649.chunk.js.map": "/dashboard/static/js/3.6715c649.chunk.js.map",
     "index.html": "/dashboard/index.html",
-    "static/css/main.5ea34b10.chunk.css.map": "/dashboard/static/css/main.5ea34b10.chunk.css.map",
-    "static/js/2.177890ed.chunk.js.LICENSE.txt": "/dashboard/static/js/2.177890ed.chunk.js.LICENSE.txt",
+    "static/css/main.0f2733a1.chunk.css.map": "/dashboard/static/css/main.0f2733a1.chunk.css.map",
+    "static/js/2.72307275.chunk.js.LICENSE.txt": "/dashboard/static/js/2.72307275.chunk.js.LICENSE.txt",
     "static/media/BTT.jpg": "/dashboard/static/media/BTT.611f21ae.jpg",
     "static/media/NPL.jpg": "/dashboard/static/media/NPL.611f21ae.jpg",
     "static/media/OpenGHG_Logo_Portrait.c51170ed.svg": "/dashboard/static/media/OpenGHG_Logo_Portrait.c51170ed.svg",
@@ -25,14 +25,13 @@
     "static/media/co2_ukghg_map_production_20190101T00.f2672f2a.svg": "/dashboard/static/media/co2_ukghg_map_production_20190101T00.f2672f2a.svg",
     "static/media/co2_ukghg_map_sectors_stacked.762bf3cd.svg": "/dashboard/static/media/co2_ukghg_map_sectors_stacked.762bf3cd.svg",
     "static/media/emissions_measurements_image.b8562de1.png": "/dashboard/static/media/emissions_measurements_image.b8562de1.png",
-    "static/media/map_update_optim.478935af.gif": "/dashboard/static/media/map_update_optim.478935af.gif",
-    "static/media/meas_comparison_optim.b32b4c38.gif": "/dashboard/static/media/meas_comparison_optim.b32b4c38.gif",
+    "static/media/inversion_demo_UK_optim.5babee29.gif": "/dashboard/static/media/inversion_demo_UK_optim.5babee29.gif",
     "static/media/methane_BEIS_2019.ad61d719.png": "/dashboard/static/media/methane_BEIS_2019.ad61d719.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.d38ce3b3.js",
-    "static/js/2.177890ed.chunk.js",
-    "static/css/main.5ea34b10.chunk.css",
-    "static/js/main.153349bc.chunk.js"
+    "static/js/runtime-main.899ed7f1.js",
+    "static/js/2.72307275.chunk.js",
+    "static/css/main.0f2733a1.chunk.css",
+    "static/js/main.d330bc4e.chunk.js"
   ]
 }
