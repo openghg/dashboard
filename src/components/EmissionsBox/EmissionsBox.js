@@ -6,15 +6,15 @@ import LeafletMap from "../LeafletMap/LeafletMap";
 
 import styles from "./EmissionsBox.module.css";
 
-import comb_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_combustion_20170101T00_optim.svg";
-import prod_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_production_20170101T00_optim.svg";
-import waste_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_waste_20170101T00_optim.svg";
-import stacked_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_sectors_stacked_20170101T00_optim.svg";
+import comb_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_combustion_20170101T00_optim.png";
+import prod_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_production_20170101T00_optim.png";
+import waste_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_waste_20170101T00_optim.png";
+import stacked_ch4 from "../../images/emissionsSVGs/ch4/uk01/ch4_ukghg_map_sectors_stacked_20170101T00_optim.png";
 
-import natural_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_natural_20170101T00_optim.svg";
-import comb_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_combustion_20170101T00_optim.svg";
-import production_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_production_20170101T00_optim.svg";
-import stacked_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_sectors_stacked_20170101T00_optim.svg";
+import natural_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_natural_20170101T00_optim.png";
+import comb_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_combustion_20170101T00_optim.png";
+import production_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_production_20170101T00_optim.png";
+import stacked_co2 from "../../images/emissionsSVGs/co2/uk01/co2_ukghg_map_sectors_stacked_20170101T00_optim.png";
 
 
 class EmissionsBox extends React.Component {
