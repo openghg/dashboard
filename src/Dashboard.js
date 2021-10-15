@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, Link, HashRouter } from "react-router-dom";
-import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
+// import { schemeTableau10, schemeSet3, schemeDark2, schemeAccent } from "d3-scale-chromatic";
 import { cloneDeep, set } from "lodash";
 
 import ControlPanel from "./components/ControlPanel/ControlPanel";
@@ -16,9 +16,11 @@ import { importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
 
 // Timeseries data
-import measurementData from "./data/aqmesh_beaco2n_comb.json";
+import measurementData from "./data/measurementData.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
+// import { scaleOrdinal } from "d3-scale";
+import chroma from "chroma-js";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -197,7 +199,22 @@ class Dashboard extends React.Component {
     }
 
     // Only expecting three networks so use these for now
-    const colourMaps = [schemeTableau10, schemeSet3, schemeDark2];
+    // const colourMaps = [schemeTableau10, schemeSet3, schemeDark2];
+    // const cool_greens = chroma.scale(["#fafa6e", "#2A4858"]).mode("lch").colors(12);
+    // const blue_purple = chroma.scale(["#ffbb44", "#902ac7"]).mode("lch").colors(12);
+
+    // Colour tuples for use with Chroma
+    const colour_start_end = [
+      //   ["#fafa6e", "#2A4858"],
+      //   ["#264653", "#e76f51"],
+      ["#f94144", "#577590"],
+      ["#d9ed92", "#184e77"],
+    ];
+
+    // https://coolors.co/264653-2a9d8f-e9c46a-f4a261-e76f51
+    // https://coolors.co/f94144-f3722c-f8961e-f9c74f-90be6d-43aa8b-577590
+    // https://coolors.co/f94144-f3722c-f8961e-f9844a-f9c74f-90be6d-43aa8b-4d908e-577590-277da1
+    // ["d9ed92","b5e48c","99d98c","76c893","52b69a","34a0a4","168aad","1a759f","1e6091","184e77"]
 
     // Assign some colours for the sites
     let siteIndex = 0;
@@ -205,8 +222,11 @@ class Dashboard extends React.Component {
     let siteColours = {};
 
     for (const [network, localSiteData] of Object.entries(uniqueSites)) {
+      const nSites = Object.keys(localSiteData).length;
+      const start_end = colour_start_end[networkIndex];
+      const colorMap = chroma.scale(start_end).mode("lch").colors(nSites);
       for (const site of Object.keys(localSiteData)) {
-        const colourCode = colourMaps[networkIndex][siteIndex];
+        const colourCode = colorMap[siteIndex];
         set(siteColours, `${network}.${site}`, colourCode);
         siteIndex++;
       }
