@@ -16,7 +16,6 @@ import comb_co2 from "../../images/emissionsPNGs/co2/uk_raw/co2_ukghg_map_combus
 import production_co2 from "../../images/emissionsPNGs/co2/uk_raw/co2_ukghg_map_production_20170101T00.png";
 import stacked_co2 from "../../images/emissionsPNGs/co2/uk_raw/co2_ukghg_map_sectors_stacked_20170101T00.png";
 
-
 class EmissionsBox extends React.Component {
   constructor(props) {
     super(props);
