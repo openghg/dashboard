@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dashboard/static/css/main.0f2733a1.chunk.css",
-    "main.js": "/dashboard/static/js/main.d330bc4e.chunk.js",
-    "main.js.map": "/dashboard/static/js/main.d330bc4e.chunk.js.map",
+    "main.js": "/dashboard/static/js/main.8f6dd43b.chunk.js",
+    "main.js.map": "/dashboard/static/js/main.8f6dd43b.chunk.js.map",
     "runtime-main.js": "/dashboard/static/js/runtime-main.899ed7f1.js",
     "runtime-main.js.map": "/dashboard/static/js/runtime-main.899ed7f1.js.map",
     "static/js/2.72307275.chunk.js": "/dashboard/static/js/2.72307275.chunk.js",
@@ -16,14 +16,14 @@
     "static/media/NPL.jpg": "/dashboard/static/media/NPL.611f21ae.jpg",
     "static/media/OpenGHG_Logo_Portrait.c51170ed.svg": "/dashboard/static/media/OpenGHG_Logo_Portrait.c51170ed.svg",
     "static/media/TMB.jpg": "/dashboard/static/media/TMB.611f21ae.jpg",
-    "static/media/ch4_ukghg_map_agriculture-and-natural_20190101T00.1ab62a81.svg": "/dashboard/static/media/ch4_ukghg_map_agriculture-and-natural_20190101T00.1ab62a81.svg",
-    "static/media/ch4_ukghg_map_combustion-and-production_20190101T00.f72b76f2.svg": "/dashboard/static/media/ch4_ukghg_map_combustion-and-production_20190101T00.f72b76f2.svg",
-    "static/media/ch4_ukghg_map_sectors_stacked.a37c7d78.svg": "/dashboard/static/media/ch4_ukghg_map_sectors_stacked.a37c7d78.svg",
-    "static/media/ch4_ukghg_map_waste_20190101T00.08daf245.svg": "/dashboard/static/media/ch4_ukghg_map_waste_20190101T00.08daf245.svg",
-    "static/media/co2_ukghg_map_agriculture-and-natural_20190101T00.b87cace6.svg": "/dashboard/static/media/co2_ukghg_map_agriculture-and-natural_20190101T00.b87cace6.svg",
-    "static/media/co2_ukghg_map_combustion_20190101T00.4f02683e.svg": "/dashboard/static/media/co2_ukghg_map_combustion_20190101T00.4f02683e.svg",
-    "static/media/co2_ukghg_map_production_20190101T00.f2672f2a.svg": "/dashboard/static/media/co2_ukghg_map_production_20190101T00.f2672f2a.svg",
-    "static/media/co2_ukghg_map_sectors_stacked.762bf3cd.svg": "/dashboard/static/media/co2_ukghg_map_sectors_stacked.762bf3cd.svg",
+    "static/media/ch4_ukghg_map_combustion_20170101T00.1ab6e12d.png": "/dashboard/static/media/ch4_ukghg_map_combustion_20170101T00.1ab6e12d.png",
+    "static/media/ch4_ukghg_map_production_20170101T00.831ef05b.png": "/dashboard/static/media/ch4_ukghg_map_production_20170101T00.831ef05b.png",
+    "static/media/ch4_ukghg_map_sectors_stacked_20170101T00.e357e3b3.png": "/dashboard/static/media/ch4_ukghg_map_sectors_stacked_20170101T00.e357e3b3.png",
+    "static/media/ch4_ukghg_map_waste_20170101T00.a311b231.png": "/dashboard/static/media/ch4_ukghg_map_waste_20170101T00.a311b231.png",
+    "static/media/co2_ukghg_map_combustion_20170101T00.8858d827.png": "/dashboard/static/media/co2_ukghg_map_combustion_20170101T00.8858d827.png",
+    "static/media/co2_ukghg_map_natural_20170101T00.8615fcfb.png": "/dashboard/static/media/co2_ukghg_map_natural_20170101T00.8615fcfb.png",
+    "static/media/co2_ukghg_map_production_20170101T00.6650e571.png": "/dashboard/static/media/co2_ukghg_map_production_20170101T00.6650e571.png",
+    "static/media/co2_ukghg_map_sectors_stacked_20170101T00.de4fabc3.png": "/dashboard/static/media/co2_ukghg_map_sectors_stacked_20170101T00.de4fabc3.png",
     "static/media/emissions_measurements_image.b8562de1.png": "/dashboard/static/media/emissions_measurements_image.b8562de1.png",
     "static/media/inversion_demo_UK_optim.5babee29.gif": "/dashboard/static/media/inversion_demo_UK_optim.5babee29.gif",
     "static/media/methane_BEIS_2019.ad61d719.png": "/dashboard/static/media/methane_BEIS_2019.ad61d719.png"
@@ -32,6 +32,6 @@
     "static/js/runtime-main.899ed7f1.js",
     "static/js/2.72307275.chunk.js",
     "static/css/main.0f2733a1.chunk.css",
-    "static/js/main.d330bc4e.chunk.js"
+    "static/js/main.8f6dd43b.chunk.js"
   ]
 }
