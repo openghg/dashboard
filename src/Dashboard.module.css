@@ -317,6 +317,9 @@ a:active {
   justify-content: center;
 }
 
+/* The loader thanks to https://loading.io/css/, 
+see https://github.com/loadingio/css-spinner/blob/master/dist/dual-ring.html
+*/
 .loaderRing {
   width: 160px;
   height: 160px;
@@ -329,8 +332,8 @@ a:active {
   height: 128px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #2D5D7B;
-  border-color: #2D5D7B transparent #2D5D7B transparent;
+  border: 6px solid #2d5d7b;
+  border-color: #2d5d7b transparent #2d5d7b transparent;
   animation: loaderRing 1.5s linear infinite;
 }
 
