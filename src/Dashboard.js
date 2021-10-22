@@ -54,8 +54,6 @@ class Dashboard extends React.Component {
     this.state.selectedSites = new Set([defaultSite]);
     this.state.selectedSpecies = defaultSpecies;
 
-    // Process the Python outputted measurement data we have from JSON
-    this.processData(measurementData);
     // Build the site info for the overlays
     this.buildSiteInfo();
 
@@ -250,24 +248,24 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    // const apiURL = "";
-    // fetch(apiURL)
-    //   .then((res) => res.json())
-    //   .then(
-    //     (result) => {
-    //       this.setState({
-    //         isLoaded: true,
-    //         weatherData: result,
-    //         // or apiData
-    //       });
-    //     },
-    //     (error) => {
-    //       this.setState({
-    //         isLoaded: true,
-    //         error,
-    //       });
-    //     }
-    //   );
+    const apiURL = "https://raw.githubusercontent.com/openghg/dashboard_data/main/combined_data.json";
+    fetch(apiURL)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.processData(result);
+          this.setState({
+            isLoaded: true,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+
   }
 
   anySelected() {
@@ -314,7 +312,7 @@ class Dashboard extends React.Component {
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <div>Retrieving data...</div>;
     } else {
       return (
         <HashRouter>
