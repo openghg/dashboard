@@ -329,8 +329,8 @@ a:active {
   height: 128px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid black;
-  border-color: black transparent black transparent;
+  border: 6px solid #2D5D7B;
+  border-color: #2D5D7B transparent #2D5D7B transparent;
   animation: loaderRing 1.5s linear infinite;
 }
 
