@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import Plot from "react-plotly.js";
+import { toTitleCase } from "../../util/helpers";
 import styles from "./MultiSiteLineChart.module.css";
+
 
 class MultiSiteLineChart extends React.Component {
   render() {
@@ -33,7 +35,7 @@ class MultiSiteLineChart extends React.Component {
           // Set the name for the legend
           let name = null;
           try {
-            name = metadata["long_name"];
+            name = toTitleCase(metadata["long_name"]);
           } catch (error) {
             console.error(`Error reading name for legend - ${error}`);
           }
@@ -50,7 +52,7 @@ class MultiSiteLineChart extends React.Component {
               width: 1,
               color: colour,
             },
-            name: name,
+            name: `<b>${name}</b>`,
             hovertemplate: `<b>Date</b>: %{x} <br><b>Concentration: </b>: %{y:.2f} ${units}<br>`,
           };
 
