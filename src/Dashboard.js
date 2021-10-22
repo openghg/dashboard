@@ -312,7 +312,9 @@ class Dashboard extends React.Component {
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div>Retrieving data...</div>;
+      return <div className={styles.loaderContent}>
+        <div className={styles.loaderRing}></div>
+      </div>
     } else {
       return (
         <HashRouter>
