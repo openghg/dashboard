@@ -39,13 +39,21 @@ class ObsExplainer extends React.Component {
             <a href="http://beacon.berkeley.edu/about/" target="_blank" rel="noopener noreferrer">
               BEACO2N
             </a>
-            &nbsp;and&nbsp;
+            ,&nbsp;
             <a
               href="https://www.royalholloway.ac.uk/research-and-teaching/departments-and-schools/earth-sciences/research/research-laboratories/greenhouse-gas-laboratory/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Royal Holloway University of London.
+              Royal Holloway University of London
+            </a>
+            &nbsp;and&nbsp;
+            <a
+              href="https://www.strath.ac.uk/workwithus/globalenvironmentalmeasurementmonitoring/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              University of Strathclyde.
             </a>
           </li>
           <li>

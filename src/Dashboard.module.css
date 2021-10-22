@@ -11,18 +11,18 @@ body {
 }
 
 /* Start with mobile friendly first */
+
 .gridContainer {
   display: grid;
   height: 100vh;
   grid-template-columns: 1fr;
   grid-template-rows: 28px auto;
-  grid-template-areas:
-    "header"
-    "content";
+  grid-template-areas: "header" "content";
 }
 
 .menuIcon {
-  position: fixed; /* Needs to stay visible for all mobile scrolling */
+  position: fixed;
+  /* Needs to stay visible for all mobile scrolling */
   display: flex;
   left: 10px;
   align-items: center;
@@ -44,6 +44,7 @@ body {
 }
 
 /* Make room for the menu icon on mobile */
+
 .header__search {
   margin-left: 42px;
 }
@@ -59,12 +60,13 @@ body {
   transform: translateX(-245px);
   transition: all 0.6s ease-in-out;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-  z-index: 1001; /* Needs to sit above the hamburger menu icon */
+  z-index: 1001;
+  /* Needs to sit above the hamburger menu icon */
   background: #2d5d7b;
 }
 
 .sidebar a:hover {
-    color: #aaa;
+  color: #aaa;
 }
 
 .sidebar.active {
@@ -94,6 +96,7 @@ body {
 }
 
 /* Holds the content for the single column / explainer content */
+
 .contentCards {
   column-count: 1;
   column-gap: 20px;
@@ -101,6 +104,7 @@ body {
 }
 
 /* Cards hold single column content */
+
 .card {
   display: flex;
   flex-direction: column;
@@ -124,11 +128,7 @@ body {
   row-gap: 1vh;
   grid-auto-rows: auto;
   grid-template-columns: 1fr;
-  grid-template-areas:
-    "intro"
-    "timeseries"
-    "mapExplainer"
-    "siteMap";
+  grid-template-areas: "intro" "timeseries" "mapExplainer" "siteMap";
 }
 
 .explainerContent {
@@ -139,17 +139,7 @@ body {
   gap: 4vh;
   padding-top: 1vh;
   padding-bottom: 3vh;
-  grid-template-areas:
-    "emissionsMap"
-    "emissionsExplainer"
-    "dispersionExplainer"
-    "dispersionImage"
-    "comparisonExplainer"
-    "comparisonExplainer"
-    "modelImprovement"
-    "modelImage"
-    "estimatesExplainer"
-    "estimatesImage";
+  grid-template-areas: "emissionsMap" "emissionsExplainer" "dispersionExplainer" "dispersionImage" "comparisonExplainer" "comparisonExplainer" "modelImprovement" "estimatesExplainer" "estimatesImage";
 }
 
 .faqContent {
@@ -173,30 +163,27 @@ body {
   } */
 
 /* Non-mobile styles, 750px breakpoint */
+
 @media only screen and (min-width: 60em) {
   /* Show the sidebar */
   .gridContainer {
     grid-template-columns: 240px 1fr;
-    grid-template-areas:
-      "header header"
-      "sidebar content";
+    grid-template-areas: "header header" "sidebar content";
   }
-
   .header__search {
     margin-left: 0;
   }
-
   .sidebar {
     position: relative;
     transform: translateX(0);
   }
-
   .menuIcon {
     visibility: hidden;
   }
 }
 
 /* Medium screens breakpoint (1050px) */
+
 @media only screen and (min-width: 65.625em) {
   .explainerContent {
     grid-area: content;
@@ -206,28 +193,17 @@ body {
     gap: 4vh 2vw;
     padding-top: 1vh;
     padding-bottom: 3vh;
-    grid-template-areas:
-      "emissionsMap emissionsExplainer"
-      "dispersionExplainer dispersionImage"
-      "comparisonExplainer comparisonExplainer"
-      "modelImprovement modelImage"
-      "estimatesExplainer estimatesImage";
+    grid-template-areas: "emissionsMap emissionsExplainer" "dispersionExplainer dispersionImage" "comparisonExplainer comparisonExplainer" "modelImprovement modelImprovement" "estimatesExplainer estimatesImage";
   }
-
   .sidebarCloseIcon {
     display: none;
   }
-
   .contentCards {
     column-count: 2;
   }
-
   .content {
     grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "intro intro"
-      "timeseries timeseries"
-      "mapExplainer siteMap";
+    grid-template-areas: "intro intro" "timeseries timeseries" "mapExplainer siteMap";
   }
 }
 
@@ -242,6 +218,7 @@ body {
 .emissionsMap {
   grid-area: emissionsMap;
 }
+
 .emissionsExplainer {
   grid-area: emissionsExplainer;
 }
@@ -249,6 +226,7 @@ body {
 .modelMap {
   grid-area: modelMap;
 }
+
 .modelExplainer {
   grid-area: modelExplainer;
 }
@@ -306,7 +284,7 @@ body {
   max-height: 100%;
 }
 
-.modelImage {
+/* .modelImage {
   grid-area: modelImage;
   display: flex;
   flex-direction: column;
@@ -316,7 +294,7 @@ body {
 .modelImage img {
   max-width: 100%;
   max-height: 100%;
-}
+} */
 
 .linkType,
 a:visited,
@@ -328,4 +306,42 @@ a:active {
 .linkType a:hover {
   text-decoration: none;
   color: #2d5d7b;
+}
+
+.loaderContent {
+  display: flex;
+  width: 100%;
+  height: 95vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The loader thanks to https://loading.io/css/, 
+see https://github.com/loadingio/css-spinner/blob/master/dist/dual-ring.html
+*/
+.loaderRing {
+  width: 160px;
+  height: 160px;
+}
+
+.loaderRing:after {
+  content: " ";
+  display: block;
+  width: 128px;
+  height: 128px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #2d5d7b;
+  border-color: #2d5d7b transparent #2d5d7b transparent;
+  animation: loaderRing 1.5s linear infinite;
+}
+
+@keyframes loaderRing {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
