@@ -10,11 +10,12 @@ class MultiSiteLineChart extends React.Component {
     let minY = Infinity;
 
     const data = this.props.data;
+    const selectedSpecies = this.props.selectedSpecies;
 
     for (const [network, networkData] of Object.entries(data)) {
       for (const [site, siteData] of Object.entries(networkData)) {
         for (const sectorData of Object.values(siteData)) {
-          const metadata = this.props.siteMetadata[network][site];
+          const metadata = this.props.siteMetadata[selectedSpecies][network][site];
           const xValues = sectorData["x_values"];
           const yValues = sectorData["y_values"];
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, Link, HashRouter } from "react-router-dom";
-import { schemeTableau10, schemeSet3, schemeDark2 } from "d3-scale-chromatic";
+// import { schemeTableau10, schemeSet3, schemeDark2, schemeAccent } from "d3-scale-chromatic";
 import { cloneDeep, set } from "lodash";
 
 import ControlPanel from "./components/ControlPanel/ControlPanel";
@@ -17,10 +17,10 @@ import styles from "./Dashboard.module.css";
 
 // Timeseries data
 import measurementData from "./data/measurementData.json";
-// Metadata such as lat/long etc
-import siteMetadata from "./data/siteMetadata.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
+// import { scaleOrdinal } from "d3-scale";
+import chroma from "chroma-js";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -54,29 +54,6 @@ class Dashboard extends React.Component {
     this.state.selectedSites = new Set([defaultSite]);
     this.state.selectedSpecies = defaultSpecies;
 
-    // Only expecting three networks so use these for now
-    const colourMaps = [schemeTableau10, schemeSet3, schemeDark2];
-
-    // Assign some colours for the sites
-    let siteIndex = 0;
-    let networkIndex = 0;
-
-    let siteColours = {};
-    for (const [network, localSiteData] of Object.entries(siteMetadata)) {
-      for (const site of Object.keys(localSiteData)) {
-        const colourCode = colourMaps[networkIndex][siteIndex];
-        set(siteColours, `${network}.${site}`, colourCode);
-        siteIndex++;
-      }
-      networkIndex++;
-    }
-
-    // Give each site a colour
-    this.state.colours = siteColours;
-    // The locations of the sites for the selection map
-    this.state.sites = siteMetadata;
-    // Process the Python outputted measurement data we have from JSON
-    this.processData(measurementData);
     // Build the site info for the overlays
     this.buildSiteInfo();
 
@@ -173,10 +150,14 @@ class Dashboard extends React.Component {
     let iter = this.state.selectedSites.values();
     const defaultSite = iter.next().value;
 
+    let uniqueSites = {};
+
     try {
       for (const [network, networkData] of Object.entries(rawData)) {
+        uniqueSites[network] = {};
         for (const [species, speciesData] of Object.entries(networkData)) {
           for (const [site, gasData] of Object.entries(speciesData)) {
+            uniqueSites[network][site] = null;
             // We want all values from this site to be true
             const defaultValue = site === defaultSite;
 
@@ -215,8 +196,46 @@ class Dashboard extends React.Component {
       console.error("Error reading data: ", error);
     }
 
+    // Only expecting three networks so use these for now
+    // const colourMaps = [schemeTableau10, schemeSet3, schemeDark2];
+    // const cool_greens = chroma.scale(["#fafa6e", "#2A4858"]).mode("lch").colors(12);
+    // const blue_purple = chroma.scale(["#ffbb44", "#902ac7"]).mode("lch").colors(12);
+
+    // Colour tuples for use with Chroma
+    const colour_start_end = [
+      //   ["#fafa6e", "#2A4858"],
+      //   ["#264653", "#e76f51"],
+      ["#f94144", "#577590"],
+      ["#d9ed92", "#184e77"],
+    ];
+
+    // https://coolors.co/264653-2a9d8f-e9c46a-f4a261-e76f51
+    // https://coolors.co/f94144-f3722c-f8961e-f9c74f-90be6d-43aa8b-577590
+    // https://coolors.co/f94144-f3722c-f8961e-f9844a-f9c74f-90be6d-43aa8b-4d908e-577590-277da1
+    // ["d9ed92","b5e48c","99d98c","76c893","52b69a","34a0a4","168aad","1a759f","1e6091","184e77"]
+
+    // Assign some colours for the sites
+    let siteIndex = 0;
+    let networkIndex = 0;
+    let siteColours = {};
+
+    for (const [network, localSiteData] of Object.entries(uniqueSites)) {
+      const nSites = Object.keys(localSiteData).length;
+      const start_end = colour_start_end[networkIndex];
+      const colorMap = chroma.scale(start_end).mode("lch").colors(nSites);
+      for (const site of Object.keys(localSiteData)) {
+        const colourCode = colorMap[siteIndex];
+        set(siteColours, `${network}.${site}`, colourCode);
+        siteIndex++;
+      }
+      networkIndex++;
+      siteIndex = 0;
+    }
+
     // Disabled the no direct mutation rule here as this only gets called from the constructor
     /* eslint-disable react/no-direct-mutation-state */
+    // Give each site a colour
+    this.state.colours = siteColours;
     this.state.processedData = processedData;
     this.state.selectedKeys = dataKeys;
     this.state.metadata = metadata;
@@ -229,24 +248,24 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    // const apiURL = "";
-    // fetch(apiURL)
-    //   .then((res) => res.json())
-    //   .then(
-    //     (result) => {
-    //       this.setState({
-    //         isLoaded: true,
-    //         weatherData: result,
-    //         // or apiData
-    //       });
-    //     },
-    //     (error) => {
-    //       this.setState({
-    //         isLoaded: true,
-    //         error,
-    //       });
-    //     }
-    //   );
+    const apiURL = "https://raw.githubusercontent.com/openghg/dashboard_data/main/combined_data.json";
+    fetch(apiURL)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.processData(result);
+          this.setState({
+            isLoaded: true,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+
   }
 
   anySelected() {
@@ -293,7 +312,9 @@ class Dashboard extends React.Component {
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <div className={styles.loaderContent}>
+        <div className={styles.loaderRing}></div>
+      </div>
     } else {
       return (
         <HashRouter>
@@ -343,7 +364,7 @@ class Dashboard extends React.Component {
                   defaultSpecies={this.state.defaultSpecies}
                   colours={this.state.colours}
                   setSiteOverlay={this.state.setSiteOverlay}
-                  sites={this.state.sites}
+                  //   sites={this.state.sites}
                   metadata={this.state.metadata}
                 />
               </Route>
