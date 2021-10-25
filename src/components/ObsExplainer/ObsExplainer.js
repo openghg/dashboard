@@ -14,7 +14,7 @@ class ObsExplainer extends React.Component {
           <li>Greenhouse gas concentrations are monitored from a network of sites across the city.</li>
           <li>Measurements are made of carbon dioxide and methane, the most important greenhouse gases.</li>
           <li>
-            Scientists are using these observations to learn more about the UK's methane emissions. 
+            Scientists are using these observations to learn more about the UK's greenhouse gas emissions. 
           </li>
           
 
