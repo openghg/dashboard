@@ -3,6 +3,7 @@ import React from "react";
 import ExplanationBox from "../ExplanationBox/ExplanationBox";
 import EstimatesExplainer from "../EstimatesExplainer/EstimatesExplainer";
 import EmissionsBox from "../EmissionsBox/EmissionsBox";
+import EmissionsExplainer from "../EmissionsExplainer/EmissionsExplainer"
 
 import styles from "../../Dashboard.module.css";
 
@@ -25,33 +26,37 @@ class Explainer extends React.Component {
     );
   }
 
-  createEmissionsExplainer() {
-    const header = "Emissions";
-    const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure in the atmosphere. We make these measurements in order to infer emissions.`;
-    const body = `There are two primary methods for estimating greenhouse gas emissions:
-            a) Inventory methods, in which emissions are estimated using socioeconomic data (e.g., the amount of fuel sold and used in the UK). A map showing the location of the UK's carbon dioxide and methane emissions, according to the inventory, is shown here.\n
-            b) Atmospheric data-based methods, in which concentration data and atmospheric models are compared to determine whether the inventory may need to be adjusted.`;
-    return <ExplanationBox nogap={true} header={header} intro={intro} explain={body} />;
-  }
-
-  createComparisonExplainer() {
-    const header = "Comparing model with observations";
-    const body = `We can compare the inventory emissions to the atmospheric measurements to see how well they compare. 
-    From this initial “best guess”, we can run simulations where, by making small changes to the possible emissions, 
-    we can continually improve to better match the measurements made at each site.`;
-    return <ExplanationBox header={header} intro={body} />;
-  }
+  // createEmissionsExplainer() {
+  //   const header = "Emissions";
+  //   const intro = `On the live dashboard page we showed the amount of carbon dioxide and methane we measure in the atmosphere. These measurements can be used to infer emissions.`;
+  //   const body = `There are two primary methods for estimating greenhouse gas emissions:
+  //           a) Inventory methods, in which emissions are estimated using socioeconomic data (e.g., the amount of fuel sold and used in the UK). A map showing the location of the UK's carbon dioxide and methane emissions, according to the inventory, is shown here.\n
+  //           b) Atmospheric data-based methods, in which concentration data and atmospheric models are compared to determine whether the inventory may need to be adjusted.`;
+  //   return <ExplanationBox nogap={true} header={header} intro={intro} explain={body} />;
+  // }
 
   createModelExplainer() {
     const header = "Simulating travel of greenhouse gases";
     const body = `When greenhouse gases are emitted, where they travel is dependant
-    on many different factors including wind direction, speed and turbulence. 
-    When we measure greenhouse gases in the atmosphere, if we want to start to understand
-    where they came from, first we need to use a model that can simulate this.
-    Once we have done this we can then compare inventories, as described above, to atmospheric
+    on many different factors including wind direction, speed and turbulence.
+    Greenhouse gases are often measured from high places, including the top of buildings
+    and tall masts, like BT towers (as illustrated here).
+    If we want to start to understand where these greenhouse gases
+    came from, first we need to use a model that can simulate this.
+    We can then compare emissions inventories, as described above, to atmospheric
     observations and see how well our predictions match reality.`;
     // In order to compare inventories to atmospheric observations, we need to use a model that can simulate how greenhouse gases are dispersed in the atmosphere.
     // Here, we show a simulation in which XXXXXX.`;
+    return <ExplanationBox header={header} intro={body} />;
+  }
+
+  createComparisonExplainer() {
+    const header = "Comparing models with observations";
+    const body = `To start with we can use our inventory emissions as our initial “best guess”
+    and compare this to real atmospheric measurements. We can then run simulations to make 
+    small changes to the possible emissions and continuously improve to better match the measurements made at each site.
+    The animation below illustrates this process, using a site in Tacolneston, Norfolk which is part of
+    the UK DECC network as an example.`;
     return <ExplanationBox header={header} intro={body} />;
   }
 
@@ -59,7 +64,9 @@ class Explainer extends React.Component {
     return (
       <div className={styles.explainerContent}>
         <div className={styles.emissionsMap}>{this.createEmissionsBox()}</div>
-        <div className={styles.emissionsExplainer}>{this.createEmissionsExplainer()}</div>
+        <div className={styles.emissionsExplainer}>
+          <EmissionsExplainer />
+        </div>
         <div className={styles.dispersionExplainer}>{this.createModelExplainer()}</div>
         <div className={styles.dispersionImage}>
           <img src={gasDispersionImage} alt="How source gases disperse in the atmopshere" />
