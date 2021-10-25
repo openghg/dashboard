@@ -18,64 +18,73 @@ class LeafletMap extends React.Component {
   }
 
   processSites() {
-    const sites = this.props.sites;
+    const metadata = this.props.metadata;
 
-    if (!sites) {
+    if (!metadata) {
       return null;
     }
 
     let markers = [];
+
+    let seenSites = new Set();
     //
-    for (const [network, networkData] of Object.entries(sites)) {
-      for (const [key, value] of Object.entries(networkData)) {
-        const latitude = value["latitude"];
-        const longitude = value["longitude"];
+    for (const speciesData of Object.values(metadata)) {
+      for (const [network, networkData] of Object.entries(speciesData)) {
+        for (const [site, value] of Object.entries(networkData)) {
+          if (seenSites.has(site)) {
+            continue;
+          }
 
-        const locationStr = `${latitude}, ${longitude}`;
-        const location = [latitude, longitude];
+          const latitude = value["latitude"];
+          const longitude = value["longitude"];
 
-        const colourHex = this.props.colours[network][key];
+          const locationStr = `${latitude}, ${longitude}`;
+          const location = [latitude, longitude];
 
-        const marker = (
-          <CircleMarker
-            key={locationStr}
-            center={location}
-            data={key}
-            eventHandlers={{
-              click: this.handleClick,
-            }}
-            fillColor={colourHex}
-            color={colourHex}
-            fill={true}
-            fillOpacity={1.0}
-            radius={10}
-          >
-            <Popup>
-              <div className={styles.marker}>
-                <div className={styles.markerBody}>
-                  {value["long_name"]}
-                  <br />
-                  <br />
-                  Height: {value["magl"]}
-                  <br />
-                  <br />
-                  For more information please visit the network website - {`${network}`}
-                  {/* <TextButton
-                      styling="dark"
-                      onClickParam={key}
-                      extraStyling={{ fontSize: "1.0em" }}
-                      onClick={this.props.siteInfoOverlay}
-                    >
-                      Read site information
-                    </TextButton> */}
+          const colourHex = this.props.colours[network][site];
+
+          const marker = (
+            <CircleMarker
+              key={locationStr}
+              center={location}
+              data={site}
+              eventHandlers={{
+                click: this.handleClick,
+              }}
+              fillColor={colourHex}
+              color={colourHex}
+              fill={true}
+              fillOpacity={1.0}
+              radius={10}
+            >
+              <Popup>
+                <div className={styles.marker}>
+                  <div className={styles.markerBody}>
+                    {value["long_name"]}
+                    <br />
+                    <br />
+                    Height: {value["magl"]}
+                    <br />
+                    <br />
+                    For more information please visit the network website - {`${network}`}
+                    {/* <TextButton
+                          styling="dark"
+                          onClickParam={key}
+                          extraStyling={{ fontSize: "1.0em" }}
+                          onClick={this.props.siteInfoOverlay}
+                        >
+                          Read site information
+                        </TextButton> */}
+                  </div>
+                  <div className={styles.markerLocation}>Location: {locationStr}</div>
                 </div>
-                <div className={styles.markerLocation}>Location: {locationStr}</div>
-              </div>
-            </Popup>
-          </CircleMarker>
-        );
+              </Popup>
+            </CircleMarker>
+          );
 
-        markers.push(marker);
+          markers.push(marker);
+          seenSites.add(site);
+        }
       }
     }
 

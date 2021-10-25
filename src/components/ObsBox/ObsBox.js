@@ -91,7 +91,8 @@ class ObsBox extends React.Component {
               key={key}
               colours={this.props.colours}
               units={units}
-              siteMetadata={this.props.sites}
+              siteMetadata={this.props.metadata}
+              selectedSpecies={this.props.selectedSpecies}
             />
           </GraphContainer>
         );
