@@ -23,12 +23,12 @@ class EmissionsBox extends React.Component {
     const images = {
       CH4: {
         Combustion: comb_ch4,
-        Production: prod_ch4,
+        Power: prod_ch4,
         Total: stacked_ch4,
         Waste: waste_ch4,
         colorbars: {
           Combustion: null,
-          Production: null,
+          Power: null,
           Total: null,
           Waste: null,
         },
@@ -37,12 +37,12 @@ class EmissionsBox extends React.Component {
         Natural: natural_co2,
         Combustion: comb_co2,
         Total: stacked_co2,
-        Production: production_co2,
+        Power: production_co2,
         colorbars: {
           Natural: null,
           Combustion: null,
           Total: null,
-          Production: null,
+          Power: null,
         },
       },
     };
