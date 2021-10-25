@@ -19,7 +19,7 @@ class ObsExplainer extends React.Component {
           
 
           <li>
-            Measurements are made by the&nbsp;
+            Partners on this project are the&nbsp;
             <a
               href="https://www.bristol.ac.uk/chemistry/research/acrg/current/decc.html"
               target="_blank"
