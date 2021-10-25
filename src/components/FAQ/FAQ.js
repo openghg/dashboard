@@ -7,10 +7,10 @@ class FAQ extends React.Component {
   render() {
     const Q1 = "What determines the concentration of greenhouse gases in the atmosphere?";
     const A1 = `Greenhouse gas concentrations are influenced by emissions and meteorology. 
-    The concentration at a particular point in time will depend on the the background concentration, 
+    The concentration at a particular point in time will depend on the background concentration, 
     the magnitude of the emissions upwind of the sensor, the wind speed, and the amount of mixing that 
-    the gas experiences in the atmosphere. Greenhouse gas concentrations change continuously because 
-    each of these factors, and the wind direction, change continuously.`;
+    the gas experiences in the atmosphere. These factors, as well as the wind direction, mean that 
+    measured greenhouse gas concentrations at a given location change continuously.`;
 
     const Q2 = "What causes the amount of mixing in the atmosphere to change?";
     const A2 = `Mixing of greenhouse gases is driven by turbulence. You experience this turbulence every day as gusts of wind.\n
@@ -19,12 +19,12 @@ class FAQ extends React.Component {
     During periods of strong turbulence, gases are mixed away from the surface more rapidly than during times with low turbulence, or vice versa. Therefore, when the turbulence is strong and gases are mixed more rapidly, concentrations tend to be lower.`;
 
     const Q3 = "Why do the concentrations increase at night-time?";
-    const A3 = `It may seem counter-intitive that concentrations tend to be high during the night, when we 
-    might expect emissions to be low. However, as explained in Questions 1 and 2, concentrations are influenced by both 
-    emissions and meteorology. Typically, at nighttime, atmospheric mixing tends to be weaker, because 
-    radiation from the sun is not warming the ground and generating turbulence. Therefore, gases tend to hang around near the surface, 
-    close to where they are emitted, and concentrations tend to build up in the lower atmosphere. This effect tends to 
-    overwhelm any emissions change, particularly on clear days.`;
+    const A3 = `It may seem counter-intitive that measured concentrations tend to be high during the night,
+    when we might expect emissions to be low. However, as explained in Questions 1 and 2, concentrations 
+    are influenced by both emissions and meteorology. Typically, at nighttime, atmospheric mixing tends to 
+    be weaker, because radiation from the sun is not warming the ground and generating turbulence. Therefore, gases tend to hang around near the surface, 
+    close to where they are emitted, and concentrations tend to build up in the lower atmosphere. 
+    This effect often overwhelms any emissions change, particularly on clear days.`;
 
     const Q4 = "What does the minimum concentration indicate?";
     const A4 = `During periods of strong winds and/or strong mixing, concentrations will tend toward some 
