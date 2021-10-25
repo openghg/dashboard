@@ -151,7 +151,7 @@ class EmissionsBox extends React.Component {
     const midpointLon = overlayBounds[0][1] + (overlayBounds[1][1] - overlayBounds[0][1]) / 2
     const overlayMidpoint = [midpointLat, midpointLon]
 
-    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI). Generated using ukghg model.`;
+    const emissionsText = `Emission locations from the National Atmospheric Emissions Inventory (NAEI). Maps generated using ukghg model.`;
 
     return (
       <div className={styles.container}>
