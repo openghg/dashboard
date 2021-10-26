@@ -8,6 +8,7 @@ import ObsBox from "../ObsBox/ObsBox";
 import ObsExplainer from "../ObsExplainer/ObsExplainer";
 import DensityMap from "../DensityMap/DensityMap";
 import GraphContainer from "../GraphContainer/GraphContainer";
+import MobileExplainer from "../MobileExplainer/MobileExplainer";
 
 class LiveData extends React.Component {
   createMapExplainer() {
@@ -71,7 +72,9 @@ class LiveData extends React.Component {
             <DensityMap />
           </GraphContainer>
         </div>
-        <div className={styles.mobileExplainer}>Some sweet text</div>
+        <div className={styles.mobileExplainer}>
+          <MobileExplainer />
+        </div>
       </div>
     );
   }
