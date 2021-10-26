@@ -4,7 +4,11 @@ import { LayerGroup, MapContainer, ImageOverlay, TileLayer, CircleMarker, Popup 
 // import TextButton from "../TextButton/TextButton";
 // import "./LeafletMapResponsive.css";
 
+import { toTitleCase } from "../../util/helpers";
+
 import styles from "./LeafletMap.module.css";
+
+import networkMetadata from "../../data/networkInfo.json";
 
 class LeafletMap extends React.Component {
   constructor(props) {
@@ -41,6 +45,23 @@ class LeafletMap extends React.Component {
           const locationStr = `${latitude}, ${longitude}`;
           const location = [latitude, longitude];
 
+          const networkURL = networkMetadata[network]["url"];
+          const networkName = networkMetadata[network]["long_name"];
+          const siteName = value["long_name"];
+
+          const siteHeight = value["magl"];
+
+          let heightSection = null;
+          if (siteHeight) {
+            heightSection = (
+              <div>
+                <br />
+                Height: {siteHeight}
+                <br />
+              </div>
+            );
+          }
+
           const colourHex = this.props.colours[network][site];
 
           const marker = (
@@ -60,21 +81,14 @@ class LeafletMap extends React.Component {
               <Popup>
                 <div className={styles.marker}>
                   <div className={styles.markerBody}>
-                    {value["long_name"]}
+                    <div className={styles.markerTitle}>{toTitleCase(siteName)}</div>
                     <br />
+                    {heightSection}
                     <br />
-                    Height: {value["magl"]}
-                    <br />
-                    <br />
-                    For more information please visit the network website - {`${network}`}
-                    {/* <TextButton
-                          styling="dark"
-                          onClickParam={key}
-                          extraStyling={{ fontSize: "1.0em" }}
-                          onClick={this.props.siteInfoOverlay}
-                        >
-                          Read site information
-                        </TextButton> */}
+                    For more information please visit the&nbsp;
+                    <a href={networkURL} target="_blank" rel="noopener noreferrer">
+                      {networkName} website.
+                    </a>
                   </div>
                   <div className={styles.markerLocation}>Location: {locationStr}</div>
                 </div>

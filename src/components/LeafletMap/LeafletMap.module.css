@@ -22,6 +22,11 @@
   align-content: space-between;
 }
 
+.markerTitle {
+  font-size: 1.0em;
+  font-weight: 600;
+}
+
 .markerBody {
   font-size: 1.2em;
   font-weight: 300;
@@ -30,5 +35,5 @@
 }
 
 .markerLocation {
-  font-style: italic;
+  font-style: normal;
 }
