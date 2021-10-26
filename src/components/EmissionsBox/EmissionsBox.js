@@ -22,27 +22,27 @@ class EmissionsBox extends React.Component {
 
     const images = {
       CH4: {
-        Combustion: comb_ch4,
-        Production: prod_ch4,
-        Total: stacked_ch4,
         Waste: waste_ch4,
+        Combustion: comb_ch4,
+        Power: prod_ch4,
+        Total: stacked_ch4,
         colorbars: {
-          Combustion: null,
-          Production: null,
-          Total: null,
           Waste: null,
+          Combustion: null,
+          Power: null,
+          Total: null,
         },
       },
       CO2: {
         Natural: natural_co2,
         Combustion: comb_co2,
+        Power: production_co2,
         Total: stacked_co2,
-        Production: production_co2,
         colorbars: {
           Natural: null,
           Combustion: null,
+          Power: null,
           Total: null,
-          Production: null,
         },
       },
     };
@@ -83,7 +83,7 @@ class EmissionsBox extends React.Component {
     let sectorButtons = [];
     const extraStyling = { fontSize: "1.5em" };
 
-    for (const key of Object.keys(selectedImages).sort()) {
+    for (const key of Object.keys(selectedImages)) {
       if (key === "colorbars") continue;
 
       let styling = "dark";
@@ -150,14 +150,32 @@ class EmissionsBox extends React.Component {
     const midpointLat = overlayBounds[0][0] + (overlayBounds[1][0] - overlayBounds[0][0]) / 2
     const midpointLon = overlayBounds[0][1] + (overlayBounds[1][1] - overlayBounds[0][1]) / 2
     const overlayMidpoint = [midpointLat, midpointLon]
+    const mapstyle = `proton`
 
-    const emissionsText = `Emissions from the National Atmospheric Emissions Inventory (NAEI).`;
+    // const emissionsText = `Emission locations from the National Atmospheric Emissions Inventory (NAEI). Maps generated using ukghg model.`;
 
     return (
       <div className={styles.container}>
-        <div className={styles.body}>{emissionsText}</div>
+        <div className={styles.caption}>
+            Emission locations from the&nbsp;
+            <a
+              href="https://naei.beis.gov.uk/about/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+            National Atmospheric Emissions Inventory (NAEI)
+            </a>
+          . Maps generated using&nbsp;
+          <a
+              href="https://github.com/NERC-CEH/ukghg"
+              target="_blank"
+              rel="noopener noreferrer"
+            >          
+            ukghg model</a>
+          .
+        </div>
         <div className={styles.plot}>
-          <LeafletMap centre={overlayMidpoint} zoom={5} overlayBounds={overlayBounds} overlayImg={emissionsImage} />
+          <LeafletMap centre={overlayMidpoint} zoom={5} overlayBounds={overlayBounds} overlayImg={emissionsImage} mapstyle={mapstyle}/>
         </div>
         <div className={styles.buttons}>
           <div className={styles.speciesButtons}>{speciesButtons}</div>

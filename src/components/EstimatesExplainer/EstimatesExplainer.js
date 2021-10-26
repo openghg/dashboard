@@ -25,7 +25,7 @@ class EstimatesExplainer extends React.Component {
         <div className={styles.explain}>
           This study suggested that methane emissions from the inventory were consistent with atmospheric data in recent
           years. However, in the 1990s and early 2000s, the two methods disagreed. This information is now allowing the
-          inventory teams to examine assumptions in the earlier record, and, hopefully, improve our understand of the
+          inventory teams to examine assumptions in the earlier record, and, hopefully, improve our understanding of the
           UK's methane emissions.
         </div>
       </div>
