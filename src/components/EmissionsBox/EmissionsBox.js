@@ -150,6 +150,7 @@ class EmissionsBox extends React.Component {
     const midpointLat = overlayBounds[0][0] + (overlayBounds[1][0] - overlayBounds[0][0]) / 2
     const midpointLon = overlayBounds[0][1] + (overlayBounds[1][1] - overlayBounds[0][1]) / 2
     const overlayMidpoint = [midpointLat, midpointLon]
+    const mapstyle = `proton`
 
     const emissionsText = `Emission locations from the National Atmospheric Emissions Inventory (NAEI). Maps generated using ukghg model.`;
 
@@ -157,7 +158,7 @@ class EmissionsBox extends React.Component {
       <div className={styles.container}>
         <div className={styles.body}>{emissionsText}</div>
         <div className={styles.plot}>
-          <LeafletMap centre={overlayMidpoint} zoom={5} overlayBounds={overlayBounds} overlayImg={emissionsImage} />
+          <LeafletMap centre={overlayMidpoint} zoom={5} overlayBounds={overlayBounds} overlayImg={emissionsImage} mapstyle={mapstyle}/>
         </div>
         <div className={styles.buttons}>
           <div className={styles.speciesButtons}>{speciesButtons}</div>
