@@ -24,7 +24,7 @@ class EmissionsExplainer extends React.Component {
                   <li><b>Atmospheric data-based methods</b>, in which concentration data and atmospheric models are compared to determine whether the inventory is accurate.</li>
                 </ol>
                 A map showing the location of the UK's carbon dioxide and methane emissions, according to the inventory, 
-                is shown here split by sector.
+                is shown here split by significant sector.
             </div>
         </div>
     );
