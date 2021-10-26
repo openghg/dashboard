@@ -1,0 +1,14 @@
+{
+  "beaco2n": {
+    "url": "http://beacon.berkeley.edu/",
+    "long_name": "BEACO2N"
+  },
+  "aqmesh_glasgow": {
+    "url": "https://www.ch.cam.ac.uk/group/atm/",
+    "long_name": "AQMesh"
+  },
+  "npl_picarro": {
+      "url": "https://www.npl.co.uk/emissions-atmospheric-metrology", 
+      "long_name": "National Physical Laboratory"
+  }
+}
