@@ -23,7 +23,7 @@ class DensityMap extends React.Component {
     // Plotly expects an array of objects
     const plotData = [plotObj];
     const layout = {
-      mapbox: { center: { lon: -4.252836, lat: 55.863658 }, style: "open-street-map", zoom: 8 },
+      mapbox: { center: { lon: -4.212836, lat: 55.843658 }, style: "open-street-map", zoom: 10 },
       coloraxis: {
         colorscale: "Viridis",
         colorbar: { title: { side: "right", text: "Methane (ppb)", font: { size: 16 } } },
