@@ -16,7 +16,7 @@ class DensityMap extends React.Component {
       "(enhancement over background)" +
       "<extra></extra>";
 
-    let plotObj = { type: "densitymapbox", coloraxis: "coloraxis", hovertemplate: hovertemplate };
+    let plotObj = { type: "densitymapbox", coloraxis: "coloraxis", hovertemplate: hovertemplate, radius: 15 };
     // Now add in the extra lat, lon, z keys from the exported data
     const ch4Data = ch4MobileGlasgow["ch4"]["data"];
     plotObj = extend(plotObj, ch4Data);
