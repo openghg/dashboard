@@ -57,7 +57,7 @@ class LeafletMap extends React.Component {
           const siteHeight = value["magl"];
 
           let heightSection = null;
-          if (siteHeight) {
+          if (siteHeight && siteHeight !== "NA") {
             heightSection = (
               <div>
                 <br />
