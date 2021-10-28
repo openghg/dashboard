@@ -48,7 +48,7 @@ class ObsBox extends React.Component {
               try {
                 multiUnits.push(metadata[selectedSpecies][network][site]["units"]);
               } catch (error) {
-                console.log(`Error reading units - ${error}`);
+                console.error(`Error reading units - ${error}`);
               }
             }
           }

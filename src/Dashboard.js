@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route, Link, HashRouter } from "react-router-dom";
 // import { schemeTableau10, schemeSet3, schemeDark2, schemeAccent } from "d3-scale-chromatic";
-import { cloneDeep, set } from "lodash";
+import { cloneDeep, has, set } from "lodash";
 
 import ControlPanel from "./components/ControlPanel/ControlPanel";
 import OverlayContainer from "./components/OverlayContainer/OverlayContainer";
@@ -79,7 +79,7 @@ class Dashboard extends React.Component {
         siteData[site]["image"] = siteImages[site];
         siteData[site]["description"] = siteInfoJSON[site]["description"];
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
 
@@ -90,15 +90,24 @@ class Dashboard extends React.Component {
   }
 
   siteSelector(selectedSite) {
-    const siteLower = String(selectedSite).toLowerCase();
+    // const siteLower = String(selectedSite).toLowerCase();
+    let selectedSiteSet = new Set();
 
-    // Here we change all the sites and select all species / sectors at that site
+    if (selectedSite instanceof Set) {
+      selectedSiteSet = selectedSite;
+    } else {
+      selectedSiteSet.add(selectedSite);
+    }
+
+    // // Here we change all the sites and select all species / sectors at that site
     let selectedSites = cloneDeep(this.state.selectedSites);
 
-    if (selectedSites.has(siteLower)) {
-      selectedSites.delete(siteLower);
-    } else {
-      selectedSites.add(siteLower);
+    for (const site of selectedSiteSet) {
+      if (selectedSites.has(site)) {
+        selectedSites.delete(site);
+      } else {
+        selectedSites.add(site);
+      }
     }
 
     // Now update the selectedKeys so each selected site has all its
@@ -125,7 +134,36 @@ class Dashboard extends React.Component {
 
   speciesSelector(species) {
     const speciesLower = species.toLowerCase();
+    const selectedSitesClone = cloneDeep(this.state.selectedSites);
+
+    this.setState({ selectedSites: new Set() }, () => {
+      this.siteSpeciesChange(species, selectedSitesClone);
+    });
+
     this.setState({ selectedSpecies: speciesLower });
+  }
+
+  siteSpeciesChange(species, oldSelectedSites) {
+    // We want to select a site that has data for this species and show that
+    const processedData = this.state.processedData;
+    const speciesData = this.state.processedData[species];
+
+    let newSites = new Set();
+    for (const networkData of Object.values(speciesData)) {
+      for (const site of oldSelectedSites) {
+        if (has(networkData, site)) {
+          newSites.add(site);
+        }
+      }
+    }
+
+    if (newSites.size === 0) {
+      const network = Object.keys(processedData[species]).sort()[0];
+      const site = Object.keys(processedData[species][network]).sort()[0];
+      newSites.add(site);
+    }
+
+    this.siteSelector(newSites);
   }
 
   toggleOverlay() {
@@ -265,7 +303,10 @@ class Dashboard extends React.Component {
           });
         }
       );
+  }
 
+  updateSites(selectedSpecies) {
+    // Update the sites shown on the map so only sites with data for the selected species are shown.
   }
 
   anySelected() {
@@ -312,9 +353,11 @@ class Dashboard extends React.Component {
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-      return <div className={styles.loaderContent}>
-        <div className={styles.loaderRing}></div>
-      </div>
+      return (
+        <div className={styles.loaderContent}>
+          <div className={styles.loaderRing}></div>
+        </div>
+      );
     } else {
       return (
         <HashRouter>
@@ -364,7 +407,6 @@ class Dashboard extends React.Component {
                   defaultSpecies={this.state.defaultSpecies}
                   colours={this.state.colours}
                   setSiteOverlay={this.state.setSiteOverlay}
-                  //   sites={this.state.sites}
                   metadata={this.state.metadata}
                 />
               </Route>

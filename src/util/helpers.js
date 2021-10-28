@@ -74,7 +74,7 @@ export function importSiteImages() {
       const sansExtension = String(filename).split(".")[0].toUpperCase();
 
       if (sansExtension.length > 3) {
-          console.log("We expect filenames to be three letter site codes");
+          console.error("We expect filenames to be three letter site codes");
           continue;
       }
 
