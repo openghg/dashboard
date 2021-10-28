@@ -13,10 +13,7 @@ class ObsExplainer extends React.Component {
         <div className={styles.explain}>
           <li>Greenhouse gas concentrations are monitored from a network of sites across the city.</li>
           <li>Measurements are made of carbon dioxide and methane, the most important greenhouse gases.</li>
-          <li>
-            Scientists are using these observations to learn more about the UK's greenhouse gas emissions. 
-          </li>
-          
+          <li>Scientists are using these observations to learn more about the UK's greenhouse gas emissions.</li>
 
           <li>
             Partners on this project are the&nbsp;
@@ -47,7 +44,11 @@ class ObsExplainer extends React.Component {
             >
               Royal Holloway University of London
             </a>
-            &nbsp;and&nbsp;
+            ,&nbsp;
+            <a href="https://www.ch.cam.ac.uk/group/atm/" target="_blank" rel="noopener noreferrer">
+              University of Cambridge
+            </a>
+            ,&nbsp;and&nbsp;
             <a
               href="https://www.strath.ac.uk/workwithus/globalenvironmentalmeasurementmonitoring/"
               target="_blank"
@@ -56,9 +57,7 @@ class ObsExplainer extends React.Component {
               University of Strathclyde.
             </a>
           </li>
-          <li>
-          Start exploring the measurements by selecting a site from the map
-          </li>
+          <li>Start exploring the measurements by selecting a site from the map</li>
         </div>
       </div>
     );
