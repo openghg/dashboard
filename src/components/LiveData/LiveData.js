@@ -57,10 +57,10 @@ class LiveData extends React.Component {
           <LeafletMap
             siteSelector={this.props.siteSelector}
             metadata={this.props.metadata}
+            selectedSpecies={this.props.selectedSpecies}
             centre={mapCentre}
             zoom={10}
             colours={this.props.colours}
-            siteData={this.props.siteData}
             siteInfoOverlay={this.props.setSiteOverlay}
           />
         </div>

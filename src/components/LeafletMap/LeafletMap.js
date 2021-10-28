@@ -31,8 +31,13 @@ class LeafletMap extends React.Component {
     let markers = [];
 
     let seenSites = new Set();
+    const selectedSpecies = this.props.selectedSpecies;
     //
-    for (const speciesData of Object.values(metadata)) {
+    for (const [species, speciesData] of Object.entries(metadata)) {
+      if (species !== selectedSpecies) {
+        continue;
+      }
+
       for (const [network, networkData] of Object.entries(speciesData)) {
         for (const [site, value] of Object.entries(networkData)) {
           if (seenSites.has(site)) {
