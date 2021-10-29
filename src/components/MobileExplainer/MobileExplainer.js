@@ -9,9 +9,10 @@ class MobileExplainer extends React.Component {
 
     return (
       <div className={style}>
-        <div className={styles.header}>Mobile methane measurements around Glasgow</div>
+        <div className={styles.header}>Mobile methane study</div>
         <div className={styles.intro}>
-          This map shows the results of measurements of methane taken whilst driving 350 km around Glasgow.
+          This map shows methane detected by a mobile study completed in August, 2021. 
+          Methane was measured using a car-mounted instrument which was driven 350km around Glasgow to gather this data.
           <br />
           <br />
           <a
