@@ -95,6 +95,14 @@ body {
   padding-bottom: 2vh;
 }
 
+.mobileMap {
+  grid-area: mobileMap;
+}
+
+.mobileExplainer {
+  grid-area: mobileExplainer;
+}
+
 /* Holds the content for the single column / explainer content */
 
 .contentCards {
@@ -128,7 +136,7 @@ body {
   row-gap: 1vh;
   grid-auto-rows: auto;
   grid-template-columns: 1fr;
-  grid-template-areas: "intro" "timeseries" "mapExplainer" "siteMap";
+  grid-template-areas: "intro" "timeseries" "mapExplainer" "siteMap" "mobileMap" "mobileExplainer";
 }
 
 .explainerContent {
@@ -203,7 +211,7 @@ body {
   }
   .content {
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "intro intro" "timeseries timeseries" "mapExplainer siteMap";
+    grid-template-areas: "intro intro" "timeseries timeseries" "mapExplainer siteMap" "mobileMap mobileExplainer";
   }
 }
 

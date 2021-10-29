@@ -81,7 +81,7 @@ class ObsBox extends React.Component {
         const yLabel = `Concentration  (${units})`;
 
         const vis = (
-          <GraphContainer heightScale={heightScale} widthScale={widthScale} key={key}>
+          <GraphContainer heightScale={heightScale} widthScale={widthScale} key={key} divName="graphContent">
             <MultiSiteLineChart
               title={title}
               divID={getVisID()}

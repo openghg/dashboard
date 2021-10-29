@@ -6,6 +6,9 @@ import LeafletMap from "../LeafletMap/LeafletMap";
 import styles from "../../Dashboard.module.css";
 import ObsBox from "../ObsBox/ObsBox";
 import ObsExplainer from "../ObsExplainer/ObsExplainer";
+import DensityMap from "../DensityMap/DensityMap";
+import GraphContainer from "../GraphContainer/GraphContainer";
+import MobileExplainer from "../MobileExplainer/MobileExplainer";
 
 class LiveData extends React.Component {
   createMapExplainer() {
@@ -63,6 +66,14 @@ class LiveData extends React.Component {
             colours={this.props.colours}
             siteInfoOverlay={this.props.setSiteOverlay}
           />
+        </div>
+        <div className={styles.mobileMap} id="densityMapContent">
+          <GraphContainer divName="densityMapContent">
+            <DensityMap />
+          </GraphContainer>
+        </div>
+        <div className={styles.mobileExplainer}>
+          <MobileExplainer />
         </div>
       </div>
     );

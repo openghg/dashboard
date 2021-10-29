@@ -11,11 +11,12 @@ class GraphContainer extends React.Component {
 
   updateDimensions() {
     const node = this.contRef.current;
-    const dbcontent = document.getElementById("graphContent");
+    const divName = this.props.divName;
+    const dbcontent = document.getElementById(divName);
     const widthScale = this.props.widthScale ? this.props.widthScale : 1.0;
     const heightScale = this.props.heightScale ? this.props.heightScale : 1.0;
 
-    if (node) {
+    if (node && dbcontent) {
       const height = heightScale * node.parentNode.clientHeight;
       const width = widthScale * dbcontent.clientWidth;
       this.setState({ height: height, width: width });
@@ -44,6 +45,9 @@ class GraphContainer extends React.Component {
 }
 
 GraphContainer.propTypes = {
+  widthScale: PropTypes.number,
+  heightScale: PropTypes.number,
+  divName: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 
