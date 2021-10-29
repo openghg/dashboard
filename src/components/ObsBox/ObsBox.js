@@ -57,9 +57,9 @@ class ObsBox extends React.Component {
 
       if (!isEmpty(speciesEmissions)) {
         // Do a quick check to make sure all the units are the same
-        let units = null;
+        let units = "";
         if (new Set(multiUnits).size === 1) {
-          units = multiUnits[0];
+          units = ` (${multiUnits[0]})`;
         } else {
           console.error(`Multiple units for same species - ${multiUnits}`);
         }
@@ -78,7 +78,7 @@ class ObsBox extends React.Component {
         // }
 
         const xLabel = "Date";
-        const yLabel = `Concentration  (${units})`;
+        const yLabel = `Concentration${units}`;
 
         const vis = (
           <GraphContainer heightScale={heightScale} widthScale={widthScale} key={key} divName="graphContent">
