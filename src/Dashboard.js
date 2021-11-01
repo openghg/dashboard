@@ -15,11 +15,8 @@ import Explainer from "./components/Explainer/Explainer";
 import { importSiteImages } from "./util/helpers";
 import styles from "./Dashboard.module.css";
 
-// Timeseries data
-import measurementData from "./data/measurementData.json";
 // Site description information
 import siteInfoJSON from "./data/siteInfo.json";
-// import { scaleOrdinal } from "d3-scale";
 import chroma from "chroma-js";
 
 class Dashboard extends React.Component {
@@ -43,16 +40,7 @@ class Dashboard extends React.Component {
       colours: {},
     };
 
-    // By default we'll just pick a species from a single site to show
-    // const defaultSpecies = Object.keys(measurementData).sort()[0];
-    const defaultNetwork = Object.keys(measurementData)[0];
-    const defaultSpecies = Object.keys(measurementData[defaultNetwork]).sort()[0];
-    const defaultSite = Object.keys(measurementData[defaultNetwork][defaultSpecies]).sort()[0];
 
-    this.state.defaultSpecies = defaultSpecies;
-    this.state.defaultSite = defaultSite;
-    this.state.selectedSites = new Set([defaultSite]);
-    this.state.selectedSpecies = defaultSpecies;
 
     // Build the site info for the overlays
     this.buildSiteInfo();
@@ -185,8 +173,19 @@ class Dashboard extends React.Component {
     let processedData = {};
     let metadata = {};
 
-    let iter = this.state.selectedSites.values();
-    const defaultSite = iter.next().value;
+    let defaultNetwork = Object.keys(rawData).sort()[0]
+    let defaultSpecies = Object.keys(rawData[defaultNetwork]).sort()[0]
+    let defaultSite = Object.keys(rawData[defaultNetwork][defaultSpecies]).sort()[0]
+
+    try {
+      if("gst" in rawData["npl_picarro"]["co2"]) {
+        defaultSite = "gst"
+        defaultSpecies = "co2"
+        defaultNetwork = "npl_picarro"
+      }
+    } catch(error) {
+      console.warn("Couldn't load default scicence tower data")
+    }
 
     let uniqueSites = {};
 
@@ -270,9 +269,15 @@ class Dashboard extends React.Component {
       siteIndex = 0;
     }
 
+
+
     // Disabled the no direct mutation rule here as this only gets called from the constructor
     /* eslint-disable react/no-direct-mutation-state */
     // Give each site a colour
+    this.state.defaultSpecies = defaultSpecies;
+    this.state.defaultSite = defaultSite;
+    this.state.selectedSites = new Set([defaultSite]);
+    this.state.selectedSpecies = defaultSpecies;
     this.state.colours = siteColours;
     this.state.processedData = processedData;
     this.state.selectedKeys = dataKeys;
