@@ -136,7 +136,7 @@ body {
   row-gap: 1vh;
   grid-auto-rows: auto;
   grid-template-columns: 1fr;
-  grid-template-areas: "intro" "timeseries" "mapExplainer" "siteMap" "mobileMap" "mobileExplainer";
+  grid-template-areas: "intro" "timeseries" "siteMap" "mapExplainer" "mobileExplainer" "mobileMap";
 }
 
 .explainerContent {

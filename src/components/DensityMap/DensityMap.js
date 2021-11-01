@@ -23,14 +23,7 @@ class DensityMap extends React.Component {
     // Plotly expects an array of objects
     const plotData = [plotObj];
 
-    // Cap the height of the plot
-    let height = this.props.height;
-    if(height < 300) {
-      height = 2*this.props.height;
-    } else {
-      height = 350;
-    }
-
+    const height = 400;
     const width = this.props.width;
 
     const layout = {
@@ -39,7 +32,7 @@ class DensityMap extends React.Component {
         colorscale: "Viridis",
         colorbar: { title: { side: "right", text: "Methane (ppb)", font: { size: 16 } } },
       },      
-      margin: { t: 30, b: 30 },
+      margin: { t: 30, b: 30, l: 30, r: 30 },
       width: width,
       height: height,
     };
