@@ -67,12 +67,12 @@ class LiveData extends React.Component {
             siteInfoOverlay={this.props.setSiteOverlay}
           />
         </div>
-        <div className={styles.mobileMap} id="densityMapContent">
+        <div className={styles.mobileMap} >
           <GraphContainer divName="densityMapContent">
             <DensityMap />
           </GraphContainer>
         </div>
-        <div className={styles.mobileExplainer}>
+        <div className={styles.mobileExplainer} id="densityMapContent">
           <MobileExplainer />
         </div>
       </div>
