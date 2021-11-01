@@ -22,21 +22,31 @@ class DensityMap extends React.Component {
     plotObj = extend(plotObj, ch4Data);
     // Plotly expects an array of objects
     const plotData = [plotObj];
+
+    // Cap the height of the plot
+    let height = this.props.height;
+    if(height < 300) {
+      height = 2*this.props.height;
+    } else {
+      height = 350;
+    }
+
+    const width = this.props.width;
+
     const layout = {
       mapbox: { center: { lon: -4.212836, lat: 55.843658 }, style: "open-street-map", zoom: 10 },
       coloraxis: {
         colorscale: "Viridis",
         colorbar: { title: { side: "right", text: "Methane (ppb)", font: { size: 16 } } },
-      },
-      autosize: true,
+      },      
       margin: { t: 30, b: 30 },
+      width: width,
+      height: height,
     };
-
-    const style = { width: "100%", height: "120%" };
 
     return (
       <div className={styles.content}>
-        <Plot data={plotData} layout={layout} useResizeHandler={true} style={style} />
+        <Plot data={plotData} layout={layout} />
       </div>
     );
   }
