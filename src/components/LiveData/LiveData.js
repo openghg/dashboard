@@ -62,7 +62,7 @@ class LiveData extends React.Component {
             metadata={this.props.metadata}
             selectedSpecies={this.props.selectedSpecies}
             centre={mapCentre}
-            zoom={10}
+            zoom={9}
             colours={this.props.colours}
             siteInfoOverlay={this.props.setSiteOverlay}
           />

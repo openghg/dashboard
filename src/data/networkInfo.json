@@ -8,7 +8,11 @@
     "long_name": "AQMesh"
   },
   "npl_picarro": {
-      "url": "https://www.npl.co.uk/emissions-atmospheric-metrology", 
-      "long_name": "National Physical Laboratory"
+    "url": "https://www.npl.co.uk/emissions-atmospheric-metrology",
+    "long_name": "National Physical Laboratory"
+  },
+  "cop26": {
+    "url": "https://www.bristol.ac.uk/chemistry/research/acrg/",
+    "long_name": "University of Bristol for COP26"
   }
 }
