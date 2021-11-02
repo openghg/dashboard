@@ -240,10 +240,10 @@ class Dashboard extends React.Component {
 
     // Colour tuples for use with Chroma
     const colour_start_end = [
-      //   ["#fafa6e", "#2A4858"],
-      //   ["#264653", "#e76f51"],
       ["#f94144", "#577590"],
       ["#d9ed92", "#184e77"],
+      ["#fafa6e", "#2A4858"],
+      ["#264653", "#e76f51"],
     ];
 
     // https://coolors.co/264653-2a9d8f-e9c46a-f4a261-e76f51
