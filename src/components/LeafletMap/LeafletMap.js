@@ -102,13 +102,13 @@ class LeafletMap extends React.Component {
                 </Popup>
               </CircleMarker>
             );
+
+            markers.push(marker);
+            seenSites.add(site);
           } catch (error) {
             console.log(error);
             continue;
           }
-
-          markers.push(marker);
-          seenSites.add(site);
         }
       }
     }
