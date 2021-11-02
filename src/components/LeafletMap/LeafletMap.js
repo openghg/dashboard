@@ -44,62 +44,68 @@ class LeafletMap extends React.Component {
             continue;
           }
 
-          const latitude = value["latitude"];
-          const longitude = value["longitude"];
+          let marker = null;
+          try {
+            const latitude = value["latitude"];
+            const longitude = value["longitude"];
 
-          const locationStr = `${latitude}, ${longitude}`;
-          const location = [latitude, longitude];
+            const locationStr = `${latitude}, ${longitude}`;
+            const location = [latitude, longitude];
 
-          const networkURL = networkMetadata[network]["url"];
-          const networkName = networkMetadata[network]["long_name"];
-          const siteName = value["long_name"];
+            const networkURL = networkMetadata[network]["url"];
+            const networkName = networkMetadata[network]["long_name"];
+            const siteName = value["long_name"];
 
-          const siteHeight = value["magl"];
+            const siteHeight = value["magl"];
 
-          let heightSection = null;
-          if (siteHeight && siteHeight !== "NA") {
-            heightSection = (
-              <div>
-                <br />
-                Height: {siteHeight}
-                <br />
-              </div>
-            );
-          }
-
-          const colourHex = this.props.colours[network][site];
-
-          const marker = (
-            <CircleMarker
-              key={locationStr}
-              center={location}
-              data={site}
-              eventHandlers={{
-                click: this.handleClick,
-              }}
-              fillColor={colourHex}
-              color={colourHex}
-              fill={true}
-              fillOpacity={1.0}
-              radius={10}
-            >
-              <Popup>
-                <div className={styles.marker}>
-                  <div className={styles.markerBody}>
-                    <div className={styles.markerTitle}>{toTitleCase(siteName)}</div>
-                    <br />
-                    {heightSection}
-                    <br />
-                    For more information please visit the&nbsp;
-                    <a href={networkURL} target="_blank" rel="noopener noreferrer">
-                      {networkName} website.
-                    </a>
-                  </div>
-                  <div className={styles.markerLocation}>Location: {locationStr}</div>
+            let heightSection = null;
+            if (siteHeight && siteHeight !== "NA") {
+              heightSection = (
+                <div>
+                  <br />
+                  Height: {siteHeight}
+                  <br />
                 </div>
-              </Popup>
-            </CircleMarker>
-          );
+              );
+            }
+
+            const colourHex = this.props.colours[network][site];
+
+            marker = (
+              <CircleMarker
+                key={locationStr}
+                center={location}
+                data={site}
+                eventHandlers={{
+                  click: this.handleClick,
+                }}
+                fillColor={colourHex}
+                color={colourHex}
+                fill={true}
+                fillOpacity={1.0}
+                radius={10}
+              >
+                <Popup>
+                  <div className={styles.marker}>
+                    <div className={styles.markerBody}>
+                      <div className={styles.markerTitle}>{toTitleCase(siteName)}</div>
+                      <br />
+                      {heightSection}
+                      <br />
+                      For more information please visit the&nbsp;
+                      <a href={networkURL} target="_blank" rel="noopener noreferrer">
+                        {networkName} website.
+                      </a>
+                    </div>
+                    <div className={styles.markerLocation}>Location: {locationStr}</div>
+                  </div>
+                </Popup>
+              </CircleMarker>
+            );
+          } catch (error) {
+            console.log(error);
+            continue;
+          }
 
           markers.push(marker);
           seenSites.add(site);
