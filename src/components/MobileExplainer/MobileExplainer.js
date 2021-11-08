@@ -13,6 +13,7 @@ class MobileExplainer extends React.Component {
         <div className={styles.intro}>
           This map shows methane detected by a mobile study completed in August, 2021. 
           Methane was measured using a car-mounted instrument which was driven 350km around Glasgow to gather this data.
+          The diameter of the circles on the map is related to the size of the methane emissions measured.
           <br />
           <br />
           <a
