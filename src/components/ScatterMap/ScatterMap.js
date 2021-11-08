@@ -23,7 +23,7 @@ class ScatterMap extends React.Component {
       "<extra></extra>";
 
     const sizeVals = [];
-    const divisor = 100;
+    const divisor = 125;
     for (var i = 0; i < measurements.length; i++) {
       sizeVals.push(measurements[i] / divisor);
     }
