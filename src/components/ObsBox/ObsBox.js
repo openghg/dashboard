@@ -36,12 +36,6 @@ class ObsBox extends React.Component {
         for (const [site, sectorData] of Object.entries(networkData)) {
           for (const [sector, value] of Object.entries(sectorData)) {
             if (value) {
-              //   if (!speciesEmissions.hasOwnProperty(site)) {
-              //     speciesEmissions[site] = {};
-              //   }
-
-              //   speciesEmissions[network][site][sector] = data;
-
               const data = processedData[selectedSpecies][network][site][sector];
               set(speciesEmissions, `${network}.${site}.${sector}`, data);
 
