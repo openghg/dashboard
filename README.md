@@ -1,5 +1,8 @@
 # OpenGHG Dashboard
 
+> [!NOTE]  
+> This repository is now archived and may not work with more recent versions of Node. Please see the more recent dashboards within the OpenGHG organisation.
+
 ![OpenGHG Dashboard CI](https://github.com/openghg/dashboard/workflows/OpenGHG%20Dashboard%20CI/badge.svg)
 
 A simple React and Plotly.js based visualisation dashboard for the [OpenGHG project](https://openghg.org/).
